@@ -80,7 +80,7 @@
     /* 0 to 299 */
     #homePageBackgroundImageDivStyled {
       /*background-image: url('{{ $tiny.RelPermalink }}'); This does not work on https://themes.gohugo.io/ */
-      background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}{{ $tiny }}');
+      background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $tiny }}');
     }
     /* 300 to X */
     @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
