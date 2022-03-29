@@ -1,4 +1,4 @@
-baseURL: http://localhost:1313
+baseURL: https://tigernaxojr.github.io/blog/
 
 languageCode: en-us
 title: "YuCheng's Site"
@@ -24,7 +24,7 @@ enableEmoji: true
 # Site parameters
 params:
   # GitHub repo URL of your site
-  gitRepo: https://github.com/tigernaxo/quickstart
+  gitRepo: https://github.com/tigernaxoJr/blog
 
   # specify whether you want to write some blog posts or not
   enableBlogPost: true
