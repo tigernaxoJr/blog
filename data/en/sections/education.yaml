@@ -1,0 +1,24 @@
+# section information
+section:
+  name: Education
+  id: education
+  template: sections/education.html # Use "sections/education-alt.html for alternate template.
+  enable: true
+  weight: 4
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+degrees:
+  - name: Master of Science
+    icon: fa-microscope
+    timeframe: 2007-2009
+    institution:
+      name: Institute of Biochemistry and Molecular Biology, National Yang-Ming University
+      url: "#"
+  - name: Bachelor of Science
+    icon: fa-microscope
+    timeframe: 2003-2007
+    institution:
+      name: Department of Life Sciences, National Chung Hsing University
+      url: "#"
