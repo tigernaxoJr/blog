@@ -74,33 +74,35 @@
 {{ end }}
 
 <div class="container-fluid home" id="home">
-  {{ $backgroundImage }}
-  {{ $tiny.RelPermalink }}
+<div>{{ printf "%#v" "hi" }}</div>
+  <div>backgroundImage: {{ $backgroundImage }}</div>
+  <div>$tiny: {{ $tiny}}</div>
+  <div>$tiny.RelPermalink: {{ $tiny.RelPermalink }}</div>
   <style>
     /* 0 to 299 */
     #homePageBackgroundImageDivStyled {
       /*background-image: url('{{ $tiny.RelPermalink }}'); This does not work on https://themes.gohugo.io/ */
-      background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $tiny }}');
+      background-image: url('{{ $tiny.RelPermalink }}');
     }
     /* 300 to X */
     @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
       #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $small}}');
+          background-image: url('{{ $small.RelPermalink}}');
         }
     }
     @media (min-width: 801px) and (max-width: 1200px) { /* or 301 if you want really the same as previously.  */
       #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $medium}}');
+          background-image: url('{{ $medium.RelPermalink}}');
         }
     }
     @media (min-width: 1201px) and (max-width: 1500px) { /* or 301 if you want really the same as previously.  */
       #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $large}}');
+          background-image: url('{{ $large.RelPermalink}}');
         }
     }
     @media (min-width: 1501px) { /* or 301 if you want really the same as previously.  */
       #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ strings.TrimSuffix "/" site.BaseURL }}/{{ $src}}');
+          background-image: url('{{ $src.RelPermalink}}');
         }
     }
     </style>
