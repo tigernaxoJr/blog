@@ -23,6 +23,7 @@ enableEmoji: true
 
 # Site parameters
 params:
+  background: "images/test-background1.jpg"
   # GitHub repo URL of your site
   gitRepo: https://github.com/tigernaxoJr/blog
 

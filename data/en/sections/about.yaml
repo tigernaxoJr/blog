@@ -1,4 +1,5 @@
 # section information
+# reference https://toha-guides.netlify.app/posts/configuration/sections/about/
 section:
   name: About
   id: about
@@ -11,29 +12,38 @@ section:
 designation: Software Engineer
 # your company information
 company:
-  name: Example Co.
-  url: "https://www.example.com"
+  name: Kuang Tien General Hospital #Example Co.
+  url: "https://www.ktgh.com.tw"
 
 # your resume. this file path should be relative to you "static" directory
 resume: "files/resume.pdf"
 
 # a summary about you
-summary: 'I am a passionate software engineer with x years of working experience. I built OSS tools for [Kubernetes](https://kubernetes.io/) using GO. My tools help people to deploy their workloads in Kubernetes. Sometimes, I work on some fun projects such as writing a theme, etc.'
+summary: 'I am a passionate software engineer with 3 years of working experience. I work on some fun projects such as writing JavaScriopt Library, etc.'
 
 # your social links
 # give as many as you want. use font-awesome for the icons.
 socialLinks:
+- name: Email
+  icon: "fas fa-envelope"
+  url: "tigernaxo.co.cc@gmail.com"
 - name: Github
   icon: "fab fa-github"
-  url: "https://www.github.com/example"
+  url: "https://www.github.com/tigernaxo"
+- name: LinkedIn
+  icon: "fab fa-linkedin"
+  url: "https://www.linkedin.com/in/%E8%AD%BD%E6%99%9F-%E9%99%B3-41464a132"
 
 # your soft skills
 # give the percentage between 50 to 100 with 5 intervals.
 # currently supported colors: blue, yellow, pink, green, sky, orange
 softSkills:
-- name: Leadership
+- name: Back-End
   percentage: 85
   color: blue
-- name: Team Work
+- name: Front-End
   percentage: 90
   color: yellow
+- name: DevOps
+  percentage: 45
+  color: green
