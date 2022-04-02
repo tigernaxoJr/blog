@@ -16,7 +16,7 @@ company:
   url: "https://www.ktgh.com.tw"
 
 # your resume. this file path should be relative to you "static" directory
-resume: "files/resume.pdf"
+resume: "https://drive.google.com/file/d/1KfdI4Et68NmDsISpM7tBp5ulTJCb4IiP/view?usp=sharing"
 
 # a summary about you
 summary: 'I am a passionate software engineer with 3 years of working experience. I work on some fun projects such as writing JavaScriopt Library, etc.'
@@ -47,3 +47,6 @@ softSkills:
 - name: DevOps
   percentage: 45
   color: green
+- name: Problem Solve
+  percentage: 95
+  color: pink
