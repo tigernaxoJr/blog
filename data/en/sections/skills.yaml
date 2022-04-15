@@ -27,7 +27,7 @@ skills:
 
   - name: JavaScript
     logo: "images/sections/skills/javascript.png"
-    summary: "熟悉 ES5 up 原生語法"
+    summary: "Familiar with modern ECMAScript"
 
   - name: Linux
     logo: "images/sections/skills/linux.png"
@@ -43,19 +43,19 @@ skills:
 
   - name: Vuetify
     logo: "images/sections/skills/vuetify.png"
-    summary: "熟練的 UI framework，使用在過往專案上"
+    summary: "My most used vue UI Framework"
 
   - name: Bootstrap
     logo: "images/sections/skills/bootstrap.png"
-    summary: "bootstrap4/5 開發"
+    summary: "Familiar with bootstrap4/5"
 
   - name: JQuery
     logo: "images/sections/skills/jquery.png"
-    summary: "jquery 語法與相關元件庫，例如 jqurey-mobile。"
+    summary: "Familiar with jquery and jquery-related component libraries, such as jquery-mobile"
 
-  - name: SignallR
+  - name: SignallR/WebSocket
     logo: "images/sections/skills/SignalR.png"
-    summary: "websocket 專案經驗"
+    summary: "Use SignalR as real-time communication technology in my webChat APP and cloud exam system project."
 
   - name: Oracle DB
     logo: "images/sections/skills/oracle.png"
