@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nginx</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="Nginx" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/tags/nginx/" />
+
+
+
+    
+    
+    <link rel="stylesheet" href="/blog/css/layouts/list.css">
+    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+    
+    <link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/tags" data-filter="all">Tags</a></li>
+            <div class="subtree taxonomy-terms">
+              
+              
+
+
+
+  
+  
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/.net-core-3.1/" data-taxonomy-term=".net-core-3.1"><span class="taxonomy-label">.NET Core 3.1</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/asynchronous/" data-taxonomy-term="asynchronous"><span class="taxonomy-label">Asynchronous</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/authentication/" data-taxonomy-term="authentication"><span class="taxonomy-label">Authentication</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/autherization/" data-taxonomy-term="autherization"><span class="taxonomy-label">Autherization</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/authorization/" data-taxonomy-term="authorization"><span class="taxonomy-label">Authorization</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/bearor-token/" data-taxonomy-term="bearor-token"><span class="taxonomy-label">Bearor Token</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/cookie/" data-taxonomy-term="cookie"><span class="taxonomy-label">Cookie</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/cors/" data-taxonomy-term="cors"><span class="taxonomy-label">CORS</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/cross-origin-resource-sharing/" data-taxonomy-term="cross-origin-resource-sharing"><span class="taxonomy-label">Cross-Origin Resource Sharing</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/datatable/" data-taxonomy-term="datatable"><span class="taxonomy-label">DataTable</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/dotnetcore/" data-taxonomy-term="dotnetcore"><span class="taxonomy-label">dotNetCore</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/google-drive/" data-taxonomy-term="google-drive"><span class="taxonomy-label">google drive</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/http-proxy-middleware/" data-taxonomy-term="http-proxy-middleware"><span class="taxonomy-label">http-proxy-middleware</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/jenkins/" data-taxonomy-term="jenkins"><span class="taxonomy-label">Jenkins</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/json/" data-taxonomy-term="json"><span class="taxonomy-label">Json</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/jsondocument/" data-taxonomy-term="jsondocument"><span class="taxonomy-label">JsonDocument</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/multitier-architecture/" data-taxonomy-term="multitier-architecture"><span class="taxonomy-label">Multitier Architecture</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/n-tier/" data-taxonomy-term="n-tier"><span class="taxonomy-label">N-Tier</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/n-tier-architecture/" data-taxonomy-term="n-tier-architecture"><span class="taxonomy-label">N-Tier Architecture</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term active" href="https://tigernaxojr.github.io/blog/tags/nginx/" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/non-blocking/" data-taxonomy-term="non-blocking"><span class="taxonomy-label">non-blocking</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/signalr/" data-taxonomy-term="signalr"><span class="taxonomy-label">SignalR</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/tap/" data-taxonomy-term="tap"><span class="taxonomy-label">TAP</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/task/" data-taxonomy-term="task"><span class="taxonomy-label">Task</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/vim/" data-taxonomy-term="vim"><span class="taxonomy-label">vim</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/tags/websocket/" data-taxonomy-term="websocket"><span class="taxonomy-label">Websocket</span></a></li>
+        
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      
+      
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)</h5>
+        <p class="card-text post-summary">設置 Ubuntu 安裝 .NET Core Runtime wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb sudo apt update sudo apt install apt-transport-https sudo apt install dotnet-runtime-3.1 安裝 Nginx 新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list
+#/etc/apt/sources.list.d/nginx.list. deb https://nginx.org/packages/ubuntu/ focal nginx deb-src https://nginx.org/packages/ubuntu/ focal nginx 安裝
+sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
+# 啟動 nginx sudo systemctl start nginx # 設置 nginx 開機啟動 sudo systemctl enable nginx # 確認 nginx 運行狀態 sudo systemctl status nginx 設置 Nginx 反向代理本機的 5000 連接埠(之後 Kestrel 的 http 服務端口)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">August 11, 2021</span>
+        <a
+        href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+    </div>
+    <div class="paginator">
+      
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+    <script src="/blog/js/list.js"></script>
+
+
+    
+</body>
+</html>

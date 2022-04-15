@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Posts</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/" />
+
+
+
+    
+    
+    <link rel="stylesheet" href="/blog/css/layouts/list.css">
+    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+    
+    <link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 用Typescript搭建簡易前端路由">[DIY] 用Typescript搭建簡易前端路由</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/sonarqube_netcore/" title="[流程] SonarQube 檢測">[流程] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層式架構">[架構] 多層式架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[工具] 一鍵登入台灣杉">[工具] 一鍵登入台灣杉</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      
+      
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/tools/gdrive/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Tools] 在 linux 中使用 google drive cli</h5>
+        <p class="card-text post-summary">重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
+# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 29, 2021</span>
+        <a
+        href="/blog/blog/posts/tools/gdrive/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/system/arch-multi-layer/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[System] 多層式架構(Multitier Architecture)</h5>
+        <p class="card-text post-summary">多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
+為何以 multi-layer 撰寫程式碼
+ 增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。  BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
+ one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取  分層  Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation)  Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 10, 2021</span>
+        <a
+        href="/blog/blog/posts/system/arch-multi-layer/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/javascript/js-async/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 非同步程式設計-Promise 與 Async/Await</h5>
+        <p class="card-text post-summary">Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
+ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。  promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
+// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){  let reason = &#39;找不到 value&#39;  return new Promise((resolve, reject)=&gt;{  value ? resolve(value) :reject(reason)  }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 9, 2021</span>
+        <a
+        href="/blog/blog/posts/javascript/js-async/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/javascript/js-hoisting/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</h5>
+        <p class="card-text post-summary">網路上時常見到充滿 function 與 var 的 JavaScript 求值題目， 筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料， 雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。
+Hoisting 對學過伺服器端語言(C#、C/C++&hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事， 在 JavaScript 中也是如此：
+console.log(x) // ReferenceError: x is not defined 但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine， 在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後已分配記憶體空間(初始化、initiation)但尚未賦值的狀態， 但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？
+console.log(x) // undefined var x 原因在於 javascript 會先程式中的蒐集 var(let/const/function) 宣告並釐清對應的作用域， 最後再執行程式碼，這個行為就如同宣告被提升(Hoisting)到前面行數的程式碼中一樣。
+JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、賦值等等時機取用變數會獲得不同輸出結果， 這篇文章(link)中提到， 稱 JavaScript 為直譯式(解釋型)語言實際上是通俗的說法，語言本身沒有規定實現的方式(編/直譯)， 舉例來說 Chrome 瀏覽器所使用的 Google V8 JavaScript engine， 所帶的解釋器 (interpreter) 會將程式編譯 (compile) 成字節碼 (bytecode)， 最後再由編譯器 (compiler) 即時編譯 (JIT;just-in-time compilation) 編譯成機器碼執行， 而 JavaScript 被編譯時宣告會被蒐集到最頂端進行定義並區分作用域(scope)，這個行為就是 Hoisting ，記住重點在於JS編譯後會先定義變數及區分作用域，編譯後的程式看起來就像這樣：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 9, 2021</span>
+        <a
+        href="/blog/blog/posts/javascript/js-hoisting/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_3/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</h5>
+        <p class="card-text post-summary">前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;
+Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">December 30, 2020</span>
+        <a
+        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_3/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_2/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</h5>
+        <p class="card-text post-summary">驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
+ 驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 23, 2020</span>
+        <a
+        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_2/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_1/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</h5>
+        <p class="card-text post-summary">在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
+驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
+授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
+ 限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。  挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
+ cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。  禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 23, 2020</span>
+        <a
+        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_1/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/tools/vim/plugin_ycm/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</h5>
+        <p class="card-text post-summary">安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
+&#34; Specify a directory for pluginscall plug#begin(&#39;~/.vim/plugged&#39;)Plug &#39;ycm-core/YouCompleteMe&#39;&#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
+:PlugInstall 編譯YCM 安裝編譯工具
+sudo apt install -y build-essential cmake vim python3-dev 編譯
+~/.vim/plugged/YouCompleteMe/install.py 測試 打開 vim 確認，完工~
+Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 18, 2020</span>
+        <a
+        href="/blog/blog/posts/tools/vim/plugin_ycm/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/javascript/code-copy-html-content/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Code] 複製元件內的文字</h5>
+        <p class="card-text post-summary">要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
+Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
+ 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 13, 2020</span>
+        <a
+        href="/blog/blog/posts/javascript/code-copy-html-content/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/javascript/diy-simple-router/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
+        <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
+npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt;  &lt;head&gt;  &lt;meta charset=&#34;UTF-8&#34; /&gt;  &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt;  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt;  &lt;title&gt;Vite App&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;  &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt;  &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;script type=&#34;module&#34; src=&#34;/src/main.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 13, 2020</span>
+        <a
+        href="/blog/blog/posts/javascript/diy-simple-router/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/javascript/js-module/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 各種模組(module)</h5>
+        <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
+Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 13, 2020</span>
+        <a
+        href="/blog/blog/posts/javascript/js-module/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/dotnetcore31/signalr/guild_4_front_end_login/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
+        <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
+axios 一樣可以透過 LibMan 安裝~
+libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+&lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
+libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 10, 2020</span>
+        <a
+        href="/blog/blog/posts/dotnetcore31/signalr/guild_4_front_end_login/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+    </div>
+    <div class="paginator">
+      
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/blog/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/3/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+    <script src="/blog/js/list.js"></script>
+
+
+    
+</body>
+</html>

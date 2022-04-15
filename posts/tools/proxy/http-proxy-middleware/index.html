@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題" />
+<meta property="og:description" content="前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
+步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
+mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;;  // 設定代理到 google 的 Proxy 端點 app." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-20T08:45:00+08:00" />
+<meta property="article:modified_time" content="2021-03-20T08:45:00+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 用Typescript搭建簡易前端路由">[DIY] 用Typescript搭建簡易前端路由</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/sonarqube_netcore/" title="[流程] SonarQube 檢測">[流程] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層式架構">[架構] 多層式架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[工具] 一鍵登入台灣杉">[工具] 一鍵登入台灣杉</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(https://tigernaxojr.github.io/blog/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Saturday, March 20, 2021</p>
+        </div>
+
+        <div class="title">
+          <h1>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <p>前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題，
+一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置，
+如果要對於不熟悉的開發環境進行快速除錯
+(例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)，
+重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間
+(不過最終還是要搭建起來阿，喂~~)，
+因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。</p>
+<h1 id="步驟">步驟</h1>
+<h2 id="首先安裝-nodejshttpsnodejsorgen">首先安裝 <a href="https://nodejs.org/en/">node.js</a></h2>
+<h2 id="建立專案資料夾">建立專案資料夾</h2>
+<p>建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir proxy
+</span></span></code></pre></div><h2 id="起始專案">起始專案</h2>
+<p>用指令移動到該專案資料夾下，起始專案：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd proxy
+</span></span><span style="display:flex;"><span>npm init 
+</span></span></code></pre></div><h2 id="安裝相依性">安裝相依性</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm i express http-proxy-middleware cors
+</span></span></code></pre></div><h2 id="建立-appjs">建立 app.js</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cors</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;cors&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">createProxyMiddleware</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;http-proxy-middleware&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 建立一個 Express 伺服器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">cors</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 設定 Express 伺服器的 Host、Port
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">PORT</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3000</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">HOST</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;localhost&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 設定代理到 google 的 Proxy 端點
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#e6db74">&#39;/google&#39;</span>, <span style="color:#a6e22e">createProxyMiddleware</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://www.google.com/&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">changeOrigin</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">pathRewrite</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">`^/google`</span>]<span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>}));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 設定代理到 yahoo 的 Proxy 端點
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#e6db74">&#39;/yahoo&#39;</span>, <span style="color:#a6e22e">createProxyMiddleware</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://tw.yahoo.com/&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">changeOrigin</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">pathRewrite</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        [<span style="color:#e6db74">`^/yahoo`</span>]<span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>}));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 啟動代理伺服器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">listen</span>(<span style="color:#a6e22e">PORT</span>, <span style="color:#a6e22e">HOST</span>, () =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Starting Proxy at </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">PORT</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="啟動代理伺服器">啟動代理伺服器</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ node app.js
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>HPM<span style="color:#f92672">]</span> Proxy created: /  -&gt; https://www.google.com/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>HPM<span style="color:#f92672">]</span> Proxy rewrite rule created: <span style="color:#e6db74">&#34;^/google&#34;</span> ~&gt; <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>HPM<span style="color:#f92672">]</span> Proxy created: /  -&gt; https://tw.yahoo.com/
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>HPM<span style="color:#f92672">]</span> Proxy rewrite rule created: <span style="color:#e6db74">&#34;^/yahoo&#34;</span> ~&gt; <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>Starting Proxy at localhost:3000
+</span></span></code></pre></div><h2 id="測試">測試</h2>
+<p>打開隨意網頁 F12，用 fetch api 透過 proxy 對 google 或 yahoo 發起 get 請求成功獲得資訊，且 Header 裡面會有<code>Access-Control-Allow-Origin: *</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;http://localhost:3000/google/&#39;</span>)
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">response</span> =&gt; <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">text</span>())
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">data</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Promise {&lt;pending&gt;}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// &lt;!doctype html&gt;&lt;html itemscope=&#34;&#34; itemtype=&#34;http://schema.org/WebPage&#34; lang=&#34;zh-TW&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;UT...
+</span></span></span></code></pre></div><p>如果是直接對 google 發起的 get 請求則會因為跨網域問題不會成功：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;https://www.google.com/&#39;</span>)
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">response</span> =&gt; <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">text</span>())
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">data</span> =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Promise {&lt;pending&gt;}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Access to fetch at &#39;https://www.google.com/&#39; from origin &#39;https://developer.mozilla.org&#39; has been blocked by CORS policy: No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource. If an opaque response serves your needs, set the request&#39;s mode to &#39;no-cors&#39; to fetch the resource with CORS disabled.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// GET https://www.google.com/ net::ERR_FAILED
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Using_Fetch:1 Uncaught (in promise) TypeError: Failed to fetch
+</span></span></span></code></pre></div>
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5ctools%5cproxy%5chttp-proxy-middleware.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+  
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#首先安裝-nodejshttpsnodejsorgen">首先安裝 <a href="https://nodejs.org/en/">node.js</a></a></li>
+    <li><a href="#建立專案資料夾">建立專案資料夾</a></li>
+    <li><a href="#起始專案">起始專案</a></li>
+    <li><a href="#安裝相依性">安裝相依性</a></li>
+    <li><a href="#建立-appjs">建立 app.js</a></li>
+    <li><a href="#啟動代理伺服器">啟動代理伺服器</a></li>
+    <li><a href="#測試">測試</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

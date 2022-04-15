@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Linux] CentOS 8 設定網路靜態IP</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[Linux] CentOS 8 設定網路靜態IP" />
+<meta property="og:description" content="查詢IP $ ip a1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00inet 127.0.0.1/8 scope host lovalid_lft forever preferred_lft foreverinet6 ::1/128 scope hostvalid_lft forever preferred_lft forever2: enp0s3: mtu 1500 qdisc fq_codel state UP group default qlen 1000link/ether 08:00:27:85:fe:50 brd ff:ff:ff:ff:ff:ffinet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute enp0s3valid_lft forever preferred_lft foreverinet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroutevalid_lft forever preferred_lft forever 修改網路設定 修改網路介面設置如下，檔案名稱預設為ifcfg-網路介面(網路卡)名稱，舉例來說安裝好 CentOS 預設的網路卡 enp0s3 設定檔：/etc/sysconfig/network-scripts/ifcfg-enp0s3" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/linux/centos8-static-ip/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-16T09:37:18+08:00" />
+<meta property="article:modified_time" content="2020-06-16T09:37:18+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[Linux] CentOS 8 設定網路靜態IP" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 用Typescript搭建簡易前端路由">[DIY] 用Typescript搭建簡易前端路由</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/sonarqube_netcore/" title="[流程] SonarQube 檢測">[流程] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層式架構">[架構] 多層式架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[工具] 一鍵登入台灣杉">[工具] 一鍵登入台灣杉</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(https://tigernaxojr.github.io/blog/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Tuesday, June 16, 2020</p>
+        </div>
+
+        <div class="title">
+          <h1>[Linux] CentOS 8 設定網路靜態IP</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <h1 id="查詢ip">查詢IP</h1>
+<pre tabindex="0"><code>$ ip a
+1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: enp0s3: mtu 1500 qdisc fq_codel state UP group default qlen 1000
+link/ether 08:00:27:85:fe:50 brd ff:ff:ff:ff:ff:ff
+inet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute enp0s3
+valid_lft forever preferred_lft forever
+inet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroute
+valid_lft forever preferred_lft forever
+</code></pre><h1 id="修改網路設定">修改網路設定</h1>
+<p>修改網路介面設置如下，檔案名稱預設為ifcfg-網路介面(網路卡)名稱，舉例來說安裝好 CentOS 預設的網路卡 enp0s3 設定檔：/etc/sysconfig/network-scripts/ifcfg-enp0s3</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">TYPE</span>=<span style="color:#e6db74">&#34;Ethernet&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PROXY_METHOD</span>=<span style="color:#e6db74">&#34;none&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">BROWSER_ONLY</span>=<span style="color:#e6db74">&#34;no&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">BOOTPROTO</span>=<span style="color:#e6db74">&#34;static&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DEFROUTE</span>=<span style="color:#e6db74">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV4_FAILURE_FATAL</span>=<span style="color:#e6db74">&#34;no&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6INIT</span>=<span style="color:#e6db74">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6_AUTOCONF</span>=<span style="color:#e6db74">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6_DEFROUTE</span>=<span style="color:#e6db74">&#34;yes&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6_FAILURE_FATAL</span>=<span style="color:#e6db74">&#34;no&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6_ADDR_GEN_MODE</span>=<span style="color:#e6db74">&#34;stable-privacy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">NAME</span>=<span style="color:#e6db74">&#34;enp0s3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">UUID</span>=<span style="color:#e6db74">&#34;15114252-a2e9-4fd7-9a2e-c5cc82d0417b&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DEVICE</span>=<span style="color:#e6db74">&#34;enp0s3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ONBOOT</span>=<span style="color:#e6db74">&#34;yes&#34;</span>         <span style="color:#75715e"># 設置開機啟動</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPADDR</span>=<span style="color:#e6db74">&#34;10.0.2.101&#34;</span>  <span style="color:#75715e"># 設置靜態IP位址動</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PREFIX</span>=<span style="color:#e6db74">&#34;24&#34;</span>          <span style="color:#75715e"># 子網路遮照，等價於 NETMASK=&#34;255.255.255.0&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">GATEWAY</span>=<span style="color:#e6db74">&#34;10.0.2.1&#34;</span>   <span style="color:#75715e"># 閘道器位址</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DNS1</span>=<span style="color:#e6db74">&#34;8.8.8.8&#34;</span>       <span style="color:#75715e"># DNS1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">DNS2</span>=<span style="color:#e6db74">&#34;9.9.9.9&#34;</span>       <span style="color:#75715e"># DNS2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">IPV6_PRIVACY</span>=<span style="color:#e6db74">&#34;no&#34;</span>
+</span></span></code></pre></div><h1 id="重啟網路介面">重啟網路介面</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span><span style="color:#75715e"># 停用</span>
+</span></span><span style="display:flex;"><span>ifdown enp0s3
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 啟動</span>
+</span></span><span style="display:flex;"><span>ifup enp0s3
+</span></span></code></pre></div><p>檢查ip，已變更：</p>
+<pre tabindex="0"><code>$ ip a
+1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: enp0s3: mtu 1500 qdisc fq_codel state UP group default qlen 1000
+link/ether 08:00:27:85:fe:50 brd ff:ff:ff:ff:ff:ff
+inet 10.0.2.101/24 brd 10.0.2.255 scope global noprefixroute enp0s3
+valid_lft forever preferred_lft forever
+inet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroute
+valid_lft forever preferred_lft forever
+</code></pre>
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5clinux%5ccentos8-static-ip%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+  
+      
+      
+      <div class="col-md-12 next-article">
+        <a href="/blog/posts/linux/ubuntu204-static-ip/" title="[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents"></nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>
