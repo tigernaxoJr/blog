@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>[基礎] 認證與授權 on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/</link>
+    <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/</link>
     <description>Recent content in [基礎] 認證與授權 on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Mar 2021 23:08:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Fri, 12 Mar 2021 23:08:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/posts/netcore31/basic-auth/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</title>
-      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_2/</link>
+      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_2/</link>
       <pubDate>Fri, 12 Mar 2021 23:08:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_2/</guid>
+      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_2/</guid>
       <description>驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
  驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &amp;rsquo;no result&amp;rsquo; 或 &amp;lsquo;failure&amp;rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
  cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</description>
@@ -19,10 +19,10 @@
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</title>
-      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_4/</link>
+      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_4/</link>
       <pubDate>Thu, 31 Dec 2020 14:08:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_4/</guid>
+      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_4/</guid>
       <description>授權(Authorization)  授權(Authorization): 界定用戶可存取資源範圍的程序。  Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
 自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
 驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
@@ -31,10 +31,10 @@ Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService I
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title>
-      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_3/</link>
+      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_3/</link>
       <pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_3/</guid>
+      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_3/</guid>
       <description>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;
 Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
 // 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
@@ -43,10 +43,10 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</title>
-      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/</link>
+      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_memo/</link>
       <pubDate>Mon, 23 Nov 2020 15:48:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/</guid>
+      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_memo/</guid>
       <description>Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
 Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
@@ -56,10 +56,10 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</title>
-      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_1/</link>
+      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_1/</link>
       <pubDate>Mon, 23 Nov 2020 08:39:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_1/</guid>
+      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_1/</guid>
       <description>在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
 授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：

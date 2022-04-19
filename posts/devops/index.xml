@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>[維運] DevOps on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/blog/posts/devops/</link>
+    <link>https://tigernaxojr.github.io/posts/devops/</link>
     <description>Recent content in [維運] DevOps on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/devops/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/posts/devops/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[DevOps] CI/CD-01 安裝 Jenkins</title>
-      <link>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</link>
+      <link>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</link>
       <pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</guid>
+      <guid>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</guid>
       <description>環境 硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
 安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc  # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \  apt-transport-https \  ca-certificates \  curl \  gnupg \  lsb-release  # 添加 Docker 官方 GPG key curl -fsSL https://download.</description>
     </item>
     
     <item>
       <title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title>
-      <link>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</link>
+      <link>https://tigernaxojr.github.io/posts/devops/sonarqube_netcore31/</link>
       <pubDate>Wed, 22 Sep 2021 11:11:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</guid>
+      <guid>https://tigernaxojr.github.io/posts/devops/sonarqube_netcore31/</guid>
       <description>弱點掃描時常使用 owasp top 10 作為報告， 然而 owasp 軟體一年要價不菲，委外掃一次也是非常貴， 使用免費的 SonarQube 將弱點掃描整合到 CI/CD 階段， 要交付前再花錢委外掃一次似乎是個折衷的作法，避免一次檢測出來的弱點過多改動過大。
 SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
 準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。

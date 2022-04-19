@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>系統 on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/blog/posts/system/</link>
+    <link>https://tigernaxojr.github.io/posts/system/</link>
     <description>Recent content in 系統 on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 May 2021 23:20:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/system/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 17 May 2021 23:20:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/posts/system/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[架構] 多層式架構(Multitier Architecture)</title>
-      <link>https://tigernaxojr.github.io/blog/posts/system/arch_n_tier/</link>
+      <link>https://tigernaxojr.github.io/posts/system/arch_n_tier/</link>
       <pubDate>Mon, 17 May 2021 23:20:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/system/arch_n_tier/</guid>
+      <guid>https://tigernaxojr.github.io/posts/system/arch_n_tier/</guid>
       <description>多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
 N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
  提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。  1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
@@ -22,10 +22,10 @@ N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨�
     
     <item>
       <title>[架構] 多層式架構(Multi-layer Architecture)</title>
-      <link>https://tigernaxojr.github.io/blog/posts/system/arch-multi-layer/</link>
+      <link>https://tigernaxojr.github.io/posts/system/arch-multi-layer/</link>
       <pubDate>Sun, 10 Jan 2021 23:21:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/blog/posts/system/arch-multi-layer/</guid>
+      <guid>https://tigernaxojr.github.io/posts/system/arch-multi-layer/</guid>
       <description>多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
 為何以 multi-layer 撰寫程式碼
  增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。  BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾

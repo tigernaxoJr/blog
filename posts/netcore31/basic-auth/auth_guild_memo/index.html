@@ -7,17 +7,17 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
 
-<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
-<link rel="stylesheet" href="/blog/css/plyr.css"/>
-<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/css/layouts/main.css"/>
+<link rel="stylesheet" href="/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/css/plyr.css"/>
+<link rel="stylesheet" href="/css/flag-icon.min.css"/>
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
 
 
-<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+<link rel="stylesheet" href="/fontawesome/css/all.min.css"/>
 
 
 
@@ -29,7 +29,7 @@ Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容�
  ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_memo/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-11-23T15:48:00+08:00" />
 <meta property="article:modified_time" content="2020-11-23T15:48:00+08:00" />
 
@@ -42,10 +42,10 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
 />
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+<link rel="stylesheet" href="/css/layouts/single.css"/>
+<link rel="stylesheet" href="/css/navigators/sidebar.css">
 
-<link rel="stylesheet" href="/blog/css/style.css"/>
+<link rel="stylesheet" href="/css/style.css"/>
 
 
 
@@ -78,7 +78,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
       <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/blog">
+    <a class="navbar-brand" href="/">
       YuCheng&#39;s Site</a>
     <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
       <span class="navbar-toggler-icon"></span>
@@ -102,12 +102,12 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
-        <form class="mx-auto" method="get" action="/blog/search">
+        <form class="mx-auto" method="get" action="/search">
           <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <li id="list-heading"><a href="/posts" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -117,7 +117,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/linux/">[OS] Linux</a>
       
       <ul class="">
         
@@ -127,7 +127,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+    <li><a class="" href="/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
   
 
   
@@ -136,7 +136,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+    <li><a class="" href="/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
   
 
 
@@ -151,7 +151,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/web-tool/">[Web] 工具</a>
       
       <ul class="">
         
@@ -161,7 +161,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+    <li><a class="" href="/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
   
 
 
@@ -176,7 +176,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/javascript/">[前端] Javascript</a>
       
       <ul class="">
         
@@ -186,7 +186,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+    <li><a class="" href="/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
   
 
   
@@ -195,7 +195,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+    <li><a class="" href="/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
   
 
   
@@ -204,7 +204,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+    <li><a class="" href="/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
   
 
   
@@ -213,7 +213,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+    <li><a class="" href="/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
   
 
   
@@ -222,7 +222,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+    <li><a class="" href="/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
   
 
   
@@ -231,7 +231,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+    <li><a class="" href="/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
   
 
   
@@ -240,7 +240,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+    <li><a class="" href="/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
   
 
   
@@ -249,7 +249,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 用Typescript搭建簡易前端路由">[DIY] 用Typescript搭建簡易前端路由</a></li>
+    <li><a class="" href="/posts/javascript/diy-simple-router/" title="[DIY] 用Typescript搭建簡易前端路由">[DIY] 用Typescript搭建簡易前端路由</a></li>
   
 
 
@@ -263,7 +263,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+    <li><a class="" href="/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
   
 
   
@@ -273,7 +273,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/vuejs/">[前端] VueJs</a>
       
       <ul class="">
         
@@ -283,7 +283,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+    <li><a class="" href="/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
   
 
   
@@ -292,7 +292,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+    <li><a class="" href="/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
   
 
   
@@ -301,7 +301,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+    <li><a class="" href="/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
   
 
 
@@ -319,7 +319,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/posts/netcore31/">[後端] .NET Code 3.1</a>
       
       <ul class="active">
         
@@ -333,7 +333,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/netcore31/basic-auth/">[基礎] 認證與授權</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/posts/netcore31/basic-auth/">[基礎] 認證與授權</a>
       
       <ul class="active">
         
@@ -343,7 +343,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+    <li><a class="" href="/posts/netcore31/basic-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
   
 
   
@@ -352,7 +352,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+    <li><a class="" href="/posts/netcore31/basic-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
   
 
   
@@ -361,7 +361,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+    <li><a class="" href="/posts/netcore31/basic-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
   
 
   
@@ -370,7 +370,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+    <li><a class="" href="/posts/netcore31/basic-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
   
 
   
@@ -382,7 +382,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="active" href="/blog/posts/netcore31/basic-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+    <li><a class="active" href="/posts/netcore31/basic-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
   
 
 
@@ -397,7 +397,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-signalr/">[後端] 即時聊天專案</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/netcore31/startup-signalr/">[後端] 即時聊天專案</a>
       
       <ul class="">
         
@@ -407,7 +407,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+    <li><a class="" href="/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
   
 
   
@@ -416,7 +416,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+    <li><a class="" href="/posts/netcore31/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
   
 
   
@@ -425,7 +425,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+    <li><a class="" href="/posts/netcore31/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
   
 
   
@@ -434,7 +434,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+    <li><a class="" href="/posts/netcore31/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
   
 
 
@@ -448,7 +448,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+    <li><a class="" href="/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
   
@@ -457,7 +457,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
+    <li><a class="" href="/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
   
 
   
@@ -466,41 +466,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+    <li><a class="" href="/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
   
 
 
@@ -515,7 +481,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/system/">[系統] 軟體開發</a>
       
       <ul class="">
         
@@ -525,7 +491,16 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+    <li><a class="" href="/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
 
@@ -540,7 +515,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">Other</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/devops/">[維運] DevOps</a>
       
       <ul class="">
         
@@ -550,7 +525,32 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   
   
     
-    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[工具] 一鍵登入台灣杉">[工具] 一鍵登入台灣杉</a></li>
+    <li><a class="" href="/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/posts/other/">Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/posts/other/taiwania_login_oneclick/" title="[工具] 一鍵登入台灣杉">[工具] 一鍵登入台灣杉</a></li>
   
 
 
@@ -573,13 +573,13 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   <div class="content">
     <div class="container p-0 read-area">
       
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(https://tigernaxojr.github.io/blog/blog/images/default-hero.jpg);'>
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(https://tigernaxojr.github.io/images/default-hero.jpg);'>
       </div>
 
       
       <div class="page-content">
         <div class="author-profile ml-auto align-self-lg-center">
-          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <img class="rounded-circle" src='/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
           <h5 class="author-name">Yu Cheng</h5>
           <p>Monday, November 23, 2020</p>
         </div>
@@ -755,7 +755,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/netcore31/basic-auth/auth_guild_4/" title="[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定" class="btn btn-outline-info">
+      <a href="/posts/netcore31/basic-auth/auth_guild_4/" title="[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
         <div class="next-prev-text">[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</div>
       </a>
@@ -767,7 +767,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] Websocket 即時聊天程式(一) - 建立專案" class="btn btn-outline-info">
+        <a href="/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] Websocket 即時聊天程式(一) - 建立專案" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
           <div class="next-prev-text">[SignalR] Websocket 即時聊天程式(一) - 建立專案</div>
         </a>
@@ -887,7 +887,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
                   
                 
                 <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/#about">About</a>
                 </li>
               
               
@@ -896,7 +896,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
                   
                 
                 <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/#skills">Skills</a>
                 </li>
               
               
@@ -905,7 +905,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
                   
                 
                 <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/#experiences">Experiences</a>
                 </li>
               
               
@@ -914,7 +914,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
                   
                 
                 <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/#education">Education</a>
                 </li>
               
             
@@ -951,7 +951,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
               <form method='post' action='https://blogtrottr.com'>
               <div class="form-group">
               <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
-              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/index.xml' />
               <input type='hidden' name='schedule_type' value='1' />
               <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
               <button type="submit" class="btn btn-info"> Submit </button>
@@ -969,7 +969,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
       <div class="row text-left">
         <div class="col-md-4">
           <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
             Toha
           </a>
         </div>
@@ -977,7 +977,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <div class="col-md-4 text-right">
           <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
           <img
-            src="/blog/images/hugo-logo.svg"
+            src="/images/hugo-logo.svg"
             alt="Hugo Logo"
             height="18"
           />
@@ -989,19 +989,19 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
   </footer>
 
 
-    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/blog/js/popper.min.js"></script>
-<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="/blog/js/navbar.js"></script>
-<script type="text/javascript" src="/blog/js/plyr.js"></script>
-<script type="text/javascript" src="/blog/js/main.js"></script>
+<script type="text/javascript" src="/js/navbar.js"></script>
+<script type="text/javascript" src="/js/plyr.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 
 
     
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/blog/js/single.js"></script>
+<script src="/js/single.js"></script>
 <script>
   hljs.initHighlightingOnLoad();
 </script>
