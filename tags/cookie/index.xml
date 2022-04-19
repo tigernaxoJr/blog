@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cookie on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/tags/cookie/</link>
+    <description>Recent content in Cookie on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Dec 2020 23:24:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/tags/cookie/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/auth/auth_guild_3/</link>
+      <pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/auth/auth_guild_3/</guid>
+      <description>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;
+Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&amp;gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</description>
+    </item>
+    
+    
+  </channel>
+</rss>

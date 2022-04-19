@@ -122,11 +122,6 @@
           
             
           
-          <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/categories/system/" data-taxonomy-term="system"><span class="taxonomy-label">System</span></a></li>
-        
-          
-            
-          
           <li><a class="taxonomy-term " href="https://tigernaxojr.github.io/blog/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span></a></li>
         
   
@@ -150,87 +145,7 @@
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)</h5>
-        <p class="card-text post-summary">設置 Ubuntu 安裝 .NET Core Runtime wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb sudo apt update sudo apt install apt-transport-https sudo apt install dotnet-runtime-3.1 安裝 Nginx 新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list
-#/etc/apt/sources.list.d/nginx.list. deb https://nginx.org/packages/ubuntu/ focal nginx deb-src https://nginx.org/packages/ubuntu/ focal nginx 安裝
-sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
-# 啟動 nginx sudo systemctl start nginx # 設置 nginx 開機啟動 sudo systemctl enable nginx # 確認 nginx 運行狀態 sudo systemctl status nginx 設置 Nginx 反向代理本機的 5000 連接埠(之後 Kestrel 的 http 服務端口)</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 11, 2021</span>
-        <a
-        href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/json/json_datatable/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] JsonDocument 與 DataTable 的互相轉換</h5>
-        <p class="card-text post-summary">在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
-public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 6, 2021</span>
-        <a
-        href="/blog/blog/posts/dotnetcore31/json/json_datatable/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/json/json_manipulate/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] .NET Core 中對 JsonElement 的操作</h5>
-        <p class="card-text post-summary">.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 6, 2021</span>
-        <a
-        href="/blog/blog/posts/dotnetcore31/json/json_manipulate/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/async/async_controller/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/async/async_controller/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -245,7 +160,7 @@ public static class JsonExt { 	public static void Add(ref this JsonElement sourc
       <div class="card-footer">
         <span class="float-left">March 17, 2021</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/async/async_controller/"
+        href="/blog/blog/posts/netcore31/async/async_controller/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -258,7 +173,7 @@ public static class JsonExt { 	public static void Add(ref this JsonElement sourc
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_3/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/auth/auth_guild_3/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -273,7 +188,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       <div class="card-footer">
         <span class="float-left">December 30, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_3/"
+        href="/blog/blog/posts/netcore31/auth/auth_guild_3/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -286,7 +201,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_2/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/auth/auth_guild_2/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -300,7 +215,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       <div class="card-footer">
         <span class="float-left">November 23, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_2/"
+        href="/blog/blog/posts/netcore31/auth/auth_guild_2/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -313,7 +228,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/auth/auth_guild_1/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/auth/auth_guild_1/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -330,7 +245,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       <div class="card-footer">
         <span class="float-left">November 23, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/auth/auth_guild_1/"
+        href="/blog/blog/posts/netcore31/auth/auth_guild_1/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -343,7 +258,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/signalr/guild_4_front_end_login/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/signalr/guild_4_front_end_login/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -359,7 +274,7 @@ libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \ 
       <div class="card-footer">
         <span class="float-left">November 10, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/signalr/guild_4_front_end_login/"
+        href="/blog/blog/posts/netcore31/signalr/guild_4_front_end_login/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -372,7 +287,7 @@ libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \ 
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/signalr/guild_3_validate_token/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/signalr/guild_3_validate_token/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -386,7 +301,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
       <div class="card-footer">
         <span class="float-left">November 7, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/signalr/guild_3_validate_token/"
+        href="/blog/blog/posts/netcore31/signalr/guild_3_validate_token/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -399,7 +314,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/signalr/guild_2_issue_token/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/signalr/guild_2_issue_token/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -414,7 +329,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
       <div class="card-footer">
         <span class="float-left">November 6, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/signalr/guild_2_issue_token/"
+        href="/blog/blog/posts/netcore31/signalr/guild_2_issue_token/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -427,7 +342,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/signalr/guild_1_start/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/signalr/guild_1_start/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -442,7 +357,7 @@ using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace Sig
       <div class="card-footer">
         <span class="float-left">October 31, 2020</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/signalr/guild_1_start/"
+        href="/blog/blog/posts/netcore31/signalr/guild_1_start/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

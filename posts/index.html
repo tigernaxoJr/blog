@@ -318,7 +318,25 @@
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/sonarqube_netcore/" title="[流程] SonarQube 檢測">[流程] SonarQube 檢測</a></li>
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
   
 
 
@@ -343,7 +361,41 @@
   
   
     
-    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層式架構">[架構] 多層式架構</a></li>
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
   
 
 
@@ -421,7 +473,7 @@
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/netcore31/sonarqube_netcore/" class="post-card-link">
+  <a href="/blog/blog/posts/devops/sonarqube_netcore31/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -437,7 +489,7 @@ SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Sc
       <div class="card-footer">
         <span class="float-left">September 22, 2021</span>
         <a
-        href="/blog/blog/posts/netcore31/sonarqube_netcore/"
+        href="/blog/blog/posts/devops/sonarqube_netcore31/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -504,7 +556,7 @@ runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size ex
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -519,7 +571,7 @@ sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
       <div class="card-footer">
         <span class="float-left">August 11, 2021</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/deploy/ubuntu2004_nginx/"
+        href="/blog/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -532,20 +584,20 @@ sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/json/json_datatable/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/snippet-json-dt/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
       </div>
       <div class="card-body">
-        <h5 class="card-title">[.NET Core] JsonDocument 與 DataTable 的互相轉換</h5>
+        <h5 class="card-title">[.NET Core 3.1] JsonDocument 與 DataTable 的互相轉換</h5>
         <p class="card-text post-summary">在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
 public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/json/json_datatable/"
+        href="/blog/blog/posts/netcore31/snippet-json-dt/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -558,7 +610,7 @@ public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new Me
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/json/json_manipulate/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/snippet-json-operate/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -571,7 +623,7 @@ public static class JsonExt { 	public static void Add(ref this JsonElement sourc
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/json/json_manipulate/"
+        href="/blog/blog/posts/netcore31/snippet-json-operate/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -638,13 +690,13 @@ Dialog 元件設計原理:
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/system/n_tier/" class="post-card-link">
+  <a href="/blog/blog/posts/system/arch_n_tier/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
       </div>
       <div class="card-body">
-        <h5 class="card-title">[System] 多層式架構(Multitier Architecture)</h5>
+        <h5 class="card-title">[架構] 多層式架構(Multitier Architecture)</h5>
         <p class="card-text post-summary">多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
 N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
  提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。  1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
@@ -655,7 +707,7 @@ N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨�
       <div class="card-footer">
         <span class="float-left">May 17, 2021</span>
         <a
-        href="/blog/blog/posts/system/n_tier/"
+        href="/blog/blog/posts/system/arch_n_tier/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -696,7 +748,7 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/dotnetcore31/async/async_controller/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/async/async_controller/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -711,7 +763,7 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
       <div class="card-footer">
         <span class="float-left">March 17, 2021</span>
         <a
-        href="/blog/blog/posts/dotnetcore31/async/async_controller/"
+        href="/blog/blog/posts/netcore31/async/async_controller/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[System] 多層式架構(Multitier Architecture)</title>
+    <title>[架構] 多層式架構(Multi-layer Architecture)</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,7 +22,7 @@
 
 
 
-<meta property="og:title" content="[System] 多層式架構(Multitier Architecture)" />
+<meta property="og:title" content="[架構] 多層式架構(Multi-layer Architecture)" />
 <meta property="og:description" content="多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
 為何以 multi-layer 撰寫程式碼
  增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。  BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
@@ -36,7 +36,7 @@
 
     
     
-<meta name="description" content="[System] 多層式架構(Multitier Architecture)" />
+<meta name="description" content="[架構] 多層式架構(Multi-layer Architecture)" />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
@@ -325,7 +325,25 @@
   
   
     
-    <li><a class="" href="/blog/posts/netcore31/sonarqube_netcore/" title="[流程] SonarQube 檢測">[流程] SonarQube 檢測</a></li>
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
   
 
 
@@ -356,7 +374,41 @@
   
   
     
-    <li><a class="active" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層式架構">[架構] 多層式架構</a></li>
+    <li><a class="active" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
   
 
 
@@ -416,7 +468,7 @@
         </div>
 
         <div class="title">
-          <h1>[System] 多層式架構(Multitier Architecture)</h1>
+          <h1>[架構] 多層式架構(Multi-layer Architecture)</h1>
         </div>
         
         <div class="post-content" id="post-content">
@@ -597,8 +649,20 @@ todo: specify IEnumerable、IQueryable
   
 
   
+  
+
+  
+  
+
+  
     
     
+  
+  
+
+  
+  
+
   
   
 
@@ -609,9 +673,9 @@ todo: specify IEnumerable、IQueryable
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/netcore31/sonarqube_netcore/" title="[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼" class="btn btn-outline-info">
+      <a href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</div>
+        <div class="next-prev-text">[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)</div>
       </a>
     </div>
   
@@ -621,9 +685,9 @@ todo: specify IEnumerable、IQueryable
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/other/taiwania_login_oneclick/" title="[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)" class="btn btn-outline-info">
+        <a href="/blog/posts/system/arch_n_tier/" title="[架構] 多層式架構(Multitier Architecture)" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</div>
+          <div class="next-prev-text">[架構] 多層式架構(Multitier Architecture)</div>
         </a>
       </div>
     

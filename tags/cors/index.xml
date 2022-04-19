@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CORS on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/tags/cors/</link>
+    <description>Recent content in CORS on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 20 Mar 2021 08:45:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/tags/cors/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</link>
+      <pubDate>Sat, 20 Mar 2021 08:45:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</guid>
+      <description>前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
+步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
+mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&amp;#39;express&amp;#39;); const cors = require(&amp;#39;cors&amp;#39;); const { createProxyMiddleware } = require(&amp;#39;http-proxy-middleware&amp;#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &amp;#34;localhost&amp;#34;;  // 設定代理到 google 的 Proxy 端點 app.</description>
+    </item>
+    
+    
+  </channel>
+</rss>
