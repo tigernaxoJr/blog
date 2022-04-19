@@ -1,13 +1,14 @@
 ---
 title: "[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定"
 date: 2020-12-31T14:08:00+08:00
-lastmod: 2020-12-31T14:08:00+08:00
-draft: true
-tags: ["Authentication", "dotNetCore", "Authorization"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+draft: false
+hero: 
+menu:
+  sidebar	:
+    name: "[驗證與授權] 授權設定"
+    identifier: netcore31-basic-auth-4
+    parent: netcore31-basic-auth
+    weight: 1400
 ---
 
 # 授權(Authorization)

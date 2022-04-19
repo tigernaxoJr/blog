@@ -1,15 +1,14 @@
 ---
 title: "[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權"
-date: 2020-11-06T21:09:45+08:00
-lastmod: 2020-11-07T01:35:45+08:00
+date: 2020-11-07T01:35:45+08:00
 draft: false
-tags: ["SignalR", "dotNetCore", "Authentication", "Autherization", "Bearor Token"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
-#contentCopyright: '<a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a>'
-
+hero: 
+menu:
+  sidebar	:
+    name: "[SignalR] 後端 Token 授權"
+    identifier: netcore31-startup-signalr-2
+    parent: netcore31-startup-signalr
+    weight: 1200
 ---
 # SignalR驗證方式
 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：

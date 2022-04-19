@@ -6,7 +6,7 @@ hero:
 menu:
   sidebar:
     name: "[JS] 例外處理"
-    identifier: js-event-loop
+    identifier: js-error-handle
     parent: Javascript
     weight: 1000
 ---

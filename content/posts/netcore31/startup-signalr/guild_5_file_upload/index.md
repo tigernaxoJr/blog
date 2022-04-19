@@ -1,15 +1,14 @@
 ---
 title: "[SignalR] SignalR 檔案上傳姿勢"
 date: 2021-01-04T09:11:00+08:00
-lastmod: 2021-01-04T09:11:00+08:00
 draft: true
-tags: ["SignalR", "dotNetCore" ]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: false
-#contentCopyright: '<a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a>'
-
+hero: 
+menu:
+  sidebar	:
+    name: "[SignalR] 前端登入頁面"
+    identifier: netcore31-startup-signalr-5
+    parent: netcore31-startup-signalr
+    weight: 1300
 ---
 Inject an instance of IHubContext in a controller enable the controller to use HubContext to send Responses to users through Websocket
 # Reference

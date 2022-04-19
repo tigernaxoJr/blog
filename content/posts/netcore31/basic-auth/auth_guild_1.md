@@ -1,13 +1,14 @@
 ---
 title: "[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權"
 date: 2020-11-23T08:39:00+08:00
-lastmod: 2020-11-23T08:39:00+08:00
 draft: false
-tags: ["Authentication", "dotNetCore", "Authorization"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar	:
+    name: "[驗證與授權] 驗證與授權"
+    identifier: netcore31-basic-auth-1
+    parent: netcore31-basic-auth
+    weight: 1100
 ---
 在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 

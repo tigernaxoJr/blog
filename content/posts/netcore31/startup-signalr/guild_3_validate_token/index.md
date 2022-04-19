@@ -1,15 +1,14 @@
 ---
 title: "[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證"
-date: 2020-11-07T15:09:45+08:00
-lastmod: 2020-11-20T22:44:00+08:00
+date: 2020-11-20T22:44:00+08:00
 draft: false
-tags: ["SignalR", "dotNetCore", "Authentication", "Autherization", "Bearor Token"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
-#contentCopyright: '<a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a>'
-
+hero: 
+menu:
+  sidebar	:
+    name: "[SignalR] 後端 Token 認證"
+    identifier: netcore31-startup-signalr-3
+    parent: netcore31-startup-signalr
+    weight: 1300
 ---
 
 # 安裝套件

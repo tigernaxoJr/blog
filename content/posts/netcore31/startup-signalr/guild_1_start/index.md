@@ -1,14 +1,14 @@
 ---
 title: "[SignalR] Websocket 即時聊天程式(一) - 建立專案"
-date: 2020-10-31T02:09:45+08:00
-lastmod: 2020-11-03T05:46:45+08:00
+date: 2020-11-03T05:46:45+08:00
 draft: false
-tags: ["SignalR", "dotNetCore", "Websocket"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
-#contentCopyright: '<a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a>'
+hero: 
+menu:
+  sidebar	:
+    name: "[SignalR] 建立專案"
+    identifier: netcore31-startup-signalr-1
+    parent: netcore31-startup-signalr
+    weight: 1100
 ---
 這個系列會[官方文件](https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&tabs=visual-studio)為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 

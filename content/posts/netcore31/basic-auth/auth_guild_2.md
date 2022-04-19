@@ -1,13 +1,14 @@
 ---
 title: "[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定"
-date: 2020-11-23T15:46:00+08:00
-lastmod: 2021-03-12T23:08:00+08:00
+date: 2021-03-12T23:08:00+08:00
 draft: false
-tags: ["Authentication", "dotNetCore"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar	:
+    name: "[驗證與授權] 驗證設定"
+    identifier: netcore31-basic-auth-2
+    parent: netcore31-basic-auth
+    weight: 1200
 ---
 # 驗證方案(Authentication Scheme)
 

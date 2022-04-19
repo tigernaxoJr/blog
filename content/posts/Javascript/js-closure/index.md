@@ -6,7 +6,7 @@ hero:
 menu:
   sidebar:
     name: "[JS] 閉包(Closure)"
-    identifier: js-event-loop
+    identifier: js-closure
     parent: Javascript
     weight: 1000
 ---
