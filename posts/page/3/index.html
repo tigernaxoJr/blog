@@ -318,6 +318,119 @@
   
   
     
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/basic-auth/">[基礎] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-signalr/">[後端] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
@@ -447,21 +560,20 @@
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/netcore31/signalr/guild_3_validate_token/" class="post-card-link">
+  <a href="/blog/blog/posts/javascript/diy-simple-router/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
       </div>
       <div class="card-body">
-        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</h5>
-        <p class="card-text post-summary">安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</p>
+        <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
+        <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
+npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt;  &lt;head&gt;  &lt;meta charset=&#34;UTF-8&#34; /&gt;  &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt;  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt;  &lt;title&gt;Vite App&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;  &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt;  &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;script type=&#34;module&#34; src=&#34;/src/main.</p>
       </div>
       <div class="card-footer">
-        <span class="float-left">November 7, 2020</span>
+        <span class="float-left">November 13, 2020</span>
         <a
-        href="/blog/blog/posts/netcore31/signalr/guild_3_validate_token/"
+        href="/blog/blog/posts/javascript/diy-simple-router/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -474,7 +586,62 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/netcore31/signalr/guild_2_issue_token/" class="post-card-link">
+  <a href="/blog/blog/posts/javascript/js-module/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 各種模組(module)</h5>
+        <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
+Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 13, 2020</span>
+        <a
+        href="/blog/blog/posts/javascript/js-module/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
+        <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
+axios 一樣可以透過 LibMan 安裝~
+libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+&lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
+libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 10, 2020</span>
+        <a
+        href="/blog/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -487,9 +654,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
 appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;Logging&#34;: {  &#34;LogLevel&#34;: {  &#34;Default&#34;: &#34;Information&#34;,  &#34;Microsoft&#34;: &#34;Warning&#34;,  &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34;  }  },  &#34;JWT&#34;: {  &#34;Issuer&#34;: &#34;Naxo&#34;,  &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數  &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰  },  &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
       </div>
       <div class="card-footer">
-        <span class="float-left">November 6, 2020</span>
+        <span class="float-left">November 7, 2020</span>
         <a
-        href="/blog/blog/posts/netcore31/signalr/guild_2_issue_token/"
+        href="/blog/blog/posts/netcore31/startup-signalr/guild_2_issue_token/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -502,7 +669,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
       
         
           <div class="post-card">
-  <a href="/blog/blog/posts/netcore31/signalr/guild_1_start/" class="post-card-link">
+  <a href="/blog/blog/posts/netcore31/startup-signalr/guild_1_start/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -515,9 +682,9 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
 using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace SignalR.Hubs {  // 這就是所謂的 SignalR 中樞  public class ChatHub : Hub  {  // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數  public async Task SendMessage(string user, string message)  {  // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message  await Clients.</p>
       </div>
       <div class="card-footer">
-        <span class="float-left">October 31, 2020</span>
+        <span class="float-left">November 3, 2020</span>
         <a
-        href="/blog/blog/posts/netcore31/signalr/guild_1_start/"
+        href="/blog/blog/posts/netcore31/startup-signalr/guild_1_start/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

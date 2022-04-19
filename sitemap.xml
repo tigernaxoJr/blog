@@ -204,6 +204,12 @@
     <loc>https://tigernaxojr.github.io/blog/tags/task/</loc>
     <lastmod>2021-03-17T03:32:00+08:00</lastmod>
   </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_2/</loc>
+    <lastmod>2021-03-12T23:08:00+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/</loc>
+    <lastmod>2021-03-12T23:08:00+08:00</lastmod>
+  </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</loc>
     <lastmod>2021-01-29T23:46:00+08:00</lastmod>
   </url><url>
@@ -225,26 +231,23 @@
     <loc>https://tigernaxojr.github.io/blog/posts/javascript/js-hoisting/</loc>
     <lastmod>2021-01-09T01:31:00+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/auth/auth_guild_3/</loc>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_4/</loc>
+    <lastmod>2020-12-31T14:08:00+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_3/</loc>
     <lastmod>2020-12-30T23:24:00+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/authentication/</loc>
-    <lastmod>2021-03-12T23:08:00+08:00</lastmod>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/</loc>
+    <lastmod>2020-11-23T15:48:00+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/authorization/</loc>
-    <lastmod>2020-12-30T23:24:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/cookie/</loc>
-    <lastmod>2020-12-30T23:24:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/dotnetcore/</loc>
-    <lastmod>2021-03-12T23:08:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/auth/auth_guild_2/</loc>
-    <lastmod>2021-03-12T23:08:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/auth/auth_guild_1/</loc>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_1/</loc>
     <lastmod>2020-11-23T08:39:00+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_3_validate_token/</loc>
+    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/</loc>
+    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</loc>
     <lastmod>2020-11-18T23:14:00+08:00</lastmod>
@@ -261,28 +264,13 @@
     <loc>https://tigernaxojr.github.io/blog/posts/javascript/js-module/</loc>
     <lastmod>2020-11-13T06:26:00+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/signalr/guild_4_front_end_login/</loc>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/</loc>
     <lastmod>2020-11-10T05:05:45+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/autherization/</loc>
-    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/bearor-token/</loc>
-    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/signalr/</loc>
-    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/signalr/guild_3_validate_token/</loc>
-    <lastmod>2020-11-20T22:44:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/signalr/guild_2_issue_token/</loc>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_2_issue_token/</loc>
     <lastmod>2020-11-07T01:35:45+08:00</lastmod>
   </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/signalr/guild_1_start/</loc>
-    <lastmod>2020-11-03T05:46:45+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/tags/websocket/</loc>
+    <loc>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_1_start/</loc>
     <lastmod>2020-11-03T05:46:45+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/linux/centos8-static-ip/</loc>
