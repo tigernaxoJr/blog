@@ -1,14 +1,16 @@
 ---
 title: "[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)"
 date: 2021-08-11T16:48:00+08:00
-lastmod: 2021-08-11T16:48:00+08:00
 draft: false
-tags: [ "Nginx", "Linux", "Ubuntu", ".NET Core 3.1"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar:
+    name: "[部屬手動] Ubuntu Nginx"
+    identifier: netcore31-deploy-ubuntu2004-nginx
+    parent: netcore31
+    weight: 1000
 ---
+
 # 設置 Ubuntu
 ## 安裝 .NET Core Runtime
 ```bash

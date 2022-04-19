@@ -1,13 +1,13 @@
 ---
-title: "[System] 多層式架構(Multitier Architecture)"
+title: "[架構] 多層式架構(Multi-layer Architecture)"
 date: 2021-01-10T23:21:00+08:00
 draft: false
 hero: 
 menu:
   sidebar:
-    name: "[架構] 多層式架構"
-    identifier: system-soft-arch-multi-layer
-    parent: system-soft
+    name: "[架構] 多層(layer)架構"
+    identifier: system-arch-multi-layer
+    parent: system
     weight: 1000
 ---
 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置；

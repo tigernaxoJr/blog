@@ -1,13 +1,14 @@
 ---
 title: "[.NET Core] .NET Core 中對 JsonElement 的操作"
 date: 2021-08-06T14:37:00+08:00
-lastmod: 2021-08-06T14:37:00+08:00
 draft: false
-tags: ["dotNetCore", "JsonDocument", "Json"]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: false 
+hero: 
+menu:
+  sidebar:
+    name: "[Snippet] Json 操作"
+    identifier: netcore31-snippet-json-operate
+    parent: netcore31
+    weight: 1000
 ---
 .NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺，
 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument，

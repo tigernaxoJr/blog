@@ -5,9 +5,9 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[流程] SonarQube 檢測"
-    identifier: netcore31-sonarqube
-    parent: netcore31
+    name: "[Tips] SonarQube 檢測"
+    identifier: devops-netcore31-sonarqube
+    parent: devops
     weight: 1000
 ---
 弱點掃描時常使用 owasp top 10 作為報告，

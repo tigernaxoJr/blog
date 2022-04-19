@@ -1,13 +1,14 @@
 ---
-title: "[System] 多層式架構(Multitier Architecture)"
+title: "[架構] 多層式架構(Multitier Architecture)"
 date: 2021-05-17T23:20:00+08:00
-lastmod: 2021-05-17T23:20:00+08:00
 draft: false
-tags: ["N-Tier", "Multitier Architecture", "N-Tier Architecture"]
-categories: ["System"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar:
+    name: "[架構] 多層(tier)架構"
+    identifier: system-arch-n-tier
+    parent: system
+    weight: 1000
 ---
 多層式架構 Multitier Architecture 或稱 N-Tier Architecture，
 是 Client–server architecture 的一種，
