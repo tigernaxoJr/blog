@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Other on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/posts/other/</link>
+    <link>https://tigernaxojr.github.io/blog/posts/other/</link>
     <description>Recent content in Other on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Jan 2019 09:37:18 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/posts/other/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Wed, 23 Jan 2019 09:37:18 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/other/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</title>
-      <link>https://tigernaxojr.github.io/posts/other/taiwania_login_oneclick/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/other/taiwania_login_oneclick/</link>
       <pubDate>Wed, 23 Jan 2019 09:37:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/other/taiwania_login_oneclick/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/other/taiwania_login_oneclick/</guid>
       <description>台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
 OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
 注意事項  校時

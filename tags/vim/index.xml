@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>vim on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/tags/vim/</link>
+    <link>https://tigernaxojr.github.io/blog/tags/vim/</link>
     <description>Recent content in vim on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Nov 2020 23:14:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/tags/vim/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Wed, 18 Nov 2020 23:14:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/tags/vim/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</title>
-      <link>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</link>
       <pubDate>Wed, 18 Nov 2020 23:14:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</guid>
       <description>安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &amp;lsquo;ycm-core/YouCompleteMe&amp;rsquo;
 &amp;#34; Specify a directory for pluginscall plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)Plug &amp;#39;ycm-core/YouCompleteMe&amp;#39;&amp;#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗

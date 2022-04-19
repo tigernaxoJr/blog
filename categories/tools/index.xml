@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tools on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/categories/tools/</link>
+    <link>https://tigernaxojr.github.io/blog/categories/tools/</link>
     <description>Recent content in Tools on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Mar 2021 08:45:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/categories/tools/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sat, 20 Mar 2021 08:45:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/categories/tools/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title>
-      <link>https://tigernaxojr.github.io/posts/tools/proxy/http-proxy-middleware/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</link>
       <pubDate>Sat, 20 Mar 2021 08:45:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/proxy/http-proxy-middleware/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</guid>
       <description>前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
 步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
 mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
@@ -20,20 +20,20 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[Tools] 在 linux 中使用 google drive cli</title>
-      <link>https://tigernaxojr.github.io/posts/tools/gdrive/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</link>
       <pubDate>Fri, 29 Jan 2021 23:46:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/gdrive/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</guid>
       <description>重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&amp;quot;設定同意畫面&amp;quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &amp;#34;*************************************.com&amp;#34; const ClientSecret = &amp;#34;*************&amp;#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
 # 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;amp;&amp;amp; \ &amp;gt; echo &amp;#34;PATH=\${HOME}/bin:\${PATH}&amp;#34; &amp;gt;&amp;gt; ~/.</description>
     </item>
     
     <item>
       <title>[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</title>
-      <link>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</link>
       <pubDate>Wed, 18 Nov 2020 23:14:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</guid>
       <description>安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &amp;lsquo;ycm-core/YouCompleteMe&amp;rsquo;
 &amp;#34; Specify a directory for pluginscall plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)Plug &amp;#39;ycm-core/YouCompleteMe&amp;#39;&amp;#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗

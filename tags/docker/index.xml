@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docker on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/tags/docker/</link>
+    <link>https://tigernaxojr.github.io/blog/tags/docker/</link>
     <description>Recent content in Docker on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/tags/docker/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[DevOps] CI/CD-01 安裝 Jenkins</title>
-      <link>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</link>
       <pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</guid>
       <description>環境 硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
 安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc  # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \  apt-transport-https \  ca-certificates \  curl \  gnupg \  lsb-release  # 添加 Docker 官方 GPG key curl -fsSL https://download.</description>
     </item>

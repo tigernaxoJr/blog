@@ -2,39 +2,195 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/posts/</link>
+    <link>https://tigernaxojr.github.io/blog/posts/</link>
     <description>Recent content in Posts on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Resultados de Búsqueda</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>Este archivo existe únicamente para responder a la URL /search con la plantilla de diseño search relacionada.
+No se muestra ningún contenido aquí, todo el contenido se basa en la plantilla layouts/page/search.html
+Establecer una prioridad muy baja en el mapa del sitio le dirá a los motores de búsqueda que éste no es un contenido importante.
+Esta implementación utiliza Fusejs, jquery y mark.js
+Configuración inicial La búsqueda depende del tipo de contenido de salida adicional de JSON en config.</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
+    <item>
+      <title>Search Results</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
+    
+    <item>
+      <title>অনুসন্ধানের ফলাফল</title>
+      <link>https://tigernaxojr.github.io/blog/search/</link>
+      <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/search/</guid>
+      <description>This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
     
     <item>
       <title>[DevOps] CI/CD-01 安裝 Jenkins</title>
-      <link>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</link>
       <pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/devops/pipeline/01_install_jenkins/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</guid>
       <description>環境 硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
 安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc  # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \  apt-transport-https \  ca-certificates \  curl \  gnupg \  lsb-release  # 添加 Docker 官方 GPG key curl -fsSL https://download.</description>
     </item>
     
     <item>
       <title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title>
-      <link>https://tigernaxojr.github.io/posts/devops/sonarqube_netcore31/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</link>
       <pubDate>Wed, 22 Sep 2021 11:11:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/devops/sonarqube_netcore31/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</guid>
       <description>弱點掃描時常使用 owasp top 10 作為報告， 然而 owasp 軟體一年要價不菲，委外掃一次也是非常貴， 使用免費的 SonarQube 將弱點掃描整合到 CI/CD 階段， 要交付前再花錢委外掃一次似乎是個折衷的作法，避免一次檢測出來的弱點過多改動過大。
 SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
 準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。
@@ -44,20 +200,20 @@ SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Sc
     
     <item>
       <title>[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</title>
-      <link>https://tigernaxojr.github.io/posts/web-tool/web-tool-eudc-frontforge/eudc/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/</link>
       <pubDate>Tue, 24 Aug 2021 10:07:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/web-tool/web-tool-eudc-frontforge/eudc/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/</guid>
       <description>Web 在顯示姓名的時候常會遇到中文難字無法顯示， 此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 woff、woff2、ttf 讓網頁正確顯示難字。 過程需要字型工具軟體 FontForge， 步驟如下：
  拿到造字檔 EUDC.TTE   用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&amp;gt; EUDC -&amp;gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte  安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&amp;#34;EUDC.tte&amp;#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&amp;#34;EUDC&amp;#34;)SetTTFName(0x409,2,&amp;#34;EUDC&amp;#34;)SetTTFName(0x409,3,&amp;#34;EUDC&amp;#34;)SetTTFName(0x409,4,&amp;#34;EUDC&amp;#34;)SetTTFName(0x404,1,&amp;#34;EUDC&amp;#34;)SetTTFName(0x404,2,&amp;#34;EUDC&amp;#34;)SetTTFName(0x409,3,&amp;#34;&amp;#34;)SetTTFName(0x404,4,&amp;#34;EUDC&amp;#34;)SetFontNames(&amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;Regular&amp;#34;, &amp;#34;655&amp;#34;, &amp;#34;1.</description>
     </item>
     
     <item>
       <title>[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</title>
-      <link>https://tigernaxojr.github.io/posts/vuejs/router_add_query/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/vuejs/router_add_query/</link>
       <pubDate>Thu, 19 Aug 2021 17:20:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/vuejs/router_add_query/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/vuejs/router_add_query/</guid>
       <description>工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
 router.beforeEach(async (to, from, next) =&amp;gt; {  next({  path: path,  query: {...to.queryl ,token: tokenStr}  }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
 runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
@@ -66,10 +222,10 @@ runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size ex
     
     <item>
       <title>[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</link>
       <pubDate>Wed, 11 Aug 2021 16:48:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</guid>
       <description>設置 Ubuntu 安裝 .NET Core Runtime wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb sudo apt update sudo apt install apt-transport-https sudo apt install dotnet-runtime-3.1 安裝 Nginx 新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list
 #/etc/apt/sources.list.d/nginx.list. deb https://nginx.org/packages/ubuntu/ focal nginx deb-src https://nginx.org/packages/ubuntu/ focal nginx 安裝
 sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
@@ -78,39 +234,39 @@ sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
     
     <item>
       <title>[.NET Core 3.1] JsonDocument 與 DataTable 的互相轉換</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/snippet-json-dt/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/snippet-json-dt/</link>
       <pubDate>Fri, 06 Aug 2021 14:56:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/snippet-json-dt/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/snippet-json-dt/</guid>
       <description>在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
 public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</description>
     </item>
     
     <item>
       <title>[.NET Core] .NET Core 中對 JsonElement 的操作</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/snippet-json-operate/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/snippet-json-operate/</link>
       <pubDate>Fri, 06 Aug 2021 14:37:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/snippet-json-operate/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/snippet-json-operate/</guid>
       <description>.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
 public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&amp;#34;{}&amp;#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer.</description>
     </item>
     
     <item>
       <title>[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</title>
-      <link>https://tigernaxojr.github.io/posts/vuejs/vuejs-comp-yncheckbox/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/vuejs/vuejs-comp-yncheckbox/</link>
       <pubDate>Thu, 29 Jul 2021 13:50:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/vuejs/vuejs-comp-yncheckbox/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/vuejs/vuejs-comp-yncheckbox/</guid>
       <description>情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選  單選元件 程式碼 (Code) Vue.component(&amp;#39;x-ck-single&amp;#39;, {  props: {  disabled: { type: Boolean, default: () =&amp;gt; false },  // checkbox 的標記 [string] || [{text:string, value:any}]  labels: { type: Array, default: () =&amp;gt; [&amp;#39;Yes&amp;#39;, &amp;#39;No&amp;#39;] },  value: { default: () =&amp;gt; null },  trueValue: { default: () =&amp;gt; &amp;#39;Y&amp;#39; },  falseValue: { default: () =&amp;gt; &amp;#39;N&amp;#39; },  inline: { type: Boolean, default: () =&amp;gt; false },  },  data() {  return {  innervalue_: this.</description>
     </item>
     
     <item>
       <title>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</title>
-      <link>https://tigernaxojr.github.io/posts/vuejs/vuejs-comp-promise/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/vuejs/vuejs-comp-promise/</link>
       <pubDate>Sat, 24 Jul 2021 07:32:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/vuejs/vuejs-comp-promise/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/vuejs/vuejs-comp-promise/</guid>
       <description>有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
  元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
@@ -120,10 +276,10 @@ Dialog 元件設計原理:
     
     <item>
       <title>[架構] 多層式架構(Multitier Architecture)</title>
-      <link>https://tigernaxojr.github.io/posts/system/arch_n_tier/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/system/arch_n_tier/</link>
       <pubDate>Mon, 17 May 2021 23:20:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/system/arch_n_tier/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/system/arch_n_tier/</guid>
       <description>多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
 N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
  提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。  1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
@@ -134,10 +290,10 @@ N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨�
     
     <item>
       <title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title>
-      <link>https://tigernaxojr.github.io/posts/tools/proxy/http-proxy-middleware/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</link>
       <pubDate>Sat, 20 Mar 2021 08:45:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/proxy/http-proxy-middleware/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/proxy/http-proxy-middleware/</guid>
       <description>前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
 步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
 mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
@@ -146,10 +302,10 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/async/async_controller/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/async/async_controller/</link>
       <pubDate>Wed, 17 Mar 2021 03:32:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/async/async_controller/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/async/async_controller/</guid>
       <description>ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
 非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
  產生可等待 awaitable 型別 (Task, Task&amp;lt;TResult&amp;gt;, ValueTask, 和 ValueTask&amp;lt;TResult&amp;gt;)， 其中以 Task、Task&amp;lt;TResult&amp;gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。  async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
@@ -158,10 +314,10 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_2/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_2/</link>
       <pubDate>Fri, 12 Mar 2021 23:08:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_2/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_2/</guid>
       <description>驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
  驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &amp;rsquo;no result&amp;rsquo; 或 &amp;lsquo;failure&amp;rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
  cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</description>
@@ -169,20 +325,20 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[Tools] 在 linux 中使用 google drive cli</title>
-      <link>https://tigernaxojr.github.io/posts/tools/gdrive/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</link>
       <pubDate>Fri, 29 Jan 2021 23:46:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/gdrive/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</guid>
       <description>重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&amp;quot;設定同意畫面&amp;quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &amp;#34;*************************************.com&amp;#34; const ClientSecret = &amp;#34;*************&amp;#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
 # 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;amp;&amp;amp; \ &amp;gt; echo &amp;#34;PATH=\${HOME}/bin:\${PATH}&amp;#34; &amp;gt;&amp;gt; ~/.</description>
     </item>
     
     <item>
       <title>[架構] 多層式架構(Multi-layer Architecture)</title>
-      <link>https://tigernaxojr.github.io/posts/system/arch-multi-layer/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/system/arch-multi-layer/</link>
       <pubDate>Sun, 10 Jan 2021 23:21:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/system/arch-multi-layer/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/system/arch-multi-layer/</guid>
       <description>多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
 為何以 multi-layer 撰寫程式碼
  增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。  BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
@@ -191,10 +347,10 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[JS] 非同步程式設計-Promise 與 Async/Await</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-async/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-async/</link>
       <pubDate>Sat, 09 Jan 2021 01:32:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-async/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-async/</guid>
       <description>Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
  pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。  promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
 // resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){  let reason = &amp;#39;找不到 value&amp;#39;  return new Promise((resolve, reject)=&amp;gt;{  value ? resolve(value) :reject(reason)  }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</description>
@@ -202,10 +358,10 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     <item>
       <title>[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-hoisting/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-hoisting/</link>
       <pubDate>Sat, 09 Jan 2021 01:31:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-hoisting/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-hoisting/</guid>
       <description>網路上時常見到充滿 function 與 var 的 JavaScript 求值題目， 筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料， 雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。
 Hoisting 對學過伺服器端語言(C#、C/C++&amp;hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事， 在 JavaScript 中也是如此：
 console.log(x) // ReferenceError: x is not defined 但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine， 在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後已分配記憶體空間(初始化、initiation)但尚未賦值的狀態， 但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？
@@ -215,10 +371,10 @@ JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、�
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_4/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_4/</link>
       <pubDate>Thu, 31 Dec 2020 14:08:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_4/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_4/</guid>
       <description>授權(Authorization)  授權(Authorization): 界定用戶可存取資源範圍的程序。  Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
 自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
 驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
@@ -227,10 +383,10 @@ Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService I
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_3/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_3/</link>
       <pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_3/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_3/</guid>
       <description>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;
 Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
 // 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
@@ -239,10 +395,10 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_memo/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/</link>
       <pubDate>Mon, 23 Nov 2020 15:48:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_memo/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_memo/</guid>
       <description>Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
 Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
@@ -252,10 +408,10 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
     
     <item>
       <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_1/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_1/</link>
       <pubDate>Mon, 23 Nov 2020 08:39:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/basic-auth/auth_guild_1/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/basic-auth/auth_guild_1/</guid>
       <description>在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
 授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
@@ -266,10 +422,10 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
     
     <item>
       <title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_3_validate_token/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_3_validate_token/</link>
       <pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_3_validate_token/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_3_validate_token/</guid>
       <description>安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
 using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</description>
@@ -277,10 +433,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
     
     <item>
       <title>[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</title>
-      <link>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</link>
       <pubDate>Wed, 18 Nov 2020 23:14:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/vim/plugin_ycm/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/vim/plugin_ycm/</guid>
       <description>安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &amp;lsquo;ycm-core/YouCompleteMe&amp;rsquo;
 &amp;#34; Specify a directory for pluginscall plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)Plug &amp;#39;ycm-core/YouCompleteMe&amp;#39;&amp;#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
@@ -292,10 +448,10 @@ Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </descrip
     
     <item>
       <title>[Code] 複製元件內的文字</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/code-copy-html-content/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/code-copy-html-content/</link>
       <pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/code-copy-html-content/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/code-copy-html-content/</guid>
       <description>要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
 Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
  不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&amp;#34;瀏覽器不支援 Clipboard API&amp;#34;)  // 這裡可以改用 document.execCommand(&amp;#39;copy&amp;#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&amp;gt; {  console.</description>
@@ -303,30 +459,30 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
     
     <item>
       <title>[DIY] 用Typescript搭建簡易前端路由</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/diy-simple-router/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/diy-simple-router/</link>
       <pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/diy-simple-router/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/diy-simple-router/</guid>
       <description>起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
 npm init vite@latest route-test #依序選擇 vallina-&amp;gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt;  &amp;lt;head&amp;gt;  &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt;  &amp;lt;link rel=&amp;#34;icon&amp;#34; type=&amp;#34;image/svg+xml&amp;#34; href=&amp;#34;favicon.svg&amp;#34; /&amp;gt;  &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34; /&amp;gt;  &amp;lt;title&amp;gt;Vite App&amp;lt;/title&amp;gt;  &amp;lt;/head&amp;gt;  &amp;lt;body&amp;gt;  &amp;lt;div id=&amp;#34;app&amp;#34; class=&amp;#34;container-fluid&amp;#34;&amp;gt;  &amp;lt;div id=&amp;#34;menu&amp;#34; class=&amp;#34;row g-0&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;  &amp;lt;div id=&amp;#34;root&amp;#34; class=&amp;#34;row g-0&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;  &amp;lt;/div&amp;gt;  &amp;lt;script type=&amp;#34;module&amp;#34; src=&amp;#34;/src/main.</description>
     </item>
     
     <item>
       <title>[JS] 各種模組(module)</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-module/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-module/</link>
       <pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-module/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-module/</guid>
       <description>JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
 Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </description>
     </item>
     
     <item>
       <title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_4_front_end_login/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/</link>
       <pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_4_front_end_login/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/</guid>
       <description>安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
 axios 一樣可以透過 LibMan 安裝~
 libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
@@ -336,10 +492,10 @@ libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \ 
     
     <item>
       <title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_2_issue_token/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_2_issue_token/</link>
       <pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_2_issue_token/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_2_issue_token/</guid>
       <description>SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
  Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。  將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
 以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
@@ -348,10 +504,10 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &amp;
     
     <item>
       <title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title>
-      <link>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_1_start/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_1_start/</link>
       <pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/netcore31/startup-signalr/guild_1_start/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/netcore31/startup-signalr/guild_1_start/</guid>
       <description>這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
 # 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
@@ -360,19 +516,19 @@ using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace Sig
     
     <item>
       <title>[Linux] CentOS 8 設定網路靜態IP</title>
-      <link>https://tigernaxojr.github.io/posts/linux/centos8-static-ip/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/linux/centos8-static-ip/</link>
       <pubDate>Tue, 16 Jun 2020 09:37:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/linux/centos8-static-ip/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/linux/centos8-static-ip/</guid>
       <description>查詢IP $ ip a1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00inet 127.0.0.1/8 scope host lovalid_lft forever preferred_lft foreverinet6 ::1/128 scope hostvalid_lft forever preferred_lft forever2: enp0s3: mtu 1500 qdisc fq_codel state UP group default qlen 1000link/ether 08:00:27:85:fe:50 brd ff:ff:ff:ff:ff:ffinet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute enp0s3valid_lft forever preferred_lft foreverinet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroutevalid_lft forever preferred_lft forever 修改網路設定 修改網路介面設置如下，檔案名稱預設為ifcfg-網路介面(網路卡)名稱，舉例來說安裝好 CentOS 預設的網路卡 enp0s3 設定檔：/etc/sysconfig/network-scripts/ifcfg-enp0s3</description>
     </item>
     
     <item>
       <title>[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</title>
-      <link>https://tigernaxojr.github.io/posts/linux/ubuntu204-static-ip/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/linux/ubuntu204-static-ip/</link>
       <pubDate>Sat, 13 Jun 2020 09:37:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/linux/ubuntu204-static-ip/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/linux/ubuntu204-static-ip/</guid>
       <description>Ubuntu 自 17.10 以後就可以用 netplan 設置網卡~
 檢查網路介面 以 ip a 可以看到我的 ubuntu 有2個網路介面分別是 lo、enp0s3，對應到 loopback、有線網卡
 $ ip a1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00inet 127.0.0.1/8 scope host lovalid_lft forever preferred_lft foreverinet6 ::1/128 scope host valid_lft forever preferred_lft forever2: enp0s3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000link/ether 08:00:27:6a:7b:e3 brd ff:ff:ff:ff:ff:ffinet 10.</description>
@@ -380,10 +536,10 @@ $ ip a1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state
     
     <item>
       <title>[JS] Object 常用方法</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-obj-func/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-obj-func/</link>
       <pubDate>Wed, 20 May 2020 23:31:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-obj-func/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-obj-func/</guid>
       <description>紀錄常用的 Object 方法，細節可以到MDN看
 Object.create  Object.create(proto, [propertiesObject])
  以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
@@ -392,10 +548,10 @@ Object.create  Object.create(proto, [propertiesObject])
     
     <item>
       <title>[JS] JavaScript 當中的原型繼承鏈模型</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-prototype/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-prototype/</link>
       <pubDate>Wed, 20 May 2020 09:37:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-prototype/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-prototype/</guid>
       <description>基於原型 (Prototype-Based) 的 JavaScript 一般物件導向式(OOP; Object Oriented Programming) 程式語言 (如：java、c++、c#) 當中的物件是由類別模板 (class) 產生實體物件 (instance)，實體物件的屬性各自獨立。類別模板上可設置共用的靜態資源包含靜態方法 (static method)、靜態屬性 (static field)，而這些靜態資源可以在沒有建立實體的情況下透過類別名稱直接取用。
 JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似物件導向語言的繼承，而在這種關係中的上層物件稱為原型 (Prototype)。原型本身又有自己所屬的原型，這種物件層層繼承的關係稱為原型鏈 (Prototype Chain)，幾乎所有物件的最上層原型是一個構造函數叫做 Object 的物件。
 因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。
@@ -406,10 +562,10 @@ JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似
     
     <item>
       <title>[JS] Array 常用方法</title>
-      <link>https://tigernaxojr.github.io/posts/javascript/js-arr-func/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/javascript/js-arr-func/</link>
       <pubDate>Wed, 29 Apr 2020 23:31:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/javascript/js-arr-func/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/javascript/js-arr-func/</guid>
       <description>紀錄常用的 Array 方法，細節可以到MDN看
 陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()  arr.pop()
 arr.push(element1[, &amp;hellip;[, elementN]])
@@ -421,10 +577,10 @@ arr.unshift(element1[, &amp;hellip;[, elementN]])
     
     <item>
       <title>[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</title>
-      <link>https://tigernaxojr.github.io/posts/other/taiwania_login_oneclick/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/other/taiwania_login_oneclick/</link>
       <pubDate>Wed, 23 Jan 2019 09:37:18 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/other/taiwania_login_oneclick/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/other/taiwania_login_oneclick/</guid>
       <description>台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
 OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
 注意事項  校時

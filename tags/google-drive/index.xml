@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>google drive on YuCheng&#39;s Site</title>
-    <link>https://tigernaxojr.github.io/tags/google-drive/</link>
+    <link>https://tigernaxojr.github.io/blog/tags/google-drive/</link>
     <description>Recent content in google drive on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Jan 2021 23:46:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/tags/google-drive/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Fri, 29 Jan 2021 23:46:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/tags/google-drive/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>[Tools] 在 linux 中使用 google drive cli</title>
-      <link>https://tigernaxojr.github.io/posts/tools/gdrive/</link>
+      <link>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</link>
       <pubDate>Fri, 29 Jan 2021 23:46:00 +0800</pubDate>
       
-      <guid>https://tigernaxojr.github.io/posts/tools/gdrive/</guid>
+      <guid>https://tigernaxojr.github.io/blog/posts/tools/gdrive/</guid>
       <description>重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&amp;quot;設定同意畫面&amp;quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &amp;#34;*************************************.com&amp;#34; const ClientSecret = &amp;#34;*************&amp;#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
 # 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;amp;&amp;amp; \ &amp;gt; echo &amp;#34;PATH=\${HOME}/bin:\${PATH}&amp;#34; &amp;gt;&amp;gt; ~/.</description>
     </item>
