@@ -1,14 +1,14 @@
 ---
 title: "[Tools] 在 linux 中使用 google drive cli"
 date: 2021-01-29T23:46:00+08:00
-lastmod: 2021-01-29T23:46:00+08:00
-draft: false 
-tags: ["linux", "google drive"]
-categories: ["Tools"]
-author: "tigernaxo"
-
-autoCollapseToc: false
-##關鍵字：gdrive 系統已暫時停用這個應用程式的「使用 google 帳戶登入」功能
+draft: false
+hero: 
+menu:
+  sidebar:
+    name: "[工具] Gdrive CLI / Linux"
+    identifier: other-gdrive-cli-linux
+    parent: other
+    weight: 1000
 ---
 # 重新編譯 gdrive
 ## 取得憑證

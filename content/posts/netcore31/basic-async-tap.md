@@ -1,13 +1,14 @@
 ---
-title: "[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)"
+title: "[.NET Core] TAP (task-based asynchronous pattern) 以工作為基礎的非同步模式"
 date: 2021-03-13T00:07:00+08:00
-lastmod: 2021-03-13T00:07:00+08:00
 draft: true
-tags: ["Task", "TAP", "non-blocking", "Asynchronous" ]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar	:
+    name: "[基礎] TAP 非同步模式"
+    identifier: netcore31-basic-async-tap
+    parent: netcore31
+    weight: 1120
 ---
 無論是在 I/O-bound (IO密集)或 CPU-bound (CPU密集)類型的程式，非同步設計皆有發揮的空間。
 而 C# 達成非同步程式設計的方法可以是

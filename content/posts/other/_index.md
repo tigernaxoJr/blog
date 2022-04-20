@@ -2,7 +2,7 @@
 title: Other
 menu:
   sidebar:
-    name: Other
+    name: "[其他] Other"
     identifier: other
-    weight: 300
+    weight: 9000
 ---

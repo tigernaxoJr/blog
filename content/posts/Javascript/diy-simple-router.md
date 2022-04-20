@@ -4,7 +4,7 @@ date: 2020-11-13T06:26:00+08:00
 hero: 
 menu:
   sidebar:
-    name: "[DIY] 用Typescript搭建簡易前端路由"
+    name: "[DIY] 前端路由"
     identifier: jsdiy-simple-router
     parent: Javascript
     weight: 3000

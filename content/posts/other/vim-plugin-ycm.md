@@ -1,17 +1,15 @@
 ---
 title: "[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe"
 date: 2020-11-18T23:14:00+08:00
-lastmod: 2020-11-18T23:14:00+08:00
 draft: false
-tags: ["ubuntu", "linux", "vim"]
-categories: ["Tools"]
-author: "tigernaxo"
-
-autoCollapseToc: true
-#contentCopyright: '<a rel="license noopener" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank">Creative Commons Attribution-ShareAlike License</a>'
-
+hero: 
+menu:
+  sidebar:
+    name: "[工具] Vim Plugin YCM"
+    identifier: other-vim-plugin-ycm
+    parent: other
+    weight: 1000
 ---
-
 # 安裝 junegunn/vim-plug 管理套件
 以指令安裝 junegunn/vim-plug
 ```shell

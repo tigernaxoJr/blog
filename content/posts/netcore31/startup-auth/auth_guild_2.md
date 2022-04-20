@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar	:
     name: "[驗證與授權] 驗證設定"
-    identifier: netcore31-basic-auth-2
-    parent: netcore31-basic-auth
+    identifier: netcore31-startup-auth-2
+    parent: netcore31-startup-auth
     weight: 1200
 ---
 # 驗證方案(Authentication Scheme)

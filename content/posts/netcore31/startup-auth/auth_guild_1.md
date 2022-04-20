@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar	:
     name: "[驗證與授權] 驗證與授權"
-    identifier: netcore31-basic-auth-1
-    parent: netcore31-basic-auth
+    identifier: netcore31-startup-auth-1
+    parent: netcore31-startup-auth
     weight: 1100
 ---
 在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。

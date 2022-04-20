@@ -1,9 +1,9 @@
 ---
-title: "[後端] 即時聊天專案"
+title: "[練習] 即時聊天專案"
 menu:
   sidebar:
-    name: "[後端] 即時聊天專案"
+    name: "[練習] 即時聊天專案"
     identifier: netcore31-startup-signalr
-    weight: 300
+    weight: 7130
     parent: netcore31
 ---

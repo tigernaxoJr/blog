@@ -1,13 +1,13 @@
 ---
 title: "[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題"
 date: 2021-03-20T08:45:00+08:00
-lastmod: 2021-03-20T08:45:00+08:00
-draft: false 
-tags: ["CORS", "Cross-Origin Resource Sharing", "http-proxy-middleware"]
-categories: ["Tools"]
-author: "tigernaxo"
-
-autoCollapseToc: false
+hero: 
+menu:
+  sidebar:
+    name: "[DIY] 開發 proxy"
+    identifier: jsdiy-http-proxy-middleware
+    parent: Javascript
+    weight: 3000
 ---
 前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題，
 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置，

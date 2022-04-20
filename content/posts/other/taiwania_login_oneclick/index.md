@@ -5,7 +5,7 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[工具] 一鍵登入台灣杉"
+    name: "[DIY] 一鍵登入台灣杉"
     identifier: other-taiwania-oneclick-login
     parent: other
     weight: 1000

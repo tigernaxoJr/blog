@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar	:
     name: "[驗證與授權] 授權設定"
-    identifier: netcore31-basic-auth-4
-    parent: netcore31-basic-auth
+    identifier: netcore31-startup-auth-4
+    parent: netcore31-startup-auth
     weight: 1400
 ---
 

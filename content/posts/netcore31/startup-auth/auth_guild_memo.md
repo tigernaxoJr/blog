@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar	:
     name: "[驗證與授權] 備註頁面"
-    identifier: netcore31-basic-auth-memo
-    parent: netcore31-basic-auth
+    identifier: netcore31-startup-auth-memo
+    parent: netcore31-startup-auth
     weight: 1900
 ---
 

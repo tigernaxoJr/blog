@@ -1,13 +1,14 @@
 ---
 title: "[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)"
 date: 2021-03-17T03:32:00+08:00
-lastmod: 2021-03-17T03:32:00+08:00
 draft: false
-tags: ["Task", "TAP", "non-blocking", "Asynchronous" ]
-categories: ["NET Core 3.1"]
-author: "tigernaxo"
-
-autoCollapseToc: true
+hero: 
+menu:
+  sidebar	:
+    name: "[基礎] 非同步控制器"
+    identifier: netcore31-basic-async-controller
+    parent: netcore31
+    weight: 1110
 ---
 ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。
 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。

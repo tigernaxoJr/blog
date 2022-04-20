@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar	:
     name: "[驗證與授權] 驗證實例"
-    identifier: netcore31-basic-auth-3
-    parent: netcore31-basic-auth
+    identifier: netcore31-startup-auth-3
+    parent: netcore31-startup-auth
     weight: 1300
 ---
 前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出...
