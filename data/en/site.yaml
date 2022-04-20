@@ -3,3 +3,9 @@ copyright: © 2022 Copyright.
 
 # Meta description for your site.  This will help the search engines to find your site.
 description: Portfolio and personal blog of Chen, Yu-Cheng.
+
+# customMenus:
+# - name: Note
+#   url: https://...
+#   hideFromNavbar: false
+#   showOnFooter: true
