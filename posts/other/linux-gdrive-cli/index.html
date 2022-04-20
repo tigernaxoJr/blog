@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[Tools] 在 linux 中使用 google drive cli</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[Tools] 在 linux 中使用 google drive cli" />
+<meta property="og:description" content="重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
+# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u&#43;x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/other/linux-gdrive-cli/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-29T23:46:00+08:00" />
+<meta property="article:modified_time" content="2021-01-29T23:46:00+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[Tools] 在 linux 中使用 google drive cli" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-auth/">[練習] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-signalr/">[練習] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/other/">[其他] Other</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/blog/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Friday, January 29, 2021</p>
+        </div>
+
+        <div class="title">
+          <h1>[Tools] 在 linux 中使用 google drive cli</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <h1 id="重新編譯-gdrive">重新編譯 gdrive</h1>
+<h2 id="取得憑證">取得憑證</h2>
+<ul>
+<li>首先到<a href="https://console.developers.google.com/apis/dashboard">Google API Console</a>，</li>
+<li>建立專案</li>
+<li>啟動 Google Drive API。</li>
+<li>啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好</li>
+<li>建立一組 OAth2 憑證，會有 Client ID 和 Secret</li>
+</ul>
+<h2 id="編譯專案">編譯專案</h2>
+<ul>
+<li>1.安裝 <a href="https://golang.org/dl/">Golang</a></li>
+<li>2.下載 gdrive 專案
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone git@github.com:prasmussen/gdrive.git
+</span></span></code></pre></div></li>
+<li>3.修改專案下的<code>handlers_drive.go</code>，把下列兩行改成拿到的 Client ID、Secret
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ClientId</span> = <span style="color:#e6db74">&#34;*************************************.com&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ClientSecret</span> = <span style="color:#e6db74">&#34;*************&#34;</span>
+</span></span></code></pre></div></li>
+<li>4.取得需要的 golang 套件
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go get github.com/prasmussen/gdrive
+</span></span></code></pre></div></li>
+<li>5.到專案資料夾下編譯，編譯完後就會有得到執行檔
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go build
+</span></span></code></pre></div></li>
+</ul>
+<h1 id="設定">設定</h1>
+<h2 id="設置環境變數">設置環境變數</h2>
+<p>將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 建立${HOME}/bin</span>
+</span></span><span style="display:flex;"><span>$ mkdir -p <span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span>/bin
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 把gdrive-linux-x64放進去重新命名為gdrive</span>
+</span></span><span style="display:flex;"><span>$ mv <span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span>/gdrive-linux-x64 <span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span>/bin/gdrive
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 賦予gdrive執行權限</span>
+</span></span><span style="display:flex;"><span>$ chmod u+x <span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span>/bin/gdrive
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定</span>
+</span></span><span style="display:flex;"><span>$ echo <span style="color:#e6db74">${</span>PATH<span style="color:#e6db74">}</span> | grep -qE <span style="color:#e6db74">${</span>HOME<span style="color:#e6db74">}</span>/bin<span style="color:#f92672">[</span>^/<span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>&gt; echo <span style="color:#e6db74">&#34;PATH=\${HOME}/bin:\${PATH}&#34;</span> &gt;&gt; ~/.bashrc <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>&gt; . ~/.bashrc
+</span></span></code></pre></div><h2 id="連結google帳戶">連結google帳戶</h2>
+<p>安裝好Google drive CLI後需要取得雲端硬碟帳戶授權，gdrive預設會在${HOME}/.gdrive底下找授權檔，
+由於目前我們沒有任何授權，所以需要先下簡單的指令觸發token請求，
+取得token之後會出現一個檔案叫做${HOME}/.gdrive/token_v2.json，
+並且在終端機出現雲端硬碟所有檔案及資料夾清單(預設最多出現30筆)：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 以list命令觸發token請求</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 這裡會得到一個網址，貼到瀏覽器的網址列enter，之後選擇你要連結的帳戶，按照步驟授權後貼上授權碼，成功的話就會出現清單。</span>
+</span></span><span style="display:flex;"><span>$ gdrive list
+</span></span><span style="display:flex;"><span>Authentication needed
+</span></span><span style="display:flex;"><span>Go to the following url in your browser:
+</span></span><span style="display:flex;"><span>https://accounts.google.com/o/oauth2/auth?access_type<span style="color:#f92672">=</span>offline&amp;client_id<span style="color:#f92672">=</span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Enter verification code:7/4wDh2A_4vtaFR9JibaVC-l-lv2sV7SSCj0QsWL-J2-mcTGY9xrTi9rU
+</span></span></code></pre></div><h1 id="使用">使用</h1>
+<h2 id="查詢檔案">查詢檔案</h2>
+<p>gdrive除了一些特殊資料夾，像是根目錄沒有ID直接叫做root之外，
+對於檔案跟資料夾的操作都基於id，而獲得檔案與資料夾id常用的方式有三種：</p>
+<ul>
+<li>從資料夾網址觀察id：https://drive.google.com/drive/u/1/folders/1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa</li>
+<li>對檔案右鍵後選擇&quot;取得檔案共用連結，貼到文字編輯器觀察id：https://drive.google.com/open?id=1QJUxAzep1s4xxxxxxxUWUxf1H3KBrTNO</li>
+<li>透過gdrive list指令配合搜尋參數(重要！可參閱文件)查詢，就是以下要介紹的方法。</li>
+</ul>
+<h3 id="查詢雲端檔案清單">查詢雲端檔案清單</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 列出雲端硬碟最上層資料夾(root)的內容</span>
+</span></span><span style="display:flex;"><span>$ ./gdrive-linux-x64 list -q <span style="color:#e6db74">&#34;&#39;root&#39; in parents&#34;</span>
+</span></span><span style="display:flex;"><span>Id                                             Name         Type   Size   Created
+</span></span><span style="display:flex;"><span>1zY5UMnx-xxxxxxfuetg7cyrY5MU-k8w4              tmp          dir           2018-05-29 02:32:33
+</span></span><span style="display:flex;"><span>1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa              Backup       dir           2018-03-27 05:14:21
+</span></span><span style="display:flex;"><span>1gFOCwss-xxxxxxKF5td-g-Ovj_z4JoEcqpVHq1t5u4Y   Google 相簿    dir           2017-07-07 14:02:17
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 列出特定資料夾的內容，1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa是資料夾id</span>
+</span></span><span style="display:flex;"><span>$ ./gdrive-linux-x64 list -q <span style="color:#e6db74">&#34;&#39;1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa&#39; in parents&#34;</span>
+</span></span><span style="display:flex;"><span>Id                                  Name        Type   Size      Created
+</span></span><span style="display:flex;"><span>1sqZTRRd5ucxxxxxx7l4ApnlLs4kVOsyF   note0001    bin    196.0 B   2018-07-18 06:41:12
+</span></span><span style="display:flex;"><span>1V-CvduOE9exxxxxxAflObt2wbGbD49zz   note0002    bin    199.0 B   2018-07-18 06:41:11
+</span></span><span style="display:flex;"><span>1SOq0opXxXQxxxxxxiCy5eY3ivO-KFVLy   back        dir              2018-07-18 06:40:56
+</span></span><span style="display:flex;"><span>1tyJcRaO9Dfxxxxxxo6yvndSkr8zpos_D   test.sh     bin    4.6 KB    2018-07-18 06:38:25
+</span></span></code></pre></div><h2 id="上傳下載">上傳/下載</h2>
+<h3 id="下載">下載</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 下載某個檔案</span>
+</span></span><span style="display:flex;"><span>$ gdrive download 1tyJcRaO9Dfxxxxxxo6yvndSkr8zpos_D
+</span></span><span style="display:flex;"><span>Downloading myTestFile1 -&gt; myTestFile1
+</span></span><span style="display:flex;"><span>Downloaded 1tyJcRaO9Dfxxxxxxo6yvndSkr8zpos_D at 402.0 B/s, total 402.0 B
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 下載整個資料夾</span>
+</span></span><span style="display:flex;"><span>$ gdrive download -r 1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa
+</span></span><span style="display:flex;"><span>Downloading myTestFile1  -&gt; myTestFolder /myTestFile1
+</span></span><span style="display:flex;"><span>Downloading myTestFile2  -&gt; myTestFolder /myTestFile2
+</span></span><span style="display:flex;"><span>Downloading myTestFile3  -&gt; myTestFolder /myTestFile3
+</span></span><span style="display:flex;"><span>Downloading myTestFile4  -&gt; myTestFolder /myTestFile4
+</span></span></code></pre></div><h3 id="上傳">上傳</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 上傳某個檔案到某個資料夾</span>
+</span></span><span style="display:flex;"><span>$ gdrive upload -p 1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa myTestFile4
+</span></span><span style="display:flex;"><span>Uploading myTestFile5
+</span></span><span style="display:flex;"><span>Uploaded 1tyJcRaO9Dfxxxxxxo6yvndSkr8zpos_D at 87.8 KB/s, total 151.3 KB
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 上傳整個資料夾到某個資料夾底下</span>
+</span></span><span style="display:flex;"><span>$ gdrive upload -r -p 1D8kkabcEecxxxxxxNSAy8ho97gTRuyNa myTestFolder
+</span></span><span style="display:flex;"><span>Creating directory myTestFolder
+</span></span><span style="display:flex;"><span>Uploading myTestFolder/myTestFile1
+</span></span><span style="display:flex;"><span>Uploading myTestFolder/myTestFile2
+</span></span><span style="display:flex;"><span>Uploading myTestFolder/myTestFile3
+</span></span><span style="display:flex;"><span>Uploading myTestFolder/myTestFile4
+</span></span></code></pre></div><h2 id="資料夾同步">資料夾同步</h2>
+<h3 id="資料夾同步到雲端">資料夾同步到雲端</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 建立一個空資料夾並上傳雲端，作為雲端同步資料夾</span>
+</span></span><span style="display:flex;"><span>$ mkdir syncTest
+</span></span><span style="display:flex;"><span>$ gdrive upload -r syncTest
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 查詢剛剛上傳的空資料夾ID</span>
+</span></span><span style="display:flex;"><span>$ gdrive -q <span style="color:#e6db74">&#34;name = &#39;syncTest&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>Id                                  Name       Type   Size   Created
+</span></span><span style="display:flex;"><span>1Uv5MxUXcxxxxxxcjM2nT_3hcuz-SMNnV   syncTest   dir           2019-02-18 09:52:26
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 把本地資料夾的內容同步到雲端</span>
+</span></span><span style="display:flex;"><span>$ gdrive sync upload local_folder 1Uv5MxUXcxxxxxxcjM2nT_3hcuz-SMNnV
+</span></span><span style="display:flex;"><span>Starting sync...
+</span></span><span style="display:flex;"><span>Collecting local and remote file information...
+</span></span><span style="display:flex;"><span>Found <span style="color:#ae81ff">7</span> local files and <span style="color:#ae81ff">0</span> remote files
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> remote directories are missing
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>0001/0001<span style="color:#f92672">]</span> Creating directory syncTest/ae006468
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> remote files are missing
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>0001/0006<span style="color:#f92672">]</span> Uploading ae006468/0.error -&gt; syncTest/ae006468/0.error
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>Sync finished in 13.435891267s
+</span></span></code></pre></div><h3 id="雲端同步到資料夾">雲端同步到資料夾</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 建立一個空資料夾準備接收雲端資料</span>
+</span></span><span style="display:flex;"><span>$ mkdir syncTest2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 把雲端內容同步到本地資料夾</span>
+</span></span><span style="display:flex;"><span>$ gdrive sync download 1Uv5MxUXcxxxxxxcjM2nT_3hcuz-SMNnV syncTest2
+</span></span><span style="display:flex;"><span>Starting sync...
+</span></span><span style="display:flex;"><span>Collecting file information...
+</span></span><span style="display:flex;"><span>Found <span style="color:#ae81ff">0</span> local files and <span style="color:#ae81ff">7</span> remote files
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> local directories are missing
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>0001/0001<span style="color:#f92672">]</span> Creating directory syncTest2/ae006468
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> local files are missing
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>0001/0006<span style="color:#f92672">]</span> Downloading ae006468/result.ok -&gt; syncTest2/ae006468/result.ok
+</span></span><span style="display:flex;"><span>Sync finished in 7.269982268s
+</span></span></code></pre></div><h1 id="reference">Reference</h1>
+<ul>
+<li><a href="http://bioinfotw.blogspot.com/2019/02/google-linux-cligoogle.html">底棲生物的生物資訊筆記 - [Google] 用Linux CLI操作google drive雲端硬碟</a></li>
+<li><a href="https://github.com/prasmussen/gdrive">GitHub - prasmussen/gdrive</a></li>
+<li><a href="https://www.mynotepaper.com/mount-google-drive-using-gdrive-on-linux-server-with-own-oauth-credentials">Mount Google Drive using GDrive on Linux Server with Own OAuth Credentials</a></li>
+</ul>
+
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5cother%5clinux-gdrive-cli.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/other/taiwania_login_oneclick/" title="[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/blog/posts/other/vim-plugin-ycm/" title="[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#取得憑證">取得憑證</a></li>
+    <li><a href="#編譯專案">編譯專案</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#設置環境變數">設置環境變數</a></li>
+    <li><a href="#連結google帳戶">連結google帳戶</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#查詢檔案">查詢檔案</a>
+      <ul>
+        <li><a href="#查詢雲端檔案清單">查詢雲端檔案清單</a></li>
+      </ul>
+    </li>
+    <li><a href="#上傳下載">上傳/下載</a>
+      <ul>
+        <li><a href="#下載">下載</a></li>
+        <li><a href="#上傳">上傳</a></li>
+      </ul>
+    </li>
+    <li><a href="#資料夾同步">資料夾同步</a>
+      <ul>
+        <li><a href="#資料夾同步到雲端">資料夾同步到雲端</a></li>
+        <li><a href="#雲端同步到資料夾">雲端同步到資料夾</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>
