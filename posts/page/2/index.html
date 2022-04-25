@@ -109,6 +109,31 @@
   
     
     <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-recursive/" title="[SQL] Menu Tree">[SQL] Menu Tree</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
       <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
       
       <ul class="">
@@ -516,6 +541,31 @@
   
     
     <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/container/">[維運] Container 容器</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/base-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
       <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
       
       <ul class="">
@@ -593,6 +643,64 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/javascript/diy-http-proxy-middleware/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</h5>
+        <p class="card-text post-summary">前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
+步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
+mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;;  // 設定代理到 google 的 Proxy 端點 app.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">March 20, 2021</span>
+        
+        <a
+        href="/blog/posts/javascript/diy-http-proxy-middleware/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/netcore31/basic-async-controller/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</h5>
+        <p class="card-text post-summary">ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
+非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
+ 產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。  async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
+非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">March 17, 2021</span>
+        
+        <a
+        href="/blog/posts/netcore31/basic-async-controller/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -883,66 +991,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
 
         
       
-        
-          <div class="post-card">
-  <a href="/blog/posts/other/vim-plugin-ycm/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</h5>
-        <p class="card-text post-summary">安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
-&#34; Specify a directory for pluginscall plug#begin(&#39;~/.vim/plugged&#39;)Plug &#39;ycm-core/YouCompleteMe&#39;&#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
-:PlugInstall 編譯YCM 安裝編譯工具
-sudo apt install -y build-essential cmake vim python3-dev 編譯
-~/.vim/plugged/YouCompleteMe/install.py 測試 打開 vim 確認，完工~
-Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 18, 2020</span>
-        
-        <a
-        href="/blog/posts/other/vim-plugin-ycm/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/code-copy-html-content/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[Code] 複製元件內的文字</h5>
-        <p class="card-text post-summary">要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
-Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
- 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 13, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/code-copy-html-content/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
     </div>
     <div class="paginator">
       
@@ -963,10 +1011,13 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
         <a href="/blog/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
       </li>
       <li class="page-item">
+        <a href="/blog/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
         <a href="/blog/posts/page/3/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
       </li>
       <li class="page-item">
-        <a href="/blog/posts/page/3/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/blog/posts/page/4/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
       </li>
     </ul>
     </div>
