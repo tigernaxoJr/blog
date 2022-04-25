@@ -6,7 +6,7 @@ draft: false
 menu:
   sidebar:
     name: "[Basic] 學習資源"
-    identifier: base-resource
+    identifier: container-base-resource
     parent: container
     weight: 2000
 ---
