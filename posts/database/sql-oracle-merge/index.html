@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[SQL] MERGE</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[SQL] MERGE" />
+<meta property="og:description" content="一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
+在更新清單的時候特別好用。
+MERGE INTO  DETAIL AS TARGET -- 目標表格  USING ( VALUES (@k1, @k2, @k3, @f1)) AS SOURCE (k1, k2, k3, f1) -- 資料來源  ON SOURCE.k1 = TARGET.k1 AND SOURCE.k2 = TARGET.k2 AND SOURCE.k3 = TARGET.k3 -- 兩造欄位核對條件 -- TARGET 有，SOURCE 也有，SOURCE 更新到 TARGET WHEN MATCHED THEN -- 以 TARGET 為目標，更新 SOURCE 裡面被 TARGET 對應(BY TARGET)的資料?(這邊 BY 哪裡都一樣)  UPDATE SET f1 = SOURCE." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/database/sql-oracle-merge/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-14T00:20:00+08:00" />
+<meta property="article:modified_time" content="2022-06-14T00:20:00+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[SQL] MERGE" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/database/">[DB] Database</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-recursive/" title="[SQL] Menu Tree">[SQL] Menu Tree</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/blog/posts/database/sql-oracle-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vue-next/" title="[前端] Vue-next">[前端] Vue-next</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vuejs/">[前端] VueJs</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/">[後端] .NET Code 3.1</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/snippet-json-operate/" title="[Snippet] Json 操作">[Snippet] Json 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-auth/">[練習] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/netcore31/startup-signalr/">[練習] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/netcore31/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/container/">[維運] Container 容器</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/base-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">[其他] Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Tuesday, June 14, 2022</p>
+        </div>
+
+        <div class="title">
+          <h1>[SQL] MERGE</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <p>一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)，
+不指定的話預設是 BY TARGET，
+動作目標都是 TARGET。</p>
+<p>在更新清單的時候特別好用。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>MERGE <span style="color:#66d9ef">INTO</span> 
+</span></span><span style="display:flex;"><span>  DETAIL <span style="color:#66d9ef">AS</span> TARGET  <span style="color:#75715e">-- 目標表格
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">USING</span> ( <span style="color:#66d9ef">VALUES</span> (<span style="color:#f92672">@</span>k1, <span style="color:#f92672">@</span>k2, <span style="color:#f92672">@</span>k3, <span style="color:#f92672">@</span>f1)) <span style="color:#66d9ef">AS</span> <span style="color:#66d9ef">SOURCE</span> (k1, k2, k3, f1) <span style="color:#75715e">-- 資料來源
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">ON</span> <span style="color:#66d9ef">SOURCE</span>.k1 <span style="color:#f92672">=</span> TARGET.k1 <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">SOURCE</span>.k2 <span style="color:#f92672">=</span> TARGET.k2 <span style="color:#66d9ef">AND</span> <span style="color:#66d9ef">SOURCE</span>.k3 <span style="color:#f92672">=</span> TARGET.k3 <span style="color:#75715e">-- 兩造欄位核對條件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- TARGET 有，SOURCE 也有，SOURCE 更新到 TARGET
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">WHEN</span> MATCHED <span style="color:#66d9ef">THEN</span> <span style="color:#75715e">-- 以 TARGET 為目標，更新 SOURCE 裡面被 TARGET 對應(BY TARGET)的資料?(這邊 BY 哪裡都一樣)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">UPDATE</span> <span style="color:#66d9ef">SET</span> f1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">SOURCE</span>.f1
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">WHEN</span> <span style="color:#66d9ef">NOT</span> MATCHED <span style="color:#66d9ef">THEN</span> <span style="color:#75715e">-- 以 TARGET 為目標，新增 SOURCE 裡面無法被 TARGET 對應(BY TARGET)的資料
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">INSERT</span> (k1, k2, k3, f1)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">VALUES</span> (<span style="color:#66d9ef">SOURCE</span>.k1, <span style="color:#66d9ef">SOURCE</span>.k2, <span style="color:#66d9ef">SOURCE</span>.k3, <span style="color:#66d9ef">SOURCE</span>.f1)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- TARGET 有，SOURCE 沒有，刪除 TARGET 裡面的紀錄
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">WHEN</span> <span style="color:#66d9ef">NOT</span> MATCHED <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">SOURCE</span> <span style="color:#75715e">-- 以 TARGET 為目標，刪除 TARGET 裡面無法被 SOURCE 對應(BY SOURCE)的資料
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">THEN</span> <span style="color:#66d9ef">DELETE</span>;
+</span></span></code></pre></div><p>ASP 裡面結合 Dapper 可以直接丟 IEnumerable 進去。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> connectionString = <span style="color:#e6db74">&#34;......&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> sql = <span style="color:#e6db74">@&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  MERGE INTO 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    DETAIL AS TARGET 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    USING ( VALUES (@k1, @k2, @k3, @f1)) AS SOURCE (k1, k2, k3, f1)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    ON SOURCE.k1 = TARGET.k1 AND SOURCE.k2 = TARGET.k2 AND SOURCE.k3 = TARGET.k3 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN MATCHED THEN
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    UPDATE SET f1 = SOURCE.f1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN NOT MATCHED THEN
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    INSERT (k1, k2, k3, f1)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    VALUES (SOURCE.k1, SOURCE.k2, SOURCE.k3, SOURCE.f1)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  WHEN NOT MATCHED BY SOURCE 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    THEN DELETE;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;</span>; 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">var</span> cn = <span style="color:#66d9ef">new</span> OracleConnection(connectionString))
+</span></span><span style="display:flex;"><span>{   
+</span></span><span style="display:flex;"><span>    List&lt;Detail&gt; details = <span style="color:#66d9ef">new</span> List&lt;Detail&gt; {
+</span></span><span style="display:flex;"><span>        {<span style="color:#66d9ef">new</span> Detail() {k1 = <span style="color:#ae81ff">1</span>, k2 = <span style="color:#ae81ff">1024</span>, k3 = <span style="color:#ae81ff">42</span>, f1 = <span style="color:#ae81ff">1000</span>} },
+</span></span><span style="display:flex;"><span>        {<span style="color:#66d9ef">new</span> Detail() {k1 = <span style="color:#ae81ff">9999</span>, k2 = <span style="color:#ae81ff">10268</span>, k3 = <span style="color:#ae81ff">42</span>, f1 = <span style="color:#ae81ff">1000</span>} }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> cn.ExecuteAsync(sql, details);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/43738324/performing-merge-with-dapper-net">[StackOverflow] Performing MERGE with Dapper.net</a></li>
+</ul>
+
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5cDatabase%5csql-oracle-merge%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/database/sql-recursive/" title="[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/blog/posts/linux/centos8-static-ip/" title="[Linux] CentOS 8 設定網路靜態IP" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[Linux] CentOS 8 設定網路靜態IP</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

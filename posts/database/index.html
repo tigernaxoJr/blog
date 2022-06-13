@@ -125,6 +125,15 @@
     <li><a class="" href="/blog/posts/database/sql-recursive/" title="[SQL] Menu Tree">[SQL] Menu Tree</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-oracle-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
+  
+
 
       </ul>
     </li>
@@ -655,6 +664,34 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/database/sql-oracle-merge/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SQL] MERGE</h5>
+        <p class="card-text post-summary">一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
+在更新清單的時候特別好用。
+MERGE INTO  DETAIL AS TARGET -- 目標表格  USING ( VALUES (@k1, @k2, @k3, @f1)) AS SOURCE (k1, k2, k3, f1) -- 資料來源  ON SOURCE.k1 = TARGET.k1 AND SOURCE.k2 = TARGET.k2 AND SOURCE.k3 = TARGET.k3 -- 兩造欄位核對條件 -- TARGET 有，SOURCE 也有，SOURCE 更新到 TARGET WHEN MATCHED THEN -- 以 TARGET 為目標，更新 SOURCE 裡面被 TARGET 對應(BY TARGET)的資料?(這邊 BY 哪裡都一樣)  UPDATE SET f1 = SOURCE.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">June 14, 2022</span>
+        
+        <a
+        href="/blog/posts/database/sql-oracle-merge/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
