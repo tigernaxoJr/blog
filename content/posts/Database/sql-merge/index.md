@@ -16,46 +16,16 @@ menu:
 
 在更新清單的時候特別好用。
 ```sql
-MERGE INTO 
-  DETAIL AS TARGET  -- 目標表格
-  USING ( VALUES (@k1, @k2, @k3, @f1)) AS SOURCE (k1, k2, k3, f1) -- 資料來源
-  ON SOURCE.k1 = TARGET.k1 AND SOURCE.k2 = TARGET.k2 AND SOURCE.k3 = TARGET.k3 -- 兩造欄位核對條件
--- TARGET 有，SOURCE 也有，SOURCE 更新到 TARGET
-WHEN MATCHED THEN -- 以 TARGET 為目標，更新 SOURCE 裡面被 TARGET 對應(BY TARGET)的資料?(這邊 BY 哪裡都一樣)
-  UPDATE SET f1 = SOURCE.f1
+MERGE INTO TABLE1 DEST -- 目標表格
+  USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC
+  ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 )
+-- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄
+WHEN MATCHED THEN
+  UPDATE SET F1 = SRC.F1, F2 = SRC.F2,
 -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET
-WHEN NOT MATCHED THEN -- 以 TARGET 為目標，新增 SOURCE 裡面無法被 TARGET 對應(BY TARGET)的資料
-  INSERT (k1, k2, k3, f1)
-  VALUES (SOURCE.k1, SOURCE.k2, SOURCE.k3, SOURCE.f1)
--- TARGET 有，SOURCE 沒有，刪除 TARGET 裡面的紀錄
-WHEN NOT MATCHED BY SOURCE -- 以 TARGET 為目標，刪除 TARGET 裡面無法被 SOURCE 對應(BY SOURCE)的資料
-  THEN DELETE;
-
-```
-ASP 裡面結合 Dapper 可以直接丟 IEnumerable 進去。
-```c#
-const connectionString = "......";
-const sql = @"
-  MERGE INTO 
-    DETAIL AS TARGET 
-    USING ( VALUES (@k1, @k2, @k3, @f1)) AS SOURCE (k1, k2, k3, f1)
-    ON SOURCE.k1 = TARGET.k1 AND SOURCE.k2 = TARGET.k2 AND SOURCE.k3 = TARGET.k3 
-  WHEN MATCHED THEN
-    UPDATE SET f1 = SOURCE.f1
-  WHEN NOT MATCHED THEN
-    INSERT (k1, k2, k3, f1)
-    VALUES (SOURCE.k1, SOURCE.k2, SOURCE.k3, SOURCE.f1)
-  WHEN NOT MATCHED BY SOURCE 
-    THEN DELETE;
-    "; 
-using (var cn = new OracleConnection(connectionString))
-{   
-    List<Detail> details = new List<Detail> {
-        {new Detail() {k1 = 1, k2 = 1024, k3 = 42, f1 = 1000} },
-        {new Detail() {k1 = 9999, k2 = 10268, k3 = 42, f1 = 1000} }
-    };
-    await cn.ExecuteAsync(sql, details);
-}
+WHEN NOT MATCHED THEN
+  INSERT ( K1, K2, K4, K3, F1, F2 ) 
+  VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) 
 ```
 ## Reference 
 - [[StackOverflow] Performing MERGE with Dapper.net](https://stackoverflow.com/questions/43738324/performing-merge-with-dapper-net)
