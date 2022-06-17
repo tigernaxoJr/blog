@@ -134,6 +134,15 @@
     <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
 
       </ul>
     </li>
@@ -664,6 +673,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/database/sql-ranking/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SQL] Ranking</h5>
+        <p class="card-text post-summary">先建立一個練習表格：
+CREATE TABLE Department (  id SERIAL PRIMARY KEY,  name VARCHAR NOT NULL ); CREATE TABLE Employee (  id SERIAL PRIMARY KEY,  name VARCHAR NOT NULL,  salary INT,  dep_id INT, ); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Mandy&#39;, 45000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Emily&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sylvia&#39;, 26000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Eva&#39;, 48000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sandra&#39;, 33000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Lily&#39;, 28000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;April&#39;, 50000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Cindy&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Kay&#39;, 40000, 3);  INSERT INTO Department(name) VALUES (&#39;IT&#39;); INSERT INTO Department(name) VALUES (&#39;RD&#39;); INSERT INTO Department(name) VALUES (&#39;QA&#39;); 資料排序 直接用 ORDER BY 無法得到秩(排名)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">June 17, 2022</span>
+        
+        <a
+        href="/blog/posts/database/sql-ranking/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">

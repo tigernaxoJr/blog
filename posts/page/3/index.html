@@ -131,6 +131,15 @@
     <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
 
       </ul>
     </li>
@@ -664,6 +673,36 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/netcore31/startup-auth/auth_guild_memo/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</h5>
+        <p class="card-text post-summary">Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
+IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
+Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
+ ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
+IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 23, 2020</span>
+        
+        <a
+        href="/blog/posts/netcore31/startup-auth/auth_guild_memo/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/netcore31/startup-auth/auth_guild_1/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -967,35 +1006,6 @@ $ ip a1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN
         
         <a
         href="/blog/posts/linux/ubuntu204-static-ip/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-obj-func/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] Object 常用方法</h5>
-        <p class="card-text post-summary">紀錄常用的 Object 方法，細節可以到MDN看
-Object.create  Object.create(proto, [propertiesObject])
- 以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
-以特定Object 作為 Prototype 建立新物件 const objParent = {  parentFeild: &#39;parent feild&#39;,  parentFunc: function () {  console.log(&#39;This is parent Func&#39;)  },  deepObj: {  a: 1,  b: 2,  }, }  // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent)  // objFeild 只存在 obj 上 obj.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">May 20, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/js-obj-func/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

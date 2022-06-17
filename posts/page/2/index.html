@@ -131,6 +131,15 @@
     <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
 
       </ul>
     </li>
@@ -664,6 +673,32 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/vuejs/vuejs-comp-yncheckbox/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</h5>
+        <p class="card-text post-summary">情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選  單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, {  props: {  disabled: { type: Boolean, default: () =&gt; false },  // checkbox 的標記 [string] || [{text:string, value:any}]  labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] },  value: { default: () =&gt; null },  trueValue: { default: () =&gt; &#39;Y&#39; },  falseValue: { default: () =&gt; &#39;N&#39; },  inline: { type: Boolean, default: () =&gt; false },  },  data() {  return {  innervalue_: this.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">July 29, 2021</span>
+        
+        <a
+        href="/blog/posts/vuejs/vuejs-comp-yncheckbox/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/vuejs/vuejs-comp-promise/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -971,36 +1006,6 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
         
         <a
         href="/blog/posts/netcore31/startup-auth/auth_guild_3/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/netcore31/startup-auth/auth_guild_memo/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</h5>
-        <p class="card-text post-summary">Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
-IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
-Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
- ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
-IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 23, 2020</span>
-        
-        <a
-        href="/blog/posts/netcore31/startup-auth/auth_guild_memo/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
