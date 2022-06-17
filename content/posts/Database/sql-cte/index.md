@@ -5,7 +5,7 @@ hero:
 draft: false
 menu:
   sidebar:
-    name: "[SQL] Menu Tree"
+    name: "[SQL] CTE"
     identifier: dbsql--cte
     parent: database
     weight: 2000

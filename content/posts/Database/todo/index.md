@@ -5,7 +5,7 @@ hero:
 draft: true
 menu:
   sidebar:
-    name: "[SQL] Merge"
+    name: "[SQL] Todo"
     identifier: dbsql-todo
     parent: database
     weight: 2000
