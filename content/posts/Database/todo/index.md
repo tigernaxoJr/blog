@@ -13,6 +13,5 @@ menu:
 with
 select into 
 except intersect
-having exist
+group having exist
 limit fetch row
-Rank、Dense_Rank、Row_Number
