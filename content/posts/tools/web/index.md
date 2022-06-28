@@ -16,5 +16,7 @@ autoCollapseToc: false
 - [bootstrap 5](https://getbootstrap.com/)
 - [d3.js](https://d3js.org/) 用於資料視覺化
 - [Three.js](https://threejs.org/) 簡易使用 WebGL 的封裝
+- [lodash]() 
+- [jsPdf]() 
 
 # 退役軍火庫
