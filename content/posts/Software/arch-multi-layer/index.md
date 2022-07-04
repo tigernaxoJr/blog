@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[架構] 多層(layer)架構"
-    identifier: system-arch-multi-layer
-    parent: system
+    identifier: software-arch-multi-layer
+    parent: software
     weight: 1000
 ---
 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置；

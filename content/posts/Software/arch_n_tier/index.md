@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[架構] 多層(tier)架構"
-    identifier: system-arch-n-tier
-    parent: system
+    identifier: software-arch-n-tier
+    parent: software
     weight: 1000
 ---
 多層式架構 Multitier Architecture 或稱 N-Tier Architecture，
