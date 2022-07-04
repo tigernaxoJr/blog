@@ -7,17 +7,17 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
 
-<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
-<link rel="stylesheet" href="/blog/css/plyr.css"/>
-<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/css/layouts/main.css"/>
+<link rel="stylesheet" href="/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/css/plyr.css"/>
+<link rel="stylesheet" href="/css/flag-icon.min.css"/>
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
 
 
-<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+<link rel="stylesheet" href="/fontawesome/css/all.min.css"/>
 
 
 
@@ -25,7 +25,7 @@
 <meta property="og:title" content="[Code] 複製元件內的文字" />
 <meta property="og:description" content="要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
 Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
- 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console." />
+不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.) function copyText(text) { // 判斷瀏覽器支援 if (!navigator.clipboard) { alert(&#34;瀏覽器不支援 Clipboard API&#34;) // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法 } // 非同步複製至剪貼簿 let resolve = () =&gt; { console.log(&#39;透過 Clipboard 複製至剪貼簿成功&#39;); } let reject = (err) =&gt; { console." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/code-copy-html-content/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-11-13T06:26:00+08:00" />
@@ -40,10 +40,10 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
 />
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+<link rel="stylesheet" href="/css/layouts/single.css"/>
+<link rel="stylesheet" href="/css/navigators/sidebar.css">
 
-<link rel="stylesheet" href="/blog/css/style.css"/>
+<link rel="stylesheet" href="/css/style.css"/>
 
 
 
@@ -105,7 +105,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <li id="list-heading"><a href="/posts" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -537,7 +537,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
       
       <ul class="">
         
@@ -547,7 +547,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
   
   
     
-    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
   
 
   
@@ -556,7 +556,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
   
   
     
-    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
 
@@ -1200,19 +1200,19 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
   </footer>
 
 
-    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/blog/js/popper.min.js"></script>
-<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="/blog/js/navbar.js"></script>
-<script type="text/javascript" src="/blog/js/plyr.js"></script>
-<script type="text/javascript" src="/blog/js/main.js"></script>
+<script type="text/javascript" src="/js/navbar.js"></script>
+<script type="text/javascript" src="/js/plyr.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 
 
     
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/blog/js/single.js"></script>
+<script src="/js/single.js"></script>
 <script>
   hljs.initHighlightingOnLoad();
 </script>

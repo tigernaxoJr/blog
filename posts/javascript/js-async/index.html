@@ -7,25 +7,25 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
 
-<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
-<link rel="stylesheet" href="/blog/css/plyr.css"/>
-<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/css/layouts/main.css"/>
+<link rel="stylesheet" href="/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/css/plyr.css"/>
+<link rel="stylesheet" href="/css/flag-icon.min.css"/>
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
 
 
-<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+<link rel="stylesheet" href="/fontawesome/css/all.min.css"/>
 
 
 
 
 <meta property="og:title" content="[JS] 非同步程式設計-Promise 與 Async/Await" />
 <meta property="og:description" content="Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
- pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。  promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
-// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){  let reason = &#39;找不到 value&#39;  return new Promise((resolve, reject)=&gt;{  value ? resolve(value) :reject(reason)  }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲" />
+pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。 promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
+// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){ let reason = &#39;找不到 value&#39; return new Promise((resolve, reject)=&gt;{ value ? resolve(value) :reject(reason) }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/js-async/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-09T01:32:00+08:00" />
@@ -40,10 +40,10 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
 />
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+<link rel="stylesheet" href="/css/layouts/single.css"/>
+<link rel="stylesheet" href="/css/navigators/sidebar.css">
 
-<link rel="stylesheet" href="/blog/css/style.css"/>
+<link rel="stylesheet" href="/css/style.css"/>
 
 
 
@@ -105,7 +105,7 @@
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <li id="list-heading"><a href="/posts" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -537,7 +537,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/system/">[系統] 軟體開發</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
       
       <ul class="">
         
@@ -547,7 +547,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/system/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
   
 
   
@@ -556,7 +556,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/system/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
 
@@ -1167,19 +1167,19 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
   </footer>
 
 
-    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/blog/js/popper.min.js"></script>
-<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="/blog/js/navbar.js"></script>
-<script type="text/javascript" src="/blog/js/plyr.js"></script>
-<script type="text/javascript" src="/blog/js/main.js"></script>
+<script type="text/javascript" src="/js/navbar.js"></script>
+<script type="text/javascript" src="/js/plyr.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 
 
     
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/blog/js/single.js"></script>
+<script src="/js/single.js"></script>
 <script>
   hljs.initHighlightingOnLoad();
 </script>
