@@ -683,7 +683,7 @@
         <p class="card-text post-summary">Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
 Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
- ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
+ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項 AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</p>
       </div>
       <div class="card-footer">
@@ -713,9 +713,9 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <p class="card-text post-summary">在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
 授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
- 限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。  挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。 挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
 挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
- cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。  禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
+cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。 禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 23, 2020</span>
@@ -743,7 +743,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</h5>
         <p class="card-text post-summary">安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</p>
+using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks; namespace SignalR.Extensions.DependencyInjection { public static class MyAddConfig { public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services, IConfiguration config ) { services.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 20, 2020</span>
@@ -770,12 +770,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
       <div class="card-body">
         <h5 class="card-title">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</h5>
         <p class="card-text post-summary">安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
 &#34; Specify a directory for pluginscall plug#begin(&#39;~/.vim/plugged&#39;)Plug &#39;ycm-core/YouCompleteMe&#39;&#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
 :PlugInstall 編譯YCM 安裝編譯工具
 sudo apt install -y build-essential cmake vim python3-dev 編譯
 ~/.vim/plugged/YouCompleteMe/install.py 測試 打開 vim 確認，完工~
-Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
+Reference GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 18, 2020</span>
@@ -803,7 +803,7 @@ Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
         <h5 class="card-title">[Code] 複製元件內的文字</h5>
         <p class="card-text post-summary">要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
 Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
- 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console.</p>
+不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.) function copyText(text) { // 判斷瀏覽器支援 if (!navigator.clipboard) { alert(&#34;瀏覽器不支援 Clipboard API&#34;) // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法 } // 非同步複製至剪貼簿 let resolve = () =&gt; { console.log(&#39;透過 Clipboard 複製至剪貼簿成功&#39;); } let reject = (err) =&gt; { console.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -830,7 +830,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
       <div class="card-body">
         <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
         <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
-npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt;  &lt;head&gt;  &lt;meta charset=&#34;UTF-8&#34; /&gt;  &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt;  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt;  &lt;title&gt;Vite App&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;  &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt;  &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;script type=&#34;module&#34; src=&#34;/src/main.</p>
+npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34; /&gt; &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt; &lt;title&gt;Vite App&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt; &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script type=&#34;module&#34; src=&#34;/src/main.ts&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt;</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -857,7 +857,7 @@ npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-t
       <div class="card-body">
         <h5 class="card-title">[JS] 各種模組(module)</h5>
         <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
-Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
+Reference JS模組規範：AMD、UMD、CMD、commonJS、ES6 module </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -885,9 +885,10 @@ Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
         <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
 axios 一樣可以透過 LibMan 安裝~
-libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+libman install axios@latest \ -p unpkg \ -d wwwroot/js/axios \ --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
 &lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
-libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</p>
+libman install bootstrap@5.0.0-alpha2 \ -p unpkg \ -d wwwroot/lib/bootstrap \ --files dist/js/bootstrap.min.js \ --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
+&lt;script src=&#34;./lib/bootstrap/dist/js/bootstrap.min.js&#34;&gt;&lt;/script&gt; 現在將 wwwRoot/index.html 修改如下：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 10, 2020</span>
@@ -914,9 +915,9 @@ libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \ 
       <div class="card-body">
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</h5>
         <p class="card-text post-summary">SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
- Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。  將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
+Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。 將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
 以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
-appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;Logging&#34;: {  &#34;LogLevel&#34;: {  &#34;Default&#34;: &#34;Information&#34;,  &#34;Microsoft&#34;: &#34;Warning&#34;,  &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34;  }  },  &#34;JWT&#34;: {  &#34;Issuer&#34;: &#34;Naxo&#34;,  &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數  &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰  },  &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
+appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;Logging&#34;: { &#34;LogLevel&#34;: { &#34;Default&#34;: &#34;Information&#34;, &#34;Microsoft&#34;: &#34;Warning&#34;, &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34; } }, &#34;JWT&#34;: { &#34;Issuer&#34;: &#34;Naxo&#34;, &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數 &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰 }, &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 7, 2020</span>
@@ -945,7 +946,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
         <p class="card-text post-summary">這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
 # 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
-using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace SignalR.Hubs {  // 這就是所謂的 SignalR 中樞  public class ChatHub : Hub  {  // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數  public async Task SendMessage(string user, string message)  {  // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message  await Clients.</p>
+using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace SignalR.Hubs { // 這就是所謂的 SignalR 中樞 public class ChatHub : Hub { // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數 public async Task SendMessage(string user, string message) { // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message await Clients.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 3, 2020</span>
