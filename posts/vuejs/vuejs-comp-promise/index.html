@@ -25,9 +25,9 @@
 <meta property="og:title" content="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法" />
 <meta property="og:description" content="有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
-元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
+ 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-程式碼 (Code) &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this." />
+程式碼 (Code) &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt;  &lt;div class=&#34;modal-content&#34;&gt;  &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt;  &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt;  &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt;  &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt;  &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt;  &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({  el: &#39;#xApp&#39;,  data:() =&gt; data,  methods: {  getConfirm() {  // 先清空 result (避免兩次選中一樣的值無法觸發 watcher)  this." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/vuejs/vuejs-comp-promise/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-24T07:32:00+08:00" />
@@ -42,10 +42,10 @@ Dialog 元件設計原理:
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
 />
-<link rel="stylesheet" href="/css/layouts/single.css"/>
-<link rel="stylesheet" href="/css/navigators/sidebar.css">
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
 
-<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -107,7 +107,7 @@ Dialog 元件設計原理:
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/posts" data-filter="all">Posts</a></li>
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -1200,7 +1200,7 @@ Dialog 元件設計原理:
     
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/js/single.js"></script>
+<script src="/blog/js/single.js"></script>
 <script>
   hljs.initHighlightingOnLoad();
 </script>

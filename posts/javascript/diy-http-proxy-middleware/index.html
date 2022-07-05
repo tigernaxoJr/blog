@@ -26,7 +26,7 @@
 <meta property="og:description" content="前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
 步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
 mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
-cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;); // 建立一個 Express 伺服器 const app = express(); app.use(cors()) // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;; // 設定代理到 google 的 Proxy 端點 app." />
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;;  // 設定代理到 google 的 Proxy 端點 app." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/diy-http-proxy-middleware/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-20T08:45:00+08:00" />
@@ -41,10 +41,10 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
 />
-<link rel="stylesheet" href="/css/layouts/single.css"/>
-<link rel="stylesheet" href="/css/navigators/sidebar.css">
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
 
-<link rel="stylesheet" href="/css/style.css"/>
+<link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -106,7 +106,7 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
         </form>
         <div class="sidebar-tree">
           <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/posts" data-filter="all">Posts</a></li>
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
             <div class="subtree">
                 
   
@@ -1193,7 +1193,7 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
     
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/js/single.js"></script>
+<script src="/blog/js/single.js"></script>
 <script>
   hljs.initHighlightingOnLoad();
 </script>
