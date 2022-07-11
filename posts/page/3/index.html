@@ -186,7 +186,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] 工具</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] Web 相關</a>
       
       <ul class="">
         
@@ -197,6 +197,15 @@
   
     
     <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web-tool/web-security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
   
 
 
@@ -673,6 +682,36 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/netcore31/startup-auth/auth_guild_3/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</h5>
+        <p class="card-text post-summary">前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;
+Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中 .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權 // 端點對應 app.UseEndpoints(endpoints =&gt; { endpoints.MapControllers(); endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：
+app.UseCookiePolicy(new CookiePolicyOptions { // 所有 Cookie.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">December 30, 2020</span>
+        
+        <a
+        href="/blog/posts/netcore31/startup-auth/auth_guild_3/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/netcore31/startup-auth/auth_guild_memo/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -979,34 +1018,6 @@ using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace Sign
         
         <a
         href="/blog/posts/linux/centos8-static-ip/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/linux/ubuntu204-static-ip/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</h5>
-        <p class="card-text post-summary">Ubuntu 自 17.10 以後就可以用 netplan 設置網卡~
-檢查網路介面 以 ip a 可以看到我的 ubuntu 有2個網路介面分別是 lo、enp0s3，對應到 loopback、有線網卡
-$ ip a1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00inet 127.0.0.1/8 scope host lovalid_lft forever preferred_lft foreverinet6 ::1/128 scope host valid_lft forever preferred_lft forever2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000link/ether 08:00:27:6a:7b:e3 brd ff:ff:ff:ff:ff:ffinet 10.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">June 13, 2020</span>
-        
-        <a
-        href="/blog/posts/linux/ubuntu204-static-ip/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
