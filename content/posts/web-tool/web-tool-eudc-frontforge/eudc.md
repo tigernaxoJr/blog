@@ -7,7 +7,7 @@ menu:
   sidebar:
     name: "[Web] FontForge 造難字"
     identifier: web-tool-eudc-frontforge
-    parent: web-tool
+    parent: web
     weight: 1000
 ---
 Web 在顯示姓名的時候常會遇到中文難字無法顯示，

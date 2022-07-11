@@ -1,8 +1,8 @@
 ---
-title: "[Web] 工具"
+title: "[Web] Web 相關"
 menu:
   sidebar:
-    name: "[Web] 工具"
-    identifier: web-tool
+    name: "[Web] Web 相關"
+    identifier: web
     weight: 300
 ---
