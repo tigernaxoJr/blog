@@ -24,12 +24,13 @@
 
 <meta property="og:title" content="[JS] Array 常用方法" />
 <meta property="og:description" content="紀錄常用的 Array 方法，細節可以到MDN看
-陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()  arr.pop()
+陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push() arr.pop()
 arr.push(element1[, &hellip;[, elementN]])
- const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()  arr.shift()
+const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift() arr.shift()
 arr.unshift(element1[, &hellip;[, elementN]])
- const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice()  let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
- 可以說式集移除、插入、取代(移除&#43;插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：" />
+const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice() let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
+可以說式集移除、插入、取代(移除&#43;插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：
+添加item 不添加item deleteCount=0 在現有位置添加元素 (無意義) deleteCount&gt;0 取代現有元素 範圍移除元素 範圍移除元素 const arr=[0, 1, 2, 3, 4, 5, 6] // 移除索引位置3的元素，移除範圍為1 let removed = arr." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/js-arr-func/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-29T23:31:18+08:00" />
