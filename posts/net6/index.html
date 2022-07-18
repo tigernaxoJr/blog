@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree</title>
+    <title>[後端] .NET 6</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,27 +22,19 @@
 
 
 
-<meta property="og:title" content="[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree" />
-<meta property="og:description" content="建立一個暫存表 testCTE，並暫存查詢語句(所有資料)的結果 MSSQL CTE 名稱前不需加上 RECURSEIVE 關鍵字，必須使用 UNION ALL PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION ALL
-WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層) SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL UNION ALL -- 遞迴取得 Recursive member ( SELECT A.id, A.name, A.parentId, CTE.lvl &#43; 1 AS lvl FROM menus A INNER JOIN CTE B on A.id = B.parentId ) ) SELECT * FROM CTE WHERE id=1 ORDER BY LEVEL Reference [StackOverflow] How to create a query from a menu tree using RECURSIVE CTE?" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/database/sql-cte/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-04-25T06:26:00+08:00" />
-<meta property="article:modified_time" content="2022-04-25T06:26:00+08:00" />
+<meta property="og:title" content="[後端] .NET 6" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/net6/" />
 
 
 
     
     
-<meta name="description" content="[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree" />
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
-/>
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
-
-<link rel="stylesheet" href="/blog/css/style.css"/>
+    <link rel="stylesheet" href="/blog/css/layouts/list.css">
+    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+    
+    <link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -96,6 +88,9 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
 
       
       
+  
+  
+
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
@@ -111,26 +106,20 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/database/">[DB] Database</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
   
   
-    
-    
-  
   
     
-    <li><a class="active" href="/blog/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
+    <li><a class="" href="/blog/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
   
 
   
@@ -377,9 +366,12 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
+    <li><a class="active" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
   
 
   
@@ -695,267 +687,21 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
       
       
 <section class="content-section" id="content-section">
-  <div class="content">
-    <div class="container p-0 read-area">
-      
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
-      </div>
-
-      
-      <div class="page-content">
-        <div class="author-profile ml-auto align-self-lg-center">
-          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
-          <h5 class="author-name">Yu Cheng</h5>
-          <p>Monday, April 25, 2022</p>
-        </div>
-
-        <div class="title">
-          <h1>[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree</h1>
-        </div>
-        
-        <div class="post-content" id="post-content">
-          <p>建立一個暫存表 testCTE，並暫存查詢語句(所有資料)的結果
-MSSQL CTE 名稱前不需加上 RECURSEIVE 關鍵字，必須使用 UNION ALL
-PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION ALL</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">WITH</span> CTE (id, name, parentId, lvl) <span style="color:#66d9ef">AS</span>
-</span></span><span style="display:flex;"><span>(
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">SELECT</span> id, name parentId, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">AS</span> lvl <span style="color:#66d9ef">FROM</span> menus <span style="color:#66d9ef">WHERE</span> parentId <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NULL</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">ALL</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">-- 遞迴取得 Recursive member
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  (
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SELECT</span> A.id, A.name, A.parentId, CTE.lvl <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">AS</span> lvl <span style="color:#66d9ef">FROM</span> menus A
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> CTE B <span style="color:#66d9ef">on</span> A.id <span style="color:#f92672">=</span> B.parentId
-</span></span><span style="display:flex;"><span>  )
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> CTE <span style="color:#66d9ef">WHERE</span> id<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#66d9ef">LEVEL</span>
-</span></span></code></pre></div><h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://stackoverflow.com/questions/32681915/how-to-create-a-query-from-a-menu-tree-using-recursive-cte">[StackOverflow] How to create a query from a menu tree using RECURSIVE CTE?</a></li>
-<li><a href="https://www.gss.com.tw/blog/sql-cte-recursive-query-postgresql-mssql">[SQL] 使用 CTE 遞迴查詢 (PostgreSQL / MSSQL)</a></li>
-</ul>
-
-        </div>
-
-        
-        <div class="row pl-3 pr-3">
-        
-        <div class="col-md-6 share-buttons">
-        
-          </div>
-
-        
-        
-          
-            
-          
-          <div class="col-md-6 btn-improve-page">
-             
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5cDatabase%5csql-cte%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
-            
-                <i class="fas fa-code-branch"></i>
-                Improve this page
-              </a>
-          </div>
-        
-        </div>
-
-
-
-      
-      <hr />
-        
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-    
-    
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-
-<div class="row next-prev-navigator">
-  
-  
-      
-      
-      <div class="col-md-12 next-article">
-        <a href="/blog/posts/database/sql-merge/" title="[SQL] MERGE" class="btn btn-outline-info">
-          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[SQL] MERGE</div>
-        </a>
-      </div>
-    
-</div>
-
-      <hr />
-
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
       
+    </div>
+    <div class="paginator">
       
-
-      </div>
     </div>
   </div>
-  
-  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
-  
 </section>
 
 
       
-      
-  <section class="toc-section" id="toc-section">
-    
-    <div class="toc-holder">
-      <h5 class="text-center pl-3">Table of Contents</h5>
-      <hr>
-      <div class="toc">
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#reference">Reference</a></li>
-  </ul>
-</nav>
-      </div>
-    </div>
-    
-  </section>
-
+       
     </div>
 
     
@@ -1144,18 +890,7 @@ PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION
 
     
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="/blog/js/single.js"></script>
-<script>
-  hljs.initHighlightingOnLoad();
-</script>
-
-
-
-
-
-
-
+    <script src="/blog/js/list.js"></script>
 
 
     
