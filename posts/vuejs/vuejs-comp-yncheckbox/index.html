@@ -609,6 +609,15 @@
     <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
 
       </ul>
     </li>
@@ -795,7 +804,93 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">h</span>(<span style="color:#e6db74">&#39;div&#39;</span>, {}, <span style="color:#a6e22e">siblings</span>)
 </span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>})
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div><div id="app">
+  <x-ck-single v-model="value" inline></x-ck-single>
+  {{value === null ? 'null' : value}}
+</div>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+Vue.component('x-ck-single', {
+  props: {
+  disabled: { type: Boolean, default: () => false },
+  // checkbox 的標記 [string] || [{text:string, value:any}]
+  labels: { type: Array, default: () => ['Yes', 'No'] }, 
+  value: { default: () => null },
+  trueValue: { default: () => 'Y' },
+  falseValue: { default: () => 'N' },
+  inline: { type: Boolean, default: () => false },
+  },
+  data() {
+    return {
+      innervalue_: this.value,
+    }
+  },
+  watch: {
+    value(v) {
+      this.innervalue_ = v
+    },
+  },
+  computed: {
+    innervalue: {
+      get() {
+        return this.innervalue_
+      },
+      set(v) {
+        this.innervalue_ = v
+        this.$emit('input', v)
+      },
+    },
+  },
+  render: function (h) {
+    const self = this
+    let len = self.labels.length // labels 的長度
+    let allStr = self.labels.every((label) => typeof label == 'string') // 是否為 string
+    let allOkObj = self.labels.every((l) => !!l.text && !!l.value) // 是否為合法的物件(如果不是 string)
+    let siblingConf = null
+    if (allOkObj) {
+      siblingConf = self.labels.map((l) => _.pick(l, ['text', 'value']))
+    } else if (allStr && len <= 2) {
+      siblingConf = self.labels.map((text, idx) => {
+        let value = idx === 0 ? self.trueValue : self.falseValue
+        return { text, value }
+      })
+    }
+    if (!siblingConf) {
+      let errStr = '無法正確設定元件,len,allStr,allOkObj'
+      return h('div', errStr, len, allStr, allOkObj)
+    }
+    // 設定 CheckBox
+    let { disabled } = self
+    let hideDetails = true
+    let dense = true
+    const baseProps = { hideDetails, dense, disabled }
+    const baseClass = self.inline ? ['d-inline-block'] : []
+    let siblings = siblingConf.map((c) => {
+      let props = {
+        label: c.text,
+        inputValue: self.innervalue === c.value,
+        ...baseProps,
+      }
+      // 如果只有一個選項，取消勾選時就顯示 falseValue
+      let valueOnNull = len === 1 ? self.falseValue : null
+      let on = {
+        change: (e) => (self.innervalue = e ? c.value : valueOnNull),
+      }
+      return h("v-checkbox", { props, class: baseClass, on })
+    })
+    // 傳回整個元件
+    return h('div', {}, siblings)
+  }
+})
+</script>
+<script>
+  new Vue({
+    el: '#app',
+    data: { value: '' }
+  })
+</script>
 <h1 id="多選元件">多選元件</h1>
 <h2 id="程式碼-code-1">程式碼 (Code)</h2>
 
@@ -896,6 +991,9 @@
   
     
     
+  
+  
+
   
   
 

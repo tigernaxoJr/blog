@@ -615,6 +615,15 @@ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer s
     <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
 
       </ul>
     </li>
@@ -724,7 +733,7 @@ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer s
 <ul>
 <li>驗證處理函式(Authentication handler)，可能是
 <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationhandler?view=aspnetcore-3.1">IAuthenticationHandler</a> 或 
-<a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1?view=aspnetcore-3.1">AuthenticationHandler<!-- raw HTML omitted --></a>
+<a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1?view=aspnetcore-3.1">AuthenticationHandler<TOptions></a>
 的實作，相當於驗證方案的<strong>行為</strong>，責任範圍涵蓋:
 <ul>
 <li>驗證使用者，</li>
@@ -938,6 +947,9 @@ AuthenticationBuilder 設定驗證方案的方式有：</p>
   
     
     
+  
+  
+
   
   
 

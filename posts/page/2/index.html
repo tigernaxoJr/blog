@@ -599,6 +599,15 @@
     <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
 
       </ul>
     </li>
@@ -688,6 +697,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/netcore31/snippet-json-dt/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core 3.1] JsonDocument 與 DataTable 的互相轉換</h5>
+        <p class="card-text post-summary">在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
+public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new MemoryStream()) { using (var writer = new Utf8JsonWriter(stream)) { // 起始一個裝 JElement 的陣列 writer.WriteStartArray(); foreach (DataRow row in dt.Rows) { // 開始寫入每個 Row 各自對應的 JElement 寫入程序 writer.WriteStartObject(); foreach (DataColumn column in row.Table.Columns) { // 先寫入屬性名稱 writer.WritePropertyName(column.ColumnName); // 判斷欄位值是否為 DBNull 來寫入值或 Null if (row[column.ColumnName] == DBNull.Value) writer.WriteNullValue(); else JsonSerializer.Serialize(writer, row[column]); } // 結束一列資料對應的 JElement 寫入程序 writer.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">August 6, 2021</span>
+        
+        <a
+        href="/blog/posts/netcore31/snippet-json-dt/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -994,35 +1030,6 @@ JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、�
         
         <a
         href="/blog/posts/javascript/js-hoisting/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/netcore31/startup-auth/auth_guild_4/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</h5>
-        <p class="card-text post-summary">授權(Authorization) 授權(Authorization): 界定用戶可存取資源範圍的程序。 Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
-自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
-驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
-Reference MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.AspNetCore.Authentication.Cookies Namespace MSDN - Microsoft.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">December 31, 2020</span>
-        
-        <a
-        href="/blog/posts/netcore31/startup-auth/auth_guild_4/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
