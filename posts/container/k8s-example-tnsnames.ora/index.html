@@ -397,6 +397,15 @@ ExternalName Service Service &#43; Endpoints Secret Volume Ip/Domain 可 可 可
   
   
     
+    <li><a class="" href="/blog/posts/netcore31/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
@@ -850,7 +859,7 @@ P.S. 不能是 subPath</p>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f testap.yml
 </span></span><span style="display:flex;"><span>minikube kubectl -- expose deployment testap-deployment --type<span style="color:#f92672">=</span>NodePort --port<span style="color:#f92672">=</span><span style="color:#ae81ff">80</span>
 </span></span><span style="display:flex;"><span>minikube kubectl -- port-forward testap-deployment-66797fd85b-gx64z 8080:80
-</span></span></code></pre></div><p>這時可以打開 http://{k8s ip}:8080 看</p>
+</span></span></code></pre></div><p>這時可以打開 http://{k8s ip}:8080，看</p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li><a href="https://ithelp.ithome.com.tw/articles/10195094">ithome - [Day 12] 敏感的資料怎麼存在k8s?! - Secrets</a></li>
@@ -902,6 +911,9 @@ P.S. 不能是 subPath</p>
 
 
 
+
+  
+  
 
   
   

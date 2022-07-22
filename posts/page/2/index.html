@@ -388,6 +388,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/netcore31/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
@@ -700,6 +709,35 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] 在 Ubuntu 20.04 上部署 .NET Core 3.1 (使用 Nginx 反向代理)</h5>
+        <p class="card-text post-summary">設置 Ubuntu 安裝 .NET Core Runtime wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb sudo apt update sudo apt install apt-transport-https sudo apt install dotnet-runtime-3.1 安裝 Nginx 新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list
+#/etc/apt/sources.list.d/nginx.list. deb https://nginx.org/packages/ubuntu/ focal nginx deb-src https://nginx.org/packages/ubuntu/ focal nginx 安裝
+sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
+# 啟動 nginx sudo systemctl start nginx # 設置 nginx 開機啟動 sudo systemctl enable nginx # 確認 nginx 運行狀態 sudo systemctl status nginx 設置 Nginx 反向代理本機的 5000 連接埠(之後 Kestrel 的 http 服務端口)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">August 11, 2021</span>
+        
+        <a
+        href="/blog/posts/netcore31/deploy-ubuntu2004-nginx/ubuntu2004_nginx/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/netcore31/snippet-json-dt/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1000,36 +1038,6 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
         
         <a
         href="/blog/posts/javascript/js-async/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-hoisting/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</h5>
-        <p class="card-text post-summary">網路上時常見到充滿 function 與 var 的 JavaScript 求值題目， 筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料， 雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。
-Hoisting 對學過伺服器端語言(C#、C/C++&hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事， 在 JavaScript 中也是如此：
-console.log(x) // ReferenceError: x is not defined 但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine， 在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後已分配記憶體空間(初始化、initiation)但尚未賦值的狀態， 但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？
-console.log(x) // undefined var x 原因在於 javascript 會先程式中的蒐集 var(let/const/function) 宣告並釐清對應的作用域， 最後再執行程式碼，這個行為就如同宣告被提升(Hoisting)到前面行數的程式碼中一樣。
-JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、賦值等等時機取用變數會獲得不同輸出結果， 這篇文章(link)中提到， 稱 JavaScript 為直譯式(解釋型)語言實際上是通俗的說法，語言本身沒有規定實現的方式(編/直譯)， 舉例來說 Chrome 瀏覽器所使用的 Google V8 JavaScript engine， 所帶的解釋器 (interpreter) 會將程式編譯 (compile) 成字節碼 (bytecode)， 最後再由編譯器 (compiler) 即時編譯 (JIT;just-in-time compilation) 編譯成機器碼執行， 而 JavaScript 被編譯時宣告會被蒐集到最頂端進行定義並區分作用域(scope)，這個行為就是 Hoisting ，記住重點在於JS編譯後會先定義變數及區分作用域，編譯後的程式看起來就像這樣：</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">January 9, 2021</span>
-        
-        <a
-        href="/blog/posts/javascript/js-hoisting/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

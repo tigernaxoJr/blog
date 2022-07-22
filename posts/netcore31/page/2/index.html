@@ -391,6 +391,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/netcore31/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
@@ -700,6 +709,35 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</h5>
+        <p class="card-text post-summary">SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
+Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。 將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
+以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
+appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;Logging&#34;: { &#34;LogLevel&#34;: { &#34;Default&#34;: &#34;Information&#34;, &#34;Microsoft&#34;: &#34;Warning&#34;, &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34; } }, &#34;JWT&#34;: { &#34;Issuer&#34;: &#34;Naxo&#34;, &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數 &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰 }, &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 7, 2020</span>
+        
+        <a
+        href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">

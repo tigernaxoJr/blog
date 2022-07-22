@@ -388,6 +388,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/netcore31/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/netcore31/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
   
 
@@ -697,6 +706,36 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/javascript/js-hoisting/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</h5>
+        <p class="card-text post-summary">網路上時常見到充滿 function 與 var 的 JavaScript 求值題目， 筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料， 雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。
+Hoisting 對學過伺服器端語言(C#、C/C++&hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事， 在 JavaScript 中也是如此：
+console.log(x) // ReferenceError: x is not defined 但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine， 在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後已分配記憶體空間(初始化、initiation)但尚未賦值的狀態， 但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？
+console.log(x) // undefined var x 原因在於 javascript 會先程式中的蒐集 var(let/const/function) 宣告並釐清對應的作用域， 最後再執行程式碼，這個行為就如同宣告被提升(Hoisting)到前面行數的程式碼中一樣。
+JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、賦值等等時機取用變數會獲得不同輸出結果， 這篇文章(link)中提到， 稱 JavaScript 為直譯式(解釋型)語言實際上是通俗的說法，語言本身沒有規定實現的方式(編/直譯)， 舉例來說 Chrome 瀏覽器所使用的 Google V8 JavaScript engine， 所帶的解釋器 (interpreter) 會將程式編譯 (compile) 成字節碼 (bytecode)， 最後再由編譯器 (compiler) 即時編譯 (JIT;just-in-time compilation) 編譯成機器碼執行， 而 JavaScript 被編譯時宣告會被蒐集到最頂端進行定義並區分作用域(scope)，這個行為就是 Hoisting ，記住重點在於JS編譯後會先定義變數及區分作用域，編譯後的程式看起來就像這樣：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 9, 2021</span>
+        
+        <a
+        href="/blog/posts/javascript/js-hoisting/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1010,35 +1049,6 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;L
         
         <a
         href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/netcore31/startup-signalr/guild_1_start/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(一) - 建立專案</h5>
-        <p class="card-text post-summary">這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
-建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
-# 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
-using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace SignalR.Hubs { // 這就是所謂的 SignalR 中樞 public class ChatHub : Hub { // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數 public async Task SendMessage(string user, string message) { // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message await Clients.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 3, 2020</span>
-        
-        <a
-        href="/blog/posts/netcore31/startup-signalr/guild_1_start/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
