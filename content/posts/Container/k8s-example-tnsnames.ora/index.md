@@ -120,7 +120,7 @@ kubectl apply -f testap.yml
 minikube kubectl -- expose deployment testap-deployment --type=NodePort --port=80
 minikube kubectl -- port-forward testap-deployment-66797fd85b-gx64z 8080:80
 ```
-這時可以打開 http://{k8s ip}:8080 看
+這時可以打開 http://{k8s ip}:8080，看
 ## Reference
 - [ithome - [Day 12] 敏感的資料怎麼存在k8s?! - Secrets](https://ithelp.ithome.com.tw/articles/10195094)
 - [kubernetes - Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
