@@ -617,6 +617,15 @@
     <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
+  
+
 
       </ul>
     </li>
@@ -709,6 +718,33 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/container/k8s-basc-install/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[K8S] 自架 Kubernetes 使用 VM 模擬多台 Server</h5>
+        <p class="card-text post-summary">準備/安裝兩台 Server ( 使用 VM clone 然後修改 hostname ) 一台為 Master (主控)，另外一台為 Node ( 節點 ) 安裝 kubelet/kubeadm ( Master 與 node 皆要執行此步驟 )
+# 設定 k8s server上網路 cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf net.bridge.bridge-nf-call-ip6tables = 1 net.bridge.bridge-nf-call-iptables = 1 EOF sudo sysctl --system  # 安裝 kubeadm / kubelet sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - cat &lt;&lt;EOF | sudo tee /etc/apt/sources.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">July 23, 2022</span>
+        
+        <a
+        href="/blog/posts/container/k8s-basc-install/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/netcore31/nuget/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -718,7 +754,7 @@
         <h5 class="card-title">[.NET] 製作 Nuget package</h5>
         <p class="card-text post-summary">安裝 nuget.exe CLI 安裝 nuget.exe CLI，並在環境變數 PATH 新增路徑。
 建立 nuspec 設定檔 example
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt; &lt;metadata&gt; &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt; &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt; &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt; &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt; &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt; &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt; &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt; &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt; &lt;description&gt;MyPackage&lt;/description&gt; &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt; &lt;copyright&gt;-&lt;/copyright&gt; &lt;tags&gt;&lt;/tags&gt; &lt;dependencies&gt; &lt;!-- 定義 .net framework 4.0 使用時需要的相依姓套件 --&gt; &lt;group targetFramework=&#34;.NETFramework4.0.0&#34; &gt; &lt;dependency id=&#34;Dapper&#34; version=&#34;1.50.2&#34; /&gt; &lt;dependency id=&#34;Newtonsoft.Json&#34; version=&#34;7.0.1&#34; /&gt; &lt;/group&gt; &lt;/dependencies&gt; &lt;/metadata&gt; &lt;/package&gt; 打包檔案 假設最低系統需求為 .</p>
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt;  &lt;metadata&gt;  &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt;  &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt;  &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt;  &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt;  &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt;  &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt;  &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt;  &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt;  &lt;description&gt;MyPackage&lt;/description&gt;  &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt;  &lt;copyright&gt;-&lt;/copyright&gt;  &lt;tags&gt;&lt;/tags&gt; 	&lt;dependencies&gt; 	&lt;!-- 定義 .net framework 4.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 22, 2022</span>
@@ -745,11 +781,10 @@
       <div class="card-body">
         <h5 class="card-title">[K8s] 以 Secrete 共享 tnsnames.ora</h5>
         <p class="card-text post-summary">Introduction Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
-程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。 考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
+ 程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。  考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
 單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：
-ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。 三種連線資訊共用策略是否能反映連線資訊修改：
-ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Port 不能 可 可 Service Name/SID 不能 不能 可 Step Secret 用處：
-作為容器的環境變數 (但只會在 pod 啟動的時候載入，無法反映動態更改) 作為檔案，可被掛載在其他 Pod 的檔案路徑下，此時 key 視為檔案名稱，value 視為檔案內容，可動態反映修改 作為 deployment 的一部分，敏感資料統一存放在 Docker image，讓其他 pod 可以 pull 存取(也無法動態反映修改，要重新 pull) 因此如果要維護 tnsnames.</p>
+ ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。  三種連線資訊共用策略是否能反映連線資訊修改：
+    ExternalName Service Service + Endpoints Secret Volume     Ip/Domain 可 可 可   Port 不能 可 可   Service Name/SID 不能 不能 可    Step Secret 用處：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 21, 2022</span>
@@ -777,8 +812,8 @@ ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Por
         <h5 class="card-title">[Web] RESTful 敏感性 GET 參數</h5>
         <p class="card-text post-summary">網址列參數洩漏風險 目前網頁後端資源存取大多以 RESTful Api 開發， REST 標準下 API 的設計需符合冪等性(idempotent)， SSL 連線連接 TCP 層與 HTTP 層，因此透過 HTTPS 傳輸的網頁，網址進入 TCP 層之後是被加密的， 即使封包被截取也只能看見要傳送的目標主機 那麼敏感性資料可以透過 GET 參數傳送嗎？
 如果將機敏性資料夾帶於網址列當中會有洩漏的安全性風險，諸如：
-被 Shoulder surfers 竊取。(你的螢幕被偷看) 隨著頁面列印被印出。 使用者將連結加入書籤。 儲存在瀏覽器瀏覽歷史紀錄。 被記錄在 Web Server 的 Log，而 Log 本身可能不安全。 隱藏 RESTful GET 參數 因此避免這些資料外洩的可能，根本的做法就是讓機敏性資料從網址列消失，最好的做法是依據 OWASP 的建議把 參數夾帶在 Header 裡面，其他手段整理：
-將機敏性資料加密，但加密也會破壞 API RESTful 特性，在後端需要先解密無法直接對應回物件。 以 POST 的一部份傳輸(透過 HTTPS)，但會直接破壞 API 的 RESTful 特性。 根據 OWASP REST Security Cheat Sheet，應該把敏感性參數夾帶在 GET 請求的 HTTP Header 裡面透過 HTTPS 傳輸。 P.</p>
+ 被 Shoulder surfers 竊取。(你的螢幕被偷看) 隨著頁面列印被印出。 使用者將連結加入書籤。 儲存在瀏覽器瀏覽歷史紀錄。 被記錄在 Web Server 的 Log，而 Log 本身可能不安全。  隱藏 RESTful GET 參數 因此避免這些資料外洩的可能，根本的做法就是讓機敏性資料從網址列消失，最好的做法是依據 OWASP 的建議把 參數夾帶在 Header 裡面，其他手段整理：
+ 將機敏性資料加密，但加密也會破壞 API RESTful 特性，在後端需要先解密無法直接對應回物件。 以 POST 的一部份傳輸(透過 HTTPS)，但會直接破壞 API 的 RESTful 特性。 根據 OWASP REST Security Cheat Sheet，應該把敏感性參數夾帶在 GET 請求的 HTTP Header 裡面透過 HTTPS 傳輸。  P.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 11, 2022</span>
@@ -805,7 +840,7 @@ ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Por
       <div class="card-body">
         <h5 class="card-title">[SQL] Ranking</h5>
         <p class="card-text post-summary">先建立一個練習表格：
-CREATE TABLE Department ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL ); CREATE TABLE Employee ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL, salary INT, dep_id INT, ); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Mandy&#39;, 45000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Emily&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sylvia&#39;, 26000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Eva&#39;, 48000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sandra&#39;, 33000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Lily&#39;, 28000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;April&#39;, 50000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Cindy&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Kay&#39;, 40000, 3); INSERT INTO Department(name) VALUES (&#39;IT&#39;); INSERT INTO Department(name) VALUES (&#39;RD&#39;); INSERT INTO Department(name) VALUES (&#39;QA&#39;); 資料排序 直接用 ORDER BY 無法得到秩(排名)</p>
+CREATE TABLE Department (  id SERIAL PRIMARY KEY,  name VARCHAR NOT NULL ); CREATE TABLE Employee (  id SERIAL PRIMARY KEY,  name VARCHAR NOT NULL,  salary INT,  dep_id INT, ); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Mandy&#39;, 45000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Emily&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sylvia&#39;, 26000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Eva&#39;, 48000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sandra&#39;, 33000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Lily&#39;, 28000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;April&#39;, 50000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Cindy&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Kay&#39;, 40000, 3);  INSERT INTO Department(name) VALUES (&#39;IT&#39;); INSERT INTO Department(name) VALUES (&#39;RD&#39;); INSERT INTO Department(name) VALUES (&#39;QA&#39;); 資料排序 直接用 ORDER BY 無法得到秩(排名)</p>
       </div>
       <div class="card-footer">
         <span class="float-left">June 17, 2022</span>
@@ -833,7 +868,7 @@ CREATE TABLE Department ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL ); CREATE
         <h5 class="card-title">[SQL] MERGE</h5>
         <p class="card-text post-summary">一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
 在更新清單的時候特別好用。
-MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 ) -- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄 WHEN MATCHED THEN UPDATE SET F1 = SRC.F1, F2 = SRC.F2, -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET WHEN NOT MATCHED THEN INSERT ( K1, K2, K4, K3, F1, F2 ) VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) Reference [StackOverflow] Performing MERGE with Dapper.</p>
+MERGE INTO TABLE1 DEST -- 目標表格  USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC  ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 ) -- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄 WHEN MATCHED THEN  UPDATE SET F1 = SRC.F1, F2 = SRC.F2, -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET WHEN NOT MATCHED THEN  INSERT ( K1, K2, K4, K3, F1, F2 )  VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) Reference  [StackOverflow] Performing MERGE with Dapper.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">June 14, 2022</span>
@@ -859,7 +894,7 @@ MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4
       </div>
       <div class="card-body">
         <h5 class="card-title">[Container] 學習資源</h5>
-        <p class="card-text post-summary"> DockerHub Docker文件 K8S </p>
+        <p class="card-text post-summary"> DockerHub Docker文件 K8S  </p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 25, 2022</span>
@@ -913,7 +948,7 @@ $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE postgres latest 74b0c105737
       <div class="card-body">
         <h5 class="card-title">[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree</h5>
         <p class="card-text post-summary">建立一個暫存表 testCTE，並暫存查詢語句(所有資料)的結果 MSSQL CTE 名稱前不需加上 RECURSEIVE 關鍵字，必須使用 UNION ALL PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION ALL
-WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層) SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL UNION ALL -- 遞迴取得 Recursive member ( SELECT A.id, A.name, A.parentId, CTE.lvl + 1 AS lvl FROM menus A INNER JOIN CTE B on A.id = B.parentId ) ) SELECT * FROM CTE WHERE id=1 ORDER BY LEVEL Reference [StackOverflow] How to create a query from a menu tree using RECURSIVE CTE?</p>
+WITH CTE (id, name, parentId, lvl) AS (  -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層)  SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL  UNION ALL  -- 遞迴取得 Recursive member  (  SELECT A.id, A.name, A.parentId, CTE.lvl + 1 AS lvl FROM menus A  INNER JOIN CTE B on A.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 25, 2022</span>
@@ -940,7 +975,7 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
       <div class="card-body">
         <h5 class="card-title">[DevOps] CI/CD-01 安裝 Jenkins</h5>
         <p class="card-text post-summary">環境 硬體部分官方提到: RAM &gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
-安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \ apt-transport-https \ ca-certificates \ curl \ gnupg \ lsb-release # 添加 Docker 官方 GPG key curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.</p>
+安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc  # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \  apt-transport-https \  ca-certificates \  curl \  gnupg \  lsb-release  # 添加 Docker 官方 GPG key curl -fsSL https://download.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">October 18, 2021</span>
@@ -970,7 +1005,7 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
 SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
 準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。
 這裡紀錄在一台 Ubuntu 20.04 上架設。 關於 Linux 安裝過程在這裡不加贅述， 官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：
-RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。 安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
+ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。  安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
       </div>
       <div class="card-footer">
         <span class="float-left">September 22, 2021</span>
@@ -997,43 +1032,13 @@ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備�
       <div class="card-body">
         <h5 class="card-title">[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</h5>
         <p class="card-text post-summary">Web 在顯示姓名的時候常會遇到中文難字無法顯示， 此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 woff、woff2、ttf 讓網頁正確顯示難字。 過程需要字型工具軟體 FontForge， 步驟如下：
-拿到造字檔 EUDC.TTE 用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte 安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.0.0&#34;)Generate(&#34;EUDC.ttf&#34;)Generate(&#34;EUDC.</p>
+ 拿到造字檔 EUDC.TTE   用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte  安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 24, 2021</span>
         
         <a
         href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/vuejs/router_add_query/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</h5>
-        <p class="card-text post-summary">工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
-router.beforeEach(async (to, from, next) =&gt; { next({ path: path, query: {...to.queryl ,token: tokenStr} }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
-runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
-next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:
-next(): move on to the next hook in the pipeline.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 19, 2021</span>
-        
-        <a
-        href="/blog/posts/vuejs/router_add_query/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

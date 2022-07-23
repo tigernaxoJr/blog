@@ -620,6 +620,15 @@
     <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
+  
+
 
       </ul>
     </li>
@@ -712,6 +721,33 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/container/k8s-basc-install/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[K8S] 自架 Kubernetes 使用 VM 模擬多台 Server</h5>
+        <p class="card-text post-summary">準備/安裝兩台 Server ( 使用 VM clone 然後修改 hostname ) 一台為 Master (主控)，另外一台為 Node ( 節點 ) 安裝 kubelet/kubeadm ( Master 與 node 皆要執行此步驟 )
+# 設定 k8s server上網路 cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf net.bridge.bridge-nf-call-ip6tables = 1 net.bridge.bridge-nf-call-iptables = 1 EOF sudo sysctl --system  # 安裝 kubeadm / kubelet sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - cat &lt;&lt;EOF | sudo tee /etc/apt/sources.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">July 23, 2022</span>
+        
+        <a
+        href="/blog/posts/container/k8s-basc-install/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/container/k8s-example-tnsnames.ora/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -720,11 +756,10 @@
       <div class="card-body">
         <h5 class="card-title">[K8s] 以 Secrete 共享 tnsnames.ora</h5>
         <p class="card-text post-summary">Introduction Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
-程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。 考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
+ 程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。  考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
 單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：
-ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。 三種連線資訊共用策略是否能反映連線資訊修改：
-ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Port 不能 可 可 Service Name/SID 不能 不能 可 Step Secret 用處：
-作為容器的環境變數 (但只會在 pod 啟動的時候載入，無法反映動態更改) 作為檔案，可被掛載在其他 Pod 的檔案路徑下，此時 key 視為檔案名稱，value 視為檔案內容，可動態反映修改 作為 deployment 的一部分，敏感資料統一存放在 Docker image，讓其他 pod 可以 pull 存取(也無法動態反映修改，要重新 pull) 因此如果要維護 tnsnames.</p>
+ ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。  三種連線資訊共用策略是否能反映連線資訊修改：
+    ExternalName Service Service + Endpoints Secret Volume     Ip/Domain 可 可 可   Port 不能 可 可   Service Name/SID 不能 不能 可    Step Secret 用處：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 21, 2022</span>
@@ -750,7 +785,7 @@ ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Por
       </div>
       <div class="card-body">
         <h5 class="card-title">[Container] 學習資源</h5>
-        <p class="card-text post-summary"> DockerHub Docker文件 K8S </p>
+        <p class="card-text post-summary"> DockerHub Docker文件 K8S  </p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 25, 2022</span>
