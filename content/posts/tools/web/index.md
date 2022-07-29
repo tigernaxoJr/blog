@@ -18,5 +18,6 @@ autoCollapseToc: false
 - [Three.js](https://threejs.org/) 簡易使用 WebGL 的封裝
 - [lodash]() 
 - [jsPdf]() 
+- [awesome(學習資源彙整)](https://github.com/sindresorhus/awesome)
 
 # 退役軍火庫

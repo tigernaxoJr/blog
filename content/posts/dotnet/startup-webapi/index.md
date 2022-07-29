@@ -1,13 +1,13 @@
 ---
-title: "[Web] .NET 6 Web API 專案"
+title: "[.NET] .NET 6 Web API 專案"
 date: 2022-07-18T11:35:00+08:00
-draft: true
+draft: false
 hero: 
 menu:
   sidebar:
-    name: "[Web] .NET 6 Web API 專案"
-    identifier: netcore6-startup-webapi
-    parent: netcore6
+    name: "[.NET] .NET 6 Web API 專案"
+    identifier: dotnet-startup-webapi
+    parent: dotnet
     weight: 1000
 ---
 ## 添加 Swagger
