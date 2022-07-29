@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Database</title>
+    <title>[.NET] .NET 6 Web API 專案</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,19 +22,28 @@
 
 
 
-<meta property="og:title" content="Database" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/database/" />
+<meta property="og:title" content="[.NET] .NET 6 Web API 專案" />
+<meta property="og:description" content="添加 Swagger dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3 Program.cs
+builder.Services.AddControllers(); builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
+&#34;serverReadyAction&#34;: { &#34;action&#34;: &#34;openExternally&#34;, &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s&#43;(https?://\\S&#43;)&#34;, &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝 dotnet add package System." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/startup-webapi/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-18T11:35:00+08:00" />
+<meta property="article:modified_time" content="2022-07-18T11:35:00+08:00" />
 
 
 
     
     
-    <link rel="stylesheet" href="/blog/css/layouts/list.css">
-    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
-    
-    <link rel="stylesheet" href="/blog/css/style.css"/>
+<meta name="description" content="[.NET] .NET 6 Web API 專案" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -88,9 +97,6 @@
 
       
       
-  
-  
-
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
@@ -106,15 +112,12 @@
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/database/">[DB] Database</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -369,20 +372,26 @@
   
   
   
+    
+    
+  
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/dotnet/">[後端] .NET</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+    <li><a class="active" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
   
 
   
@@ -739,103 +748,292 @@
       
       
 <section class="content-section" id="content-section">
-  <div class="content container-fluid" id="content">
-    <div class="container-fluid post-card-holder" id="post-card-holder">
+  <div class="content">
+    <div class="container p-0 read-area">
       
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
       
-      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Monday, July 18, 2022</p>
+        </div>
+
+        <div class="title">
+          <h1>[.NET] .NET 6 Web API 專案</h1>
+        </div>
         
-          <div class="post-card">
-  <a href="/blog/posts/database/sql-ranking/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SQL] Ranking</h5>
-        <p class="card-text post-summary">先建立一個練習表格：
-CREATE TABLE Department ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL ); CREATE TABLE Employee ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL, salary INT, dep_id INT, ); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Mandy&#39;, 45000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Emily&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sylvia&#39;, 26000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Eva&#39;, 48000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Sandra&#39;, 33000, 3); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Lily&#39;, 28000, 2); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;April&#39;, 50000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Cindy&#39;, 43000, 1); INSERT INTO Employee(name, salary, dep_id) VALUES (&#39;Kay&#39;, 40000, 3); INSERT INTO Department(name) VALUES (&#39;IT&#39;); INSERT INTO Department(name) VALUES (&#39;RD&#39;); INSERT INTO Department(name) VALUES (&#39;QA&#39;); 資料排序 直接用 ORDER BY 無法得到秩(排名)</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">June 17, 2022</span>
-        
-        <a
-        href="/blog/posts/database/sql-ranking/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
+        <div class="post-content" id="post-content">
+          <h2 id="添加-swagger">添加 Swagger</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3
+</span></span></code></pre></div><p>Program.cs</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>builder.Services.AddControllers();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>builder.Services.AddEndpointsApiExplorer();
+</span></span><span style="display:flex;"><span>builder.Services.AddSwaggerGen();
+</span></span></code></pre></div><p><code>https://localhost:&lt;port&gt;/swagger/index.html</code>
+添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger
+讓Swagger 認得 IActionResult 的 api 接收/回傳型別
+<a href="https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult">https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#e6db74">&#34;serverReadyAction&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;action&#34;</span>: <span style="color:#e6db74">&#34;openExternally&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;pattern&#34;</span>: <span style="color:#e6db74">&#34;^\\s*Now listening on:\\s+(https?://\\S+)&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;uriFormat&#34;</span>: <span style="color:#e6db74">&#34;%s/swagger&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider.
+<a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0</a>
+.NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝
+<code>dotnet add package System.Configuration.ConfigurationManager --version 6.0.0</code>
+<a href="https://stackoverflow.com/questions/46360716/cant-use-system-configuration-configuration-manager-in-a-net-standard2-0-libra">https://stackoverflow.com/questions/46360716/cant-use-system-configuration-configuration-manager-in-a-net-standard2-0-libra</a></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&amp;tabs=visual-studio-code">https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&amp;tabs=visual-studio-code</a></p>
+
+        </div>
 
         
-      
+        <div class="row pl-3 pr-3">
         
-          <div class="post-card">
-  <a href="/blog/posts/database/sql-merge/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SQL] MERGE</h5>
-        <p class="card-text post-summary">一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
-在更新清單的時候特別好用。
-MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 ) -- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄 WHEN MATCHED THEN UPDATE SET F1 = SRC.F1, F2 = SRC.F2, -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET WHEN NOT MATCHED THEN INSERT ( K1, K2, K4, K3, F1, F2 ) VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) Reference [StackOverflow] Performing MERGE with Dapper.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">June 14, 2022</span>
+        <div class="col-md-6 share-buttons">
         
-        <a
-        href="/blog/posts/database/sql-merge/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
+          </div>
 
         
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts%5cdotnet%5cstartup-webapi%5cindex.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/vuejs/vuejs-comp-promise/" title="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</div>
+      </a>
+    </div>
+  
+  
+      
       
         
-          <div class="post-card">
-  <a href="/blog/posts/database/sql-cte/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      
+      <div class="col-md-6 next-article">
+        <a href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段管理應用程式的敏感資料" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[.NET] 開發階段管理應用程式的敏感資料</div>
+        </a>
       </div>
-      <div class="card-body">
-        <h5 class="card-title">[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree</h5>
-        <p class="card-text post-summary">建立一個暫存表 testCTE，並暫存查詢語句(所有資料)的結果 MSSQL CTE 名稱前不需加上 RECURSEIVE 關鍵字，必須使用 UNION ALL PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION ALL
-WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層) SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL UNION ALL -- 遞迴取得 Recursive member ( SELECT A.id, A.name, A.parentId, CTE.lvl + 1 AS lvl FROM menus A INNER JOIN CTE B on A.id = B.parentId ) ) SELECT * FROM CTE WHERE id=1 ORDER BY LEVEL Reference [StackOverflow] How to create a query from a menu tree using RECURSIVE CTE?</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">April 25, 2022</span>
-        
-        <a
-        href="/blog/posts/database/sql-cte/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
+    
 </div>
 
-        
+      <hr />
+
       
-    </div>
-    <div class="paginator">
       
+      
+      
+
+      </div>
     </div>
   </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
 </section>
 
 
       
-       
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#添加-swagger">添加 Swagger</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
     </div>
 
     
@@ -1024,7 +1222,18 @@ WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor membe
 
     
     
-    <script src="/blog/js/list.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+
+
+
 
 
     

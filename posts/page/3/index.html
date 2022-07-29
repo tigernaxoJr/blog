@@ -368,7 +368,32 @@
   
   
     
-    <li><a class="" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -718,6 +743,62 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/other/linux-gdrive-cli/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Tools] 在 linux 中使用 google drive cli</h5>
+        <p class="card-text post-summary">重新編譯 gdrive 取得憑證 首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret 編譯專案 1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git 3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34; 4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive 5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build 設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
+# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 29, 2021</span>
+        
+        <a
+        href="/blog/posts/other/linux-gdrive-cli/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/software/arch-multi-layer/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[架構] 多層式架構(Multi-layer Architecture)</h5>
+        <p class="card-text post-summary">多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
+為何以 multi-layer 撰寫程式碼
+增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。 BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
+one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取 分層 Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation) Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 10, 2021</span>
+        
+        <a
+        href="/blog/posts/software/arch-multi-layer/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/javascript/js-async/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -726,8 +807,8 @@
       <div class="card-body">
         <h5 class="card-title">[JS] 非同步程式設計-Promise 與 Async/Await</h5>
         <p class="card-text post-summary">Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
- pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。  promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
-// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){  let reason = &#39;找不到 value&#39;  return new Promise((resolve, reject)=&gt;{  value ? resolve(value) :reject(reason)  }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
+pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。 promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
+// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){ let reason = &#39;找不到 value&#39; return new Promise((resolve, reject)=&gt;{ value ? resolve(value) :reject(reason) }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 9, 2021</span>
@@ -783,10 +864,10 @@ JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、�
       </div>
       <div class="card-body">
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</h5>
-        <p class="card-text post-summary">授權(Authorization)  授權(Authorization): 界定用戶可存取資源範圍的程序。  Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
+        <p class="card-text post-summary">授權(Authorization) 授權(Authorization): 界定用戶可存取資源範圍的程序。 Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
 自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
 驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
-Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.</p>
+Reference MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.AspNetCore.Authentication.Cookies Namespace MSDN - Microsoft.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 31, 2020</span>
@@ -814,8 +895,9 @@ Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService I
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</h5>
         <p class="card-text post-summary">前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;
 Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
-// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
-app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</p>
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中 .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權 // 端點對應 app.UseEndpoints(endpoints =&gt; { endpoints.MapControllers(); endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：
+app.UseCookiePolicy(new CookiePolicyOptions { // 所有 Cookie.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 30, 2020</span>
@@ -844,7 +926,7 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
         <p class="card-text post-summary">Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
 Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
- ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
+ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項 AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</p>
       </div>
       <div class="card-footer">
@@ -874,9 +956,9 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <p class="card-text post-summary">在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
 授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
- 限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。  挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。 挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
 挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
- cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。  禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
+cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。 禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 23, 2020</span>
@@ -904,7 +986,7 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</h5>
         <p class="card-text post-summary">安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</p>
+using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks; namespace SignalR.Extensions.DependencyInjection { public static class MyAddConfig { public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services, IConfiguration config ) { services.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 20, 2020</span>
@@ -931,12 +1013,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
       <div class="card-body">
         <h5 class="card-title">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</h5>
         <p class="card-text post-summary">安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
 &#34; Specify a directory for pluginscall plug#begin(&#39;~/.vim/plugged&#39;)Plug &#39;ycm-core/YouCompleteMe&#39;&#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
 :PlugInstall 編譯YCM 安裝編譯工具
 sudo apt install -y build-essential cmake vim python3-dev 編譯
 ~/.vim/plugged/YouCompleteMe/install.py 測試 打開 vim 確認，完工~
-Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
+Reference GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 18, 2020</span>
@@ -964,7 +1046,7 @@ Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
         <h5 class="card-title">[Code] 複製元件內的文字</h5>
         <p class="card-text post-summary">要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
 Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
- 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console.</p>
+不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.) function copyText(text) { // 判斷瀏覽器支援 if (!navigator.clipboard) { alert(&#34;瀏覽器不支援 Clipboard API&#34;) // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法 } // 非同步複製至剪貼簿 let resolve = () =&gt; { console.log(&#39;透過 Clipboard 複製至剪貼簿成功&#39;); } let reject = (err) =&gt; { console.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -991,70 +1073,13 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
       <div class="card-body">
         <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
         <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
-npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt;  &lt;head&gt;  &lt;meta charset=&#34;UTF-8&#34; /&gt;  &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt;  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt;  &lt;title&gt;Vite App&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;  &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt;  &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;script type=&#34;module&#34; src=&#34;/src/main.</p>
+npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34; /&gt; &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt; &lt;title&gt;Vite App&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt; &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script type=&#34;module&#34; src=&#34;/src/main.ts&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt;</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
         
         <a
         href="/blog/posts/javascript/diy-simple-router/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-module/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] 各種模組(module)</h5>
-        <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
-Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 13, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/js-module/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
-        <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
-axios 一樣可以透過 LibMan 安裝~
-libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
-&lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
-libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 10, 2020</span>
-        
-        <a
-        href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

@@ -368,7 +368,32 @@
   
   
     
-    <li><a class="" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -718,6 +743,64 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/javascript/js-module/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[JS] 各種模組(module)</h5>
+        <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
+Reference JS模組規範：AMD、UMD、CMD、commonJS、ES6 module </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 13, 2020</span>
+        
+        <a
+        href="/blog/posts/javascript/js-module/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
+        <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
+axios 一樣可以透過 LibMan 安裝~
+libman install axios@latest \ -p unpkg \ -d wwwroot/js/axios \ --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+&lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
+libman install bootstrap@5.0.0-alpha2 \ -p unpkg \ -d wwwroot/lib/bootstrap \ --files dist/js/bootstrap.min.js \ --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
+&lt;script src=&#34;./lib/bootstrap/dist/js/bootstrap.min.js&#34;&gt;&lt;/script&gt; 現在將 wwwRoot/index.html 修改如下：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 10, 2020</span>
+        
+        <a
+        href="/blog/posts/netcore31/startup-signalr/guild_4_front_end_login/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/netcore31/startup-signalr/guild_2_issue_token/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -726,9 +809,9 @@
       <div class="card-body">
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</h5>
         <p class="card-text post-summary">SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
- Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。  將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
+Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。 將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
 以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
-appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;Logging&#34;: {  &#34;LogLevel&#34;: {  &#34;Default&#34;: &#34;Information&#34;,  &#34;Microsoft&#34;: &#34;Warning&#34;,  &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34;  }  },  &#34;JWT&#34;: {  &#34;Issuer&#34;: &#34;Naxo&#34;,  &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數  &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰  },  &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
+appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;Logging&#34;: { &#34;LogLevel&#34;: { &#34;Default&#34;: &#34;Information&#34;, &#34;Microsoft&#34;: &#34;Warning&#34;, &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34; } }, &#34;JWT&#34;: { &#34;Issuer&#34;: &#34;Naxo&#34;, &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數 &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰 }, &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 7, 2020</span>
@@ -757,7 +840,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;
         <p class="card-text post-summary">這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
 # 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
-using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace SignalR.Hubs {  // 這就是所謂的 SignalR 中樞  public class ChatHub : Hub  {  // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數  public async Task SendMessage(string user, string message)  {  // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message  await Clients.</p>
+using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace SignalR.Hubs { // 這就是所謂的 SignalR 中樞 public class ChatHub : Hub { // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數 public async Task SendMessage(string user, string message) { // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message await Clients.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 3, 2020</span>
@@ -838,9 +921,9 @@ $ ip a1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN
       <div class="card-body">
         <h5 class="card-title">[JS] Object 常用方法</h5>
         <p class="card-text post-summary">紀錄常用的 Object 方法，細節可以到MDN看
-Object.create  Object.create(proto, [propertiesObject])
- 以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
-以特定Object 作為 Prototype 建立新物件 const objParent = {  parentFeild: &#39;parent feild&#39;,  parentFunc: function () {  console.log(&#39;This is parent Func&#39;)  },  deepObj: {  a: 1,  b: 2,  }, }  // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent)  // objFeild 只存在 obj 上 obj.</p>
+Object.create Object.create(proto, [propertiesObject])
+以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
+以特定Object 作為 Prototype 建立新物件 const objParent = { parentFeild: &#39;parent feild&#39;, parentFunc: function () { console.log(&#39;This is parent Func&#39;) }, deepObj: { a: 1, b: 2, }, } // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent) // objFeild 只存在 obj 上 obj.objFeild = &#39;obj feild&#39; // 可從建立的 obj 呼叫 prototype 的屬性, 方法 obj.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">May 20, 2020</span>
@@ -871,7 +954,7 @@ JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似
 因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。
 建立物件原型 JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。
 建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。
-// 宣告一個函數 Foo function Foo (){}  // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
+// 宣告一個函數 Foo function Foo (){} // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
       </div>
       <div class="card-footer">
         <span class="float-left">May 20, 2020</span>
@@ -898,12 +981,13 @@ JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似
       <div class="card-body">
         <h5 class="card-title">[JS] Array 常用方法</h5>
         <p class="card-text post-summary">紀錄常用的 Array 方法，細節可以到MDN看
-陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()  arr.pop()
+陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push() arr.pop()
 arr.push(element1[, &hellip;[, elementN]])
- const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()  arr.shift()
+const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift() arr.shift()
 arr.unshift(element1[, &hellip;[, elementN]])
- const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice()  let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
- 可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：</p>
+const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice() let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
+可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：
+添加item 不添加item deleteCount=0 在現有位置添加元素 (無意義) deleteCount&gt;0 取代現有元素 範圍移除元素 範圍移除元素 const arr=[0, 1, 2, 3, 4, 5, 6] // 移除索引位置3的元素，移除範圍為1 let removed = arr.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 29, 2020</span>
@@ -931,10 +1015,11 @@ arr.unshift(element1[, &hellip;[, elementN]])
         <h5 class="card-title">[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</h5>
         <p class="card-text post-summary">台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
 OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
-注意事項  校時
-由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w  所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null   從Windows登入台灣杉 前置工作  安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。  編譯TOTP產生器 取得TOTP套件
+注意事項 校時
+由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w 所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null 從Windows登入台灣杉 前置工作 安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。 編譯TOTP產生器 取得TOTP套件
 go get github.com/pquerna/otp/totp 撰寫程式碼main.go
-package main  import (  &#34;fmt&#34;  &#34;github.com/pquerna/otp/totp&#34;  &#34;os&#34;  &#34;time&#34; )  func main() {  secret := os.</p>
+package main import ( &#34;fmt&#34; &#34;github.com/pquerna/otp/totp&#34; &#34;os&#34; &#34;time&#34; ) func main() { secret := os.Args[1] code, _ := totp.GenerateCode(secret, time.Now().UTC()) fmt.Print(code) } 編譯
+go build -o taiwaniaOTP.exe main.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 23, 2019</span>

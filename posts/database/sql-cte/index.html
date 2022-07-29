@@ -24,7 +24,7 @@
 
 <meta property="og:title" content="[SQL] 用 CTE (Common Table Expression) 達成遞迴查詢，建立 MenuTree" />
 <meta property="og:description" content="建立一個暫存表 testCTE，並暫存查詢語句(所有資料)的結果 MSSQL CTE 名稱前不需加上 RECURSEIVE 關鍵字，必須使用 UNION ALL PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION ALL
-WITH CTE (id, name, parentId, lvl) AS (  -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層)  SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL  UNION ALL  -- 遞迴取得 Recursive member  (  SELECT A.id, A.name, A.parentId, CTE.lvl &#43; 1 AS lvl FROM menus A  INNER JOIN CTE B on A." />
+WITH CTE (id, name, parentId, lvl) AS ( -- 取得第一層的資料(Anchor member)(假設沒有 parentId 的是第一層) SELECT id, name parentId, 0 AS lvl FROM menus WHERE parentId IS NULL UNION ALL -- 遞迴取得 Recursive member ( SELECT A.id, A.name, A.parentId, CTE.lvl &#43; 1 AS lvl FROM menus A INNER JOIN CTE B on A.id = B.parentId ) ) SELECT * FROM CTE WHERE id=1 ORDER BY LEVEL Reference [StackOverflow] How to create a query from a menu tree using RECURSIVE CTE?" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/database/sql-cte/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-25T06:26:00+08:00" />
@@ -379,7 +379,32 @@ WITH CTE (id, name, parentId, lvl) AS (  -- 取得第一層的資料(Anchor memb
   
   
     
-    <li><a class="" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -808,6 +833,9 @@ PostgreSQL：CTE 名稱前需加上 RECURSIVE 關鍵字，可用 UNION 或 UNION
   
     
     
+  
+  
+
   
   
 

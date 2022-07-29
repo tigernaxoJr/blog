@@ -24,7 +24,7 @@
 
 <meta property="og:title" content="[.NET Core] .NET Core 中對 JsonElement 的操作" />
 <meta property="og:description" content=".NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer." />
+public static class JsonExt { public static void Add(ref this JsonElement source, string name, string value) { using (MemoryStream ms = new MemoryStream()) { using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) { using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) { writer.WriteStartObject(); // 開始 foreach (var el in source.EnumerateObject()) el.WriteTo(writer); // 寫入新屬性 writer.WritePropertyName(name); writer.WriteStringValue(value); writer.WriteEndObject(); // 結束 } } var resultStr = Encoding." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/netcore31/snippet-json-operate/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-06T14:37:00+08:00" />
@@ -373,7 +373,32 @@ public static class JsonExt { 	public static void Add(ref this JsonElement sourc
   
   
     
-    <li><a class="" href="/blog/posts/net6/" title="[後端] .NET 6">[後端] .NET 6</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -820,6 +845,9 @@ public static class JsonExt { 	public static void Add(ref this JsonElement sourc
 
 
 
+
+  
+  
 
   
   
