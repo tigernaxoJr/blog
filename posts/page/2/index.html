@@ -186,7 +186,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] Web 相關</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
       
       <ul class="">
         
@@ -196,7 +196,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
   
 
   
@@ -205,7 +205,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
   
 
 
@@ -754,7 +754,7 @@
 SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
 準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。
 這裡紀錄在一台 Ubuntu 20.04 上架設。 關於 Linux 安裝過程在這裡不加贅述， 官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：
-RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。 安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
+ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。  安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
       </div>
       <div class="card-footer">
         <span class="float-left">September 22, 2021</span>
@@ -773,7 +773,7 @@ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備�
       
         
           <div class="post-card">
-  <a href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" class="post-card-link">
+  <a href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -781,13 +781,13 @@ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備�
       <div class="card-body">
         <h5 class="card-title">[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</h5>
         <p class="card-text post-summary">Web 在顯示姓名的時候常會遇到中文難字無法顯示， 此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 woff、woff2、ttf 讓網頁正確顯示難字。 過程需要字型工具軟體 FontForge， 步驟如下：
-拿到造字檔 EUDC.TTE 用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte 安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.0.0&#34;)Generate(&#34;EUDC.ttf&#34;)Generate(&#34;EUDC.</p>
+ 拿到造字檔 EUDC.TTE   用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte  安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 24, 2021</span>
         
         <a
-        href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/"
+        href="/blog/posts/web/web-tool-eudc-frontforge/eudc/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -808,10 +808,9 @@ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備�
       <div class="card-body">
         <h5 class="card-title">[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</h5>
         <p class="card-text post-summary">工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
-router.beforeEach(async (to, from, next) =&gt; { next({ path: path, query: {...to.queryl ,token: tokenStr} }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
+router.beforeEach(async (to, from, next) =&gt; {  next({  path: path,  query: {...to.queryl ,token: tokenStr}  }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
 runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
-next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:
-next(): move on to the next hook in the pipeline.</p>
+ next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 19, 2021</span>
@@ -867,7 +866,7 @@ sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
       <div class="card-body">
         <h5 class="card-title">[.NET Core 3.1] JsonDocument 與 DataTable 的互相轉換</h5>
         <p class="card-text post-summary">在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
-public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new MemoryStream()) { using (var writer = new Utf8JsonWriter(stream)) { // 起始一個裝 JElement 的陣列 writer.WriteStartArray(); foreach (DataRow row in dt.Rows) { // 開始寫入每個 Row 各自對應的 JElement 寫入程序 writer.WriteStartObject(); foreach (DataColumn column in row.Table.Columns) { // 先寫入屬性名稱 writer.WritePropertyName(column.ColumnName); // 判斷欄位值是否為 DBNull 來寫入值或 Null if (row[column.ColumnName] == DBNull.Value) writer.WriteNullValue(); else JsonSerializer.Serialize(writer, row[column]); } // 結束一列資料對應的 JElement 寫入程序 writer.</p>
+public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
@@ -894,7 +893,7 @@ public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new Mem
       <div class="card-body">
         <h5 class="card-title">[.NET Core] .NET Core 中對 JsonElement 的操作</h5>
         <p class="card-text post-summary">.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { public static void Add(ref this JsonElement source, string name, string value) { using (MemoryStream ms = new MemoryStream()) { using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) { using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) { writer.WriteStartObject(); // 開始 foreach (var el in source.EnumerateObject()) el.WriteTo(writer); // 寫入新屬性 writer.WritePropertyName(name); writer.WriteStringValue(value); writer.WriteEndObject(); // 結束 } } var resultStr = Encoding.</p>
+public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
@@ -920,7 +919,7 @@ public static class JsonExt { public static void Add(ref this JsonElement source
       </div>
       <div class="card-body">
         <h5 class="card-title">[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</h5>
-        <p class="card-text post-summary">情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選 單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, { props: { disabled: { type: Boolean, default: () =&gt; false }, // checkbox 的標記 [string] || [{text:string, value:any}] labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] }, value: { default: () =&gt; null }, trueValue: { default: () =&gt; &#39;Y&#39; }, falseValue: { default: () =&gt; &#39;N&#39; }, inline: { type: Boolean, default: () =&gt; false }, }, data() { return { innervalue_: this.</p>
+        <p class="card-text post-summary">情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選  單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, {  props: {  disabled: { type: Boolean, default: () =&gt; false },  // checkbox 的標記 [string] || [{text:string, value:any}]  labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] },  value: { default: () =&gt; null },  trueValue: { default: () =&gt; &#39;Y&#39; },  falseValue: { default: () =&gt; &#39;N&#39; },  inline: { type: Boolean, default: () =&gt; false },  },  data() {  return {  innervalue_: this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 29, 2021</span>
@@ -948,9 +947,9 @@ public static class JsonExt { public static void Add(ref this JsonElement source
         <h5 class="card-title">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h5>
         <p class="card-text post-summary">有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
-元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
+ 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-程式碼 (Code) &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this.</p>
+程式碼 (Code) &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt;  &lt;div class=&#34;modal-content&#34;&gt;  &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt;  &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt;  &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt;  &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt;  &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt;  &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({  el: &#39;#xApp&#39;,  data:() =&gt; data,  methods: {  getConfirm() {  // 先清空 result (避免兩次選中一樣的值無法觸發 watcher)  this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 24, 2021</span>
@@ -978,10 +977,10 @@ Dialog 元件設計原理:
         <h5 class="card-title">[架構] 多層式架構(Multitier Architecture)</h5>
         <p class="card-text post-summary">多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
 N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
-提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。 1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
+ 提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。  1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
 2-tier model layer 分配至兩個不同的記憶體空間運行，記憶體空間可能位於相同或兩台不同的機器上(通常是不同機器)，典型的例子是分配到 client、server 上運行。
 3-tier model 多層式架構當中最常使用的就是三層架構(three-tier architecture)。 三層架構與Web應用程式來說明如下：
-表現層(Presentation)：又稱為 UI 層，以Web來說就是呈現出來的前端網頁。 應用程式層(Application)：以 Web 來說相當於伺服器上執行的應用程式。 資料層(Data)：這一層包含資料儲存、呈現機制，以 Web 來說通常指 Database。 Reference wikipedia - Multitier architecture Rockford Lhotka - Should all apps be n-tier?</p>
+ 表現層(Presentation)：又稱為 UI 層，以Web來說就是呈現出來的前端網頁。 應用程式層(Application)：以 Web 來說相當於伺服器上執行的應用程式。 資料層(Data)：這一層包含資料儲存、呈現機制，以 Web 來說通常指 Database。  Reference  wikipedia - Multitier architecture Rockford Lhotka - Should all apps be n-tier?</p>
       </div>
       <div class="card-footer">
         <span class="float-left">May 17, 2021</span>
@@ -1010,7 +1009,7 @@ N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨�
         <p class="card-text post-summary">前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
 步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
 mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
-cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;); // 建立一個 Express 伺服器 const app = express(); app.use(cors()) // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;; // 設定代理到 google 的 Proxy 端點 app.</p>
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;;  // 設定代理到 google 的 Proxy 端點 app.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">March 20, 2021</span>
@@ -1038,7 +1037,7 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
         <h5 class="card-title">[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</h5>
         <p class="card-text post-summary">ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
 非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
-產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。 async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
+ 產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。  async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
 非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</p>
       </div>
       <div class="card-footer">
@@ -1066,9 +1065,8 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
       <div class="card-body">
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</h5>
         <p class="card-text post-summary">驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
-驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋: 驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。 驗證處理函式的設定選項(Opitons of Authentication handler)。 驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
-cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity 使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：
-呼叫 scheme-specific 擴充方法，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。 以 AuthenticationBuilder 內建方法 AddScheme 手動設定，一般來說較少使用。 P.</p>
+ 驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">March 12, 2021</span>

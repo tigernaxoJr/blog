@@ -186,7 +186,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] Web 相關</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
       
       <ul class="">
         
@@ -196,7 +196,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
   
 
   
@@ -205,7 +205,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
   
 
 
@@ -754,9 +754,9 @@
       <div class="card-body">
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</h5>
         <p class="card-text post-summary">SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
-Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。 將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
+ Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。  將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
 以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
-appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;Logging&#34;: { &#34;LogLevel&#34;: { &#34;Default&#34;: &#34;Information&#34;, &#34;Microsoft&#34;: &#34;Warning&#34;, &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34; } }, &#34;JWT&#34;: { &#34;Issuer&#34;: &#34;Naxo&#34;, &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數 &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰 }, &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
+appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &#34;Logging&#34;: {  &#34;LogLevel&#34;: {  &#34;Default&#34;: &#34;Information&#34;,  &#34;Microsoft&#34;: &#34;Warning&#34;,  &#34;Microsoft.Hosting.Lifetime&#34;: &#34;Information&#34;  }  },  &#34;JWT&#34;: {  &#34;Issuer&#34;: &#34;Naxo&#34;,  &#34;Expires&#34;: &#34;1440&#34;, // 憑證有效分鐘數  &#34;SignKey&#34;: &#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&#34; // 設定簽發/解密憑證的對稱式加密金鑰  },  &#34;AllowedHosts&#34;: &#34;*&#34; }</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 7, 2020</span>
@@ -785,7 +785,7 @@ appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { &#34;L
         <p class="card-text post-summary">這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
 # 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
-using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace SignalR.Hubs { // 這就是所謂的 SignalR 中樞 public class ChatHub : Hub { // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數 public async Task SendMessage(string user, string message) { // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message await Clients.</p>
+using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace SignalR.Hubs {  // 這就是所謂的 SignalR 中樞  public class ChatHub : Hub  {  // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數  public async Task SendMessage(string user, string message)  {  // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message  await Clients.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 3, 2020</span>

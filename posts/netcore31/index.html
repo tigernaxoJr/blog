@@ -186,7 +186,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web-tool/">[Web] Web 相關</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
       
       <ul class="">
         
@@ -196,7 +196,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
   
 
   
@@ -205,7 +205,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/web-tool/web-security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
   
 
 
@@ -755,7 +755,7 @@
         <h5 class="card-title">[.NET] 製作 Nuget package</h5>
         <p class="card-text post-summary">安裝 nuget.exe CLI 安裝 nuget.exe CLI，並在環境變數 PATH 新增路徑。
 建立 nuspec 設定檔 example
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt; &lt;metadata&gt; &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt; &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt; &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt; &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt; &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt; &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt; &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt; &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt; &lt;description&gt;MyPackage&lt;/description&gt; &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt; &lt;copyright&gt;-&lt;/copyright&gt; &lt;tags&gt;&lt;/tags&gt; &lt;dependencies&gt; &lt;!-- 定義 .net framework 4.0 使用時需要的相依姓套件 --&gt; &lt;group targetFramework=&#34;.NETFramework4.0.0&#34; &gt; &lt;dependency id=&#34;Dapper&#34; version=&#34;1.50.2&#34; /&gt; &lt;dependency id=&#34;Newtonsoft.Json&#34; version=&#34;7.0.1&#34; /&gt; &lt;/group&gt; &lt;/dependencies&gt; &lt;/metadata&gt; &lt;/package&gt; 打包檔案 假設最低系統需求為 .</p>
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt;  &lt;metadata&gt;  &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt;  &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt;  &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt;  &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt;  &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt;  &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt;  &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt;  &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt;  &lt;description&gt;MyPackage&lt;/description&gt;  &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt;  &lt;copyright&gt;-&lt;/copyright&gt;  &lt;tags&gt;&lt;/tags&gt; 	&lt;dependencies&gt; 	&lt;!-- 定義 .net framework 4.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 22, 2022</span>
@@ -811,7 +811,7 @@ sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
       <div class="card-body">
         <h5 class="card-title">[.NET Core 3.1] JsonDocument 與 DataTable 的互相轉換</h5>
         <p class="card-text post-summary">在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
-public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new MemoryStream()) { using (var writer = new Utf8JsonWriter(stream)) { // 起始一個裝 JElement 的陣列 writer.WriteStartArray(); foreach (DataRow row in dt.Rows) { // 開始寫入每個 Row 各自對應的 JElement 寫入程序 writer.WriteStartObject(); foreach (DataColumn column in row.Table.Columns) { // 先寫入屬性名稱 writer.WritePropertyName(column.ColumnName); // 判斷欄位值是否為 DBNull 來寫入值或 Null if (row[column.ColumnName] == DBNull.Value) writer.WriteNullValue(); else JsonSerializer.Serialize(writer, row[column]); } // 結束一列資料對應的 JElement 寫入程序 writer.</p>
+public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
@@ -838,7 +838,7 @@ public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new Mem
       <div class="card-body">
         <h5 class="card-title">[.NET Core] .NET Core 中對 JsonElement 的操作</h5>
         <p class="card-text post-summary">.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { public static void Add(ref this JsonElement source, string name, string value) { using (MemoryStream ms = new MemoryStream()) { using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) { using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) { writer.WriteStartObject(); // 開始 foreach (var el in source.EnumerateObject()) el.WriteTo(writer); // 寫入新屬性 writer.WritePropertyName(name); writer.WriteStringValue(value); writer.WriteEndObject(); // 結束 } } var resultStr = Encoding.</p>
+public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 6, 2021</span>
@@ -866,7 +866,7 @@ public static class JsonExt { public static void Add(ref this JsonElement source
         <h5 class="card-title">[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</h5>
         <p class="card-text post-summary">ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
 非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
-產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。 async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
+ 產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。  async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
 非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</p>
       </div>
       <div class="card-footer">
@@ -894,9 +894,8 @@ public static class JsonExt { public static void Add(ref this JsonElement source
       <div class="card-body">
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</h5>
         <p class="card-text post-summary">驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
-驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋: 驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。 驗證處理函式的設定選項(Opitons of Authentication handler)。 驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
-cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity 使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：
-呼叫 scheme-specific 擴充方法，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。 以 AuthenticationBuilder 內建方法 AddScheme 手動設定，一般來說較少使用。 P.</p>
+ 驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">March 12, 2021</span>
@@ -922,10 +921,10 @@ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer s
       </div>
       <div class="card-body">
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</h5>
-        <p class="card-text post-summary">授權(Authorization) 授權(Authorization): 界定用戶可存取資源範圍的程序。 Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
+        <p class="card-text post-summary">授權(Authorization)  授權(Authorization): 界定用戶可存取資源範圍的程序。  Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
 自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
 驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
-Reference MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.AspNetCore.Authentication.Cookies Namespace MSDN - Microsoft.</p>
+Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 31, 2020</span>
@@ -953,9 +952,8 @@ Reference MSDN - Principal and Identity Objects MSDN - IAuthenticationService In
         <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</h5>
         <p class="card-text post-summary">前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;
 Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
-// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中 .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
-app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權 // 端點對應 app.UseEndpoints(endpoints =&gt; { endpoints.MapControllers(); endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：
-app.UseCookiePolicy(new CookiePolicyOptions { // 所有 Cookie.</p>
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 30, 2020</span>
@@ -984,7 +982,7 @@ app.UseCookiePolicy(new CookiePolicyOptions { // 所有 Cookie.</p>
         <p class="card-text post-summary">Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
 Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
-ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項 AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
+ ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
 IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</p>
       </div>
       <div class="card-footer">
@@ -1014,9 +1012,9 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
         <p class="card-text post-summary">在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
 驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
 授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
-限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。 挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+ 限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。  挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
 挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
-cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。 禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
+ cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。  禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 23, 2020</span>
@@ -1044,7 +1042,7 @@ cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthori
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</h5>
         <p class="card-text post-summary">安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks; namespace SignalR.Extensions.DependencyInjection { public static class MyAddConfig { public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services, IConfiguration config ) { services.</p>
+using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 20, 2020</span>
@@ -1072,10 +1070,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
         <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
         <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
 axios 一樣可以透過 LibMan 安裝~
-libman install axios@latest \ -p unpkg \ -d wwwroot/js/axios \ --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
 &lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
-libman install bootstrap@5.0.0-alpha2 \ -p unpkg \ -d wwwroot/lib/bootstrap \ --files dist/js/bootstrap.min.js \ --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
-&lt;script src=&#34;./lib/bootstrap/dist/js/bootstrap.min.js&#34;&gt;&lt;/script&gt; 現在將 wwwRoot/index.html 修改如下：</p>
+libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 10, 2020</span>
