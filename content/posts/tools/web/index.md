@@ -17,6 +17,8 @@ autoCollapseToc: false
 - [d3.js](https://d3js.org/) 用於資料視覺化
 - [Three.js](https://threejs.org/) 簡易使用 WebGL 的封裝
 - [lodash]() 
-- [jsPdf]() 
+- [jsPdf](https://github.com/MrRio/jsPDF) 
+- [jsPdf - Documentation](http://raw.githack.com/MrRio/jsPDF/master/docs/index.html)
+- [html2canvas - official](https://html2canvas.hertzen.com/)
 
 # 退役軍火庫
