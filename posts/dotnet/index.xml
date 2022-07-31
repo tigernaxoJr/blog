@@ -23,6 +23,17 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</description>
     </item>
     
     <item>
+      <title>[.NET] 製作 Nuget package</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/nuget/</link>
+      <pubDate>Fri, 22 Jul 2022 14:07:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/nuget/</guid>
+      <description>安裝 nuget.exe CLI 安裝 nuget.exe CLI，並在環境變數 PATH 新增路徑。
+建立 nuspec 設定檔 example
+&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt; &amp;lt;package &amp;gt;  &amp;lt;metadata&amp;gt;  &amp;lt;id&amp;gt;MyPackage&amp;lt;/id&amp;gt; &amp;lt;!--package id --&amp;gt;  &amp;lt;version&amp;gt;1.0.0&amp;lt;/version&amp;gt; &amp;lt;!--版本號--&amp;gt;  &amp;lt;title&amp;gt;MyPackage&amp;lt;/title&amp;gt; &amp;lt;!-- package title --&amp;gt;  &amp;lt;authors&amp;gt;Chen, Yu Cheng&amp;lt;/authors&amp;gt; &amp;lt;!-- 作者 --&amp;gt;  &amp;lt;requireLicenseAcceptance&amp;gt;false&amp;lt;/requireLicenseAcceptance&amp;gt;  &amp;lt;license type=&amp;#34;expression&amp;#34;&amp;gt;MIT&amp;lt;/license&amp;gt;  &amp;lt;!-- &amp;lt;icon&amp;gt;icon.png&amp;lt;/icon&amp;gt; --&amp;gt;  &amp;lt;!--&amp;lt;projectUrl&amp;gt;http://project_url_here_or_delete_this_line/&amp;lt;/projectUrl&amp;gt;--&amp;gt;  &amp;lt;description&amp;gt;MyPackage&amp;lt;/description&amp;gt;  &amp;lt;releaseNotes&amp;gt;Test release of MyPackage package.&amp;lt;/releaseNotes&amp;gt;  &amp;lt;copyright&amp;gt;-&amp;lt;/copyright&amp;gt;  &amp;lt;tags&amp;gt;&amp;lt;/tags&amp;gt; 	&amp;lt;dependencies&amp;gt; 	&amp;lt;!-- 定義 .net framework 4.</description>
+    </item>
+    
+    <item>
       <title>[.NET] .NET 6 Web API 專案</title>
       <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-webapi/</link>
       <pubDate>Mon, 18 Jul 2022 11:35:00 +0800</pubDate>
@@ -31,6 +42,160 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</description>
       <description>添加 Swagger dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3 Program.cs
 builder.Services.AddControllers();  builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&amp;lt;port&amp;gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
 &amp;#34;serverReadyAction&amp;#34;: {  &amp;#34;action&amp;#34;: &amp;#34;openExternally&amp;#34;,  &amp;#34;pattern&amp;#34;: &amp;#34;^\\s*Now listening on:\\s+(https?://\\S+)&amp;#34;,  &amp;#34;uriFormat&amp;#34;: &amp;#34;%s/swagger&amp;#34; } ASP.NET Core doesn&amp;rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</link>
+      <pubDate>Wed, 11 Aug 2021 16:48:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</guid>
+      <description>設置 Ubuntu 安裝 .NET Core Runtime wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb sudo dpkg -i packages-microsoft-prod.deb sudo apt update sudo apt install apt-transport-https sudo apt install dotnet-runtime-3.1 安裝 Nginx 新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list
+#/etc/apt/sources.list.d/nginx.list. deb https://nginx.org/packages/ubuntu/ focal nginx deb-src https://nginx.org/packages/ubuntu/ focal nginx 安裝
+sudo apt update sudo apt install nginx -y 啟動、設定開機啟動
+# 啟動 nginx sudo systemctl start nginx # 設置 nginx 開機啟動 sudo systemctl enable nginx # 確認 nginx 運行狀態 sudo systemctl status nginx 設置 Nginx 反向代理本機的 5000 連接埠(之後 Kestrel 的 http 服務端口)</description>
+    </item>
+    
+    <item>
+      <title>[.NET] JsonDocument 與 DataTable 的互相轉換</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-dt/</link>
+      <pubDate>Fri, 06 Aug 2021 14:56:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-dt/</guid>
+      <description>在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
+public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column.</description>
+    </item>
+    
+    <item>
+      <title>[.NET] JsonElement 的操作</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-operate/</link>
+      <pubDate>Fri, 06 Aug 2021 14:37:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-operate/</guid>
+      <description>.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
+public static class JsonExt { 	public static void Add(ref this JsonElement source, string name, string value) 	{ 	using (MemoryStream ms = new MemoryStream()) 	{ 	using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) 	{ 	using (JsonDocument json = JsonDocument.Parse(&amp;#34;{}&amp;#34;)) 	{ 	writer.WriteStartObject(); // 開始 	foreach (var el in source.EnumerateObject()) 	el.WriteTo(writer); 	// 寫入新屬性 	writer.</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/basic-async-controller/</link>
+      <pubDate>Wed, 17 Mar 2021 03:32:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/basic-async-controller/</guid>
+      <description>ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
+非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
+ 產生可等待 awaitable 型別 (Task, Task&amp;lt;TResult&amp;gt;, ValueTask, 和 ValueTask&amp;lt;TResult&amp;gt;)， 其中以 Task、Task&amp;lt;TResult&amp;gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。  async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
+非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_2/</link>
+      <pubDate>Fri, 12 Mar 2021 23:08:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_2/</guid>
+      <description>驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
+ 驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &amp;rsquo;no result&amp;rsquo; 或 &amp;lsquo;failure&amp;rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+ cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_4/</link>
+      <pubDate>Thu, 31 Dec 2020 14:08:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_4/</guid>
+      <description>授權(Authorization)  授權(Authorization): 界定用戶可存取資源範圍的程序。  Policy-based authorization ASP .NET Core 的授權以政策 Policy 進行設定
+自訂授權 RBAC Name 記載使用者識別名稱(User Identity) userData 記載以 | 分隔的使用者角色 Role
+驗證與授權 Challenge、Forbid 中間件順序 先驗證、再授權 The Order of UseAuthentication、UseAuthorization
+Reference  MSDN - Principal and Identity Objects MSDN - IAuthenticationService Interface MSDN - AuthenticationService Class MSDN - Overview of ASP.NET Core Security MSDN - Overview of ASP.NET Core authentication MSDN - Policy-based authorization in ASP.NET Core MSDN - Microsoft.</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_3/</link>
+      <pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_3/</guid>
+      <description>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;
+Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
+// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
+app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&amp;gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_memo/</link>
+      <pubDate>Mon, 23 Nov 2020 15:48:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_memo/</guid>
+      <description>Identity Objects Principal Objects IPrincipal 物件帶有 IIdentity 物件的參考 可指定 Authentication Scheme 獲得 Identity
+IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 在 Cookie 寫入 Claims
+Token 登入 登入 API 實作 宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。 使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：
+ ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。 AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。 authProperties (Optional)，可指定自訂認證選項  AuthenticationHttpContextExtensions AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法， 從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。
+IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。</description>
+    </item>
+    
+    <item>
+      <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_1/</link>
+      <pubDate>Mon, 23 Nov 2020 08:39:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_1/</guid>
+      <description>在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
+驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
+授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
+ 限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。  挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
+ cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。  禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</description>
+    </item>
+    
+    <item>
+      <title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_3_validate_token/</link>
+      <pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_3_validate_token/</guid>
+      <description>安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
+using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services.</description>
+    </item>
+    
+    <item>
+      <title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/</link>
+      <pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/</guid>
+      <description>安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
+axios 一樣可以透過 LibMan 安裝~
+libman install axios@latest \  -p unpkg \  -d wwwroot/js/axios \  --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
+&amp;lt;script src=&amp;#34;./lib/axios/dist/axios.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
+libman install bootstrap@5.0.0-alpha2 \  -p unpkg \  -d wwwroot/lib/bootstrap \  --files dist/js/bootstrap.min.js \  --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：</description>
+    </item>
+    
+    <item>
+      <title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_2_issue_token/</link>
+      <pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_2_issue_token/</guid>
+      <description>SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
+ Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。  將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
+以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
+appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： {  &amp;#34;Logging&amp;#34;: {  &amp;#34;LogLevel&amp;#34;: {  &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;,  &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;,  &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34;  }  },  &amp;#34;JWT&amp;#34;: {  &amp;#34;Issuer&amp;#34;: &amp;#34;Naxo&amp;#34;,  &amp;#34;Expires&amp;#34;: &amp;#34;1440&amp;#34;, // 憑證有效分鐘數  &amp;#34;SignKey&amp;#34;: &amp;#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&amp;#34; // 設定簽發/解密憑證的對稱式加密金鑰  },  &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; }</description>
+    </item>
+    
+    <item>
+      <title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title>
+      <link>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_1_start/</link>
+      <pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_1_start/</guid>
+      <description>這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
+建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
+# 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
+using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks;  namespace SignalR.Hubs {  // 這就是所謂的 SignalR 中樞  public class ChatHub : Hub  {  // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數  public async Task SendMessage(string user, string message)  {  // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message  await Clients.</description>
     </item>
     
     
