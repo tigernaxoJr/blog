@@ -6,7 +6,7 @@ draft: false
 menu:
   sidebar:
     name: "[K8s] 共享 tnsnames.ora"
-    identifier: k8s-example-tnsnames.ora
+    identifier: k8s-tnsnames.ora
     parent: container
     weight: 2000
 ---
@@ -121,9 +121,18 @@ minikube kubectl -- expose deployment testap-deployment --type=NodePort --port=8
 minikube kubectl -- port-forward testap-deployment-66797fd85b-gx64z 8080:80
 ```
 這時可以打開 http://{k8s ip}:8080，看
+
 ## Reference
 - [ithome - [Day 12] 敏感的資料怎麼存在k8s?! - Secrets](https://ithelp.ithome.com.tw/articles/10195094)
 - [kubernetes - Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 - [kubernetes - Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)
 - [Oracle - Oracle Data Provider for .NET Core Configuration](https://docs.oracle.com/en/database/oracle/oracle-database/21/odpnt/InstallCoreConfiguration.html)
+- [Oracle tnsnames.ora Distribution Management System!](https://ahmedfattah.com/2017/04/28/oracle-tnsnames-ora-distribution-management-system/)
+
+## IIS 環境 (Window Server)
+有下面兩種做法：
+- 以 NFS 共用 tnsnames.ora (網路斷線就讀不到) 
+- 連線資訊有更動時，直接利用腳本更新每台機器的 tnsnames.ora 
+
+## Reference
 - [Oracle tnsnames.ora Distribution Management System!](https://ahmedfattah.com/2017/04/28/oracle-tnsnames-ora-distribution-management-system/)
