@@ -22,5 +22,7 @@ autoCollapseToc: false
 - [html2canvas - official](https://html2canvas.hertzen.com/)
 - [awesome(學習資源彙整)](https://github.com/sindresorhus/awesome)
 - [focalboard(Trello 替代)](https://www.focalboard.com/download/personal-edition/docker/)
+- [file-saver](https://www.npmjs.com/package/file-saver)
+- [exceljs](https://www.npmjs.com/package/exceljs)
 
 # 退役軍火庫
