@@ -317,7 +317,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/vue/">[前端] Vue</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/frontend/">[前端] 前端開發</a>
       
       <ul class="">
         
@@ -327,7 +327,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/vue/vuejs-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+    <li><a class="" href="/blog/posts/frontend/vue-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
   
 
   
@@ -336,7 +336,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/vue/vuejs-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+    <li><a class="" href="/blog/posts/frontend/vue-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
   
 
   
@@ -345,7 +345,16 @@
   
   
     
-    <li><a class="" href="/blog/posts/vue/vuejs-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+    <li><a class="" href="/blog/posts/frontend/vue-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/devops-git/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
   
 
 
@@ -718,6 +727,35 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/dotnet/startup-auth/auth_guild_2/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</h5>
+        <p class="card-text post-summary">驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
+驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋: 驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。 驗證處理函式的設定選項(Opitons of Authentication handler)。 驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity 使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：
+呼叫 scheme-specific 擴充方法，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。 以 AuthenticationBuilder 內建方法 AddScheme 手動設定，一般來說較少使用。 P.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">March 12, 2021</span>
+        
+        <a
+        href="/blog/posts/dotnet/startup-auth/auth_guild_2/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/other/linux-gdrive-cli/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1028,33 +1066,6 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
         
         <a
         href="/blog/posts/javascript/code-copy-html-content/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/diy-simple-router/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
-        <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
-npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34; /&gt; &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt; &lt;title&gt;Vite App&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt; &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script type=&#34;module&#34; src=&#34;/src/main.ts&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt;</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 13, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/diy-simple-router/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
