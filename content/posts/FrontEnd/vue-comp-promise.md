@@ -1,6 +1,6 @@
 ---
 title: "[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法"
-date: 2021-07-24T07:32:00+08:00
+date: 2022-08-26T15:03:00+08:00
 draft: false
 hero: 
 discription: asdf
@@ -25,7 +25,7 @@ Dialog 元件設計原理:
 
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
 
-# 程式碼 (Code)
+## Vuejs 實作
 ```html
 <button id="xBtn">執行測試</button>
 <div id="xApp" class="modal" :style="{display: dialog?'block':'none'}">
@@ -184,3 +184,93 @@ document.getElementById('xBtn')
       async e => alert( await dialog.getConfirm() )
     );
 </script>
+
+## Vue-next 實作
+這裡使用 vue-next/setup/quasar/typescript
+### 程式碼
+```vue
+<template>
+  <q-dialog v-model="model" :persistent="persistent">
+    <q-card>
+      <slot>
+        <q-card-section> {{ textComputed }} </q-card-section>
+      </slot>
+      <q-card-actions align="right">
+        <slot name="action" :setter="SetResult">
+          <q-btn dense color="primary" label="確認" @click="SetResult(true)" />
+          <q-btn dense color="info" label="取消" @click="SetResult(false)" />
+        </slot>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+const model = ref(false);
+const result = ref<unknown>(null);
+
+interface IProps {
+  text?: string;
+  persistent?: boolean;
+  width?: 'xs' | 'sm' | 'md' | 'lg' | 'max';
+}
+const props = withDefaults(defineProps<IProps>(), {
+  text: '確認或取消？',
+  persistent: true,
+  width: 'max',
+});
+
+defineEmits(['input']);
+const SetResult = (v: unknown) => (result.value = v);
+
+const textTmp = ref<string | null>(null);
+const textComputed = computed(() => textTmp.value || props.text);
+async function GetResult(text: string | null = null) {
+  textTmp.value = text || null;
+  result.value = null;
+  model.value = true;
+  return new Promise((resolve, reject) => {
+    console.log('new promise...');
+    try {
+      const watcher = watch(
+        () => result.value,
+        (cur) => {
+          resolve(cur);
+          watcher();
+          model.value = false;
+        }
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+defineExpose({ SetResult, GetResult, model });
+</script>
+```
+### 使用方法
+```vue
+<template>
+  <!-- 確認 Dialog -->
+  <DialogAsync ref="dlg" width="sm" />
+  <q-btn @click="getUserInput()"> </q-btn>
+</template>
+
+<script setup lang="ts">
+import DialogAsync from '../../components/DialogAsync/IndexPage.vue';
+import { ref, Ref } from 'vue';
+
+const dlg = ref(null);
+
+// 顯示文字並取得使用者輸入的 true 或 false
+const check = async (str?: string | null) =>
+  await (dlg.value as typeof DialogAsync | null)?.GetResult(str);
+
+const getUserInput = async () => {
+  let result = await check('請確認')
+  console.log('使用者選擇了：', result)
+  }
+
+</script>
+```
