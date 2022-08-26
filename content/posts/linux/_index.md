@@ -6,3 +6,7 @@ menu:
     identifier: linux
     weight: 300
 ---
+
+# todos
+- namespace
+- cgroup
