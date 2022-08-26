@@ -7,8 +7,8 @@ discription: asdf
 menu:
   sidebar:
     name: "[DIY] 元件方法回傳 Promise"
-    identifier: vuejs-comp-promise
-    parent: vue
+    identifier: frontend-vue-comp-promise
+    parent: frontend
     weight: 1000
 ---
 有用過 [sweetalert2](https://sweetalert2.github.io/) 的話，應該會喜歡可以同步等待對話框回傳值的方式，

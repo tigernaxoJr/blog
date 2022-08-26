@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[DIY] CheckBox 元件"
-    identifier: vuejs-comp-yncheckbox
-    parent: vue
+    identifier: frontend-vue-comp-yncheckbox
+    parent: frontend
     weight: 1000
 ---
 

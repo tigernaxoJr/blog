@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[DIY] Navigation Guard 加入查詢參數"
-    identifier: vuejs-router-naviguard-param
-    parent: vue
+    identifier: frontend-vue-router-naviguard-param
+    parent: frontend
     weight: 1000
 ---
 工作上需要把每一個路由都加上同一個 query string
