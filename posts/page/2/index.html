@@ -614,6 +614,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/container/docker-command/" title="[Docker] Docker 基礎指令">[Docker] Docker 基礎指令</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
   
 
@@ -724,6 +733,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/container/docker-postgresql/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Docker] 安裝PostgreSQL</h5>
+        <p class="card-text post-summary">安裝 postgreSQL 拉取 postgres image $ docker pull postgres Using default tag: latest latest: Pulling from library/postgres 1fe172e4850f: Pull complete c2bb685f623f: Pull complete 3027ff705410: Pull complete 062371e3461d: Pull complete 39d54e944de7: Pull complete 6530357dda9a: Pull complete b1d302dc78c6: Pull complete f6d91cb1d3c1: Pull complete 9bbd62b0af28: Pull complete 3cfdfc8fbef3: Pull complete 635f8fae1d06: Pull complete 96b6711661dd: Pull complete c08147da7b54: Pull complete Digest: sha256:ab0be6280ada8549f45e6662ab4f00b7f601886fcd55c5976565d4636d87c8b2 Status: Downloaded newer image for postgres:latest docker.io/library/postgres:latest 檢查 docker images
+$ docker images REPOSITORY TAG IMAGE ID CREATED SIZE postgres latest 74b0c105737a 4 days ago 376MB 建立 volume docker volume create --name pg-data 執行 Image 環境變數</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">April 25, 2022</span>
+        
+        <a
+        href="/blog/posts/container/docker-postgresql/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1025,35 +1061,6 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
         
         <a
         href="/blog/posts/javascript/diy-http-proxy-middleware/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/dotnet/basic-async-controller/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</h5>
-        <p class="card-text post-summary">ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
-非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
-產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。 async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
-非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">March 17, 2021</span>
-        
-        <a
-        href="/blog/posts/dotnet/basic-async-controller/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

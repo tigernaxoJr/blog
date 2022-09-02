@@ -614,6 +614,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/container/docker-command/" title="[Docker] Docker 基礎指令">[Docker] Docker 基礎指令</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
   
 
@@ -1044,21 +1053,22 @@ MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4
       
         
           <div class="post-card">
-  <a href="/blog/posts/container/docker-postgresql/" class="post-card-link">
+  <a href="/blog/posts/container/docker-command/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
       </div>
       <div class="card-body">
-        <h5 class="card-title">[Docker] 安裝PostgreSQL</h5>
-        <p class="card-text post-summary">安裝 postgreSQL 拉取 postgres image $ docker pull postgres Using default tag: latest latest: Pulling from library/postgres 1fe172e4850f: Pull complete c2bb685f623f: Pull complete 3027ff705410: Pull complete 062371e3461d: Pull complete 39d54e944de7: Pull complete 6530357dda9a: Pull complete b1d302dc78c6: Pull complete f6d91cb1d3c1: Pull complete 9bbd62b0af28: Pull complete 3cfdfc8fbef3: Pull complete 635f8fae1d06: Pull complete 96b6711661dd: Pull complete c08147da7b54: Pull complete Digest: sha256:ab0be6280ada8549f45e6662ab4f00b7f601886fcd55c5976565d4636d87c8b2 Status: Downloaded newer image for postgres:latest docker.io/library/postgres:latest 檢查 docker images
-$ docker images REPOSITORY TAG IMAGE ID CREATED SIZE postgres latest 74b0c105737a 4 days ago 376MB 建立 volume docker volume create --name pg-data 執行 Image 環境變數</p>
+        <h5 class="card-title">[Docker] Docker Basic Command</h5>
+        <p class="card-text post-summary">執行容器
+docker run [image] [overwrite defalut commain] 列出正在執行的容器， &ndash;all 可以列出曾經執行過的容器
+docker ps [--all] </p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 25, 2022</span>
         
         <a
-        href="/blog/posts/container/docker-postgresql/"
+        href="/blog/posts/container/docker-command/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
