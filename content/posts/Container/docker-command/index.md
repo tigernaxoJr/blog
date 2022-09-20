@@ -18,3 +18,15 @@ docker run [image] [overwrite defalut commain]
 ```
 docker ps [--all]
 ```
+```
+docker run
+docker ps --all
+docker create
+docker start (what different from docker run?)
+docker system prune
+docker logs
+docker stop   (send sigterm) 10s then docker kill
+docker kill
+
+docker exec -it <containerId> /bin/bash (i, t stands for?)
+```
