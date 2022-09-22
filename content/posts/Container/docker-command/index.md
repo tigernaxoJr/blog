@@ -27,6 +27,9 @@ docker system prune
 docker logs
 docker stop   (send sigterm) 10s then docker kill
 docker kill
+docker build -t <dockerid>/<project>:latest .
 
 docker exec -it <containerId> /bin/bash (i, t stands for?)
 ```
+build context!
+port mapping 是為了處理 into docker，docker 出來從來沒有被限制
