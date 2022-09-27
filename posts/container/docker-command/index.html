@@ -793,7 +793,22 @@ service</p>
 <li>on-failure (用於例如完成任務就退出的 worker container)</li>
 <li>unless-stopped</li>
 </ul>
-<pre tabindex="0"><code></code></pre>
+<pre tabindex="0"><code></code></pre><p>pull request = merge ???
+Travis CI
+Merge PR ?</p>
+<p>development server configuration:
+use &lsquo;Dockerfile.dev&rsquo; only for development 
+and specify filename by -f
+In front end development, use Docker Volumes to let hot reload</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -p 3000:3000 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -v <span style="color:#f92672">[</span>bookmark<span style="color:#f92672">]</span> <span style="color:#ae81ff">\ </span><span style="color:#75715e"># bookmark volumes, means dont map this dir </span>
+</span></span><span style="display:flex;"><span>  -v<span style="color:#f92672">[</span>localDir<span style="color:#f92672">]</span>:<span style="color:#f92672">[</span>containerDir<span style="color:#f92672">]</span> <span style="color:#75715e"># with :</span>
+</span></span></code></pre></div><p>用 docker-compose 管理這些(build, port, volumes)
+development 用 docker-compose 的話 production  用什麼？</p>
+<p>Dockerfile 留下 COPY . . 可降低對 docker compose 的耦合度，另作他用
+docker attatch</p>
+
         </div>
 
         
