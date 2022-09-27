@@ -52,3 +52,23 @@ service
   - unless-stopped
 ```
 ```
+pull request = merge ???
+Travis CI
+Merge PR ?
+
+development server configuration:
+use 'Dockerfile.dev' only for development 
+and specify filename by -f
+In front end development, use Docker Volumes to let hot reload
+
+```bash
+docker run \
+  -p 3000:3000 \
+  -v [bookmark] \ # bookmark volumes, means dont map this dir 
+  -v[localDir]:[containerDir] # with :
+```
+用 docker-compose 管理這些(build, port, volumes)
+development 用 docker-compose 的話 production  用什麼？
+
+Dockerfile 留下 COPY . . 可降低對 docker compose 的耦合度，另作他用
+docker attatch
