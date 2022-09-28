@@ -30,6 +30,7 @@ docker kill
 docker build -t <dockerid>/<project>:latest .
 
 docker exec -it <containerId> /bin/bash (i, t stands for?)
+# execute new command
 ```
 build context!
 port mapping 是為了處理 into docker，docker 出來從來沒有被限制
@@ -72,3 +73,14 @@ development 用 docker-compose 的話 production  用什麼？
 
 Dockerfile 留下 COPY . . 可降低對 docker compose 的耦合度，另作他用
 docker attatch
+-- attatch to the container terminal(stdin/stdout/strerr) of primary proccess
+npm run test 會跑在不同的 process，導致無法 attatch 到所有的 stdin/stdout/stderr
+npm <= attatch to this primary process
+sart.js <= real run test, second process start by npm 
+!!there are no workaround for npm run test of react project
+
+multi-step build process
+FROM xxx as <temp-stagename>
+COPY --from=<stage> /app/build ...distination
+
+只能有一個 FROM 沒有加 as xxx 
