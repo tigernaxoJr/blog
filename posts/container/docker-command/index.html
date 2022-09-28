@@ -25,7 +25,7 @@
 <meta property="og:title" content="[Docker] Docker Basic Command" />
 <meta property="og:description" content="執行容器
 docker run [image] [overwrite defalut commain] 列出正在執行的容器， &ndash;all 可以列出曾經執行過的容器
-docker ps [--all] docker rundocker ps --alldocker createdocker start (what different from docker run?)docker system prunedocker logsdocker stop (send sigterm) 10s then docker killdocker killdocker build -t &lt;dockerid&gt;/&lt;project&gt;:latest .docker exec -it &lt;containerId&gt; /bin/bash (i, t stands for?) build context! port mapping 是為了處理 into docker，docker 出來從來沒有被限制
+docker ps [--all] docker rundocker ps --alldocker createdocker start (what different from docker run?)docker system prunedocker logsdocker stop (send sigterm) 10s then docker killdocker killdocker build -t &lt;dockerid&gt;/&lt;project&gt;:latest .docker exec -it &lt;containerId&gt; /bin/bash (i, t stands for?)# execute new command build context! port mapping 是為了處理 into docker，docker 出來從來沒有被限制
 Docker Compose 所有的 docker-compose 都要在 yml 資料夾下作用 可啟動多個 Contailner 並連接 Container 之間的網路 docker-compose." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/container/docker-command/" /><meta property="article:section" content="posts" />
@@ -773,6 +773,7 @@ docker kill
 docker build -t &lt;dockerid&gt;/&lt;project&gt;:latest .
 
 docker exec -it &lt;containerId&gt; /bin/bash (i, t stands for?)
+# execute new command
 </code></pre><p>build context!
 port mapping 是為了處理 into docker，docker 出來從來沒有被限制</p>
 <p>Docker Compose
@@ -807,7 +808,16 @@ In front end development, use Docker Volumes to let hot reload</p>
 </span></span></code></pre></div><p>用 docker-compose 管理這些(build, port, volumes)
 development 用 docker-compose 的話 production  用什麼？</p>
 <p>Dockerfile 留下 COPY . . 可降低對 docker compose 的耦合度，另作他用
-docker attatch</p>
+docker attatch
+&ndash; attatch to the container terminal(stdin/stdout/strerr) of primary proccess
+npm run test 會跑在不同的 process，導致無法 attatch 到所有的 stdin/stdout/stderr
+npm &lt;= attatch to this primary process
+sart.js &lt;= real run test, second process start by npm 
+!!there are no workaround for npm run test of react project</p>
+<p>multi-step build process
+FROM xxx as <temp-stagename>
+COPY &ndash;from=<stage> /app/build &hellip;distination</p>
+<p>只能有一個 FROM 沒有加 as xxx</p>
 
         </div>
 
