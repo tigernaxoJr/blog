@@ -83,4 +83,10 @@ multi-step build process
 FROM xxx as <temp-stagename>
 COPY --from=<stage> /app/build ...distination
 
+Travis CI/circleci ?
 只能有一個 FROM 沒有加 as xxx 
+Travis CI，可推到 AWS 上 
+GitHub App?
+
+before_install
+script
