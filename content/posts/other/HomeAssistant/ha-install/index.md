@@ -53,3 +53,4 @@ http://192.168.56.100:8123/
 ## Reference
 - [home-assistant.io - installation](https://www.home-assistant.io/installation/generic-x86-64#docker-compose)
 - [configuring-the-mosquitto-mqtt-docker-container-for-use-with-home-assistant](https://www.homeautomationguy.io/docker-tips/configuring-the-mosquitto-mqtt-docker-container-for-use-with-home-assistant/)
+- [home-assistant-docker-zigbee2mqtt](https://medium.com/geekculture/home-assistant-docker-zigbee2mqtt-3d8e0ba02d10)
