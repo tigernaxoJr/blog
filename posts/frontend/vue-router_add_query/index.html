@@ -24,10 +24,9 @@
 
 <meta property="og:title" content="[DIY] Vue Router 使用 Navigation Guard 加入查詢參數" />
 <meta property="og:description" content="工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
-router.beforeEach(async (to, from, next) =&gt; { next({ path: path, query: {...to.queryl ,token: tokenStr} }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
+router.beforeEach(async (to, from, next) =&gt; {  next({  path: path,  query: {...to.queryl ,token: tokenStr}  }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
 runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
-next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:
-next(): move on to the next hook in the pipeline." />
+ next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend/vue-router_add_query/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-19T17:20:00+08:00" />
@@ -702,6 +701,15 @@ next(): move on to the next hook in the pipeline." />
   
   
     
+    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
   
 
@@ -900,6 +908,9 @@ next(): move on to the next hook in the pipeline." />
   
     
     
+  
+  
+
   
   
 

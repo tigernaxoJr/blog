@@ -24,7 +24,7 @@
 
 <meta property="og:title" content="[.NET] JsonDocument 與 DataTable 的互相轉換" />
 <meta property="og:description" content="在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到， 下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，
-public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new MemoryStream()) { using (var writer = new Utf8JsonWriter(stream)) { // 起始一個裝 JElement 的陣列 writer.WriteStartArray(); foreach (DataRow row in dt.Rows) { // 開始寫入每個 Row 各自對應的 JElement 寫入程序 writer.WriteStartObject(); foreach (DataColumn column in row.Table.Columns) { // 先寫入屬性名稱 writer.WritePropertyName(column.ColumnName); // 判斷欄位值是否為 DBNull 來寫入值或 Null if (row[column.ColumnName] == DBNull.Value) writer.WriteNullValue(); else JsonSerializer.Serialize(writer, row[column]); } // 結束一列資料對應的 JElement 寫入程序 writer." />
+public JsonElement jsonFromDataTable(DataTable dt) {  using (var stream = new MemoryStream()) {  using (var writer = new Utf8JsonWriter(stream)) {  // 起始一個裝 JElement 的陣列  writer.WriteStartArray();  foreach (DataRow row in dt.Rows) {  // 開始寫入每個 Row 各自對應的 JElement 寫入程序  writer.WriteStartObject();  foreach (DataColumn column in row.Table.Columns) {  // 先寫入屬性名稱  writer.WritePropertyName(column.ColumnName);  // 判斷欄位值是否為 DBNull 來寫入值或 Null  if (row[column." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-dt/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-06T14:56:00+08:00" />
@@ -699,6 +699,15 @@ public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new Mem
   
   
     
+    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
   
 
@@ -906,6 +915,9 @@ public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new Mem
   
     
     
+  
+  
+
   
   
 

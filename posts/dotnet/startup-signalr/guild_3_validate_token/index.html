@@ -25,7 +25,7 @@
 <meta property="og:title" content="[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證" />
 <meta property="og:description" content="安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks; namespace SignalR.Extensions.DependencyInjection { public static class MyAddConfig { public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services, IConfiguration config ) { services." />
+using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks;  namespace SignalR.Extensions.DependencyInjection {  public static class MyAddConfig  {  public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services,  IConfiguration config  )  {   services." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/startup-signalr/guild_3_validate_token/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-11-20T22:44:00+08:00" />
@@ -703,6 +703,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
   
   
     
+    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
   
 
@@ -1048,6 +1057,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.
   
     
     
+  
+  
+
   
   
 
