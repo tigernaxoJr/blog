@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)" />
+<meta property="og:description" content="台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
+OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
+注意事項  校時
+由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w  所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null   從Windows登入台灣杉 前置工作  安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN&#43;R、鍵入cmd、enter)。  編譯TOTP產生器 取得TOTP套件
+go get github.com/pquerna/otp/totp 撰寫程式碼main.go
+package main  import (  &#34;fmt&#34;  &#34;github.com/pquerna/otp/totp&#34;  &#34;os&#34;  &#34;time&#34; )  func main() {  secret := os." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/other/taiwania_login_oneclick/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-01-23T09:37:18+08:00" />
+<meta property="article:modified_time" content="2019-01-23T09:37:18+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/frontend/">[前端] 前端開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/devops-git/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-auth/">[練習] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-signalr/">[練習] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/container/">[維運] Container 容器</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/base-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/docker-command/" title="[Docker] Docker 基礎指令">[Docker] Docker 基礎指令</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/other/">[其他] Other</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Wednesday, January 23, 2019</p>
+        </div>
+
+        <div class="title">
+          <h1>[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <p>台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。</p>
+<p>OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。</p>
+<h1 id="注意事項">注意事項</h1>
+<ul>
+<li><strong>校時</strong><br>
+由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS：
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 從NTP時間伺服器進行網路校時</span>
+</span></span><span style="display:flex;"><span>sudo ntpdate time.stdtime.gov.tw
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 將更新的時間寫入BIOS</span>
+</span></span><span style="display:flex;"><span>sudo hwclock -w
+</span></span></code></pre></div></li>
+<li><strong>所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。</strong>
+每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。</li>
+<li><strong>Linux要登入台灣衫需要將台灣衫加入know host</strong>，以生醫節點為例:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null
+</span></span></code></pre></div></li>
+</ul>
+<h1 id="從windows登入台灣杉">從Windows登入台灣杉</h1>
+<h2 id="前置工作">前置工作</h2>
+<ul>
+<li>安裝<a href="https://golang.org/dl/">Go</a>，並<a href="https://github.com/golang/go/wiki/SettingGOPATH">設置GOPATH</a>。</li>
+<li>安裝<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty</a>。</li>
+<li>安裝<a href="https://winscp.net/eng/download.php">WinSCP</a>。</li>
+<li>知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。</li>
+</ul>
+<h2 id="編譯totp產生器">編譯TOTP產生器</h2>
+<p>取得TOTP套件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>go get github.com/pquerna/otp/totp
+</span></span></code></pre></div><p>撰寫程式碼main.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;github.com/pquerna/otp/totp&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">secret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">code</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">totp</span>.<span style="color:#a6e22e">GenerateCode</span>(<span style="color:#a6e22e">secret</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UTC</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>編譯</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>go build -o taiwaniaOTP.exe main.go
+</span></span></code></pre></div><h2 id="設置putty">設置putty</h2>
+<p>按照圖片步驟設置putty session，如果不想修改預設字型可跳過步驟4~6，全部設置完成後要回Session標籤按Save(步驟7、8)
+<img src="set-putty-session.jpg" alt="設置Putty Session"></p>
+<h2 id="撰寫批次檔-串聯totp產生器與putty-session">撰寫批次檔 (串聯TOTP產生器與putty session)</h2>
+<p>建立資料夾(例如: D:\BioPkg\taiwania)，把剛剛的taiwaniaOTP.exe丟進去，在資料夾內複製下面指令建立taiwania-putty.bat批次檔，按照步驟1~3進行設置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>@<span style="color:#66d9ef">echo</span> off
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 1.設置putty執行檔位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> putty=D:\Programs\putty.exe
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 2.設置固定密碼(取代password)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> regular_pw=password
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 3.設置TOTP金鑰(從iservice服務網複製的金鑰取代TOTPsecret)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> secret=TOTPsecret
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 取得totp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#66d9ef">/f</span> <span style="color:#ae81ff">%%</span>i <span style="color:#66d9ef">in</span> (<span style="color:#e6db74">&#39;</span>%cd%<span style="color:#e6db74">/taiwaniaOTP.exe </span>%secret%<span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">set</span> totp=<span style="color:#ae81ff">%%</span>i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 5.把taiwania-14取代成你剛剛設置的session name</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">start</span> D:\Programs\putty.exe -load <span style="color:#e6db74">&#34;taiwania-14&#34;</span> -pw %regular_pw%%totp%
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">exit</span>
+</span></span></code></pre></div><h2 id="撰寫批次檔-串聯totp產生器與winscp">撰寫批次檔 (串聯TOTP產生器與WinSCP)</h2>
+<p>在資料夾內複製下面指令建立taiwania-sftp.bat，按照步驟1~4設置：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>@<span style="color:#66d9ef">echo</span> off
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 1.設置WinSCP執行檔位置</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> winSCP=<span style="color:#e6db74">&#34;C:\Program Files (x86)\WinSCP\WinSCP.exe&#34;</span>
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 2.設置使用者名稱(取代userName)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> user=userName
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 3.設置固定密碼(取代password)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> regular_pw=password
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 4.設置TOTP金鑰(從iservice服務網複製的金鑰取代TOTPsecret)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SET</span> secret=TOTPsecret
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 取得totp</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#66d9ef">/f</span> <span style="color:#ae81ff">%%</span>i <span style="color:#66d9ef">in</span> (<span style="color:#e6db74">&#39;</span>%cd%<span style="color:#e6db74">/taiwaniaOTP.exe </span>%secret%<span style="color:#e6db74">&#39;</span>) <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">set</span> totp=<span style="color:#ae81ff">%%</span>i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>:<span style="color:#75715e">: 呼叫winSCP登入台灣杉資料傳輸專用節點</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">start</span> %winSCP% sftp://%user%:%regular_pw%%totp%@140.110.148.21:22
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">exit</span>
+</span></span></code></pre></div><h2 id="測試">測試</h2>
+<p>目前為止我們完成了兩件事，接下來我們一分鐘的安全間隔進行測試，你可以在桌面上建立批次檔的捷徑方便登入，甚至是改icon讓它們更像一回事：</p>
+<ul>
+<li>雙擊taiwania-putty.bat呼叫putty session登入台灣杉生醫節點(140.110.148.14)。</li>
+<li>雙擊taiwania-sftp.bat呼叫winSCP登入台灣杉的資料傳輸節點(140.110.148.21)。</li>
+</ul>
+<h1 id="從linux具有管理員權限登入台灣杉">從Linux(具有管理員權限)登入台灣杉</h1>
+<p>使用Linux的設定自動登入需要熟悉基本Linux操作(套件安裝、環境變數、shell script)，或是嘗試按照下列步驟設定，當然您也可以自行編譯上述的OTP產生器(從Windows登入小節所提到)取代oathtool：</p>
+<h2 id="安裝oathtoolsshpass">安裝oathtool、sshpass</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 如果系統為Red Hat/CentOs/Fedora則改用yum</span>
+</span></span><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get install oathtool sshpass
+</span></span></code></pre></div><h2 id="設置腳本logintaiwaniash">設置腳本loginTaiwania.sh</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">##### loginTaiwania.sh #####</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>secret<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Otp-Secret-Got-From-Nchc&#34;</span>
+</span></span><span style="display:flex;"><span>taiwaniaIP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;140.110.148.14&#34;</span>
+</span></span><span style="display:flex;"><span>userName<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Id-On-Taiwania&#34;</span>
+</span></span><span style="display:flex;"><span>fixedPW<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Fixed-Password&#34;</span>
+</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>oathtool -b -d6 -s30 --totp<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sha1&#34;</span> <span style="color:#e6db74">${</span>secret<span style="color:#e6db74">}</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>sshpass -p <span style="color:#e6db74">${</span>fixedPW<span style="color:#e6db74">}${</span>otp<span style="color:#e6db74">}</span> ssh <span style="color:#e6db74">${</span>userName<span style="color:#e6db74">}</span>@<span style="color:#e6db74">${</span>taiwaniaIP<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><h2 id="予登入腳本執行權限">予登入腳本執行權限</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>chmod a+x loginTaiwania.sh
+</span></span></code></pre></div><h2 id="測試登入">測試登入</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>./loginTaiwania.sh
+</span></span></code></pre></div><h1 id="從linux沒有管理員權限登入台灣杉">從Linux(沒有管理員權限)登入台灣杉</h1>
+<p>有時候會用使用其他機器登入台灣杉，但是卻沒有管理員權限可以安裝sshpass、oathtool，以下是變通方法。</p>
+<h2 id="確認sshpassoathtool">確認sshpass、oathtool</h2>
+<p>查詢系統是否提供sshpass、oathtool，如果已有可以省略編譯的步驟，下面在台灣杉上查詢的結果顯示PATH中有sshpass但找不到oathtool，所以在台灣杉上可以跳過編譯sshpass的步驟。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ which sshpass
+</span></span><span style="display:flex;"><span>/usr/bin/sshpass
+</span></span><span style="display:flex;"><span>$ which oathtool
+</span></span><span style="display:flex;"><span>/usr/bin/which: no oathtool in <span style="color:#f92672">(</span>/home/ux/xxx/bin:/home/xxx/bin:/cm/local/apps/gcc/6.3.0/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/sbin:/cm/local/apps/environment-modules/3.2.10/bin:/opt/pbs/bin:/usr/bin:/usr/bin:/home/xxx/.local/bin:/home/xxx/bin<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="編譯sshpass">編譯sshpass</h2>
+<p>最後sshpass的可執行檔預期是/path/to/sshpass-1.06/sshpass。</p>
+<pre tabindex="0"><code>$ wget http://sourceforge.net/projects/sshpass/files/latest/download -O sshpass.tgz
+$ tar zxf sshpass.tgz
+$ cd sshpass-1.06
+$ ./configure &amp;&amp; make
+$ /path/to/sshpass-1.06/sshpass
+Usage: sshpass [-f|-d|-p|-e] [-hV] command parameters
+   -f filename   Take password to use from file
+   -d number     Use number as file descriptor for getting password
+   -p password   Provide password as argument (security unwise)
+   -e            Password is passed as env-var &#34;SSHPASS&#34;
+   With no parameters - password will be taken from stdin
+
+   -P prompt     Which string should sshpass search for to detect a password prompt
+   -v            Be verbose about what you&#39;re doing
+   -h            Show help (this screen)
+   -V            Print version information
+At most one of -f, -d, -p or -e should be used
+</code></pre><h2 id="編譯otp產生器oathtool替代方案">編譯OTP產生器(oathtool替代方案)</h2>
+<p>要在像台灣杉類似的主機上編譯oathtool有點複雜，如果一定要用oathtool比較可行的方法是下載binary及so(參考附錄)，但最簡單的方法還是直接編譯自己的OTP產生器，這一步需要先安裝<a href="https://golang.org/dl/">Go</a>，並及設置<a href="https://github.com/golang/go/wiki/SettingGOPATH">GOPATH</a>：</p>
+<pre tabindex="0"><code>go get github.com/pquerna/otp/totp
+</code></pre><p>撰寫TOTP產生器 main.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;github.com/pquerna/otp/totp&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">secret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Args</span>[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">code</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">totp</span>.<span style="color:#a6e22e">GenerateCode</span>(<span style="color:#a6e22e">secret</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UTC</span>())
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>編譯TOTP產生器</p>
+<pre tabindex="0"><code>go build -o taiwaniaOTP main.go
+</code></pre><h2 id="設置腳本logintaiwaniash-1">設置腳本loginTaiwania.sh。</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>secret<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Otp-Secret-Got-From-Nchc&#34;</span>
+</span></span><span style="display:flex;"><span>taiwaniaIP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;140.110.148.14&#34;</span>
+</span></span><span style="display:flex;"><span>userName<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Id-On-Taiwania&#34;</span>
+</span></span><span style="display:flex;"><span>fixedPW<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Enter-Your-Fixed-Password&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如果系統本身有提供oathtool，就把taiwaniaOTP改成oathtool</span>
+</span></span><span style="display:flex;"><span>otp<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>taiwaniaOTP <span style="color:#e6db74">${</span>secret<span style="color:#e6db74">}</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>sshpass -p <span style="color:#e6db74">${</span>fixedPW<span style="color:#e6db74">}${</span>otp<span style="color:#e6db74">}</span> ssh <span style="color:#e6db74">${</span>userName<span style="color:#e6db74">}</span>@<span style="color:#e6db74">${</span>taiwaniaIP<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><h2 id="測試登入-1">測試登入</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> ./loginTaiwania.sh
+</span></span></code></pre></div><h1 id="附錄在沒有權限的主機上使用oathtool-練習抽取package滿足相依性">附錄：在沒有權限的主機上使用oathtool (練習抽取package、滿足相依性)</h1>
+<p>如果要在沒有權限的主機上使用oathtool，就得要自己下載rpm/deb，從裡面抽取binaries及Requires，下面分成rpm(RedHat/CentOS/Fedora)跟apt(Debian/Ubuntu)系統說明：</p>
+<h2 id="rpmredhatcentosfedora系統">rpm(RedHat/CentOS/Fedora)系統</h2>
+<p>查詢OS版本資訊，得知台灣衫的OS是Red Hat 7.3。</p>
+<pre tabindex="0"><code>$ lsb_release -d
+Description:    Red Hat Enterprise Linux Server release 7.3 (Maipo)
+</code></pre><p>到<a href="https://pkgs.org/download">pkgs.org</a>找相應的Binary Package rpm版本，我們點選CentOS 7的EPEL x86_64版本oathtool-2.4.1-9.el7.x86_64.rpm ( CentOS與Red Hat是相容的，EPEL代表Extra Packages for Enterprise Linux，rpm套件管理員當中描述的x86_64是指cpu的x86-64架構，雖然有伺服器已經開始採用較省電的ARM架構，但目前幾乎所有的伺服器架構都是x86-64 )，接著在Download底下取得Binary Package的下載連結，以下面的指令下載、展開、確認相依性：</p>
+<pre tabindex="0"><code># 下載Binary Package
+$ wget http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/o/oathtool-2.4.1-9.el7.x86_64.rpm
+# 抽取Binary Package
+$ rpm2cpio oathtool-2.4.1-9.el7.x86_64.rpm | cpio -ivd
+./usr/bin/oathtool
+./usr/share/doc/oathtool-2.4.1
+./usr/share/doc/oathtool-2.4.1/COPYING
+./usr/share/man/man1/oathtool.1.gz
+165 blocks
+# 查看oathtool相依性，not found標註代表相依性未滿足
+$ ldd ./usr/bin/oathtool
+        linux-vdso.so.1 =&gt;  (0x00002aaaaaaab000)
+        liboath.so.0 =&gt; not found
+        libc.so.6 =&gt; /lib64/libc.so.6 (0x00002aaaaaad4000)
+        /lib64/ld-linux-x86-64.so.2 (0x0000555555554000)
+</code></pre><p>下載oathtool未滿足的相依性，可以直接到剛剛取得下載連結的下載頁面，從Requires欄位下直接點選項目liboath.so.0()(64bit)的連結，一樣選擇CentOS 7的EPEL x86_64版本下載</p>
+<pre tabindex="0"><code># 下載Binary Package
+$ wget http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/liboath-2.4.1-9.el7.x86_64.rpm
+# 抽取Binary Package
+$ rpm2cpio liboath-2.4.1-9.el7.x86_64.rpm | cpio -ivd
+./etc/liboath
+./usr/lib64/liboath.so.0
+./usr/lib64/liboath.so.0.1.3
+./usr/share/doc/liboath-2.4.1
+./usr/share/doc/liboath-2.4.1/COPYING
+# 查看liboath.so.0相依性，可看到皆滿足
+$ ldd ./usr/lib64/liboath.so.0
+        linux-vdso.so.1 =&gt;  (0x00002aaaaaaab000)
+        libc.so.6 =&gt; /lib64/libc.so.6 (0x00002aaaaacdf000)
+        /lib64/ld-linux-x86-64.so.2 (0x0000555555554000)
+</code></pre><p>到這一步oathtool仍然找不到liboath.so.0，我們也無法把liboath.so.0所在的資料夾加入/etc/ld.so.conf的定義，所以我們要定義一個oathtool.sh腳本，腳本會自動新增LD_LIBRARY_PATH，告訴oathtool要去哪裡找我們剛剛下載的liboath.so.0：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">##### oathtool.sh #####</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>oathtool<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/path/to/oathtool&#34;</span>
+</span></span><span style="display:flex;"><span>ldPath<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>dirname <span style="color:#66d9ef">$(</span>readlink -f <span style="color:#e6db74">${</span>oathtool<span style="color:#e6db74">}</span><span style="color:#66d9ef">))</span><span style="color:#e6db74">&#34;/../lib64&#34;</span>
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH_OLD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>ldPath<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>oathtool<span style="color:#e6db74">}</span> $@
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH_OLD<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><p>現在oathtool.sh表現得就跟oathtool一樣了，以下測試：</p>
+<pre tabindex="0"><code>$ ./oathtool.sh
+oathtool 2.4.1
+
+Generate and validate OATH one-time passwords.
+
+Usage: oathtool [OPTIONS]... [KEY [OTP]]...
+
+  -h, --help                    Print help and exit
+  -V, --version                 Print version and exit
+      --hotp                    use event-based HOTP mode  (default=on)
+      --totp                    use time-variant TOTP mode  (default=off)
+  -b, --base32                  use base32 encoding of KEY instead of hex
+                                  (default=off)
+  -c, --counter=COUNTER         HOTP counter value
+  -s, --time-step-size=DURATION TOTP time-step duration  (default=`30s&#39;)
+  -S, --start-time=TIME         when to start counting time steps for TOTP
+                                  (default=`1970-01-01 00:00:00 UTC&#39;)
+  -N, --now=TIME                use this time as current time for TOTP
+                                  (default=`now&#39;)
+  -d, --digits=DIGITS           number of digits in one-time password
+  -w, --window=WIDTH            window of counter values to test when
+                                  validating OTPs
+  -v, --verbose                 explain what is being done  (default=off)
+
+Report bugs to: oath-toolkit-help@nongnu.org
+oathtool home page: 
+General help using GNU software: 
+</code></pre><h2 id="aptdebianubuntu系統">apt(Debian/Ubuntu)系統</h2>
+<p>查詢作業系統版本</p>
+<pre tabindex="0"><code>$ lsb_release -d
+Description:    Ubuntu 18.04.1 LTS
+</code></pre><p>到<a href="https://pkgs.org/download">pkgs.org</a>找相應的Binary Package apt版本，我們點選Ubuntu 18.04 LTS (Bionic Beaver)的Ubuntu Universe amd64版本oathtool_2.6.1-1_amd64.deb ( BSD Linux家族把x86-64架構稱為AMD64，目前幾乎所有的伺服器架構都是x86_64 )，接著在Download底下取得Binary Package的下載連結，以下面的指令下載、展開、確認相依性：</p>
+<pre tabindex="0"><code># 先下載oathtool
+$ wget http://archive.ubuntu.com/ubuntu/pool/universe/o/oath-toolkit/oathtool_2.6.1-1_amd64.deb
+# 抽取oathtool到特定資料夾oathtool內
+$ dpkg -X oathtool_2.6.1-1_amd64.deb ./oathtool
+./
+./usr/
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/oathtool/
+./usr/share/doc/oathtool/copyright
+./usr/share/man/
+./usr/share/man/man1/
+./usr/share/man/man1/oathtool.1.gz
+./usr/bin/
+./usr/bin/oathtool
+./usr/share/doc/oathtool/AUTHORS
+./usr/share/doc/oathtool/README
+./usr/share/doc/oathtool/NEWS.gz
+./usr/share/doc/oathtool/changelog.Debian.gz
+# 查看oathtool相依性
+$ ldd ./oath/usr/bin/oathtool
+        linux-vdso.so.1 (0x00007fff10bfe000)
+        liboath.so.0 =&gt; not found
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fda6c3ea000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fda6c7db000)
+# 取得、抽取未滿足的相依性libc.so.6
+$ wget http://archive.ubuntu.com/ubuntu/pool/universe/o/oath-toolkit/liboath0_2.6.1-1_amd64.deb
+$ dpkg -X liboath0_2.6.1-1_amd64.deb ./oathtool
+./
+./usr/
+./usr/share/
+./usr/share/doc/
+./usr/share/doc/liboath0/
+./usr/share/doc/liboath0/AUTHORS
+./usr/share/doc/liboath0/README
+./usr/share/doc/liboath0/copyright
+./usr/share/doc/liboath0/NEWS.gz
+./usr/share/doc/liboath0/changelog.Debian.gz
+./usr/lib/
+./usr/lib/liboath.so.0.1.3
+./usr/lib/liboath.so.0
+# 檢查libc.so.6是否滿足
+$ ldd ./oath/usr/lib/liboath.so.0
+        linux-vdso.so.1 (0x00007ffc0f0f5000)
+        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f8f6da78000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f8f6e07d000)
+</code></pre><p>到這一步oathtool仍然找不到libc.so.6，我們也無法把libc.so.6所在的資料夾加入/etc/ld.so.conf的定義，所以我們要定義一個oathtool.sh腳本，腳本會自動新增LD_LIBRARY_PATH，告訴oathtool要去哪裡找我們剛剛下載的libc.so.6：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">##### oathtool.sh #####</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>oathtool<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/path/to/oathtool&#34;</span>
+</span></span><span style="display:flex;"><span>ldPath<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>dirname <span style="color:#66d9ef">$(</span>readlink -f <span style="color:#e6db74">${</span>oathtool<span style="color:#e6db74">}</span><span style="color:#66d9ef">))</span><span style="color:#e6db74">&#34;/../lib&#34;</span>
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH_OLD<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>ldPath<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>oathtool<span style="color:#e6db74">}</span> $@
+</span></span><span style="display:flex;"><span>export LD_LIBRARY_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>LD_LIBRARY_PATH_OLD<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><p>現在oathtool.sh表現得就跟oathtool一樣了，以下測試：</p>
+<pre tabindex="0"><code>$ ./oathtool/usr/bin/oathtool.sh
+oathtool 2.6.1
+
+Generate and validate OATH one-time passwords.
+
+Usage: oathtool [OPTIONS]... [KEY [OTP]]...
+
+  -h, --help                    Print help and exit
+  -V, --version                 Print version and exit
+      --hotp                    use event-based HOTP mode  (default=on)
+      --totp[=STRING]           use time-variant TOTP mode  (possible
+                                  values=&#34;sha1&#34;, &#34;sha256&#34;, &#34;sha512&#34;
+                                  default=`sha1&#39;)
+  -b, --base32                  use base32 encoding of KEY instead of hex
+                                  (default=off)
+  -c, --counter=COUNTER         HOTP counter value
+  -s, --time-step-size=DURATION TOTP time-step duration  (default=`30s&#39;)
+  -S, --start-time=TIME         when to start counting time steps for TOTP
+                                  (default=`1970-01-01 00:00:00 UTC&#39;)
+  -N, --now=TIME                use this time as current time for TOTP
+                                  (default=`now&#39;)
+  -d, --digits=DIGITS           number of digits in one-time password
+  -w, --window=WIDTH            window of counter values to test when
+                                  validating OTPs
+  -v, --verbose                 explain what is being done  (default=off)
+
+Report bugs to: oath-toolkit-help@nongnu.org
+oathtool home page: 
+General help using GNU software: 
+</code></pre>
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/other/taiwania_login_oneclick/index.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/other/homeassistant/" title="Home Assistant" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Home Assistant</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/blog/posts/other/linux-gdrive-cli/" title="[Tools] 在 linux 中使用 google drive cli" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[Tools] 在 linux 中使用 google drive cli</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前置工作">前置工作</a></li>
+    <li><a href="#編譯totp產生器">編譯TOTP產生器</a></li>
+    <li><a href="#設置putty">設置putty</a></li>
+    <li><a href="#撰寫批次檔-串聯totp產生器與putty-session">撰寫批次檔 (串聯TOTP產生器與putty session)</a></li>
+    <li><a href="#撰寫批次檔-串聯totp產生器與winscp">撰寫批次檔 (串聯TOTP產生器與WinSCP)</a></li>
+    <li><a href="#測試">測試</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#安裝oathtoolsshpass">安裝oathtool、sshpass</a></li>
+    <li><a href="#設置腳本logintaiwaniash">設置腳本loginTaiwania.sh</a></li>
+    <li><a href="#予登入腳本執行權限">予登入腳本執行權限</a></li>
+    <li><a href="#測試登入">測試登入</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#確認sshpassoathtool">確認sshpass、oathtool</a></li>
+    <li><a href="#編譯sshpass">編譯sshpass</a></li>
+    <li><a href="#編譯otp產生器oathtool替代方案">編譯OTP產生器(oathtool替代方案)</a></li>
+    <li><a href="#設置腳本logintaiwaniash-1">設置腳本loginTaiwania.sh。</a></li>
+    <li><a href="#測試登入-1">測試登入</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#rpmredhatcentosfedora系統">rpm(RedHat/CentOS/Fedora)系統</a></li>
+    <li><a href="#aptdebianubuntu系統">apt(Debian/Ubuntu)系統</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.highlightAll();
+  setTimeout( ()=>window.highlightJsBadge(), 1000); 
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

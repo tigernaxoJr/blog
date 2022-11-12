@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>[JS] JavaScript 當中的原型繼承鏈模型</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/blog/css/plyr.css"/>
+<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
+
+
+<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
+
+
+
+
+<meta property="og:title" content="[JS] JavaScript 當中的原型繼承鏈模型" />
+<meta property="og:description" content="基於原型 (Prototype-Based) 的 JavaScript 一般物件導向式(OOP; Object Oriented Programming) 程式語言 (如：java、c&#43;&#43;、c#) 當中的物件是由類別模板 (class) 產生實體物件 (instance)，實體物件的屬性各自獨立。類別模板上可設置共用的靜態資源包含靜態方法 (static method)、靜態屬性 (static field)，而這些靜態資源可以在沒有建立實體的情況下透過類別名稱直接取用。
+JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似物件導向語言的繼承，而在這種關係中的上層物件稱為原型 (Prototype)。原型本身又有自己所屬的原型，這種物件層層繼承的關係稱為原型鏈 (Prototype Chain)，幾乎所有物件的最上層原型是一個構造函數叫做 Object 的物件。
+因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。
+建立物件原型 JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。
+建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。
+// 宣告一個函數 Foo function Foo (){}  // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/js-prototype/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-20T09:37:18+08:00" />
+<meta property="article:modified_time" content="2020-05-20T09:37:18+08:00" />
+
+
+
+    
+    
+<meta name="description" content="[JS] JavaScript 當中的原型繼承鏈模型" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
+
+
+
+    
+
+
+
+
+</head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/blog">
+      YuCheng&#39;s Site</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/blog/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS 8] 設定網路靜態IP">[CentOS 8] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu 20.4] 設定網路靜態IP">[Ubuntu 20.4] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/javascript/">[前端] Javascript</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/frontend/">[前端] 前端開發</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/vue-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend/devops-git/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-auth/">[練習] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-signalr/">[練習] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/container/">[維運] Container 容器</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/base-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/docker-command/" title="[Docker] Docker 基礎指令">[Docker] Docker 基礎指令</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">[其他] Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Wednesday, May 20, 2020</p>
+        </div>
+
+        <div class="title">
+          <h1>[JS] JavaScript 當中的原型繼承鏈模型</h1>
+        </div>
+        
+        <div class="post-content" id="post-content">
+          <h1 id="基於原型-prototype-based-的-javascript">基於原型 (Prototype-Based) 的 JavaScript</h1>
+<p>一般物件導向式(OOP; Object Oriented Programming) 程式語言 (如：java、c++、c#) 當中的物件是由類別模板 (class) 產生實體物件 (instance)，實體物件的屬性各自獨立。類別模板上可設置共用的靜態資源包含靜態方法 (static method)、靜態屬性 (static field)，而這些靜態資源可以在沒有建立實體的情況下透過類別名稱直接取用。</p>
+<p>JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似物件導向語言的繼承，而在這種關係中的上層物件稱為原型 (Prototype)。原型本身又有自己所屬的原型，這種物件層層繼承的關係稱為原型鏈 (Prototype Chain)，幾乎所有物件的最上層原型是一個構造函數叫做 Object 的物件。</p>
+<p>因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。</p>
+<h1 id="建立物件原型">建立物件原型</h1>
+<p>JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。</p>
+<p>建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 宣告一個函數 Foo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Foo</span> (){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Foo.prototype 在 Foo 被宣告時自動建立
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// {constructor: ƒ}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Foo.prototype 的 constructor 屬性自動指向 Foo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">constructor</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">Foo</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h1 id="建立物件">建立物件</h1>
+<h2 id="透過構造函數">透過構造函數</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 建立一個物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Foo</span>{} <span style="color:#75715e">// {}
+</span></span></span></code></pre></div><h2 id="直接對變數賦值">直接對變數賦值</h2>
+<p>JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 建立一個物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">a</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>} <span style="color:#75715e">// {a: 1}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// obj 的原型是 Object.prototype
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// a: 1 是 obj 擁有的屬性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#e6db74">&#39;a&#39;</span>) <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="從沒有構造函數的物件延伸">從沒有構造函數的物件延伸</h2>
+<p>物件本身沒有構造函數時，可用 Object.create() 將物件作為原型建立其他物件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 建立一個物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">objProto</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 以 objProto  為原型建立一個物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">objProto</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// obj 的原型為 objProto
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">objProto</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h1 id="取得物件原型">取得物件原型</h1>
+<p>透過直接聲明函數所產生的原型需要透過兩個方法指涉：</p>
+<h2 id="透過構造函數-prototype-屬性">透過構造函數 prototype 屬性</h2>
+<p>構造函數物件建立時會取得 prototype 屬性，prototype 屬性指向該構造函數所屬的原型，一般以 [構造函數名稱].prototype 取得該構造函數所屬原型，以便在原型上加入屬性。</p>
+<h2 id="透過物件-__proto__-屬性">透過物件 <strong>proto</strong> 屬性</h2>
+<p>Object.prototype 原型鏈上的物件可透過兩個屬性存取原型：<strong>proto</strong>、[[Prototype]]。差別在於[[Prototype]]是私有屬性無法由外部存取；<strong>proto</strong> 屬性是存取[[Prototype]]的外部接口，ES6之後 <strong>proto</strong> 屬性就被列為 JavaScript 標準，因此可透過[物件].<strong>proto</strong> 可取得該物件的上層原型。</p>
+<h2 id="透過-objectgetprototypeof">透過 Object.getPrototypeOf()</h2>
+<p>Object.getPrototypeOf(物件) 可取得物件的原型。</p>
+<h1 id="objectprototype-原型鏈">Object.prototype 原型鏈</h1>
+<p>JavaScript 定義構造函數時自動產生的”物件(有構造函數)”預設原型是 Object，得到 [Object]-[物件(有構造函數)]-[物件(無構造函數)] 的階層關係。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// Foo 的原型是 Function.prototype
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Function.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Function.prototype 再上去的原型是 Object.prototype
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Function.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Object.prototype 位於原型鏈最最頂層，因此 __prototype 屬性是 null
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Object.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#75715e">// null
+</span></span></span></code></pre></div><p>以直接指派物件給變數的方式建立物件，JavaScirpt 會自動使用構造函數 Object 建立物件，得到 [Object]-[物件(無構造函數)] 的階層關係</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 以賦值直接建立的 obj ，原型就是 Object.prototype
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="objectprototype-原型鏈關係整理">Object.prototype 原型鏈關係整理</h2>
+<p><img src="JavaScript_ObjectChain.png" alt="img"></p>
+<h1 id="原型鏈關係判斷">原型鏈關係判斷</h1>
+<p>Object.prototype.isPrototypeOf() 用於判斷物件是否為其他物件的原型；而 instanceof 用於判斷物件是否為構造函數產生的實體。</p>
+<h2 id="判斷物件和物件的關係">判斷物件和物件的關係</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Foo</span>(){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Foo</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Foo 建立的物件，會以 Foo.prototype 作為物件原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">isPrototypeOf</span>(<span style="color:#a6e22e">bar</span>) <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="判斷物件和構造函數的關係">判斷物件和構造函數的關係</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Foo</span>(){}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Foo</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// bar 是構造函數 Foo 建立的物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">bar</span> <span style="color:#66d9ef">instanceof</span> <span style="color:#a6e22e">Foo</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h1 id="物件屬性與物件資源共用策略">物件屬性與物件資源共用策略</h1>
+<p>JavaScript 的繼承和物件導向語言規則不同，物件擁有自己的屬性， 但原型鏈上的資源(屬性、方法)都如同是物件自己的屬性一般可透過物件直接存取。</p>
+<h2 id="屬性優先權">屬性優先權</h2>
+<p>物件本身的屬性存取權優先於原型鏈上的屬性，因此如果嘗試存取物件、原型鏈上名稱相同的屬性會獲得物件屬性，除非明確指出要存取原型上的屬性。因此存取物件屬性時，該屬性可能來自三種方式，以存取權優先順序排列：</p>
+<ul>
+<li>物件建立後：直接指派給物件的屬性。</li>
+<li>物件建立時：構造函數上以 this 賦值的物件屬性。</li>
+<li>原型鍊上的屬性。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">foo</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 物件建立時：構造函數上以 this 賦值的物件屬性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">b</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 原型上的屬性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">b</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">c</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">foo</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 物件建立後：再指派給物件的屬性
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">a</span><span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 可以看出建立後指派的屬性 a=3 蓋過構造函數內以 this 賦值的屬性 a=2。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>    <span style="color:#75715e">// foo {a: 3, b: 2}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 原型鍊上的屬性 c 不在物件上，但物件仍然可以和自己的屬性一般存取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">c</span>  <span style="color:#75715e">// 1
+</span></span></span></code></pre></div><p>構造函數產生的物件，原型鍊頂層是 Object.prototype，因此 Object.prototype 定義的所有資源（屬性、方法）都可以直接呼叫：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 宣告一個函數 animal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">animal</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// animal 的物件原型上層是 Object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">animal</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">deer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">animal</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// animal 建立的 deer 可以直接呼叫 Object.prototype 上定義的 toString()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">deer</span>.<span style="color:#a6e22e">toString</span>() <span style="color:#75715e">// &#34;[object Object]&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// deer 呼叫的 toString 實際上就是  Object.prototype.toString
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">deer</span>.<span style="color:#a6e22e">toString</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">animal</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span>.<span style="color:#a6e22e">toString</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="物件資源共用策略">物件資源共用策略</h2>
+<p>由於原形鏈上的屬性都可被衍生的物件取用， 因此 JavaScript 共用資源的做法是把資源連結到物件原型上，如此一來物件物件時不必擁有自己一份資源，可以往上從物件原型取得，對必須大量產生物件的操作可有效改善效能。</p>
+<p>需要注意的是應避免擴充 Object.prototype 或其他 JavaScript 內建的原型（MDN 上歸類為 monkey patching），除非擴充內建原型的目的是 polyfill（使舊版的 JavaScript 引擎支持新功能）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 宣告一個構造函數
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">foo</span>(){}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在原型上加入資源(可以是屬性或方法)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">hello</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hello&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 該資源可以從建立的物件直接取得
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj1</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">foo</span>()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj2</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">foo</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">obj1</span>.<span style="color:#a6e22e">hello</span>()    <span style="color:#75715e">// &#34;hello&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">hello</span>()    <span style="color:#75715e">// &#34;hello&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 並且呼叫的資源 hello 是同一份
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj1</span>.<span style="color:#a6e22e">hello</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">hello</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在已建立物件上分別註冊的資源，即使完全相同，也不會是同一份
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj1</span>.<span style="color:#a6e22e">hello1</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){ <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hello1&#39;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">hello1</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){ <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hello1&#39;</span>) }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">obj1</span>.<span style="color:#a6e22e">hello1</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">hello1</span> <span style="color:#75715e">// false
+</span></span></span></code></pre></div><h2 id="判斷物件資源所屬">判斷物件資源所屬</h2>
+<p>判斷屬性存在於物件或原型鏈上 Object.prototype.hasOwnProperty()</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Foo</span>(){}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 把 hello 註冊在原型上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">hello</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;hello&#39;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">bar</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Foo</span>();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 物件 bar 可以存取原型的函式 hello
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">bar</span>.<span style="color:#a6e22e">hello</span>(); <span style="color:#75715e">// hello
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// hello 不是 bar 自己的資源
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">bar</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#e6db74">&#39;hello&#39;</span>) <span style="color:#75715e">// false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// hello 是原型的資源
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Foo</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#e6db74">&#39;hello&#39;</span>) <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="原型鏈函數資源中的-this">原型鏈函數資源中的 this</h2>
+<p>JavsScript 中 函數的 this 指向呼叫函數的物件，因此物件呼叫原型上的函數時，原型上的函數內如果有關鍵字 this ，則會指向物件本身，而非函數所在的原型：</p>
+<pre tabindex="0"><code>function foo(){}
+foo.prototype.name = &#34;prototype&#34;
+foo.prototype.echo = function(){
+    console.log(this.name)
+}
+// 函數中的 this 關鍵字指向呼叫的物件，因此 this.name 就是 bar.name
+bar = new foo();
+bar.name = &#34;bar&#34;
+bar.echo() // bar
+</code></pre><h1 id="串聯原型鏈">串聯原型鏈</h1>
+<p>JavaScript 試圖尋找不存在或位於頂層原型鏈上的資源時，會循原型鏈往上尋找，因此串連的原型鏈過長會影響效能，應適時將原型鏈打斷。</p>
+<h2 id="延伸原型鏈-objectcreate">延伸原型鏈 Object.create()</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">objProto</span> <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 以 objProto 作為原型建立物件 createdObj 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">createdObj</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">create</span>(<span style="color:#a6e22e">objProto</span> )
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 確認 createdObj 的原型是 objProto
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">createdObj</span> .<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">objProto</span>  <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="設定物件原型-objectsetprototypeof">設定物件原型 Object.setPrototypeOf()</h2>
+<p>MDN 當中提到 Object.setPrototypeOf () 在各瀏覽器中的實作效能並不好，大量使用時應以 Object.create() 代替。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 宣告兩個物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj1</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;obj1&#34;</span> }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj2</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;obj2&#34;</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 原型鏈中兩個物件都直接建立於 Object.prototype 之下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj1</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">//true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">//true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將 obj1 設定為 obj2 的原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Object.<span style="color:#a6e22e">setPrototypeOf</span>(<span style="color:#a6e22e">obj2</span>, <span style="color:#a6e22e">obj1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">obj1</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 此時 Object.prototype 不再是 obj2 的上層原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 這時候要透過 obj2 取得 Object.prototype 就需要再上溯一層
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">obj2</span>.<span style="color:#a6e22e">__proto__</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h1 id="es6-物件語法糖-class">ES6 物件語法糖 class</h1>
+<p>ES5/6 後出現的 class 是構造函數的語法糖，與一般 java 中認知的 class 並不相同，需要以原型鏈的概念對照。</p>
+<h2 id="class-extends-constructor-super">class, extends, constructor, super</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">firstName</span>, <span style="color:#a6e22e">lastName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">firstName</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">lastName</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Person 實際上是建構函數的名稱 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">Person</span> <span style="color:#75715e">// &#34;function&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Person 所指涉的原型，上層是 Object.prototype
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> Object.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Peter</span> <span style="color:#66d9ef">extends</span> <span style="color:#a6e22e">Person</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">constructor</span>(<span style="color:#a6e22e">lastName</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 建構函數 Peter 裡面呼叫物件原型的建構函數 Person 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">super</span>(<span style="color:#e6db74">&#39;Peter&#39;</span>, <span style="color:#a6e22e">lastName</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// greetings 的 getter
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">get</span> <span style="color:#a6e22e">name</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">firstName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// lastName 的 setter
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">lastName</span> (<span style="color:#a6e22e">value</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">lastName</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Peter 是另一個建構函數，所屬的物件以 Person.prototype 作為原型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Peter</span>.<span style="color:#a6e22e">prototype</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// peter 接在 Peter.prototype 下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">peter</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Peter</span>();
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">square</span>.<span style="color:#a6e22e">__proto__</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">Square</span>.<span style="color:#a6e22e">prototype</span> <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="static">static</h2>
+<p>Static 語法把資源綁定到構造函數而非原型本身，因 static 資源此需透過構造函數名稱取得，語法糖把函數名稱視為類別名稱，就好比物件導向語言中的靜態資源需要透過類別名稱取得一般。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#a6e22e">isMonkey</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Person</span>()
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 靜態資源 isMonkey 在構造函數上，而非物件原型上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">__proto__</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#e6db74">&#39;isMonkey&#39;</span>) <span style="color:#75715e">// false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">__proto__</span>.<span style="color:#a6e22e">constructor</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#e6db74">&#39;isMonkey&#39;</span>) <span style="color:#75715e">// true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 無法透過物件直接取用靜態資源
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">isMonkey</span>() 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Uncaught TypeError: t.triple is not a function
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    at &lt;anonymous&gt;:1:3 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 靜態資源必須透過類別(構造函數)名稱取得
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">isMonkey</span>() <span style="color:#75715e">// false
+</span></span></span></code></pre></div><h1 id="reference">Reference</h1>
+<p><a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Inheritance_and_the_prototype_chain</a>
+<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Details_of_the_Object_Model">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Details_of_the_Object_Model</a>
+<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Classes">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Classes</a></p>
+
+        </div>
+
+        
+        <div class="row pl-3 pr-3">
+        
+        <div class="col-md-6 share-buttons">
+        
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/Javascript/js-prototype/index.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計-Promise 與 Async/Await" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[JS] 非同步程式設計-Promise 與 Async/Await</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字" class="btn btn-outline-info">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[Code] 複製元件內的文字</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#透過構造函數">透過構造函數</a></li>
+    <li><a href="#直接對變數賦值">直接對變數賦值</a></li>
+    <li><a href="#從沒有構造函數的物件延伸">從沒有構造函數的物件延伸</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#透過構造函數-prototype-屬性">透過構造函數 prototype 屬性</a></li>
+    <li><a href="#透過物件-__proto__-屬性">透過物件 <strong>proto</strong> 屬性</a></li>
+    <li><a href="#透過-objectgetprototypeof">透過 Object.getPrototypeOf()</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#objectprototype-原型鏈關係整理">Object.prototype 原型鏈關係整理</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#判斷物件和物件的關係">判斷物件和物件的關係</a></li>
+    <li><a href="#判斷物件和構造函數的關係">判斷物件和構造函數的關係</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#屬性優先權">屬性優先權</a></li>
+    <li><a href="#物件資源共用策略">物件資源共用策略</a></li>
+    <li><a href="#判斷物件資源所屬">判斷物件資源所屬</a></li>
+    <li><a href="#原型鏈函數資源中的-this">原型鏈函數資源中的 this</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#延伸原型鏈-objectcreate">延伸原型鏈 Object.create()</a></li>
+    <li><a href="#設定物件原型-objectsetprototypeof">設定物件原型 Object.setPrototypeOf()</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#class-extends-constructor-super">class, extends, constructor, super</a></li>
+    <li><a href="#static">static</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
+                </a></li>
+              
+            
+              
+                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2022 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/blog/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/blog/js/popper.min.js"></script>
+<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/blog/js/navbar.js"></script>
+<script type="text/javascript" src="/blog/js/plyr.js"></script>
+<script type="text/javascript" src="/blog/js/main.js"></script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.highlightAll();
+  setTimeout( ()=>window.highlightJsBadge(), 1000); 
+</script>
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>
