@@ -772,6 +772,33 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/linux/ubuntu22-ssh/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Linux] Ubuntu SSH 連線</h5>
+        <p class="card-text post-summary">更改 port 可以直接修改/etc/ssh/sshd_config裡面的 Port 設定(解開註解修改)，或直接新增一個檔案：
+sudo echo &#34;Port 22&#34; &gt;&gt; /etc/ssh/sshd_config.d/port.conf </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 15, 2022</span>
+        
+        <a
+        href="/blog/posts/linux/ubuntu22-ssh/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/container/docker-install/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1076,34 +1103,6 @@ CREATE TABLE Department ( id SERIAL PRIMARY KEY, name VARCHAR NOT NULL ); CREATE
         
         <a
         href="/blog/posts/database/sql-ranking/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/database/sql-merge/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SQL] MERGE</h5>
-        <p class="card-text post-summary">一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
-在更新清單的時候特別好用。
-MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 ) -- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄 WHEN MATCHED THEN UPDATE SET F1 = SRC.F1, F2 = SRC.F2, -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET WHEN NOT MATCHED THEN INSERT ( K1, K2, K4, K3, F1, F2 ) VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) Reference [StackOverflow] Performing MERGE with Dapper.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">June 14, 2022</span>
-        
-        <a
-        href="/blog/posts/database/sql-merge/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

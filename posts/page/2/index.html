@@ -772,6 +772,34 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/database/sql-merge/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[SQL] MERGE</h5>
+        <p class="card-text post-summary">一段神奇的語法，可以指定對舊資料、新的資料分別進行不同的動作(通常是更新、新增)， 不指定的話預設是 BY TARGET， 動作目標都是 TARGET。
+在更新清單的時候特別好用。
+MERGE INTO TABLE1 DEST -- 目標表格 USING( SELECT :K1 K1, :K2 K2, :K3 K3, :K4 K4, FROM DUAL) SRC ON( DEST.K1 = SRC.K1 AND DEST.K2 = SRC.K2 AND DEST.K4 = SRC.K4 ) -- TARGET 有，SOURCE 沒有，更新 TARGET 裡面的紀錄 WHEN MATCHED THEN UPDATE SET F1 = SRC.F1, F2 = SRC.F2, -- TARGET 沒有，SOURCE 有，SOURCE 新增到 TARGET WHEN NOT MATCHED THEN INSERT ( K1, K2, K4, K3, F1, F2 ) VALUES ( :K1, :K2, :K4, :K3, :F1, :F2) Reference [StackOverflow] Performing MERGE with Dapper.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">June 14, 2022</span>
+        
+        <a
+        href="/blog/posts/database/sql-merge/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/container/basic-resource/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1066,33 +1094,6 @@ public JsonElement jsonFromDataTable(DataTable dt) { using (var stream = new Mem
         
         <a
         href="/blog/posts/dotnet/snippet-json-dt/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/dotnet/snippet-json-operate/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[.NET] JsonElement 的操作</h5>
-        <p class="card-text post-summary">.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { public static void Add(ref this JsonElement source, string name, string value) { using (MemoryStream ms = new MemoryStream()) { using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) { using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) { writer.WriteStartObject(); // 開始 foreach (var el in source.EnumerateObject()) el.WriteTo(writer); // 寫入新屬性 writer.WritePropertyName(name); writer.WriteStringValue(value); writer.WriteEndObject(); // 結束 } } var resultStr = Encoding.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 6, 2021</span>
-        
-        <a
-        href="/blog/posts/dotnet/snippet-json-operate/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
