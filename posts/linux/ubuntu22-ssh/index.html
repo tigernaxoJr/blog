@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[JS] 非同步程式設計-Promise 與 Async/Await</title>
+    <title>[Linux] Ubuntu SSH 連線</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,20 +22,19 @@
 
 
 
-<meta property="og:title" content="[JS] 非同步程式設計-Promise 與 Async/Await" />
-<meta property="og:description" content="Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
-pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。 promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
-// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){ let reason = &#39;找不到 value&#39; return new Promise((resolve, reject)=&gt;{ value ? resolve(value) :reject(reason) }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲" />
+<meta property="og:title" content="[Linux] Ubuntu SSH 連線" />
+<meta property="og:description" content="更改 port 可以直接修改/etc/ssh/sshd_config裡面的 Port 設定(解開註解修改)，或直接新增一個檔案：
+sudo echo &#34;Port 22&#34; &gt;&gt; /etc/ssh/sshd_config.d/port.conf " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/js-async/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-01-09T01:32:00+08:00" />
-<meta property="article:modified_time" content="2021-01-09T01:32:00+08:00" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/linux/ubuntu22-ssh/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-06-13T09:37:18+08:00" />
+<meta property="article:modified_time" content="2020-06-13T09:37:18+08:00" />
 
 
 
     
     
-<meta name="description" content="[JS] 非同步程式設計-Promise 與 Async/Await" />
+<meta name="description" content="[Linux] Ubuntu SSH 連線" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
 <link rel="stylesheet" href="/blog/css/layouts/single.css"/>
 <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
@@ -152,12 +151,15 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
   
   
   
+    
+    
+  
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/linux/">[OS] Linux</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
@@ -172,9 +174,12 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/linux/ubuntu22-ssh/" title="[Ubuntu] SSH 連線">[Ubuntu] SSH 連線</a></li>
+    <li><a class="active" href="/blog/posts/linux/ubuntu22-ssh/" title="[Ubuntu] SSH 連線">[Ubuntu] SSH 連線</a></li>
   
 
   
@@ -229,15 +234,12 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/javascript/">[前端] Javascript</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -279,12 +281,9 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
   
   
   
-    
-    
-  
   
     
-    <li><a class="active" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
   
 
   
@@ -785,79 +784,18 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
         <div class="author-profile ml-auto align-self-lg-center">
           <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
           <h5 class="author-name">Yu Cheng</h5>
-          <p>Saturday, January 9, 2021</p>
+          <p>Saturday, June 13, 2020</p>
         </div>
 
         <div class="title">
-          <h1>[JS] 非同步程式設計-Promise 與 Async/Await</h1>
+          <h1>[Linux] Ubuntu SSH 連線</h1>
         </div>
         
         <div class="post-content" id="post-content">
-          <h1 id="promise">Promise</h1>
-<h2 id="promise-狀態">Promise 狀態</h2>
-<p>Promise function 執行後會立即回傳一個稱為 Promise 的物件，
-Promise 本身帶有三種狀態：</p>
-<ul>
-<li>pending: 已初始化，但尚未成功或失敗。</li>
-<li>fulfilled: 操作成功完成。</li>
-<li>rejected: 操作失敗結束。</li>
-</ul>
-<p>promise 一但被回傳就處於 pending 狀態，
-promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// resolve(value): 放入解析的值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// reject(reson): 放入拒絕的理由
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">value</span>){
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">reason</span>  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;找不到 value&#39;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>)=&gt;{
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">value</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">value</span>) <span style="color:#f92672">:</span><span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">reason</span>)
-</span></span><span style="display:flex;"><span>  })
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="將-promise-繫結回呼函式">將 Promise 繫結回呼函式</h2>
-<p>若要將某個程式語句安排在 Promise 被滿足之後執行。
-可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)：
-then catch finally
-resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
-<h2 id="管理多個同時執行的-promise">管理多個同時執行的 Promise</h2>
-<p>假設需要同時控管多個需要等待的函數，
-讓這些函數都回傳 promise，
-判斷這些 promise function 其中一個/全部滿足某某狀態時就進行什麼動作，
-Promise 上定義的靜態方法(Static Method)常被用來對一個以上的 Promise 進行一波騷操作：</p>
-<p>Promise.All(iterable): iterable 中的 promise 皆被滿足時，Promise.All 本身回傳的 Promise 被滿足。
-Promise.allSettled(iterable)
-Promise.any(iterable)
-Promise.race(iterable)
-Promise.resolve(value)
-Promise.reject(reason)
-這兩個方法結合，比起 Promise 建構子能夠更優雅的回傳 Promise：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">value</span>){
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">reason</span>  <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;找不到 value&#39;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">value</span> 
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">?</span> Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">value</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#f92672">:</span> Promise.<span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">reason</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="將-promise-操作序列同步化asyncawait">將 Promise 操作序列同步化(Async/Await)</h2>
-<p>async 是 promise 的語法糖，標記 async 的 function 本身會自動回傳 promise，
-如過有回傳值就發生 resolved 函式；如果收到丟出的錯誤就放進 reject 往外傳遞。
-async function 中可以使用 await 等待 promise 被 fulfilled 或 rejected，
-使用 await 等待 promise 使函式行為同步化，也可以直接得到 resolve 當中的回傳值或 reject 中擲出的錯誤。
-await 一個函式會得到 resolve 或 reject 的結果</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">value</span>){
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">value</span>) <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">value</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">throw</span> <span style="color:#e6db74">&#39;找不到 value&#39;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>如此一來就可以取代以串接 .then() 安排程式執行順序，可以顯著減少 callback 的情況讓程式碼變乾淨。
-javascript 沒有 top level await，所以無法在 async function 以外的地方使用 await。</p>
-<h2 id="搭配-trycatch-使用">搭配 try/catch 使用</h2>
-<h1 id="reference">Reference</h1>
-<ul>
-<li><a href="https://www.oxxostudio.tw/articles/201706/javascript-promise-settimeout.html#_self">JavaScript 同步延遲 ( Promise + setTimeout )</a></li>
-<li><a href="https://www.oxxostudio.tw/articles/201908/js-async-await.html">簡單理解 JavaScript Async 和 Await</a></li>
-<li><a href="https://eyesofkids.gitbooks.io/javascript-start-es6-promise/content/">從 Promise 開始的 JavaScript 異步生活</a></li>
-<li><a href="http://liubin.org/promises-book/#chapter1-what-is-promise">JavaScript Promise 迷你書（ 中文版 )</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">MDN - Promise</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">MDN - Using Promises</a></li>
-</ul>
-
+          <h2 id="更改-port">更改 port</h2>
+<p>可以直接修改<code>/etc/ssh/sshd_config</code>裡面的 Port 設定(解開註解修改)，或直接新增一個檔案：</p>
+<pre tabindex="0"><code>sudo echo &#34;Port 22&#34; &gt;&gt; /etc/ssh/sshd_config.d/port.conf
+</code></pre>
         </div>
 
         
@@ -874,7 +812,7 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/Javascript/js-async/index.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/linux/ubuntu22-ssh/index.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -914,32 +852,32 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
   
 
   
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
     
     
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
   
   
 
@@ -1061,9 +999,9 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)" class="btn btn-outline-info">
+      <a href="/blog/posts/linux/centos8-static-ip/" title="[Linux] CentOS 8 設定網路靜態IP" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</div>
+        <div class="next-prev-text">[Linux] CentOS 8 設定網路靜態IP</div>
       </a>
     </div>
   
@@ -1073,9 +1011,9 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/javascript/js-prototype/" title="[JS] JavaScript 當中的原型繼承鏈模型" class="btn btn-outline-info">
+        <a href="/blog/posts/linux/ubuntu204-static-ip/" title="[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[JS] JavaScript 當中的原型繼承鏈模型</div>
+          <div class="next-prev-text">[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</div>
         </a>
       </div>
     
@@ -1107,11 +1045,7 @@ javascript 沒有 top level await，所以無法在 async function 以外的地�
       <div class="toc">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#promise-狀態">Promise 狀態</a></li>
-    <li><a href="#將-promise-繫結回呼函式">將 Promise 繫結回呼函式</a></li>
-    <li><a href="#管理多個同時執行的-promise">管理多個同時執行的 Promise</a></li>
-    <li><a href="#將-promise-操作序列同步化asyncawait">將 Promise 操作序列同步化(Async/Await)</a></li>
-    <li><a href="#搭配-trycatch-使用">搭配 try/catch 使用</a></li>
+    <li><a href="#更改-port">更改 port</a></li>
   </ul>
 </nav>
       </div>
