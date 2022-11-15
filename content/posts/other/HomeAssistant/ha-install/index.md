@@ -21,18 +21,33 @@ services:
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
       - $PWD/var/ha/config:/config
-      - $PWD/etc/ha/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
-    network_mode: host
+    ports:
+      - 8123:8123
   mosquitto:
-    image: eclipse-mosquitto
     container_name: mosquitto
+    image: eclipse-mosquitto
     volumes:
       - $PWD/opt/mosquitto:/mosquitto
     ports:
       - 1883:1883
       - 9001:9001
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    depends_on:
+      - mosquitto
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - $PWD/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8080:8080
+    device:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    restart: always
+    privileged: true
 ```
 HA//opt/mosquitto/config/mosquitto.conf
 ```conf

@@ -90,3 +90,8 @@ GitHub App?
 
 before_install
 script
+
+elastic beanstalk? easy to run single container
+elastic beanstalk 內建 load balancer automatically scale up everything
+S3 bucket? 放 zip file 的地方
+IAM manage api key

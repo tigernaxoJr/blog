@@ -54,6 +54,18 @@ network:
       nameservers:
         addresses: [8.8.8.8,8.8.4.4] # DNS server ip，若有多個就以逗號分隔
       dhcp4: no # 關閉 dhcp 自動取得 IP
+    # 如果有 Host only 的話通常都是 enp0s8
+    enp0s8:
+      addresses: [192.168.56.101/24]  # 靜態IP、遮罩
+      routes:
+      - to: 192.168.56.1/24
+        via: 192.168.56.1
+        metric: 100
+      #gateway4: 192.168.56.1  # IPV4 Getway ip
+      #nameservers:
+      #addresses: [8.8.8.8,8.8.4.4] # DNS server ip，若有多個就以逗號分隔
+      dhcp4: no # 關閉 dhcp 自動取得 IP
+      dhcp6: no # 關閉 dhcp 自動取得 IP
 version: 2
 ```
 # 測試設定檔
