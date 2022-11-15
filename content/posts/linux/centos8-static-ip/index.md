@@ -5,7 +5,7 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[CentOS 8] 設定網路靜態IP"
+    name: "[CentOS] 設定網路靜態IP"
     identifier: linux-centos8-static-ip
     parent: linux
     weight: 1000

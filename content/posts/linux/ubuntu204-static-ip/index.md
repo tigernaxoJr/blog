@@ -5,7 +5,7 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[Ubuntu 20.4] 設定網路靜態IP"
+    name: "[Ubuntu] 設定網路靜態IP"
     identifier: linux-ubuntu204-static-ip
     parent: linux
     weight: 1000
