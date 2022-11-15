@@ -1,6 +1,6 @@
 ---
 title: "[Linux] Ubuntu SSH 連線"
-date: 2020-06-13T09:37:18+08:00
+date: 2022-11-15T10:23:18+08:00
 draft: false
 hero: 
 menu:
