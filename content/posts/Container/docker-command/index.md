@@ -5,7 +5,7 @@ hero:
 draft: false
 menu:
   sidebar:
-    name: "[Docker] Docker 基礎指令"
+    name: "[Docker] 基礎指令"
     identifier: container-docker-command
     parent: container
     weight: 2000

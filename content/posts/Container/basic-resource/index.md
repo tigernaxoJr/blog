@@ -8,7 +8,7 @@ menu:
     name: "[Basic] 學習資源"
     identifier: container-basic-resource
     parent: container
-    weight: 2000
+    weight: 100
 ---
 - [DockerHub](https://hub.docker.com/)
 - [Docker文件](https://docs.docker.com/)

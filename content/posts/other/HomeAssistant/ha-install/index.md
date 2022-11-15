@@ -11,8 +11,8 @@ menu:
     weight: 1000
 ---
 這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。
-建立專案資料夾 HA 
-HA/docker-compose.yaml
+建立專案資料夾 ha 
+ha/docker-compose.yaml
 ```yaml
 version: '3'
 services:
@@ -34,6 +34,7 @@ services:
     ports:
       - 1883:1883
       - 9001:9001
+  # 如果要把 zigbee2mqtt 整合在同一台機器上...
   zigbee2mqtt:
     container_name: zigbee2mqtt
     depends_on:
@@ -44,13 +45,13 @@ services:
       - /run/udev:/run/udev:ro
     ports:
       - 8080:8080
-    device:
+    devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
     restart: always
     privileged: true
 ```
-HA//opt/mosquitto/config/mosquitto.conf
-```conf
+ha/opt/mosquitto/config/mosquitto.conf
+```yaml
 persistence true
 persistence_location /mosquitto/data/
 log_dest file /mosquitto/log/mosquitto.log
@@ -69,3 +70,4 @@ http://192.168.56.100:8123/
 - [home-assistant.io - installation](https://www.home-assistant.io/installation/generic-x86-64#docker-compose)
 - [configuring-the-mosquitto-mqtt-docker-container-for-use-with-home-assistant](https://www.homeautomationguy.io/docker-tips/configuring-the-mosquitto-mqtt-docker-container-for-use-with-home-assistant/)
 - [home-assistant-docker-zigbee2mqtt](https://medium.com/geekculture/home-assistant-docker-zigbee2mqtt-3d8e0ba02d10)
+- [Zigbee2MQTT - Configuration](https://www.zigbee2mqtt.io/guide/configuration)

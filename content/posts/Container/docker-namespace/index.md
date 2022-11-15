@@ -5,7 +5,7 @@ hero:
 draft: false
 menu:
   sidebar:
-    name: "[Basic] 學習資源"
+    name: "[Basic] Namespace"
     identifier: container-base-resource
     parent: container
     weight: 2000
