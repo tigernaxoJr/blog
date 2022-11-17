@@ -797,9 +797,9 @@
       </div>
       <div class="card-body">
         <h5 class="card-title">[Typescript] Typescript 用 InjectionKey 達成強型別 provide</h5>
-        <p class="card-text post-summary">上游元件
-&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;IState&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, state); &lt;/script&gt; 下游元件
-&lt;script setup lang=&#34;ts&#34;&gt; import { inject } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, { drawer: false }); &lt;/script&gt; Reference 台部落 - 如何在 vue3 中提供一個類型安全的 inject 前提準備&hellip; </p>
+        <p class="card-text post-summary">Working with Reactivity 上游元件
+&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
+&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference Vue.js/guild - Provide / Inject Vue.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 17, 2022</span>
