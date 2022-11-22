@@ -1,7 +1,7 @@
 ---
 title: "[HA] 準備系統環境"
-date: 2021-01-29T23:46:00+08:00
-draft: true 
+date: 2022-11-22T08:50:00+08:00
+draft: false
 hero: 
 menu:
   sidebar:
@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 8123:8123
+      - 8123:8123  # HA 控台的 port
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto
