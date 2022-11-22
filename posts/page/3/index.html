@@ -736,7 +736,23 @@
   
   
     
-    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/homeassistant/">[智能家居] Home Assistant</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/homeassistant/ha-install/" title="[安裝] 使用 Docker 安裝">[安裝] 使用 Docker 安裝</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -787,6 +803,36 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/frontend/vue-router_add_query/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</h5>
+        <p class="card-text post-summary">工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
+router.beforeEach(async (to, from, next) =&gt; { next({ path: path, query: {...to.queryl ,token: tokenStr} }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
+runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
+next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:
+next(): move on to the next hook in the pipeline.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">August 19, 2021</span>
+        
+        <a
+        href="/blog/posts/frontend/vue-router_add_query/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1089,36 +1135,6 @@ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完�
         
         <a
         href="/blog/posts/javascript/js-async/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-hoisting/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</h5>
-        <p class="card-text post-summary">網路上時常見到充滿 function 與 var 的 JavaScript 求值題目， 筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料， 雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。
-Hoisting 對學過伺服器端語言(C#、C/C++&hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事， 在 JavaScript 中也是如此：
-console.log(x) // ReferenceError: x is not defined 但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine， 在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後已分配記憶體空間(初始化、initiation)但尚未賦值的狀態， 但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？
-console.log(x) // undefined var x 原因在於 javascript 會先程式中的蒐集 var(let/const/function) 宣告並釐清對應的作用域， 最後再執行程式碼，這個行為就如同宣告被提升(Hoisting)到前面行數的程式碼中一樣。
-JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、賦值等等時機取用變數會獲得不同輸出結果， 這篇文章(link)中提到， 稱 JavaScript 為直譯式(解釋型)語言實際上是通俗的說法，語言本身沒有規定實現的方式(編/直譯)， 舉例來說 Chrome 瀏覽器所使用的 Google V8 JavaScript engine， 所帶的解釋器 (interpreter) 會將程式編譯 (compile) 成字節碼 (bytecode)， 最後再由編譯器 (compiler) 即時編譯 (JIT;just-in-time compilation) 編譯成機器碼執行， 而 JavaScript 被編譯時宣告會被蒐集到最頂端進行定義並區分作用域(scope)，這個行為就是 Hoisting ，記住重點在於JS編譯後會先定義變數及區分作用域，編譯後的程式看起來就像這樣：</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">January 9, 2021</span>
-        
-        <a
-        href="/blog/posts/javascript/js-hoisting/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

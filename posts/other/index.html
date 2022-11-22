@@ -739,7 +739,23 @@
   
   
     
-    <li><a class="" href="/blog/posts/other/homeassistant/" title="[智能家居] Home Assistant">[智能家居] Home Assistant</a></li>
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/homeassistant/">[智能家居] Home Assistant</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/homeassistant/ha-install/" title="[安裝] 使用 Docker 安裝">[安裝] 使用 Docker 安裝</a></li>
+  
+
+
+      </ul>
+    </li>
   
 
   
@@ -790,6 +806,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/other/homeassistant/ha-install/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[HA] 準備系統環境</h5>
+        <p class="card-text post-summary">這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。 建立專案資料夾 ha ha/docker-compose.yaml
+version: &#39;3&#39; services: homeassistant: container_name: homeassistant image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34; volumes: - $PWD/var/ha/config:/config - /etc/localtime:/etc/localtime:ro restart: unless-stopped privileged: true ports: - 8123:8123 # HA 控台的 port mosquitto: container_name: mosquitto image: eclipse-mosquitto volumes: - $PWD/opt/mosquitto:/mosquitto ports: - 1883:1883 - 9001:9001 # 如果要把 zigbee2mqtt 整合在同一台機器上... zigbee2mqtt: container_name: zigbee2mqtt depends_on: - mosquitto image: koenkk/zigbee2mqtt volumes: - $PWD/zigbee2mqtt/data:/app/data - /run/udev:/run/udev:ro ports: - 8080:8080 devices: - /dev/ttyUSB0:/dev/ttyUSB0 restart: always privileged: true ha/opt/mosquitto/config/mosquitto.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 22, 2022</span>
+        
+        <a
+        href="/blog/posts/other/homeassistant/ha-install/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
