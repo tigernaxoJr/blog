@@ -23,7 +23,7 @@
 
 
 <meta property="og:title" content="[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例" />
-<meta property="og:description" content="情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選 單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, { props: { disabled: { type: Boolean, default: () =&gt; false }, // checkbox 的標記 [string] || [{text:string, value:any}] labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] }, value: { default: () =&gt; null }, trueValue: { default: () =&gt; &#39;Y&#39; }, falseValue: { default: () =&gt; &#39;N&#39; }, inline: { type: Boolean, default: () =&gt; false }, }, data() { return { innervalue_: this." />
+<meta property="og:description" content="情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選  單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, {  props: {  disabled: { type: Boolean, default: () =&gt; false },  // checkbox 的標記 [string] || [{text:string, value:any}]  labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] },  value: { default: () =&gt; null },  trueValue: { default: () =&gt; &#39;Y&#39; },  falseValue: { default: () =&gt; &#39;N&#39; },  inline: { type: Boolean, default: () =&gt; false },  },  data() {  return {  innervalue_: this." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend/vue-comp-yncheckbox/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-29T13:50:00+08:00" />

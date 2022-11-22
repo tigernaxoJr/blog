@@ -819,7 +819,7 @@
         <p class="card-text post-summary">前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題， 一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置， 如果要對於不熟悉的開發環境進行快速除錯 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)， 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間 (不過最終還是要搭建起來阿，喂~~)， 因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。
 步驟 首先安裝 node.js 建立專案資料夾 建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。
 mkdir proxy 起始專案 用指令移動到該專案資料夾下，起始專案：
-cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;); // 建立一個 Express 伺服器 const app = express(); app.use(cors()) // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;; // 設定代理到 google 的 Proxy 端點 app.</p>
+cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建立 app.js const express = require(&#39;express&#39;); const cors = require(&#39;cors&#39;); const { createProxyMiddleware } = require(&#39;http-proxy-middleware&#39;);  // 建立一個 Express 伺服器 const app = express(); app.use(cors())  // 設定 Express 伺服器的 Host、Port const PORT = 3000; const HOST = &#34;localhost&#34;;  // 設定代理到 google 的 Proxy 端點 app.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">March 20, 2021</span>
@@ -846,8 +846,8 @@ cd proxy npm init 安裝相依性 npm i express http-proxy-middleware cors 建�
       <div class="card-body">
         <h5 class="card-title">[JS] 非同步程式設計-Promise 與 Async/Await</h5>
         <p class="card-text post-summary">Promise Promise 狀態 Promise function 執行後會立即回傳一個稱為 Promise 的物件， Promise 本身帶有三種狀態：
-pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。 promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
-// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){ let reason = &#39;找不到 value&#39; return new Promise((resolve, reject)=&gt;{ value ? resolve(value) :reject(reason) }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
+ pending: 已初始化，但尚未成功或失敗。 fulfilled: 操作成功完成。 rejected: 操作失敗結束。  promise 一但被回傳就處於 pending 狀態， promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。
+// resolve(value): 放入解析的值 // reject(reson): 放入拒絕的理由 function test(value){  let reason = &#39;找不到 value&#39;  return new Promise((resolve, reject)=&gt;{  value ? resolve(value) :reject(reason)  }) } 將 Promise 繫結回呼函式 若要將某個程式語句安排在 Promise 被滿足之後執行。 可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)： then catch finally resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲</p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 9, 2021</span>
@@ -905,7 +905,7 @@ JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、�
         <h5 class="card-title">[Code] 複製元件內的文字</h5>
         <p class="card-text post-summary">要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：
 Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。
-不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.) function copyText(text) { // 判斷瀏覽器支援 if (!navigator.clipboard) { alert(&#34;瀏覽器不支援 Clipboard API&#34;) // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法 } // 非同步複製至剪貼簿 let resolve = () =&gt; { console.log(&#39;透過 Clipboard 複製至剪貼簿成功&#39;); } let reject = (err) =&gt; { console.</p>
+ 不支援 IE 是非同步方法，會傳回 Promise 支援從變數直接複製到剪貼簿 只有 HTTPS 網頁可以使用此 API Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗 只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 DOMException: Document is not focused.)  function copyText(text) {   // 判斷瀏覽器支援  if (!navigator.clipboard) {  alert(&#34;瀏覽器不支援 Clipboard API&#34;)  // 這裡可以改用 document.execCommand(&#39;copy&#39;) 的方法  }   // 非同步複製至剪貼簿  let resolve = () =&gt; {  console.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -932,7 +932,7 @@ Clipboard API 基本上目前(2020年底)，主流瀏覽器近期版本都支援
       <div class="card-body">
         <h5 class="card-title">[DIY] 用Typescript搭建簡易前端路由</h5>
         <p class="card-text post-summary">起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：
-npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta charset=&#34;UTF-8&#34; /&gt; &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt; &lt;title&gt;Vite App&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt; &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt; &lt;/div&gt; &lt;script type=&#34;module&#34; src=&#34;/src/main.ts&#34;&gt;&lt;/script&gt; &lt;/body&gt; &lt;/html&gt;</p>
+npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-test npm i # 安裝套件 npm i bootstrap # 安裝 bootstrap 在 index.html 新增元素 app &lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt;  &lt;head&gt;  &lt;meta charset=&#34;UTF-8&#34; /&gt;  &lt;link rel=&#34;icon&#34; type=&#34;image/svg+xml&#34; href=&#34;favicon.svg&#34; /&gt;  &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34; /&gt;  &lt;title&gt;Vite App&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;  &lt;div id=&#34;app&#34; class=&#34;container-fluid&#34;&gt;  &lt;div id=&#34;menu&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;div id=&#34;root&#34; class=&#34;row g-0&#34;&gt;&lt;/div&gt;  &lt;/div&gt;  &lt;script type=&#34;module&#34; src=&#34;/src/main.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -959,7 +959,7 @@ npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts cd route-te
       <div class="card-body">
         <h5 class="card-title">[JS] 各種模組(module)</h5>
         <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
-Reference JS模組規範：AMD、UMD、CMD、commonJS、ES6 module </p>
+Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 13, 2020</span>
@@ -986,9 +986,9 @@ Reference JS模組規範：AMD、UMD、CMD、commonJS、ES6 module </p>
       <div class="card-body">
         <h5 class="card-title">[JS] Object 常用方法</h5>
         <p class="card-text post-summary">紀錄常用的 Object 方法，細節可以到MDN看
-Object.create Object.create(proto, [propertiesObject])
-以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
-以特定Object 作為 Prototype 建立新物件 const objParent = { parentFeild: &#39;parent feild&#39;, parentFunc: function () { console.log(&#39;This is parent Func&#39;) }, deepObj: { a: 1, b: 2, }, } // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent) // objFeild 只存在 obj 上 obj.objFeild = &#39;obj feild&#39; // 可從建立的 obj 呼叫 prototype 的屬性, 方法 obj.</p>
+Object.create  Object.create(proto, [propertiesObject])
+ 以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
+以特定Object 作為 Prototype 建立新物件 const objParent = {  parentFeild: &#39;parent feild&#39;,  parentFunc: function () {  console.log(&#39;This is parent Func&#39;)  },  deepObj: {  a: 1,  b: 2,  }, }  // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent)  // objFeild 只存在 obj 上 obj.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">May 20, 2020</span>
@@ -1019,7 +1019,7 @@ JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似
 因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。
 建立物件原型 JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。
 建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。
-// 宣告一個函數 Foo function Foo (){} // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
+// 宣告一個函數 Foo function Foo (){}  // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
       </div>
       <div class="card-footer">
         <span class="float-left">May 20, 2020</span>
@@ -1046,13 +1046,12 @@ JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似
       <div class="card-body">
         <h5 class="card-title">[JS] Array 常用方法</h5>
         <p class="card-text post-summary">紀錄常用的 Array 方法，細節可以到MDN看
-陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push() arr.pop()
+陣列操作 尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()  arr.pop()
 arr.push(element1[, &hellip;[, elementN]])
-const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift() arr.shift()
+ const arr=[1, 2, 3, 4] arr.pop() console.log(arr) // [1, 2, 3] arr.push(5) console.log(arr) // [1, 2, 3, 5] 首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()  arr.shift()
 arr.unshift(element1[, &hellip;[, elementN]])
-const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice() let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
-可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：
-添加item 不添加item deleteCount=0 在現有位置添加元素 (無意義) deleteCount&gt;0 取代現有元素 範圍移除元素 範圍移除元素 const arr=[0, 1, 2, 3, 4, 5, 6] // 移除索引位置3的元素，移除範圍為1 let removed = arr.</p>
+ const arr=[1, 2, 3, 4] arr.shift() console.log(arr) // [2, 3, 4] arr.unshift(0) console.log(arr) // [0, 2, 3, 4] 指定位置插入/移除/取代 Array.prototype.splice()  let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])
+ 可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：</p>
       </div>
       <div class="card-footer">
         <span class="float-left">April 29, 2020</span>
