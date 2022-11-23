@@ -15,7 +15,12 @@ menu:
 ```bash
 sudo echo "Port 22" >> /etc/ssh/sshd_config.d/port.conf
 ```
+```
+sudo ufw status verbose
+sudo ufw allow 22
+```
 重啟 sshd
 ```bash
 service sshd restart
 ```
+https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps
