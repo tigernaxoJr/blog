@@ -761,6 +761,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/other/telegram-bot/" title="[Bot] Telegram Bot">[Bot] Telegram Bot</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
   
 
@@ -814,7 +823,7 @@
       <div class="card-body">
         <h5 class="card-title">[HA] 準備系統環境</h5>
         <p class="card-text post-summary">這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。 建立專案資料夾 ha ha/docker-compose.yaml
-version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34;  volumes:  - $PWD/var/ha/config:/config  - /etc/localtime:/etc/localtime:ro  restart: unless-stopped  privileged: true  ports:  - 8123:8123 # HA 控台的 port  mosquitto:  container_name: mosquitto  image: eclipse-mosquitto  volumes:  - $PWD/opt/mosquitto:/mosquitto  ports:  - 1883:1883  - 9001:9001  # 如果要把 zigbee2mqtt 整合在同一台機器上...  zigbee2mqtt:  container_name: zigbee2mqtt  depends_on:  - mosquitto  image: koenkk/zigbee2mqtt  volumes:  - $PWD/zigbee2mqtt/data:/app/data  - /run/udev:/run/udev:ro  ports:  - 8080:8080  devices:  - /dev/ttyUSB0:/dev/ttyUSB0  restart: always  privileged: true ha/opt/mosquitto/config/mosquitto.</p>
+version: &#39;3&#39; services: homeassistant: container_name: homeassistant image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34; volumes: - $PWD/var/ha/config:/config - /etc/localtime:/etc/localtime:ro restart: unless-stopped privileged: true ports: - 8123:8123 # HA 控台的 port mosquitto: container_name: mosquitto image: eclipse-mosquitto volumes: - $PWD/opt/mosquitto:/mosquitto ports: - 1883:1883 - 9001:9001 # 如果要把 zigbee2mqtt 整合在同一台機器上... zigbee2mqtt: container_name: zigbee2mqtt depends_on: - mosquitto image: koenkk/zigbee2mqtt volumes: - $PWD/zigbee2mqtt/data:/app/data - /run/udev:/run/udev:ro ports: - 8080:8080 devices: - /dev/ttyUSB0:/dev/ttyUSB0 restart: always privileged: true ha/opt/mosquitto/config/mosquitto.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 22, 2022</span>
@@ -841,8 +850,8 @@ version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  i
       <div class="card-body">
         <h5 class="card-title">[Typescript] Typescript 用 InjectionKey 達成強型別 provide</h5>
         <p class="card-text post-summary">Working with Reactivity 上游元件
-&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState {  drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({  drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
-&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;;  const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference  Vue.</p>
+&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
+&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference Vue.js/guild - Provide / Inject Vue.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 17, 2022</span>
@@ -869,7 +878,7 @@ version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  i
       <div class="card-body">
         <h5 class="card-title">[Typescript] Vue 元件設計</h5>
         <p class="card-text post-summary">有時候要重製框架元件，讓元件在 app 內符合統一樣式，把 props, attrs, slot 全部傳給某個 child 的寫法，取例 quasar 的 q-btn：
-&lt;template&gt;  &lt;q-btn outline color=&#34;primary&#34; v-bind=&#34;$attrs&#34;&gt;  &lt;template  v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34;  v-slot:[slot]=&#34;scope&#34;  &gt;  &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt;  &lt;/template&gt;  &lt;/q-btn&gt; &lt;/template&gt;  &lt;script setup lang=&#34;ts&#34;&gt; import { QBtnSlots } from &#39;quasar&#39;; &lt;/script&gt;  &lt;style scoped&gt;&lt;/style&gt; </p>
+&lt;template&gt; &lt;q-btn outline color=&#34;primary&#34; v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34; v-slot:[slot]=&#34;scope&#34; &gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;/q-btn&gt; &lt;/template&gt; &lt;script setup lang=&#34;ts&#34;&gt; import { QBtnSlots } from &#39;quasar&#39;; &lt;/script&gt; &lt;style scoped&gt;&lt;/style&gt; </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 17, 2022</span>
@@ -924,7 +933,7 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
       <div class="card-body">
         <h5 class="card-title">[Docker] 在 Ubuntu 安裝 Docker</h5>
         <p class="card-text post-summary">從 Install Docker Engine on Ubuntu 總結出腳本，直接執行就好：
-#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc  # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \  ca-certificates \  curl \  gnupg \  lsb-release  # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.</p>
+#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \ ca-certificates \ curl \ gnupg \ lsb-release # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 15, 2022</span>
@@ -952,9 +961,9 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
         <h5 class="card-title">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h5>
         <p class="card-text post-summary">有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
- 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
+元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt;  &lt;div class=&#34;modal-content&#34;&gt;  &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt;  &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt;  &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt;  &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt;  &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt;  &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({  el: &#39;#xApp&#39;,  data:() =&gt; data,  methods: {  getConfirm() {  // 先清空 result (避免兩次選中一樣的值無法觸發 watcher)  this.</p>
+Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 26, 2022</span>
@@ -981,9 +990,9 @@ Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div
       <div class="card-body">
         <h5 class="card-title">[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</h5>
         <p class="card-text post-summary">目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。
- 一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。  Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
+一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。 Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
 git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Initializing gh-pages branch&#34; git push origin spa git checkout master 新增部屬腳本 deploy.sh 新增到專案跟目錄
-#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then  # echo &#34;The working directory is dirty.</p>
+#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then # echo &#34;The working directory is dirty.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 25, 2022</span>
@@ -1010,13 +1019,14 @@ git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Init
       <div class="card-body">
         <h5 class="card-title">[.NET] 開發階段管理應用程式的敏感資料</h5>
         <p class="card-text post-summary">基於資訊安全的理由，密碼等敏感性資訊不應該出現在程式碼裡面， 應該把敏感性資料儲存在專案以外的地方，防止對 Git Server 提交專案程式碼的時候把密碼推送到伺服器上， 因此程式開發、部屬階段都應該用適當的策略存放敏感性資料讓程式讀取使用， .NET 儲存敏感性資料大致上來說可以用這兩種方式：
- 環境變數 Secret Manager  這裡紀錄要如何在 .NET 開發環境以 Secret 儲存敏感性資料，以及程式讀取的方式。
+環境變數 Secret Manager 這裡紀錄要如何在 .NET 開發環境以 Secret 儲存敏感性資料，以及程式讀取的方式。
 Secret Manager Secret Manager 就是在本地端特定路徑存放 secret.json 檔案：
 %APPDATA%\Microsoft\UserSecrets\&lt;user_secrets_id&gt;\secrets.json ~/.microsoft/usersecrets/&lt;user_secrets_id&gt;/secrets.json 需要先針對個別專案啟用專案的 Secret Storage 支援，切換到專案目錄執行：
 dotnet user-secrets init 在專案檔裡的 UserSecretsId 區段會得到一段 GUID，這個要作為 user_secrets_id 資料夾名稱。
-&lt;PropertyGroup&gt;  &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt;  &lt;UserSecretsId&gt;79a3edd0-2092-40a2-a04d-dcb46d5ca9ed&lt;/UserSecretsId&gt; &lt;/PropertyGroup&gt; 以指令設置一組 secret，例如連線字串：
+&lt;PropertyGroup&gt; &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt; &lt;UserSecretsId&gt;79a3edd0-2092-40a2-a04d-dcb46d5ca9ed&lt;/UserSecretsId&gt; &lt;/PropertyGroup&gt; 以指令設置一組 secret，例如連線字串：
 dotnet user-secrets set &#34;ConnectionStrings:POSTGRES&#34; &#34;User ID=root;Password=myPassword;Host=localhost;Port=5432;Database=myDataBase;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;&#34; --project &#34;D:\workspace\MySolution\MyProject&#34; 以檔案直接設置 secret windows
-type .\input.json | dotnet user-secrets set Linux/MacOS</p>
+type .\input.json | dotnet user-secrets set Linux/MacOS
+cat ./input.json | dotnet user-secrets set 在程式裡面存在 secret.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 29, 2022</span>
@@ -1043,7 +1053,7 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</p>
       <div class="card-body">
         <h5 class="card-title">[K8S] 自架 Kubernetes 使用 VM 模擬多台 Server</h5>
         <p class="card-text post-summary">準備/安裝兩台 Server ( 使用 VM clone 然後修改 hostname ) 一台為 Master (主控)，另外一台為 Node ( 節點 ) 安裝 kubelet/kubeadm ( Master 與 node 皆要執行此步驟 )
-# 設定 k8s server上網路 cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf net.bridge.bridge-nf-call-ip6tables = 1 net.bridge.bridge-nf-call-iptables = 1 EOF sudo sysctl --system  # 安裝 kubeadm / kubelet sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - cat &lt;&lt;EOF | sudo tee /etc/apt/sources.</p>
+# 設定 k8s server上網路 cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf net.bridge.bridge-nf-call-ip6tables = 1 net.bridge.bridge-nf-call-iptables = 1 EOF sudo sysctl --system # 安裝 kubeadm / kubelet sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https curl curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - cat &lt;&lt;EOF | sudo tee /etc/apt/sources.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 23, 2022</span>
@@ -1071,7 +1081,7 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</p>
         <h5 class="card-title">[.NET] 製作 Nuget package</h5>
         <p class="card-text post-summary">安裝 nuget.exe CLI 安裝 nuget.exe CLI，並在環境變數 PATH 新增路徑。
 建立 nuspec 設定檔 example
-&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt;  &lt;metadata&gt;  &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt;  &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt;  &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt;  &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt;  &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt;  &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt;  &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt;  &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt;  &lt;description&gt;MyPackage&lt;/description&gt;  &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt;  &lt;copyright&gt;-&lt;/copyright&gt;  &lt;tags&gt;&lt;/tags&gt; 	&lt;dependencies&gt; 	&lt;!-- 定義 .net framework 4.</p>
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt; &lt;package &gt; &lt;metadata&gt; &lt;id&gt;MyPackage&lt;/id&gt; &lt;!--package id --&gt; &lt;version&gt;1.0.0&lt;/version&gt; &lt;!--版本號--&gt; &lt;title&gt;MyPackage&lt;/title&gt; &lt;!-- package title --&gt; &lt;authors&gt;Chen, Yu Cheng&lt;/authors&gt; &lt;!-- 作者 --&gt; &lt;requireLicenseAcceptance&gt;false&lt;/requireLicenseAcceptance&gt; &lt;license type=&#34;expression&#34;&gt;MIT&lt;/license&gt; &lt;!-- &lt;icon&gt;icon.png&lt;/icon&gt; --&gt; &lt;!--&lt;projectUrl&gt;http://project_url_here_or_delete_this_line/&lt;/projectUrl&gt;--&gt; &lt;description&gt;MyPackage&lt;/description&gt; &lt;releaseNotes&gt;Test release of MyPackage package.&lt;/releaseNotes&gt; &lt;copyright&gt;-&lt;/copyright&gt; &lt;tags&gt;&lt;/tags&gt; &lt;dependencies&gt; &lt;!-- 定義 .net framework 4.0 使用時需要的相依姓套件 --&gt; &lt;group targetFramework=&#34;.NETFramework4.0.0&#34; &gt; &lt;dependency id=&#34;Dapper&#34; version=&#34;1.50.2&#34; /&gt; &lt;dependency id=&#34;Newtonsoft.Json&#34; version=&#34;7.0.1&#34; /&gt; &lt;/group&gt; &lt;/dependencies&gt; &lt;/metadata&gt; &lt;/package&gt; 打包檔案 假設最低系統需求為 .</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 22, 2022</span>
@@ -1098,10 +1108,11 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</p>
       <div class="card-body">
         <h5 class="card-title">[K8s] 以 Secrete 共享 tnsnames.ora</h5>
         <p class="card-text post-summary">Introduction Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
- 程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。  考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
+程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。 考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
 單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：
- ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。  三種連線資訊共用策略是否能反映連線資訊修改：
-    ExternalName Service Service + Endpoints Secret Volume     Ip/Domain 可 可 可   Port 不能 可 可   Service Name/SID 不能 不能 可    Step Secret 用處：</p>
+ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。 三種連線資訊共用策略是否能反映連線資訊修改：
+ExternalName Service Service + Endpoints Secret Volume Ip/Domain 可 可 可 Port 不能 可 可 Service Name/SID 不能 不能 可 Step Secret 用處：
+作為容器的環境變數 (但只會在 pod 啟動的時候載入，無法反映動態更改) 作為檔案，可被掛載在其他 Pod 的檔案路徑下，此時 key 視為檔案名稱，value 視為檔案內容，可動態反映修改 作為 deployment 的一部分，敏感資料統一存放在 Docker image，讓其他 pod 可以 pull 存取(也無法動態反映修改，要重新 pull) 因此如果要維護 tnsnames.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 21, 2022</span>
@@ -1128,8 +1139,8 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</p>
       <div class="card-body">
         <h5 class="card-title">[.NET] .NET 6 Web API 專案</h5>
         <p class="card-text post-summary">添加 Swagger dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3 Program.cs
-builder.Services.AddControllers();  builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
-&#34;serverReadyAction&#34;: {  &#34;action&#34;: &#34;openExternally&#34;,  &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s+(https?://\\S+)&#34;,  &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.</p>
+builder.Services.AddControllers(); builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
+&#34;serverReadyAction&#34;: { &#34;action&#34;: &#34;openExternally&#34;, &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s+(https?://\\S+)&#34;, &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝 dotnet add package System.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 18, 2022</span>

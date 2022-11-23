@@ -24,8 +24,8 @@
 
 <meta property="og:title" content="[.NET] .NET 6 Web API 專案" />
 <meta property="og:description" content="添加 Swagger dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3 Program.cs
-builder.Services.AddControllers();  builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
-&#34;serverReadyAction&#34;: {  &#34;action&#34;: &#34;openExternally&#34;,  &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s&#43;(https?://\\S&#43;)&#34;,  &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2." />
+builder.Services.AddControllers(); builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
+&#34;serverReadyAction&#34;: { &#34;action&#34;: &#34;openExternally&#34;, &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s&#43;(https?://\\S&#43;)&#34;, &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝 dotnet add package System." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/startup-webapi/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-07-18T11:35:00+08:00" />
@@ -770,6 +770,15 @@ builder.Services.AddControllers();  builder.Services.AddEndpointsApiExplorer(); 
   
   
     
+    <li><a class="" href="/blog/posts/other/telegram-bot/" title="[Bot] Telegram Bot">[Bot] Telegram Bot</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
   
 
@@ -966,6 +975,9 @@ builder.Services.AddControllers();  builder.Services.AddEndpointsApiExplorer(); 
   
     
     
+  
+  
+
   
   
 
