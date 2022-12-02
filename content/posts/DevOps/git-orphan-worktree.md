@@ -7,8 +7,8 @@ discription: 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原�
 menu:
   sidebar:
     name: "[Git] CLI 專案 CI/CD Git 設定"
-    identifier: frontend-devops-git
-    parent: frontend
+    identifier: devops-git-orphan-worktree
+    parent: devops
     weight: 1000
 ---
 目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。

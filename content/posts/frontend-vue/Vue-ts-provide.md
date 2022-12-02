@@ -5,9 +5,9 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[Vue] TS-Provide"
+    name: "[TS] TS-Provide"
     identifier: frontend-vue-ts-provide
-    parent: frontend
+    parent: frontend-vue
     weight: 1000
 ---
 Working with Reactivity

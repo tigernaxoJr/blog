@@ -6,9 +6,9 @@ hero:
 discription: asdf
 menu:
   sidebar:
-    name: "[DIY] 元件方法回傳 Promise"
+    name: "[元件] Promise 元件方法"
     identifier: frontend-vue-comp-promise
-    parent: frontend
+    parent: frontend-vue
     weight: 1000
 ---
 有用過 [sweetalert2](https://sweetalert2.github.io/) 的話，應該會喜歡可以同步等待對話框回傳值的方式，

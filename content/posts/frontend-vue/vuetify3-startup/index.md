@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[Vuetify] 起始專案"
-    identifier: frontend-vuetify3-startup
-    parent: frontend
+    identifier: frontend-vue-vuetify3-startup
+    parent: frontend-vue
     weight: 1000
 ---
  - vscode

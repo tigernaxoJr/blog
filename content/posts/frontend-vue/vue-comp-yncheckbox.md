@@ -3,11 +3,12 @@ title: "[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例"
 date: 2021-07-29T13:50:00+08:00
 draft: false
 hero: 
+discription: asdf
 menu:
   sidebar:
-    name: "[DIY] CheckBox 元件"
+    name: "[元件] CheckBox"
     identifier: frontend-vue-comp-yncheckbox
-    parent: frontend
+    parent: frontend-vue
     weight: 1000
 ---
 
