@@ -326,7 +326,7 @@
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/frontend/">[前端] 前端開發</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/frontend-vue/">[前端] Vue</a>
       
       <ul class="">
         
@@ -336,7 +336,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/vue-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-router_add_query/" title="[Router] Navigation Guard 加入查詢參數">[Router] Navigation Guard 加入查詢參數</a></li>
   
 
   
@@ -345,7 +345,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/vue-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-ts-provide/" title="[TS] TS-Provide">[TS] TS-Provide</a></li>
   
 
   
@@ -354,7 +354,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/vue-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-yncheckbox/" title="[元件] CheckBox">[元件] CheckBox</a></li>
   
 
   
@@ -363,7 +363,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/devops-git/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-promise/" title="[元件] Promise 元件方法">[元件] Promise 元件方法</a></li>
   
 
   
@@ -372,16 +372,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/vue-ts-component/" title="[Vue] TS-Component">[Vue] TS-Component</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend/vue-ts-provide/" title="[Vue] TS-Provide">[Vue] TS-Provide</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Wrapper Component">[元件] Wrapper Component</a></li>
   
 
 
@@ -711,6 +702,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/devops/git-orphan-worktree/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
   
 
@@ -815,6 +815,33 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/frontend-vue/vue-comp-wrapper/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</h5>
+        <p class="card-text post-summary">用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件
+Vue3 Vue3 &lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) of $slots&#34; v-slot:[slot]=&#34;scope&#34;&gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; TS &lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34; v-slot:[slot]=&#34;scope&#34; &gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; &lt;script setup lang=&#34;ts&#34;&gt; import { QBtnSlots } from &#39;quasar&#39;; &lt;/script&gt; &lt;style scoped&gt;&lt;/style&gt; Vue2.6 &lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34; v-on=&#34;$listeners&#34;&gt; &lt;template v-for=&#34;(_, slot) of $scopedSlots&#34; v-slot:[slot]=&#34;scope&#34;&gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;/&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; </p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">December 2, 2022</span>
+        
+        <a
+        href="/blog/posts/frontend-vue/vue-comp-wrapper/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/other/homeassistant/ha-install/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -842,7 +869,7 @@ version: &#39;3&#39; services: homeassistant: container_name: homeassistant imag
       
         
           <div class="post-card">
-  <a href="/blog/posts/frontend/vue-ts-provide/" class="post-card-link">
+  <a href="/blog/posts/frontend-vue/vue-ts-provide/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -857,34 +884,7 @@ version: &#39;3&#39; services: homeassistant: container_name: homeassistant imag
         <span class="float-left">November 17, 2022</span>
         
         <a
-        href="/blog/posts/frontend/vue-ts-provide/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/frontend/vue-ts-component/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[Typescript] Vue 元件設計</h5>
-        <p class="card-text post-summary">有時候要重製框架元件，讓元件在 app 內符合統一樣式，把 props, attrs, slot 全部傳給某個 child 的寫法，取例 quasar 的 q-btn：
-&lt;template&gt; &lt;q-btn outline color=&#34;primary&#34; v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34; v-slot:[slot]=&#34;scope&#34; &gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;/q-btn&gt; &lt;/template&gt; &lt;script setup lang=&#34;ts&#34;&gt; import { QBtnSlots } from &#39;quasar&#39;; &lt;/script&gt; &lt;style scoped&gt;&lt;/style&gt; </p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 17, 2022</span>
-        
-        <a
-        href="/blog/posts/frontend/vue-ts-component/"
+        href="/blog/posts/frontend-vue/vue-ts-provide/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -952,7 +952,7 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
       
         
           <div class="post-card">
-  <a href="/blog/posts/frontend/vue-comp-promise/" class="post-card-link">
+  <a href="/blog/posts/frontend-vue/vue-comp-promise/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -969,7 +969,7 @@ Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div
         <span class="float-left">August 26, 2022</span>
         
         <a
-        href="/blog/posts/frontend/vue-comp-promise/"
+        href="/blog/posts/frontend-vue/vue-comp-promise/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
@@ -982,7 +982,7 @@ Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div
       
         
           <div class="post-card">
-  <a href="/blog/posts/frontend/devops-git/" class="post-card-link">
+  <a href="/blog/posts/devops/git-orphan-worktree/" class="post-card-link">
     <div class="card">
       <div class="card-head">
         <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
@@ -998,7 +998,7 @@ git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Init
         <span class="float-left">August 25, 2022</span>
         
         <a
-        href="/blog/posts/frontend/devops-git/"
+        href="/blog/posts/devops/git-orphan-worktree/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

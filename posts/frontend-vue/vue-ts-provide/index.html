@@ -27,7 +27,7 @@
 &lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
 &lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference Vue.js/guild - Provide / Inject Vue." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend/vue-ts-provide/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend-vue/vue-ts-provide/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-17T11:49:00+08:00" />
 <meta property="article:modified_time" content="2022-11-17T11:49:00+08:00" />
 
@@ -332,7 +332,7 @@
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/frontend/">[前端] 前端開發</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/frontend-vue/">[前端] Vue</a>
       
       <ul class="active">
         
@@ -342,43 +342,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/frontend/vue-comp-yncheckbox/" title="[DIY] CheckBox 元件">[DIY] CheckBox 元件</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend/vue-router_add_query/" title="[DIY] Navigation Guard 加入查詢參數">[DIY] Navigation Guard 加入查詢參數</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend/vue-comp-promise/" title="[DIY] 元件方法回傳 Promise">[DIY] 元件方法回傳 Promise</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend/devops-git/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend/vue-ts-component/" title="[Vue] TS-Component">[Vue] TS-Component</a></li>
+    <li><a class="" href="/blog/posts/frontend-vue/vue-router_add_query/" title="[Router] Navigation Guard 加入查詢參數">[Router] Navigation Guard 加入查詢參數</a></li>
   
 
   
@@ -390,7 +354,34 @@
   
   
     
-    <li><a class="active" href="/blog/posts/frontend/vue-ts-provide/" title="[Vue] TS-Provide">[Vue] TS-Provide</a></li>
+    <li><a class="active" href="/blog/posts/frontend-vue/vue-ts-provide/" title="[TS] TS-Provide">[TS] TS-Provide</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-yncheckbox/" title="[元件] CheckBox">[元件] CheckBox</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-promise/" title="[元件] Promise 元件方法">[元件] Promise 元件方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Wrapper Component">[元件] Wrapper Component</a></li>
   
 
 
@@ -720,6 +711,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/devops/git-orphan-worktree/" title="[Git] CLI 專案 CI/CD Git 設定">[Git] CLI 專案 CI/CD Git 設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
   
 
@@ -879,7 +879,7 @@
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/FrontEnd/Vue-ts-provide.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/frontend-vue/Vue-ts-provide.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -961,20 +961,20 @@
   
 
   
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
     
     
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
   
   
 
@@ -1075,9 +1075,9 @@
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/frontend/vue-ts-component/" title="[Typescript] Vue 元件設計" class="btn btn-outline-info">
+      <a href="/blog/posts/frontend-vue/vue-router_add_query/" title="[DIY] Vue Router 使用 Navigation Guard 加入查詢參數" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[Typescript] Vue 元件設計</div>
+        <div class="next-prev-text">[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</div>
       </a>
     </div>
   
@@ -1087,9 +1087,9 @@
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案" class="btn btn-outline-info">
+        <a href="/blog/posts/frontend-vue/vue-comp-yncheckbox/" title="[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[.NET] .NET 6 Web API 專案</div>
+          <div class="next-prev-text">[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</div>
         </a>
       </div>
     
