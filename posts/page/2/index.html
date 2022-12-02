@@ -791,6 +791,15 @@
     <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
+  
+
 
       </ul>
     </li>
@@ -812,6 +821,34 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/dotnet/startup-webapi/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET] .NET 6 Web API 專案</h5>
+        <p class="card-text post-summary">添加 Swagger dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3 Program.cs
+builder.Services.AddControllers(); builder.Services.AddEndpointsApiExplorer(); builder.Services.AddSwaggerGen(); https://localhost:&lt;port&gt;/swagger/index.html 添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger 讓Swagger 認得 IActionResult 的 api 接收/回傳型別 https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult
+&#34;serverReadyAction&#34;: { &#34;action&#34;: &#34;openExternally&#34;, &#34;pattern&#34;: &#34;^\\s*Now listening on:\\s+(https?://\\S+)&#34;, &#34;uriFormat&#34;: &#34;%s/swagger&#34; } ASP.NET Core doesn&rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0 .NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝 dotnet add package System.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">July 18, 2022</span>
+        
+        <a
+        href="/blog/posts/dotnet/startup-webapi/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1106,33 +1143,6 @@ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備�
         
         <a
         href="/blog/posts/devops/sonarqube_netcore31/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</h5>
-        <p class="card-text post-summary">Web 在顯示姓名的時候常會遇到中文難字無法顯示， 此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 woff、woff2、ttf 讓網頁正確顯示難字。 過程需要字型工具軟體 FontForge， 步驟如下：
-拿到造字檔 EUDC.TTE 用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte 安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.0.0&#34;)Generate(&#34;EUDC.ttf&#34;)Generate(&#34;EUDC.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 24, 2021</span>
-        
-        <a
-        href="/blog/posts/web/web-tool-eudc-frontforge/eudc/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

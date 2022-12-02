@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[架構] Architecture</title>
+    <title>[授權] OAuth2.0</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,19 +22,27 @@
 
 
 
-<meta property="og:title" content="[架構] Architecture" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/software/" />
+<meta property="og:title" content="[授權] OAuth2.0" />
+<meta property="og:description" content="OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題 允許授權當下的APP取得使用者在平台的相關資訊 OAuth2 有很多變化
+腳色：
+Resource Owner，也就是使用者。 Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。 Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式 Resource Server，存放資源的伺服器，認 Token 給使用者存取資源 用詞
+Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑 Scope 授權範圍 OAuth2.0 四種授權類型流程(Grant Types)： Authorization Code 最常見，步驟：
+應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip; Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。 應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。 應用程式(Client)帶著 Access Token 向 Resource Server 存取資源 Implicit 適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application) 跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token 比較不安全" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/other/auth-oauth2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-02T12:43:00+08:00" />
+<meta property="article:modified_time" content="2022-12-02T12:43:00+08:00" />
 
 
 
     
     
-    <link rel="stylesheet" href="/blog/css/layouts/list.css">
-    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
-    
-    <link rel="stylesheet" href="/blog/css/style.css"/>
+<meta name="description" content="[授權] OAuth2.0" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
+<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
+<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+
+<link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -88,9 +96,6 @@
 
       
       
-  
-  
-
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
@@ -576,15 +581,12 @@
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/software/">[系統] 軟體設計</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -726,12 +728,15 @@
   
   
   
+    
+    
+  
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">[其他] Other</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/other/">[其他] Other</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
@@ -798,9 +803,12 @@
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
+    <li><a class="active" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
   
 
 
@@ -820,81 +828,332 @@
       
       
 <section class="content-section" id="content-section">
-  <div class="content container-fluid" id="content">
-    <div class="container-fluid post-card-holder" id="post-card-holder">
+  <div class="content">
+    <div class="container p-0 read-area">
       
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      </div>
+
       
-      
+      <div class="page-content">
+        <div class="author-profile ml-auto align-self-lg-center">
+          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
+          <h5 class="author-name">Yu Cheng</h5>
+          <p>Friday, December 2, 2022</p>
+        </div>
+
+        <div class="title">
+          <h1>[授權] OAuth2.0</h1>
+        </div>
         
-          <div class="post-card">
-  <a href="/blog/posts/software/arch_n_tier/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[架構] 多層式架構(Multitier Architecture)</h5>
-        <p class="card-text post-summary">多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
-N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
-提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。 1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
-2-tier model layer 分配至兩個不同的記憶體空間運行，記憶體空間可能位於相同或兩台不同的機器上(通常是不同機器)，典型的例子是分配到 client、server 上運行。
-3-tier model 多層式架構當中最常使用的就是三層架構(three-tier architecture)。 三層架構與Web應用程式來說明如下：
-表現層(Presentation)：又稱為 UI 層，以Web來說就是呈現出來的前端網頁。 應用程式層(Application)：以 Web 來說相當於伺服器上執行的應用程式。 資料層(Data)：這一層包含資料儲存、呈現機制，以 Web 來說通常指 Database。 Reference wikipedia - Multitier architecture Rockford Lhotka - Should all apps be n-tier?</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">May 17, 2021</span>
-        
-        <a
-        href="/blog/posts/software/arch_n_tier/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
+        <div class="post-content" id="post-content">
+          <p>OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題
+允許授權當下的APP取得使用者在平台的相關資訊
+OAuth2 有很多變化</p>
+<p>腳色：</p>
+<ul>
+<li>Resource Owner，也就是使用者。</li>
+<li>Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。</li>
+<li>Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式</li>
+<li>Resource Server，存放資源的伺服器，認 Token 給使用者存取資源</li>
+</ul>
+<p>用詞</p>
+<ul>
+<li>Authorization Grant 同意應用程式取得資源</li>
+<li>Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑</li>
+<li>Scope 授權範圍</li>
+</ul>
+<h2 id="oauth20-四種授權類型流程grant-types">OAuth2.0 四種授權類型流程(Grant Types)：</h2>
+<h3 id="authorization-code">Authorization Code</h3>
+<p>最常見，步驟：</p>
+<ol>
+<li>應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip;</li>
+<li>Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。</li>
+<li>應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。</li>
+<li>應用程式(Client)帶著 Access Token 向 Resource Server 存取資源</li>
+</ol>
+<h3 id="implicit">Implicit</h3>
+<p>適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application)
+跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token
+比較不安全</p>
+<h3 id="resource-owner-password-credentials">Resource Owner Password Credentials</h3>
+<p>使用者透過應用程式(Client)，提供帳號密碼給 Authorization Server拿到 Access Token</p>
+<h3 id="client-credentials">Client Credentials</h3>
+<p>M2M (machine-to-machine)
+通常是應用程式向 Authorization Server 請求取得獲取自己相關資源的 Access Token，而不是為了獲取使用者的資源。
+不需要驗證使用者身分，單純應用程式向 Authorization Server 驗證自己的資訊。</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E7%AD%86%E8%A8%98-%E8%AA%8D%E8%AD%98-oauth-2-0-%E4%B8%80%E6%AC%A1%E4%BA%86%E8%A7%A3%E5%90%84%E8%A7%92%E8%89%B2-%E5%90%84%E9%A1%9E%E5%9E%8B%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%AE%E7%95%B0-c42da83a6015">[筆記] 認識 OAuth 2.0：一次了解各角色、各類型流程的差異</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10225956"></a></li>
+</ul>
+
+        </div>
 
         
-      
+        <div class="row pl-3 pr-3">
         
-          <div class="post-card">
-  <a href="/blog/posts/software/arch-multi-layer/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[架構] 多層式架構(Multi-layer Architecture)</h5>
-        <p class="card-text post-summary">多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
-為何以 multi-layer 撰寫程式碼
-增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。 BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
-one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取 分層 Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation) Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">January 10, 2021</span>
+        <div class="col-md-6 share-buttons">
         
-        <a
-        href="/blog/posts/software/arch-multi-layer/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
+          </div>
 
         
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/other/auth-oauth2.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
       
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/blog/posts/other/vim-plugin-ycm/" title="[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe" class="btn btn-outline-info">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</div>
+      </a>
     </div>
-    <div class="paginator">
+  
+  
+</div>
+
+      <hr />
+
       
+      
+      
+      
+
+      </div>
     </div>
   </div>
+  
+  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
+  
 </section>
 
 
       
-       
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center pl-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#oauth20-四種授權類型流程grant-types">OAuth2.0 四種授權類型流程(Grant Types)：</a>
+      <ul>
+        <li><a href="#authorization-code">Authorization Code</a></li>
+        <li><a href="#implicit">Implicit</a></li>
+        <li><a href="#resource-owner-password-credentials">Resource Owner Password Credentials</a></li>
+        <li><a href="#client-credentials">Client Credentials</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
     </div>
 
     
@@ -1083,7 +1342,20 @@ one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏
 
     
     
-    <script src="/blog/js/list.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
+<script src="/blog/js/single.js"></script>
+<script>
+  hljs.highlightAll();
+  setTimeout( ()=>window.highlightJsBadge(), 1000); 
+</script>
+
+
+
+
+
+
+
 
 
     

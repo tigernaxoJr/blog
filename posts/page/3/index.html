@@ -791,6 +791,15 @@
     <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
+  
+
 
       </ul>
     </li>
@@ -812,6 +821,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</h5>
+        <p class="card-text post-summary">Web 在顯示姓名的時候常會遇到中文難字無法顯示， 此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 woff、woff2、ttf 讓網頁正確顯示難字。 過程需要字型工具軟體 FontForge， 步驟如下：
+拿到造字檔 EUDC.TTE 用 cmd 打開 regedit (win10 搜尋圖示點下後，輸入 cmd，出現小黑窗後再輸入 regedit) 找到機碼 HKEY_CURRENT_USER -&gt; EUDC -&gt; 950 資料夾下的 SystemDefaultEUDCFont 設定檔。 從設定檔的值就是 EUDC 的存放位址取出 EUDC.tte，我這裡是 C:\CIBEN\EUDC.tte 安裝 FontForge，找到 fontforge.exe 的位址 (注意，跟桌面捷徑呼叫的執行檔不一樣！)，我的是在 C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe 建立一個轉檔腳本 tte-extract.pe，內容如下 # Open EUDC TTEOpen(&#34;EUDC.tte&#34;, 4)# CHANGE TTFNAME 2 EUDC SetTTFName(0x409,1,&#34;EUDC&#34;)SetTTFName(0x409,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;EUDC&#34;)SetTTFName(0x409,4,&#34;EUDC&#34;)SetTTFName(0x404,1,&#34;EUDC&#34;)SetTTFName(0x404,2,&#34;EUDC&#34;)SetTTFName(0x409,3,&#34;&#34;)SetTTFName(0x404,4,&#34;EUDC&#34;)SetFontNames(&#34;EUDC&#34;, &#34;EUDC&#34;, &#34;EUDC&#34;, &#34;Regular&#34;, &#34;655&#34;, &#34;1.0.0&#34;)Generate(&#34;EUDC.ttf&#34;)Generate(&#34;EUDC.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">August 24, 2021</span>
+        
+        <a
+        href="/blog/posts/web/web-tool-eudc-frontforge/eudc/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1114,35 +1150,6 @@ Referance Github-TelegramBots/Telegram.Bot Telegram.Bot-Documentation Telegram B
         
         <a
         href="/blog/posts/other/linux-gdrive-cli/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/software/arch-multi-layer/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[架構] 多層式架構(Multi-layer Architecture)</h5>
-        <p class="card-text post-summary">多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
-為何以 multi-layer 撰寫程式碼
-增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。 BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
-one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取 分層 Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation) Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">January 10, 2021</span>
-        
-        <a
-        href="/blog/posts/software/arch-multi-layer/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

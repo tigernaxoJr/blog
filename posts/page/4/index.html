@@ -791,6 +791,15 @@
     <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
+  
+
 
       </ul>
     </li>
@@ -812,6 +821,35 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/software/arch-multi-layer/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[架構] 多層式架構(Multi-layer Architecture)</h5>
+        <p class="card-text post-summary">多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
+為何以 multi-layer 撰寫程式碼
+增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。 BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
+one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取 分層 Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation) Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 10, 2021</span>
+        
+        <a
+        href="/blog/posts/software/arch-multi-layer/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1123,37 +1161,6 @@ Reference JS模組規範：AMD、UMD、CMD、commonJS、ES6 module </p>
         
         <a
         href="/blog/posts/javascript/js-module/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5>
-        <p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
-axios 一樣可以透過 LibMan 安裝~
-libman install axios@latest \ -p unpkg \ -d wwwroot/js/axios \ --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
-&lt;script src=&#34;./lib/axios/dist/axios.min.js&#34;&gt;&lt;/script&gt; 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
-libman install bootstrap@5.0.0-alpha2 \ -p unpkg \ -d wwwroot/lib/bootstrap \ --files dist/js/bootstrap.min.js \ --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
-&lt;script src=&#34;./lib/bootstrap/dist/js/bootstrap.min.js&#34;&gt;&lt;/script&gt; 現在將 wwwRoot/index.html 修改如下：</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 10, 2020</span>
-        
-        <a
-        href="/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
