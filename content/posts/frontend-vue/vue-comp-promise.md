@@ -171,7 +171,7 @@ defineExpose({ SetResult, GetResult, model });
 </script>
 ```
 ### 使用方法
-```vue
+```html
 <template>
   <!-- 確認 Dialog -->
   <DialogAsync ref="dlg" width="sm" />
