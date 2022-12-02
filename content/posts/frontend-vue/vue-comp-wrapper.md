@@ -18,8 +18,9 @@ menu:
 <template>
   <q-btn v-bind="$attrs">
     <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-      <slot :name="slot" v-bind="scope"/>
+      <slot :name="slot" v-bind="scope"></slot>
     </template>
+    <slot></slot>
   </q-btn>
 </template>
 ```
@@ -33,6 +34,7 @@ menu:
     >
       <slot :name="slot" v-bind="scope"></slot>
     </template>
+    <slot></slot>
   </q-btn>
 </template>
 
@@ -49,6 +51,7 @@ import { QBtnSlots } from 'quasar';
     <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
       <slot :name="slot" v-bind="scope"/>
     </template>
+    <slot></slot>
   </q-btn>
 </template>
 ```
