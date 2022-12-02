@@ -109,7 +109,7 @@ document.getElementById('xBtn')
 ## Vue-next 實作
 這裡使用 vue-next/setup/quasar/typescript
 ### 程式碼
-```vue
+```html
 <template>
   <q-dialog v-model="model" :persistent="persistent">
     <q-card>
