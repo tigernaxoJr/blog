@@ -24,9 +24,9 @@
 
 <meta property="og:title" content="[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支" />
 <meta property="og:description" content="目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。
-一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。 Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
+ 一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。  Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
 git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Initializing gh-pages branch&#34; git push origin spa git checkout master 新增部屬腳本 deploy.sh 新增到專案跟目錄
-#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then # echo &#34;The working directory is dirty." />
+#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then  # echo &#34;The working directory is dirty." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/devops/git-orphan-worktree/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-08-25T14:23:00+08:00" />

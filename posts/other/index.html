@@ -836,9 +836,9 @@
         <h5 class="card-title">[授權] OAuth2.0</h5>
         <p class="card-text post-summary">OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題 允許授權當下的APP取得使用者在平台的相關資訊 OAuth2 有很多變化
 腳色：
-Resource Owner，也就是使用者。 Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。 Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式 Resource Server，存放資源的伺服器，認 Token 給使用者存取資源 用詞
-Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑 Scope 授權範圍 OAuth2.0 四種授權類型流程(Grant Types)： Authorization Code 最常見，步驟：
-應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip; Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。 應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。 應用程式(Client)帶著 Access Token 向 Resource Server 存取資源 Implicit 適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application) 跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token 比較不安全</p>
+ Resource Owner，也就是使用者。 Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。 Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式 Resource Server，存放資源的伺服器，認 Token 給使用者存取資源  用詞
+ Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑 Scope 授權範圍  OAuth2.0 四種授權類型流程(Grant Types)： Authorization Code 最常見，步驟：
+ 應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip; Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。 應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。 應用程式(Client)帶著 Access Token 向 Resource Server 存取資源  Implicit 適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application) 跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token 比較不安全</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 2, 2022</span>
@@ -865,7 +865,7 @@ Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器�
       <div class="card-body">
         <h5 class="card-title">[HA] 準備系統環境</h5>
         <p class="card-text post-summary">這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。 建立專案資料夾 ha ha/docker-compose.yaml
-version: &#39;3&#39; services: homeassistant: container_name: homeassistant image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34; volumes: - $PWD/var/ha/config:/config - /etc/localtime:/etc/localtime:ro restart: unless-stopped privileged: true ports: - 8123:8123 # HA 控台的 port mosquitto: container_name: mosquitto image: eclipse-mosquitto volumes: - $PWD/opt/mosquitto:/mosquitto ports: - 1883:1883 - 9001:9001 # 如果要把 zigbee2mqtt 整合在同一台機器上... zigbee2mqtt: container_name: zigbee2mqtt depends_on: - mosquitto image: koenkk/zigbee2mqtt volumes: - $PWD/zigbee2mqtt/data:/app/data - /run/udev:/run/udev:ro ports: - 8080:8080 devices: - /dev/ttyUSB0:/dev/ttyUSB0 restart: always privileged: true ha/opt/mosquitto/config/mosquitto.</p>
+version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34;  volumes:  - $PWD/var/ha/config:/config  - /etc/localtime:/etc/localtime:ro  restart: unless-stopped  privileged: true  ports:  - 8123:8123 # HA 控台的 port  mosquitto:  container_name: mosquitto  image: eclipse-mosquitto  volumes:  - $PWD/opt/mosquitto:/mosquitto  ports:  - 1883:1883  - 9001:9001  # 如果要把 zigbee2mqtt 整合在同一台機器上...  zigbee2mqtt:  container_name: zigbee2mqtt  depends_on:  - mosquitto  image: koenkk/zigbee2mqtt  volumes:  - $PWD/zigbee2mqtt/data:/app/data  - /run/udev:/run/udev:ro  ports:  - 8080:8080  devices:  - /dev/ttyUSB0:/dev/ttyUSB0  restart: always  privileged: true ha/opt/mosquitto/config/mosquitto.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 22, 2022</span>
@@ -892,7 +892,7 @@ version: &#39;3&#39; services: homeassistant: container_name: homeassistant imag
       <div class="card-body">
         <h5 class="card-title">[Bot] Telegram bot</h5>
         <p class="card-text post-summary">找 @BotFather 對話打 /newbot，設定 name username，然後就會拿到 API token
-Referance Github-TelegramBots/Telegram.Bot Telegram.Bot-Documentation Telegram Bot API </p>
+Referance  Github-TelegramBots/Telegram.Bot Telegram.Bot-Documentation Telegram Bot API  </p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 29, 2021</span>
@@ -918,8 +918,8 @@ Referance Github-TelegramBots/Telegram.Bot Telegram.Bot-Documentation Telegram B
       </div>
       <div class="card-body">
         <h5 class="card-title">[Tools] 在 linux 中使用 google drive cli</h5>
-        <p class="card-text post-summary">重新編譯 gdrive 取得憑證 首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret 編譯專案 1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git 3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34; 4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive 5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build 設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
-# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/.</p>
+        <p class="card-text post-summary">重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
+# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 29, 2021</span>
@@ -946,12 +946,12 @@ Referance Github-TelegramBots/Telegram.Bot Telegram.Bot-Documentation Telegram B
       <div class="card-body">
         <h5 class="card-title">[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</h5>
         <p class="card-text post-summary">安裝 junegunn/vim-plug 管理套件 以指令安裝 junegunn/vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 在 ~/.vimrc 加入 Plug &lsquo;ycm-core/YouCompleteMe&rsquo;
 &#34; Specify a directory for pluginscall plug#begin(&#39;~/.vim/plugged&#39;)Plug &#39;ycm-core/YouCompleteMe&#39;&#34; Initialize plugin systemcall plug#end() 打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗
 :PlugInstall 編譯YCM 安裝編譯工具
 sudo apt install -y build-essential cmake vim python3-dev 編譯
 ~/.vim/plugged/YouCompleteMe/install.py 測試 打開 vim 確認，完工~
-Reference GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug </p>
+Reference  GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug  </p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 18, 2020</span>
@@ -979,11 +979,10 @@ Reference GitHub - ycm-core/YouCompleteMe GitHub - junegunn/vim-plug </p>
         <h5 class="card-title">[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</h5>
         <p class="card-text post-summary">台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
 OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
-注意事項 校時
-由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w 所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null 從Windows登入台灣杉 前置工作 安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。 編譯TOTP產生器 取得TOTP套件
+注意事項  校時
+由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w  所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null   從Windows登入台灣杉 前置工作  安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。  編譯TOTP產生器 取得TOTP套件
 go get github.com/pquerna/otp/totp 撰寫程式碼main.go
-package main import ( &#34;fmt&#34; &#34;github.com/pquerna/otp/totp&#34; &#34;os&#34; &#34;time&#34; ) func main() { secret := os.Args[1] code, _ := totp.GenerateCode(secret, time.Now().UTC()) fmt.Print(code) } 編譯
-go build -o taiwaniaOTP.exe main.</p>
+package main  import (  &#34;fmt&#34;  &#34;github.com/pquerna/otp/totp&#34;  &#34;os&#34;  &#34;time&#34; )  func main() {  secret := os.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">January 23, 2019</span>

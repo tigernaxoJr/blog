@@ -24,7 +24,7 @@
 
 <meta property="og:title" content="[Docker] 在 Ubuntu 安裝 Docker" />
 <meta property="og:description" content="從 Install Docker Engine on Ubuntu 總結出腳本，直接執行就好：
-#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \ ca-certificates \ curl \ gnupg \ lsb-release # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker." />
+#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc  # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \  ca-certificates \  curl \  gnupg \  lsb-release  # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/container/docker-install/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-15T08:46:00+08:00" />
