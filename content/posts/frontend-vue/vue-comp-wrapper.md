@@ -39,8 +39,11 @@ menu:
 </template>
 
 <script setup lang="ts">
-import { QBtnSlots, QBtnProps } from 'quasar';
-defineProps<QBtnProps>(); // 這樣 Wrapper SFC 才會獲得 IDE 支援
+import type { QBtnSlots, QBtnProps as IProps } from 'quasar';
+import { QBtn } from 'quasar';
+// 這樣 Wrapper SFC 才會獲得 IDE 支援 
+// 不知為何 IProps 不用 alias (直接帶入 QBtnProps)總是會出錯
+defineProps<IProps>();
 </script>
 
 <style scoped></style>
