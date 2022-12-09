@@ -39,7 +39,8 @@ menu:
 </template>
 
 <script setup lang="ts">
-import { QBtnSlots } from 'quasar';
+import { QBtnSlots, QBtnProps } from 'quasar';
+defineProps<QBtnProps>(); // 這樣 Wrapper SFC 才會獲得 IDE 支援
 </script>
 
 <style scoped></style>
