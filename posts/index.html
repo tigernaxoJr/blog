@@ -601,6 +601,15 @@
     <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
+  
+
 
       </ul>
     </li>
@@ -821,6 +830,35 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/software/quality-nest/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Program] 巢狀結構</h5>
+        <p class="card-text post-summary">巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。
+消除巢狀程式手法：  Extraction Inversion 依據契約式程式設計，移除不必要判斷  Extraction 從複查的結構抽出程式碼
+Inversion 把跳出函式的判斷移動到最上面
+依據契約式程式設計，移除不必要判斷 依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">December 11, 2022</span>
+        
+        <a
+        href="/blog/posts/software/quality-nest/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1128,36 +1166,6 @@ type .\input.json | dotnet user-secrets set Linux/MacOS</p>
         
         <a
         href="/blog/posts/dotnet/nuget/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/container/k8s-example-tnsnames.ora/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[K8s] 以 Secrete 共享 tnsnames.ora</h5>
-        <p class="card-text post-summary">Introduction Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
- 程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。  考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
-單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：
- ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。  三種連線資訊共用策略是否能反映連線資訊修改：
-    ExternalName Service Service + Endpoints Secret Volume     Ip/Domain 可 可 可   Port 不能 可 可   Service Name/SID 不能 不能 可    Step Secret 用處：</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">July 21, 2022</span>
-        
-        <a
-        href="/blog/posts/container/k8s-example-tnsnames.ora/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

@@ -6,7 +6,7 @@
     <description>Recent content on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 02 Dec 2022 12:43:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sun, 11 Dec 2022 02:19:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Resultados de Búsqueda</title>
       <link>https://tigernaxojr.github.io/blog/search/</link>
       <pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate>
@@ -329,6 +329,18 @@ No content shown here is rendered, all content is based in the template layouts/
 Setting a very low sitemap priority will tell search engines this is not important content.
 This implementation uses Fusejs, jquery and mark.js
 Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description>
+    </item>
+    
+    <item>
+      <title>[Program] 巢狀結構</title>
+      <link>https://tigernaxojr.github.io/blog/posts/software/quality-nest/</link>
+      <pubDate>Sun, 11 Dec 2022 02:19:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/software/quality-nest/</guid>
+      <description>巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。
+消除巢狀程式手法：  Extraction Inversion 依據契約式程式設計，移除不必要判斷  Extraction 從複查的結構抽出程式碼
+Inversion 把跳出函式的判斷移動到最上面
+依據契約式程式設計，移除不必要判斷 依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷</description>
     </item>
     
     <item>

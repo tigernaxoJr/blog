@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title>
+    <title>[Program] 巢狀結構</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,21 +22,21 @@
 
 
 
-<meta property="og:title" content="[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例" />
-<meta property="og:description" content="前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;
-Configuration 在 Startup.ConfigureServices 方法中設置驗證方案， 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)
-// 設置 cookie 驗證作為應用程式預設的驗證方案 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) // 將 cookie 服務添加到服務容器當中  .AddCookie(); 在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization， 啟用驗證中間件並設置 HttpContext.User 屬性， UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：
-app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點對應 app.UseEndpoints(endpoints =&gt; {  endpoints.MapControllers();  endpoints.MapRazorPages(); }); Cookie Policy Middleware 在中間件當中設置的驗證政策會作用於全域(每個請求)， 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性， 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：" />
+<meta property="og:title" content="[Program] 巢狀結構" />
+<meta property="og:description" content="巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。
+消除巢狀程式手法：  Extraction Inversion 依據契約式程式設計，移除不必要判斷  Extraction 從複查的結構抽出程式碼
+Inversion 把跳出函式的判斷移動到最上面
+依據契約式程式設計，移除不必要判斷 依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_3/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-12-30T23:24:00+08:00" />
-<meta property="article:modified_time" content="2020-12-30T23:24:00+08:00" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/software/quality-nest/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-11T02:19:00+08:00" />
+<meta property="article:modified_time" content="2022-12-11T02:19:00+08:00" />
 
 
 
     
     
-<meta name="description" content="[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例" />
+<meta name="description" content="[Program] 巢狀結構" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
 <link rel="stylesheet" href="/blog/css/layouts/single.css"/>
 <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
@@ -388,15 +388,12 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/dotnet/">[後端] .NET</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -465,15 +462,12 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/dotnet/startup-auth/">[練習] 認證與授權</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-auth/">[練習] 認證與授權</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -497,12 +491,9 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
   
   
   
-    
-    
-  
   
     
-    <li><a class="active" href="/blog/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
   
 
   
@@ -589,12 +580,15 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
   
   
   
+    
+    
+  
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/software/">[系統] 軟體設計</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
@@ -618,9 +612,12 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
+    <li><a class="active" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
   
 
 
@@ -850,96 +847,27 @@ app.UseAuthentication(); // 驗證 app.UseAuthorization(); // 授權  // 端點�
         <div class="author-profile ml-auto align-self-lg-center">
           <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
           <h5 class="author-name">Yu Cheng</h5>
-          <p>Wednesday, December 30, 2020</p>
+          <p>Sunday, December 11, 2022</p>
         </div>
 
         <div class="title">
-          <h1>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</h1>
+          <h1>[Program] 巢狀結構</h1>
         </div>
         
         <div class="post-content" id="post-content">
-          <p>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&hellip;</p>
-<h1 id="configuration">Configuration</h1>
-<p>在 Startup.ConfigureServices 方法中設置驗證方案，
-並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#75715e">// 設置 cookie 驗證作為應用程式預設的驗證方案</span>
-</span></span><span style="display:flex;"><span>services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將 cookie 服務添加到服務容器當中</span>
-</span></span><span style="display:flex;"><span>    .AddCookie();
-</span></span></code></pre></div><p>在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization，
-啟用驗證中間件並設置 HttpContext.User 屬性，
-UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>app.UseAuthentication(); <span style="color:#75715e">// 驗證</span>
-</span></span><span style="display:flex;"><span>app.UseAuthorization(); <span style="color:#75715e">// 授權</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 端點對應</span>
-</span></span><span style="display:flex;"><span>app.UseEndpoints(endpoints =&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    endpoints.MapControllers();
-</span></span><span style="display:flex;"><span>    endpoints.MapRazorPages();
-</span></span><span style="display:flex;"><span>});
-</span></span></code></pre></div><h1 id="cookie-policy-middleware">Cookie Policy Middleware</h1>
-<p>在中間件當中設置的驗證政策會作用於全域(每個請求)，
-舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性，
-所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span>app.UseCookiePolicy(<span style="color:#66d9ef">new</span> CookiePolicyOptions {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 所有 Cookie.SamSite 設置都會被提升為 Strict</span>
-</span></span><span style="display:flex;"><span>    MinimumSameSitePolicy = SameSiteMode.Strict, 
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cookie.SamSite 設置為 None 的話會被提升為 Lax</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.Lax,  </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// MinimumSameSitePolicy 設置為最寬鬆，因此不會影響 Cookie.SamSite</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.None, </span>
-</span></span><span style="display:flex;"><span>});
-</span></span></code></pre></div><h1 id="create-an-authentication-cookie">Create an authentication cookie</h1>
-<p>.NET Core 利用 ClaimsPrincipal 將序列化的使用者資訊儲存在 Cookie 當中
-而 ClaimsPrincipal 可包含很多 ClaimsIdentity(但通常只有一個)；
-ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
-而每個 Claims 是包含型別(ClaimType)、值(ClaimValue)。
-因此為登入使用者建立 Cookie 驗證的步驟如下：</p>
-<ol>
-<li>建構 ClaimsPrincipal、ClaimsIdentity、Claims</li>
-<li>呼叫 SignInAsync 為 http 回應加上一個帶有使用者資訊的加密 cookie</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> claims = <span style="color:#66d9ef">new</span> List&lt;Claim&gt; 
-</span></span><span style="display:flex;"><span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> Claim(ClaimTypes.Name, user.Email),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> Claim(<span style="color:#e6db74">&#34;FullName&#34;</span>, user.FullName),
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> Claim(ClaimTypes.Role, <span style="color:#e6db74">&#34;Administrator&#34;</span>),
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> claimsIdentity = <span style="color:#66d9ef">new</span> ClaimsIdentity(
-</span></span><span style="display:flex;"><span>    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">await</span> HttpContext.SignInAsync(
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果沒有在 SignInAsync 指定 AuthenticationScheme，會使用預設值</span>
-</span></span><span style="display:flex;"><span>    CookieAuthenticationDefaults.AuthenticationScheme, 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> ClaimsPrincipal(claimsIdentity), 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> AuthenticationProperties {
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 這裡可以自訂驗證選項...</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 是否可自動更新 Cookie(時效?)</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//AllowRefresh = &lt;bool&gt;,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// IsPersistent 設置 Persistent cookies，否則瀏覽器 session 關閉就失效</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//IsPersistent = true, </span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// Persistent cookie 可進一步設置失效時間：</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//IssuedUtc = &lt;DateTimeOffset&gt;,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">//RedirectUri = &lt;string&gt;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>);
-</span></span></code></pre></div><h1 id="sign-out">Sign out</h1>
-<p>登出非常簡單：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">await</span> HttpContext.SignOutAsync(
-</span></span><span style="display:flex;"><span>    CookieAuthenticationDefaults.AuthenticationScheme);
-</span></span></code></pre></div><p>P.S. non-persistent cookies 在 <strong>瀏覽器(browser)</strong> 關閉時會自動清除，但關閉 <strong>分頁(tab)</strong> 時不會</p>
-<h1 id="reference">Reference</h1>
+          <p>巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。</p>
+<h2 id="消除巢狀程式手法">消除巢狀程式手法：</h2>
 <ul>
-<li><a href="https://docs.microsoft.com/en-us/dotnet/standard/security/principal-and-identity-objects">MSDN - Principal and Identity Objects</a></li>
-<li><a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice?view=aspnetcore-3.1">MSDN - IAuthenticationService Interface</a></li>
-<li><a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.authenticationservice?view=aspnetcore-3.1">MSDN - AuthenticationService Class</a></li>
-<li><a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-3.1">MSDN - Use cookie authentication without ASP.NET Core Identity</a></li>
-<li><a href="https://dotblogs.com.tw/Null/2020/04/09/162252">[ASP.NET Core] 加上簡單的Cookie登入驗證</a></li>
-<li><a href="https://dotnetcorecentral.com/blog/authentication-handler-in-asp-net-core/">Authentication handler in ASP.Net Core (JWT and Custom)</a></li>
+<li>Extraction</li>
+<li>Inversion</li>
+<li>依據契約式程式設計，移除不必要判斷</li>
 </ul>
+<h3 id="extraction">Extraction</h3>
+<p>從複查的結構抽出程式碼</p>
+<h3 id="inversion">Inversion</h3>
+<p>把跳出函式的判斷移動到最上面</p>
+<h3 id="依據契約式程式設計移除不必要判斷">依據契約式程式設計，移除不必要判斷</h3>
+<p>依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷</p>
 
         </div>
 
@@ -957,7 +885,7 @@ ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/dotnet/startup-auth/auth_guild_3.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/Software/quality-nest/index.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -1078,35 +1006,35 @@ ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
   
 
   
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
     
     
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
   
   
 
@@ -1159,9 +1087,9 @@ ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/dotnet/startup-auth/auth_guild_2/" title="[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定" class="btn btn-outline-info">
+      <a href="/blog/posts/software/arch_n_tier/" title="[架構] 多層式架構(Multitier Architecture)" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</div>
+        <div class="next-prev-text">[架構] 多層式架構(Multitier Architecture)</div>
       </a>
     </div>
   
@@ -1171,9 +1099,9 @@ ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/dotnet/startup-auth/auth_guild_4/" title="[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定" class="btn btn-outline-info">
+        <a href="/blog/posts/container/basic-resource/" title="[Container] 學習資源" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</div>
+          <div class="next-prev-text">[Container] 學習資源</div>
         </a>
       </div>
     
@@ -1203,7 +1131,17 @@ ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
       <h5 class="text-center pl-3">Table of Contents</h5>
       <hr>
       <div class="toc">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#消除巢狀程式手法">消除巢狀程式手法：</a>
+      <ul>
+        <li><a href="#extraction">Extraction</a></li>
+        <li><a href="#inversion">Inversion</a></li>
+        <li><a href="#依據契約式程式設計移除不必要判斷">依據契約式程式設計，移除不必要判斷</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
       </div>
     </div>
     

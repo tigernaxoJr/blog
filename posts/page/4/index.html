@@ -601,6 +601,15 @@
     <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
+  
+
 
       </ul>
     </li>
@@ -821,6 +830,33 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/other/linux-gdrive-cli/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Tools] 在 linux 中使用 google drive cli</h5>
+        <p class="card-text post-summary">重新編譯 gdrive 取得憑證  首先到Google API Console， 建立專案 啟動 Google Drive API。 啟用之後選擇左邊的&quot;設定同意畫面&quot;，填寫必要的欄位其他依照需求設置就好 建立一組 OAth2 憑證，會有 Client ID 和 Secret  編譯專案  1.安裝 Golang 2.下載 gdrive 專案 git clone git@github.com:prasmussen/gdrive.git  3.修改專案下的handlers_drive.go，把下列兩行改成拿到的 Client ID、Secret const ClientId = &#34;*************************************.com&#34; const ClientSecret = &#34;*************&#34;  4.取得需要的 golang 套件 go get github.com/prasmussen/gdrive  5.到專案資料夾下編譯，編譯完後就會有得到執行檔 go build   設定 設置環境變數 將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：
+# 建立${HOME}/bin $ mkdir -p ${HOME}/bin # 把gdrive-linux-x64放進去重新命名為gdrive $ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive # 賦予gdrive執行權限 $ chmod u+x ${HOME}/bin/gdrive  # 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定 $ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;&amp; \ &gt; echo &#34;PATH=\${HOME}/bin:\${PATH}&#34; &gt;&gt; ~/.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 29, 2021</span>
+        
+        <a
+        href="/blog/posts/other/linux-gdrive-cli/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">
@@ -1133,33 +1169,6 @@ npm init vite@latest route-test #依序選擇 vallina-&gt;vallina-ts  cd route-t
         
         <a
         href="/blog/posts/javascript/diy-simple-router/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-module/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] 各種模組(module)</h5>
-        <p class="card-text post-summary">JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module
-Reference  JS模組規範：AMD、UMD、CMD、commonJS、ES6 module  </p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">November 13, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/js-module/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
