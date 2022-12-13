@@ -25,6 +25,9 @@ menu:
 </template>
 ```
 ### TS
+要注意不能使用直接從其他檔案 import 的 type/interface，[官方文件](https://vuejs.org/api/sfc-script-setup.html#typescript-only-features)中提到：
+> Currently complex types and type imports from other files are not supported. It is possible to support type imports in the future.
+Workaround: 在本地擋案 extends 原本的 interface
 ```html
 <template>
   <q-btn v-bind="$attrs">
@@ -39,7 +42,13 @@ menu:
 </template>
 
 <script setup lang="ts">
-import { QBtnSlots } from 'quasar';
+import type { QBtnSlots, QBtnProps } from 'quasar';
+import { QBtn } from 'quasar';
+// 這樣 Wrapper SFC 才會獲得 IDE 支援 
+interface IProps extends QBtnProps {
+  mock?: undefined;
+}
+defineProps<IProps>();
 </script>
 
 <style scoped></style>
