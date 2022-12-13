@@ -610,6 +610,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/software/arch-clean-arch-review/" title="[架構] 無暇的程式碼">[架構] 無暇的程式碼</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
   
 
@@ -844,9 +853,9 @@
       <div class="card-body">
         <h5 class="card-title">[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</h5>
         <p class="card-text post-summary">用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件
-Vue3 Vue3 &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template v-for=&#34;(_, slot) of $slots&#34; v-slot:[slot]=&#34;scope&#34;&gt;  &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt;  &lt;/template&gt;  &lt;slot&gt;&lt;/slot&gt;  &lt;/q-btn&gt; &lt;/template&gt; TS 要注意不能使用直接從其他檔案 import 的 type/interface，官方文件中提到：
- Currently complex types and type imports from other files are not supported. It is possible to support type imports in the future. Workaround: 在本地擋案 extends 原本的 interface
- &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template  v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34;  v-slot:[slot]=&#34;scope&#34;  &gt;  &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt;  &lt;/template&gt;  &lt;slot&gt;&lt;/slot&gt;  &lt;/q-btn&gt; &lt;/template&gt;  &lt;script setup lang=&#34;ts&#34;&gt; import type { QBtnSlots, QBtnProps } from &#39;quasar&#39;; import { QBtn } from &#39;quasar&#39;; // 這樣 Wrapper SFC 才會獲得 IDE 支援 interface IProps extends QBtnProps {  mock?</p>
+Vue3 Vue3 &lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) of $slots&#34; v-slot:[slot]=&#34;scope&#34;&gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; TS 要注意不能使用直接從其他檔案 import 的 type/interface，官方文件中提到：
+Currently complex types and type imports from other files are not supported. It is possible to support type imports in the future. Workaround: 在本地擋案 extends 原本的 interface
+&lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34; v-slot:[slot]=&#34;scope&#34; &gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; &lt;script setup lang=&#34;ts&#34;&gt; import type { QBtnSlots, QBtnProps } from &#39;quasar&#39;; import { QBtn } from &#39;quasar&#39;; // 這樣 Wrapper SFC 才會獲得 IDE 支援 interface IProps extends QBtnProps { mock?</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 2, 2022</span>
@@ -873,8 +882,8 @@ Vue3 Vue3 &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template 
       <div class="card-body">
         <h5 class="card-title">[Typescript] Typescript 用 InjectionKey 達成強型別 provide</h5>
         <p class="card-text post-summary">Working with Reactivity 上游元件
-&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState {  drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({  drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
-&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;;  const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference  Vue.</p>
+&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
+&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference Vue.js/guild - Provide / Inject Vue.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 17, 2022</span>
@@ -902,9 +911,9 @@ Vue3 Vue3 &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template 
         <h5 class="card-title">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h5>
         <p class="card-text post-summary">有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
- 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
+元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt;  &lt;div class=&#34;modal-content&#34;&gt;  &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt;  &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt;  &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt;  &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt;  &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt;  &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({  el: &#39;#xApp&#39;,  data:() =&gt; data,  methods: {  getConfirm() {  // 先清空 result (避免兩次選中一樣的值無法觸發 watcher)  this.</p>
+Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 26, 2022</span>
@@ -931,9 +940,10 @@ Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div
       <div class="card-body">
         <h5 class="card-title">[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</h5>
         <p class="card-text post-summary">工作上需要把每一個路由都加上同一個 query string 第一直覺就是直接寫成這樣：
-router.beforeEach(async (to, from, next) =&gt; {  next({  path: path,  query: {...to.queryl ,token: tokenStr}  }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
+router.beforeEach(async (to, from, next) =&gt; { next({ path: path, query: {...to.queryl ,token: tokenStr} }) }) 結果卻跳出 Maximum call stack size exceeded 的錯誤，判斷程式出現無窮迴圈：
 runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded 第一個反應是傻眼貓咪，為什麼 next() 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會， 難道說 next() 在傳入參數與不傳入參數的行為並不相同！！ 因此去翻閱官網對 next() 的說明：
- next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:</p>
+next: Function: this function must be called to resolve the hook. The action depends on the arguments provided to next:
+next(): move on to the next hook in the pipeline.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 19, 2021</span>
@@ -959,7 +969,7 @@ runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size ex
       </div>
       <div class="card-body">
         <h5 class="card-title">[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</h5>
-        <p class="card-text post-summary">情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選  單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, {  props: {  disabled: { type: Boolean, default: () =&gt; false },  // checkbox 的標記 [string] || [{text:string, value:any}]  labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] },  value: { default: () =&gt; null },  trueValue: { default: () =&gt; &#39;Y&#39; },  falseValue: { default: () =&gt; &#39;N&#39; },  inline: { type: Boolean, default: () =&gt; false },  },  data() {  return {  innervalue_: this.</p>
+        <p class="card-text post-summary">情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN 情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1 可以打造兩個元件，分別對應至單選、多選 單選元件 程式碼 (Code) Vue.component(&#39;x-ck-single&#39;, { props: { disabled: { type: Boolean, default: () =&gt; false }, // checkbox 的標記 [string] || [{text:string, value:any}] labels: { type: Array, default: () =&gt; [&#39;Yes&#39;, &#39;No&#39;] }, value: { default: () =&gt; null }, trueValue: { default: () =&gt; &#39;Y&#39; }, falseValue: { default: () =&gt; &#39;N&#39; }, inline: { type: Boolean, default: () =&gt; false }, }, data() { return { innervalue_: this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 29, 2021</span>

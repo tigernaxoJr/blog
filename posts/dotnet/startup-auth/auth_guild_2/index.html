@@ -24,8 +24,9 @@
 
 <meta property="og:title" content="[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定" />
 <meta property="og:description" content="驗證方案(Authentication Scheme) 驗證方案包含兩個部分：
- 驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋:  驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。   驗證處理函式的設定選項(Opitons of Authentication handler)。  驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
- cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity  使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：" />
+驗證處理函式(Authentication handler)，可能是 IAuthenticationHandler 或 AuthenticationHandler 的實作，相當於驗證方案的行為，責任範圍涵蓋: 驗證使用者， 驗證成功時，建構呈現使用者識別(user identity)的 AuthenticationTicket。 驗證失敗時，回傳 &rsquo;no result&rsquo; 或 &lsquo;failure&rsquo; 負責從請求上下文(request context)中建構使用者識別 (user identity)。 定義了 challenge/forbid action。 驗證處理函式的設定選項(Opitons of Authentication handler)。 驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)， 常見的例子為：
+cookie authentication scheme 從 cookie 資訊建構 user identity. JWT bearer scheme 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity 使用驗證方案 在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder， AuthenticationBuilder 設定驗證方案的方式有：
+呼叫 scheme-specific 擴充方法，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。 以 AuthenticationBuilder 內建方法 AddScheme 手動設定，一般來說較少使用。 P." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/startup-auth/auth_guild_2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-12T23:08:00+08:00" />
@@ -619,6 +620,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/software/arch-clean-arch-review/" title="[架構] 無暇的程式碼">[架構] 無暇的程式碼</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
   
 
@@ -1088,6 +1098,9 @@ AuthenticationBuilder 設定驗證方案的方式有：</p>
   
     
     
+  
+  
+
   
   
 
