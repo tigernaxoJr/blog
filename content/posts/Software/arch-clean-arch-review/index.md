@@ -20,5 +20,6 @@ menu:
 更容易適應:需求變更。
 變更實作難度和變更的範圍成正比、跟變更的具體形狀無關。 ??
 業務需求通常不明確、時常變動，因此架構非常重要。
+不關注架構價值會隨著版本迭代、變更每一行程式成本升高，因此投入的人力成本增加。
 - [知乎-架构整洁之道, 看这一篇就够了！](https://zhuanlan.zhihu.com/p/65658089)
 - [架构整洁之道超詳細關係圖](https://alitech-public.oss-cn-beijing.aliyuncs.com/1557040476898/jiagouzhengjie-siweidaotu.png)
