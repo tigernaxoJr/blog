@@ -11,6 +11,6 @@ autoCollapseToc: true
 ---
 # Reference
 - [donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
-- []()
+- [clean architecture review](https://zhuanlan.zhihu.com/p/65658089)
 - []()
 - []()
