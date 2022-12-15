@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[維運] Container on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/posts/container/</link>
+    <description>Recent content in [維運] Container on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Nov 2022 08:46:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/container/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[Docker] 在 Ubuntu 安裝 Docker</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/docker-install/</link>
+      <pubDate>Tue, 15 Nov 2022 08:46:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/docker-install/</guid>
+      <description>從 Install Docker Engine on Ubuntu 總結出腳本，直接執行就好：
+#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc  # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \  ca-certificates \  curl \  gnupg \  lsb-release  # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.</description>
+    </item>
+    
+    <item>
+      <title>[K8S] 自架 Kubernetes 使用 VM 模擬多台 Server</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/k8s-basc-install/</link>
+      <pubDate>Sat, 23 Jul 2022 20:51:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/k8s-basc-install/</guid>
+      <description>準備/安裝兩台 Server ( 使用 VM clone 然後修改 hostname ) 一台為 Master (主控)，另外一台為 Node ( 節點 ) 安裝 kubelet/kubeadm ( Master 與 node 皆要執行此步驟 )
+# 設定 k8s server上網路 cat &amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf net.bridge.bridge-nf-call-ip6tables = 1 net.bridge.bridge-nf-call-iptables = 1 EOF sudo sysctl --system  # 安裝 kubeadm / kubelet sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install -y apt-transport-https curl curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - cat &amp;lt;&amp;lt;EOF | sudo tee /etc/apt/sources.</description>
+    </item>
+    
+    <item>
+      <title>[K8s] 以 Secrete 共享 tnsnames.ora</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/k8s-example-tnsnames.ora/</link>
+      <pubDate>Thu, 21 Jul 2022 08:05:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/k8s-example-tnsnames.ora/</guid>
+      <description>Introduction Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
+ 程式內直接設定 connection string。 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。  考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案， 因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。
+單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：
+ ExternalName Service 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。 Service + Endpoints 轉送 ip 和 port。 Secret Volume 共用 tnsnames.ora。  三種連線資訊共用策略是否能反映連線資訊修改：
+    ExternalName Service Service + Endpoints Secret Volume     Ip/Domain 可 可 可   Port 不能 可 可   Service Name/SID 不能 不能 可    Step Secret 用處：</description>
+    </item>
+    
+    <item>
+      <title>[Container] 學習資源</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/basic-resource/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/basic-resource/</guid>
+      <description> DockerHub Docker文件 K8S  </description>
+    </item>
+    
+    <item>
+      <title>[Docker] Docker Basic Command</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/docker-command/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/docker-command/</guid>
+      <description>執行容器
+docker run [image] [overwrite defalut commain] 列出正在執行的容器， &amp;ndash;all 可以列出曾經執行過的容器
+docker ps [--all] docker rundocker ps --alldocker createdocker start (what different from docker run?)docker system prunedocker logsdocker stop (send sigterm) 10s then docker killdocker killdocker build -t &amp;lt;dockerid&amp;gt;/&amp;lt;project&amp;gt;:latest .docker exec -it &amp;lt;containerId&amp;gt; /bin/bash (i, t stands for?)# execute new command build context! port mapping 是為了處理 into docker，docker 出來從來沒有被限制
+Docker Compose 所有的 docker-compose 都要在 yml 資料夾下作用 可啟動多個 Contailner 並連接 Container 之間的網路 docker-compose.</description>
+    </item>
+    
+    <item>
+      <title>[Docker] Linux-namespace 和 cgroup</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/docker-namespace/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/docker-namespace/</guid>
+      <description>UTS namespace – 隔離 interface, ip address, iptagbles, route 等各式各樣跟網路有關的資源 IPC namespace – 隔離 inter process communication PID namespace – 程序編號(Process ID)，每個容器都會有PID=1的超級父process，這個process在本機上也會有另一個PID Network namespace – 允許擁有獨立的網路設備、IP Address、路由、port Mount namespace – 掛載點，也就是隔離文件系統 User namespace – user及user group
+Reference  第 11 屆 iThome 鐵人賽 - [Day4] 淺談 Container 實現原理, 初探 Namespace 隔離 Jennifer的Docker筆記本 - Linux Namespace DOCKER基础技术：LINUX NAMESPACE（上） DOCKER基础技术：LINUX NAMESPACE（下） linux cgroup技術介紹  </description>
+    </item>
+    
+    <item>
+      <title>[Docker] 安裝PostgreSQL</title>
+      <link>https://tigernaxojr.github.io/blog/posts/container/docker-postgresql/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/container/docker-postgresql/</guid>
+      <description>安裝 postgreSQL 拉取 postgres image $ docker pull postgres Using default tag: latest latest: Pulling from library/postgres 1fe172e4850f: Pull complete c2bb685f623f: Pull complete 3027ff705410: Pull complete 062371e3461d: Pull complete 39d54e944de7: Pull complete 6530357dda9a: Pull complete b1d302dc78c6: Pull complete f6d91cb1d3c1: Pull complete 9bbd62b0af28: Pull complete 3cfdfc8fbef3: Pull complete 635f8fae1d06: Pull complete 96b6711661dd: Pull complete c08147da7b54: Pull complete Digest: sha256:ab0be6280ada8549f45e6662ab4f00b7f601886fcd55c5976565d4636d87c8b2 Status: Downloaded newer image for postgres:latest docker.io/library/postgres:latest 檢查 docker images
+$ docker images REPOSITORY TAG IMAGE ID CREATED SIZE postgres latest 74b0c105737a 4 days ago 376MB 建立 volume docker volume create --name pg-data 執行 Image 環境變數</description>
+    </item>
+    
+    
+  </channel>
+</rss>

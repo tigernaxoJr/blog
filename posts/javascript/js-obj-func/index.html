@@ -24,9 +24,9 @@
 
 <meta property="og:title" content="[JS] Object 常用方法" />
 <meta property="og:description" content="紀錄常用的 Object 方法，細節可以到MDN看
-Object.create Object.create(proto, [propertiesObject])
-以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
-以特定Object 作為 Prototype 建立新物件 const objParent = { parentFeild: &#39;parent feild&#39;, parentFunc: function () { console.log(&#39;This is parent Func&#39;) }, deepObj: { a: 1, b: 2, }, } // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent) // objFeild 只存在 obj 上 obj.objFeild = &#39;obj feild&#39; // 可從建立的 obj 呼叫 prototype 的屬性, 方法 obj." />
+Object.create  Object.create(proto, [propertiesObject])
+ 以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。
+以特定Object 作為 Prototype 建立新物件 const objParent = {  parentFeild: &#39;parent feild&#39;,  parentFunc: function () {  console.log(&#39;This is parent Func&#39;)  },  deepObj: {  a: 1,  b: 2,  }, }  // 以 objParent 作為 prototype 建立 obj 物件 const obj = Object.create(objParent)  // objFeild 只存在 obj 上 obj." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/javascript/js-obj-func/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-05-20T23:31:18+08:00" />
@@ -385,6 +385,15 @@ Object.create Object.create(proto, [propertiesObject])
     <li><a class="" href="/blog/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Wrapper Component">[元件] Wrapper Component</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-global/" title="[元件] 全域元件">[元件] 全域元件</a></li>
+  
+
 
       </ul>
     </li>
@@ -608,7 +617,7 @@ Object.create Object.create(proto, [propertiesObject])
   
   
     
-    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch-n-tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
   
@@ -1065,6 +1074,9 @@ Object.create Object.create(proto, [propertiesObject])
   
     
     
+  
+  
+
   
   
 

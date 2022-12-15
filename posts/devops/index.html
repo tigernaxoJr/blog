@@ -375,6 +375,15 @@
     <li><a class="" href="/blog/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Wrapper Component">[元件] Wrapper Component</a></li>
   
 
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-global/" title="[元件] 全域元件">[元件] 全域元件</a></li>
+  
+
 
       </ul>
     </li>
@@ -598,7 +607,7 @@
   
   
     
-    <li><a class="" href="/blog/posts/software/arch_n_tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+    <li><a class="" href="/blog/posts/software/arch-n-tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
   
 
   
@@ -853,9 +862,9 @@
       <div class="card-body">
         <h5 class="card-title">[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</h5>
         <p class="card-text post-summary">目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。
-一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。 Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
+ 一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。  Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
 git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Initializing gh-pages branch&#34; git push origin spa git checkout master 新增部屬腳本 deploy.sh 新增到專案跟目錄
-#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then # echo &#34;The working directory is dirty.</p>
+#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then  # echo &#34;The working directory is dirty.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 25, 2022</span>
@@ -882,7 +891,7 @@ git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Init
       <div class="card-body">
         <h5 class="card-title">[DevOps] CI/CD-01 安裝 Jenkins</h5>
         <p class="card-text post-summary">環境 硬體部分官方提到: RAM &gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
-安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \ apt-transport-https \ ca-certificates \ curl \ gnupg \ lsb-release # 添加 Docker 官方 GPG key curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.</p>
+安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc  # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \  apt-transport-https \  ca-certificates \  curl \  gnupg \  lsb-release  # 添加 Docker 官方 GPG key curl -fsSL https://download.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">October 18, 2021</span>
@@ -912,7 +921,7 @@ git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Init
 SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
 準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。
 這裡紀錄在一台 Ubuntu 20.04 上架設。 關於 Linux 安裝過程在這裡不加贅述， 官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：
-RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。 安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
+ RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。  安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</p>
       </div>
       <div class="card-footer">
         <span class="float-left">September 22, 2021</span>
