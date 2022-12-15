@@ -9,6 +9,7 @@ author: "tigernaxo"
 
 autoCollapseToc: true
 ---
+- [命令查詢職責分離模式(Command and Query Responsibility Segregation，CQRS)]()
 # Reference
 - [donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
 - [clean architecture review](https://zhuanlan.zhihu.com/p/65658089)
