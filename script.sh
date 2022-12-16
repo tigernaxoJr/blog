@@ -61,6 +61,7 @@ git checkout main
 
 FILE="run_publish.sh"
 cat > $FILE <<- EOF
+#!/bin/bash
 if [ "\`git status -s\`" ]
 then
     echo "The working directory is dirty. Please commit any pending changes."
@@ -83,7 +84,7 @@ echo "Generating site"
 hugo
 
 echo "Updating gh-pages branch"
-cd public && git add --all && git commit -m "Publishing to gh-pages (run_publish.sh)"
+cd public && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
 
 #echo "Pushing to github"
 git push --all

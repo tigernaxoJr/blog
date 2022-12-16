@@ -7,28 +7,29 @@ section:
   template: sections/experiences.html
 
 experiences:
-- company:
-    name: Kuang Tien General Hospital
-    url: "https://www.ktgh.com.tw"
-    location: Taichung
-    # company overview
-    #overview: 
-  positions:
-  - designation: Software Engineer
-    start: May 2021
-    # end: Dec 2020
-    responsibilities:
-    - Web Development
-    - Winform Development
-- company:
-    name: ZHZN HUI TECH Corp.
-    url: "http://www.zhtech.com.tw/"
-    location: Taichung
-    # company overview
-    #overview: 
-  positions:
-  - designation: Software Engineer
-    start: July 2019
-    end: May 2021
-    responsibilities:
-    - Web Development
+  - company:
+      name: Kuang Tien General Hospital
+      url: "https://www.ktgh.com.tw"
+      location: Taichung
+      # company overview
+      #overview:
+    positions:
+      - designation: Software Engineer
+        start: May 2021
+        # end: Dec 2020
+        responsibilities:
+          - Full-Stack Web Development
+          - Winform Development
+  - company:
+      name: ZHZN HUI TECH Corp.
+      url: "http://www.zhtech.com.tw/"
+      location: Taichung
+      # company overview
+      #overview:
+    positions:
+      - designation: Software Engineer
+        start: July 2019
+        end: May 2021
+        responsibilities:
+          - Web Development
+          - Web Application Maintenance
