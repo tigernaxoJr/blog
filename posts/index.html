@@ -860,8 +860,9 @@
         <h5 class="card-title">[元件] 全域元件</h5>
         <p class="card-text post-summary">Vue 的作法 app.component(&#39;component-name&#39;, component) Quasar2 的做法 Vite/Typescript
 建立 src/boot/register-my-component.ts
-import { boot } from &#39;quasar/wrappers&#39;; import BasicBtnVue from &#39;src/components/BasicBtn.vue&#39;;  // &#34;async&#34; is optional; // more info on params: https://v2.quasar.dev/quasar-cli/boot-files export default boot(async ({ app }) =&gt; {  app.component(&#39;x-btn&#39;, BasicBtnVue); }); 在 quasar.conf.js 內新增設定
-module.exports = configure(function (/* ctx */) {  return {  // ...上略  // https://v2.quasar.dev/quasar-cli-vite/boot-files  boot: [&#39;i18n&#39;, &#39;register-my-component&#39;],  // ... 下略  }; }); 建立型別定義檔，我放在 src/components 下 components.</p>
+import { boot } from &#39;quasar/wrappers&#39;; import BasicBtnVue from &#39;src/components/BasicBtn.vue&#39;; // &#34;async&#34; is optional; // more info on params: https://v2.quasar.dev/quasar-cli/boot-files export default boot(async ({ app }) =&gt; { app.component(&#39;x-btn&#39;, BasicBtnVue); }); 在 quasar.conf.js 內新增設定
+module.exports = configure(function (/* ctx */) { return { // ...上略 // https://v2.quasar.dev/quasar-cli-vite/boot-files boot: [&#39;i18n&#39;, &#39;register-my-component&#39;], // ... 下略 }; }); 建立型別定義檔，我放在 src/components 下 components.d.ts
+import BasicBtn from &#39;.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 13, 2022</span>
@@ -890,7 +891,7 @@ module.exports = configure(function (/* ctx */) {  return {  // ...上略  // ht
         <p class="card-text post-summary">軟體系統價值 行為價值、架構價值
 行為價值 工程師的首要責任 需求實現、可用性保障(功能性 Bug、性能、穩定性) 業務明確、穩定的前提下，可忽略架構價值
 架構價值 更容易適應:需求變更。 變更實作難度和變更的範圍成正比、跟變更的具體形狀無關。 ?? 業務需求通常不明確、時常變動，因此架構非常重要。 不關注架構價值會隨著版本迭代、變更每一行程式成本升高，因此投入的人力成本增加。
- 知乎-架构整洁之道, 看这一篇就够了！ 架构整洁之道超詳細關係圖  </p>
+知乎-架构整洁之道, 看这一篇就够了！ 架构整洁之道超詳細關係圖 </p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 12, 2022</span>
@@ -917,7 +918,7 @@ module.exports = configure(function (/* ctx */) {  return {  // ...上略  // ht
       <div class="card-body">
         <h5 class="card-title">[Program] 巢狀結構</h5>
         <p class="card-text post-summary">巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。
-消除巢狀程式手法：  Extraction Inversion 依據契約式程式設計，移除不必要判斷  Extraction 從複查的結構抽出程式碼
+消除巢狀程式手法： Extraction Inversion 依據契約式程式設計，移除不必要判斷 Extraction 從複查的結構抽出程式碼
 Inversion 把跳出函式的判斷移動到最上面
 依據契約式程式設計，移除不必要判斷 依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷</p>
       </div>
@@ -947,9 +948,9 @@ Inversion 把跳出函式的判斷移動到最上面
         <h5 class="card-title">[授權] OAuth2.0</h5>
         <p class="card-text post-summary">OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題 允許授權當下的APP取得使用者在平台的相關資訊 OAuth2 有很多變化
 腳色：
- Resource Owner，也就是使用者。 Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。 Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式 Resource Server，存放資源的伺服器，認 Token 給使用者存取資源  用詞
- Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑 Scope 授權範圍  OAuth2.0 四種授權類型流程(Grant Types)： Authorization Code 最常見，步驟：
- 應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip; Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。 應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。 應用程式(Client)帶著 Access Token 向 Resource Server 存取資源  Implicit 適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application) 跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token 比較不安全</p>
+Resource Owner，也就是使用者。 Client，要向使用者取得權限的應用程式，有自己的 Client ID、 Client Secret。 Authorization Server，負責驗證使用者身分、發 Access Token 給應用程式 Resource Server，存放資源的伺服器，認 Token 給使用者存取資源 用詞
+Authorization Grant 同意應用程式取得資源 Redirect URI 驗證伺服器驗證、授權完畢後，返回應用程式的路徑 Scope 授權範圍 OAuth2.0 四種授權類型流程(Grant Types)： Authorization Code 最常見，步驟：
+應用程式(Client) 將使用者導向 Authorization Server，提供 Redirect URL, scope, 應用程式的 client id&hellip; Authorization Server 驗證使用者身分，通過之後發給 Authorization Grant，將網址列帶上 Authorization Grant 後將使用者導回 Redirect URI 回到應用程式(Client)。 應用程式(Client)拿 Authorization Grant 和 Authorization Server 換取 Access Token，Authorization Server 會透過應用程式(Client)專屬的 Client ID、 Client Secret 驗證應用程式身分。 應用程式(Client)帶著 Access Token 向 Resource Server 存取資源 Implicit 適合在 Client-side 運行的應用程式適合使用，例如 SPA(Single Page Application) 跳過交換 Access Token 的過程，由 Authorization Server 直接給予 Access Token 比較不安全</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 2, 2022</span>
@@ -976,9 +977,9 @@ Inversion 把跳出函式的判斷移動到最上面
       <div class="card-body">
         <h5 class="card-title">[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</h5>
         <p class="card-text post-summary">用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件
-Vue3 Vue3 &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template v-for=&#34;(_, slot) of $slots&#34; v-slot:[slot]=&#34;scope&#34;&gt;  &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt;  &lt;/template&gt;  &lt;slot&gt;&lt;/slot&gt;  &lt;/q-btn&gt; &lt;/template&gt; TS 要注意不能使用直接從其他檔案 import 的 type/interface，官方文件中提到：
- Currently complex types and type imports from other files are not supported. It is possible to support type imports in the future. Workaround: 在本地擋案 extends 原本的 interface
- &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template  v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34;  v-slot:[slot]=&#34;scope&#34;  &gt;  &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt;  &lt;/template&gt;  &lt;slot&gt;&lt;/slot&gt;  &lt;/q-btn&gt; &lt;/template&gt;  &lt;script setup lang=&#34;ts&#34;&gt; import type { QBtnSlots, QBtnProps } from &#39;quasar&#39;; import { QBtn } from &#39;quasar&#39;; // 這樣 Wrapper SFC 才會獲得 IDE 支援 interface IProps extends QBtnProps {  mock?</p>
+Vue3 Vue3 &lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) of $slots&#34; v-slot:[slot]=&#34;scope&#34;&gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; TS 要注意不能使用直接從其他檔案 import 的 type/interface，官方文件中提到：
+Currently complex types and type imports from other files are not supported. It is possible to support type imports in the future. Workaround: 在本地擋案 extends 原本的 interface
+&lt;template&gt; &lt;q-btn v-bind=&#34;$attrs&#34;&gt; &lt;template v-for=&#34;(_, slot) in ($slots as Readonly&lt;QBtnSlots&gt;)&#34; v-slot:[slot]=&#34;scope&#34; &gt; &lt;slot :name=&#34;slot&#34; v-bind=&#34;scope&#34;&gt;&lt;/slot&gt; &lt;/template&gt; &lt;slot&gt;&lt;/slot&gt; &lt;/q-btn&gt; &lt;/template&gt; &lt;script setup lang=&#34;ts&#34;&gt; import type { QBtnSlots, QBtnProps } from &#39;quasar&#39;; import { QBtn } from &#39;quasar&#39;; // 這樣 Wrapper SFC 才會獲得 IDE 支援 interface IProps extends QBtnProps { mock?</p>
       </div>
       <div class="card-footer">
         <span class="float-left">December 2, 2022</span>
@@ -1005,7 +1006,7 @@ Vue3 Vue3 &lt;template&gt;  &lt;q-btn v-bind=&#34;$attrs&#34;&gt;  &lt;template 
       <div class="card-body">
         <h5 class="card-title">[HA] 準備系統環境</h5>
         <p class="card-text post-summary">這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。 建立專案資料夾 ha ha/docker-compose.yaml
-version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34;  volumes:  - $PWD/var/ha/config:/config  - /etc/localtime:/etc/localtime:ro  restart: unless-stopped  privileged: true  ports:  - 8123:8123 # HA 控台的 port  mosquitto:  container_name: mosquitto  image: eclipse-mosquitto  volumes:  - $PWD/opt/mosquitto:/mosquitto  ports:  - 1883:1883  - 9001:9001  # 如果要把 zigbee2mqtt 整合在同一台機器上...  zigbee2mqtt:  container_name: zigbee2mqtt  depends_on:  - mosquitto  image: koenkk/zigbee2mqtt  volumes:  - $PWD/zigbee2mqtt/data:/app/data  - /run/udev:/run/udev:ro  ports:  - 8080:8080  devices:  - /dev/ttyUSB0:/dev/ttyUSB0  restart: always  privileged: true ha/opt/mosquitto/config/mosquitto.</p>
+version: &#39;3&#39; services: homeassistant: container_name: homeassistant image: &#34;ghcr.io/home-assistant/home-assistant:stable&#34; volumes: - $PWD/var/ha/config:/config - /etc/localtime:/etc/localtime:ro restart: unless-stopped privileged: true ports: - 8123:8123 # HA 控台的 port mosquitto: container_name: mosquitto image: eclipse-mosquitto volumes: - $PWD/opt/mosquitto:/mosquitto ports: - 1883:1883 - 9001:9001 # 如果要把 zigbee2mqtt 整合在同一台機器上... zigbee2mqtt: container_name: zigbee2mqtt depends_on: - mosquitto image: koenkk/zigbee2mqtt volumes: - $PWD/zigbee2mqtt/data:/app/data - /run/udev:/run/udev:ro ports: - 8080:8080 devices: - /dev/ttyUSB0:/dev/ttyUSB0 restart: always privileged: true ha/opt/mosquitto/config/mosquitto.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 22, 2022</span>
@@ -1032,8 +1033,8 @@ version: &#39;3&#39; services:  homeassistant:  container_name: homeassistant  i
       <div class="card-body">
         <h5 class="card-title">[Typescript] Typescript 用 InjectionKey 達成強型別 provide</h5>
         <p class="card-text post-summary">Working with Reactivity 上游元件
-&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState {  drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({  drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
-&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;;  const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference  Vue.</p>
+&lt;script lang=&#34;ts&#34;&gt; import { InjectionKey, provide, Ref, reactive } from &#39;vue&#39;; // State export interface IState { drawer: boolean; } export const stateKey: InjectionKey&lt;Ref&lt;IState&gt;&gt; = Symbol(); const state = reactive&lt;IState&gt;({ drawer: false, }); provide&lt;IState&gt;(stateKey, computed(()=&gt;state)); &lt;/script&gt; 下游元件
+&lt;script setup lang=&#34;ts&#34;&gt; import { inject, ref } from &#39;vue&#39;; import { stateKey } from &#39;./Parent.vue&#39;; const state = inject(stateKey, ref({ drawer: false })); &lt;/script&gt; Reference Vue.js/guild - Provide / Inject Vue.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 17, 2022</span>
@@ -1088,7 +1089,7 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
       <div class="card-body">
         <h5 class="card-title">[Docker] 在 Ubuntu 安裝 Docker</h5>
         <p class="card-text post-summary">從 Install Docker Engine on Ubuntu 總結出腳本，直接執行就好：
-#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc  # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \  ca-certificates \  curl \  gnupg \  lsb-release  # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.</p>
+#!/bin/bash # Uninstall old versions sudo apt-get remove docker docker-engine docker.io containerd runc # Set up the repository # Update the apt package index and install packages to allow apt to use a repository over HTTPS sudo apt-get update sudo apt-get install \ ca-certificates \ curl \ gnupg \ lsb-release # Add Docker’s official GPG key sudo mkdir -p /etc/apt/keyrings curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">November 15, 2022</span>
@@ -1116,9 +1117,9 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
         <h5 class="card-title">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h5>
         <p class="card-text post-summary">有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
- 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise  得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
+元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt;  &lt;div class=&#34;modal-content&#34;&gt;  &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt;  &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt;  &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt;  &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt;  &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt;  &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({  el: &#39;#xApp&#39;,  data:() =&gt; data,  methods: {  getConfirm() {  // 先清空 result (避免兩次選中一樣的值無法觸發 watcher)  this.</p>
+Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 26, 2022</span>
@@ -1145,9 +1146,9 @@ Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div
       <div class="card-body">
         <h5 class="card-title">[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</h5>
         <p class="card-text post-summary">目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。
- 一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。  Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
+一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。 Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
 git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Initializing gh-pages branch&#34; git push origin spa git checkout master 新增部屬腳本 deploy.sh 新增到專案跟目錄
-#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then  # echo &#34;The working directory is dirty.</p>
+#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &#34;`git status -s`&#34; ] # then # echo &#34;The working directory is dirty.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">August 25, 2022</span>
@@ -1174,13 +1175,14 @@ git checkout --orphan spa git reset --hard git commit --allow-empty -m &#34;Init
       <div class="card-body">
         <h5 class="card-title">[.NET] 開發階段管理應用程式的敏感資料</h5>
         <p class="card-text post-summary">基於資訊安全的理由，密碼等敏感性資訊不應該出現在程式碼裡面， 應該把敏感性資料儲存在專案以外的地方，防止對 Git Server 提交專案程式碼的時候把密碼推送到伺服器上， 因此程式開發、部屬階段都應該用適當的策略存放敏感性資料讓程式讀取使用， .NET 儲存敏感性資料大致上來說可以用這兩種方式：
- 環境變數 Secret Manager  這裡紀錄要如何在 .NET 開發環境以 Secret 儲存敏感性資料，以及程式讀取的方式。
+環境變數 Secret Manager 這裡紀錄要如何在 .NET 開發環境以 Secret 儲存敏感性資料，以及程式讀取的方式。
 Secret Manager Secret Manager 就是在本地端特定路徑存放 secret.json 檔案：
 %APPDATA%\Microsoft\UserSecrets\&lt;user_secrets_id&gt;\secrets.json ~/.microsoft/usersecrets/&lt;user_secrets_id&gt;/secrets.json 需要先針對個別專案啟用專案的 Secret Storage 支援，切換到專案目錄執行：
 dotnet user-secrets init 在專案檔裡的 UserSecretsId 區段會得到一段 GUID，這個要作為 user_secrets_id 資料夾名稱。
-&lt;PropertyGroup&gt;  &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt;  &lt;UserSecretsId&gt;79a3edd0-2092-40a2-a04d-dcb46d5ca9ed&lt;/UserSecretsId&gt; &lt;/PropertyGroup&gt; 以指令設置一組 secret，例如連線字串：
+&lt;PropertyGroup&gt; &lt;TargetFramework&gt;netcoreapp3.1&lt;/TargetFramework&gt; &lt;UserSecretsId&gt;79a3edd0-2092-40a2-a04d-dcb46d5ca9ed&lt;/UserSecretsId&gt; &lt;/PropertyGroup&gt; 以指令設置一組 secret，例如連線字串：
 dotnet user-secrets set &#34;ConnectionStrings:POSTGRES&#34; &#34;User ID=root;Password=myPassword;Host=localhost;Port=5432;Database=myDataBase;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;&#34; --project &#34;D:\workspace\MySolution\MyProject&#34; 以檔案直接設置 secret windows
-type .\input.json | dotnet user-secrets set Linux/MacOS</p>
+type .\input.json | dotnet user-secrets set Linux/MacOS
+cat ./input.json | dotnet user-secrets set 在程式裡面存在 secret.</p>
       </div>
       <div class="card-footer">
         <span class="float-left">July 29, 2022</span>
