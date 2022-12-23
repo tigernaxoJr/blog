@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title>
+    <title>Posts</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,26 +22,19 @@
 
 
 
-<meta property="og:title" content="[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)" />
-<meta property="og:description" content="ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。 透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。
-非同步方法 C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：
-產生可等待 awaitable 型別 (Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)， 其中以 Task、Task&lt;TResult&gt;最常見。 非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。 async、await await 運算子用來等待非同步行為完成， 或等待非同步行為完成後解析回傳值， await 運算子只能用在非同步方法中， 因此 await 運算子的外層方法必須套用 async 修飾， 否則會出現錯誤。
-非同步 Action 設計原則： 總是加上 async 關鍵字 async 的方法裡面可以等待非同步方法。 action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)， 當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳， 而這也是以 Task 作為回傳值的方法的預期行為。 如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)， 因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/basic-async-controller/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-03-17T03:32:00+08:00" />
-<meta property="article:modified_time" content="2021-03-17T03:32:00+08:00" />
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/" />
 
 
 
     
     
-<meta name="description" content="[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
-
-<link rel="stylesheet" href="/blog/css/style.css"/>
+    <link rel="stylesheet" href="/blog/css/layouts/list.css">
+    <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
+    
+    <link rel="stylesheet" href="/blog/css/style.css"/>
 
 
 
@@ -95,6 +88,9 @@
 
       
       
+  
+  
+
   <section class="sidebar-section" id="sidebar-section">
     <div class="sidebar-holder">
       <div class="sidebar" id="sidebar">
@@ -422,15 +418,12 @@
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/dotnet/">[後端] .NET</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -490,12 +483,9 @@
   
   
   
-    
-    
-  
   
     
-    <li><a class="active" href="/blog/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+    <li><a class="" href="/blog/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
   
 
   
@@ -879,379 +869,82 @@
       
       
 <section class="content-section" id="content-section">
-  <div class="content">
-    <div class="container p-0 read-area">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
       
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
+      
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/other/taiwania_login_oneclick/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
       </div>
-
-      
-      <div class="page-content">
-        <div class="author-profile ml-auto align-self-lg-center">
-          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
-          <h5 class="author-name">Yu Cheng</h5>
-          <p>Wednesday, March 17, 2021</p>
-        </div>
-
-        <div class="title">
-          <h1>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</h1>
-        </div>
+      <div class="card-body">
+        <h5 class="card-title">[台灣杉] 一鍵登入國網中心台灣杉(Taiwania)</h5>
+        <p class="card-text post-summary">台灣杉(Taiwania)是國網中心2018年啟用的超級電腦，登入時密碼必須附加OTP (One-time Password)，國網中心建議取得OTP的方式是從驗證器取得OTP密碼，但這樣的方式每次都需要打開驗證器(手機、chrome插件… etc)，並且需要手動輸入OTP，下面分享我從Windows以及Linux環境下登入台灣杉所使用的一鍵登入方式。
+OTP的演算法可粗分為HOTP (HMAC-based OTP)；以及基於HOTP的TOTP (Time-based OTP)，我們不必瞭解演算法細節，只需知道台灣杉採用Base32編碼作為TOTP金鑰(Secret)，時間間格為30秒，每30秒可以根據”Secret”與”當前時間區間”以sha1演算法生成一次性密碼(OTP，或稱為Key)，由於這是單向加密的過程所以無法用時間區間與Key逆推Secret，並且OTP在成功使用一次之後就會被伺服器廢棄，以確保安全性。
+注意事項 校時
+由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS： # 從NTP時間伺服器進行網路校時 sudo ntpdate time.stdtime.gov.tw # 將更新的時間寫入BIOS sudo hwclock -w 所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。 Linux要登入台灣衫需要將台灣衫加入know host，以生醫節點為例: ssh-keyscan 140.110.148.14 1&gt;&gt;~/.ssh/known_hosts 2&gt;/dev/null 從Windows登入台灣杉 前置工作 安裝Go，並設置GOPATH。 安裝putty。 安裝WinSCP。 知道怎麼打開windows的命令提示字元 (WIN+R、鍵入cmd、enter)。 編譯TOTP產生器 取得TOTP套件
+go get github.com/pquerna/otp/totp 撰寫程式碼main.go
+package main import ( &#34;fmt&#34; &#34;github.com/pquerna/otp/totp&#34; &#34;os&#34; &#34;time&#34; ) func main() { secret := os.Args[1] code, _ := totp.GenerateCode(secret, time.Now().UTC()) fmt.Print(code) } 編譯
+go build -o taiwaniaOTP.exe main.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 23, 2019</span>
         
-        <div class="post-content" id="post-content">
-          <p>ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。
-透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。</p>
-<h1 id="非同步方法">非同步方法</h1>
-<p>C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：</p>
-<ul>
-<li>產生可等待 awaitable 型別
-(Task, Task&lt;TResult&gt;, ValueTask, 和 ValueTask&lt;TResult&gt;)，
-其中以 Task、Task&lt;TResult&gt;最常見。</li>
-<li>非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。</li>
-</ul>
-<h1 id="asyncawait">async、await</h1>
-<p>await 運算子用來等待非同步行為完成，
-或等待非同步行為完成後解析回傳值，
-await 運算子只能用在非同步方法中，
-因此 await 運算子的外層方法必須套用 async 修飾，
-否則會出現錯誤。</p>
-<h1 id="非同步-action-設計原則">非同步 Action 設計原則：</h1>
-<h2 id="總是加上-async-關鍵字">總是加上 async 關鍵字</h2>
-<p>async 的方法裡面可以等待非同步方法。
-action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)，
-當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳，
-而這也是以 Task 作為回傳值的方法的預期行為。
-如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)，
-因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。</p>
-<h2 id="在action中使用非同步方法">在Action中使用非同步方法：</h2>
-<p>在<strong>非同步方法</strong>中長時間執行<strong>同步方法</strong>會阻塞造成<strong>其他非同步方法</strong>初始化執行而降低併發性。
-且如果 API 回傳型別是 Task 但卻只使用同步函式，
-那該API的行為就只是同步。
-以 Dapper 存取資料庫為例子，用 QueryAsync 代替 Query，
-可以避免在 Query 在等待回應的時候阻塞其他非同步方法的執行。</p>
-<h1 id="範例">範例</h1>
-<p>透過建立一個非同步的 Controller 由前端呼叫，可以獲得非阻塞的結果：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#a6e22e">[Route(&#34;api/[controller]</span><span style="color:#e6db74">&#34;)]
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"></span><span style="color:#a6e22e">[ApiController]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TaskController</span> : ControllerBase
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [HttpGet(&#34;Delay&#34;)]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">async</span> Task&lt;IActionResult&gt; Delay()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> controllerName = <span style="color:#e6db74">&#34;Delay&#34;</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> startTime = DateTime.Now.ToString(<span style="color:#e6db74">&#34;HH:MM:ss.fff&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">5000</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> endTime = DateTime.Now.ToString(<span style="color:#e6db74">&#34;HH:MM:ss.fff&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Ok(<span style="color:#66d9ef">new</span> { controllerName, startTime, endTime });
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在前端以 javscript 程式碼測試可以觀察到非阻塞 api：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">callApi</span>(<span style="color:#a6e22e">url</span>){
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">url</span>)
-</span></span><span style="display:flex;"><span>	.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">res</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>();
-</span></span><span style="display:flex;"><span>	})
-</span></span><span style="display:flex;"><span>	.<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">json</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">json</span>);
-</span></span><span style="display:flex;"><span>	});
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">callApi</span>(<span style="color:#e6db74">&#39;api/Task/Delay&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">callApi</span>(<span style="color:#e6db74">&#39;api/Task/Delay&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// {controllerName: &#34;Delay&#34;, startTime: &#34;02:03:46.720&#34;, endTime: &#34;02:03:51.764&#34;}
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//{controllerName: &#34;Delay&#34;, startTime: &#34;02:03:46.720&#34;, endTime: &#34;02:03:51.764&#34;}
-</span></span></span></code></pre></div><p>P.S. 測試當下無法在Edge瀏覽器中呼叫同一支 api 獲得非阻塞結果，
-同時呼叫 api 第二次呼叫會被瀏覽器排在第一次呼叫之後執行，
-看起來會像是該 api 在伺服器端發生了阻塞，
-但是 Chrome 卻沒有這個情況，可能是瀏覽器政策不同，
-無論如何後端回傳 Task 的 Controller 行為都是非阻塞的。</p>
-<h1 id="reference">Reference</h1>
-<ul>
-<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/async">MSDN - Asynchronous programming</a></li>
-<li><a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap">MSDN - Task-based asynchronous pattern</a></li>
-<li><a href="https://stackoverflow.com/questions/59823334/task-without-async-await-in-controller-action-method">stackoverflow - Task without async/await in controller action method</a></li>
-</ul>
-
-        </div>
-
-        
-        <div class="row pl-3 pr-3">
-        
-        <div class="col-md-6 share-buttons">
-        
-          </div>
-
-        
-        
-          
-            
-          
-          <div class="col-md-6 btn-improve-page">
-             
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/dotnet/basic-async-controller.md" title="Improve this page" target="_blank" rel="noopener">
-            
-                <i class="fas fa-code-branch"></i>
-                Improve this page
-              </a>
-          </div>
-        
-        </div>
-
-
-
-      
-      <hr />
-        
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-    
-    
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-
-<div class="row next-prev-navigator">
-  
-    <div class="col-md-6 previous-article">
-      <a href="/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)" class="btn btn-outline-info">
-        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)</div>
-      </a>
+        <a
+        href="/blog/posts/other/taiwania_login_oneclick/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
     </div>
-  
-  
-      
-      
-        
-      
-      <div class="col-md-6 next-article">
-        <a href="/blog/posts/dotnet/startup-auth/auth_guild_1/" title="[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權" class="btn btn-outline-info">
-          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</div>
-        </a>
-      </div>
-    
+  </a>
 </div>
 
-      <hr />
-
+        
       
+    </div>
+    <div class="paginator">
       
-      
-      
-
-      </div>
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/blog/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/5/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/blog/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 6" class="page-link" role="button">6</a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
     </div>
   </div>
-  
-  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
-  
 </section>
 
 
       
-      
-  <section class="toc-section" id="toc-section">
-    
-    <div class="toc-holder">
-      <h5 class="text-center pl-3">Table of Contents</h5>
-      <hr>
-      <div class="toc">
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#總是加上-async-關鍵字">總是加上 async 關鍵字</a></li>
-    <li><a href="#在action中使用非同步方法">在Action中使用非同步方法：</a></li>
-  </ul>
-</nav>
-      </div>
-    </div>
-    
-  </section>
-
+       
     </div>
 
     
@@ -1440,20 +1133,7 @@ action 前加上 async 的作用在於建立一個管理回傳任務的狀態機
 
     
     
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-<script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
-<script src="/blog/js/single.js"></script>
-<script>
-  hljs.highlightAll();
-  setTimeout( ()=>window.highlightJsBadge(), 1000); 
-</script>
-
-
-
-
-
-
-
+    <script src="/blog/js/list.js"></script>
 
 
     
