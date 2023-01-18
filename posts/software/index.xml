@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[架構] Architecture on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/posts/software/</link>
+    <description>Recent content in [架構] Architecture on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Dec 2022 10:57:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/software/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[架構] 無暇的程式碼-讀書心得</title>
+      <link>https://tigernaxojr.github.io/blog/posts/software/arch-clean-arch-review/</link>
+      <pubDate>Mon, 12 Dec 2022 10:57:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/software/arch-clean-arch-review/</guid>
+      <description>軟體系統價值 行為價值、架構價值
+行為價值 工程師的首要責任 需求實現、可用性保障(功能性 Bug、性能、穩定性) 業務明確、穩定的前提下，可忽略架構價值
+架構價值 更容易適應:需求變更。 變更實作難度和變更的範圍成正比、跟變更的具體形狀無關。 ?? 業務需求通常不明確、時常變動，因此架構非常重要。 不關注架構價值會隨著版本迭代、變更每一行程式成本升高，因此投入的人力成本增加。
+知乎-架构整洁之道, 看这一篇就够了！ 架构整洁之道超詳細關係圖 </description>
+    </item>
+    
+    <item>
+      <title>[Program] 巢狀結構</title>
+      <link>https://tigernaxojr.github.io/blog/posts/software/quality-nest/</link>
+      <pubDate>Sun, 11 Dec 2022 02:19:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/software/quality-nest/</guid>
+      <description>巢狀程式結構會使程式可讀性差、且難以維護，可讀性高的程式碼深度最多不超過三層，嚴格管控程式碼深度的程式設計師又稱為 Never Nester。
+消除巢狀程式手法： Extraction Inversion 依據契約式程式設計，移除不必要判斷 Extraction 從複查的結構抽出程式碼
+Inversion 把跳出函式的判斷移動到最上面
+依據契約式程式設計，移除不必要判斷 依據契約式程式設計，以程式碼使用者會傳入的參數合法性為前提，移除不必要判斷</description>
+    </item>
+    
+    <item>
+      <title>[架構] 多層式架構(Multitier Architecture)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/software/arch-n-tier/</link>
+      <pubDate>Mon, 17 May 2021 23:20:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/software/arch-n-tier/</guid>
+      <description>多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
+N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
+提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。 1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
+2-tier model layer 分配至兩個不同的記憶體空間運行，記憶體空間可能位於相同或兩台不同的機器上(通常是不同機器)，典型的例子是分配到 client、server 上運行。
+3-tier model 多層式架構當中最常使用的就是三層架構(three-tier architecture)。 三層架構與Web應用程式來說明如下：
+表現層(Presentation)：又稱為 UI 層，以Web來說就是呈現出來的前端網頁。 應用程式層(Application)：以 Web 來說相當於伺服器上執行的應用程式。 資料層(Data)：這一層包含資料儲存、呈現機制，以 Web 來說通常指 Database。 Reference wikipedia - Multitier architecture Rockford Lhotka - Should all apps be n-tier?</description>
+    </item>
+    
+    <item>
+      <title>[架構] 多層式架構(Multi-layer Architecture)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/software/arch-multi-layer/</link>
+      <pubDate>Sun, 10 Jan 2021 23:21:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/software/arch-multi-layer/</guid>
+      <description>多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 layer。
+為何以 multi-layer 撰寫程式碼
+增加程式彈性和複用性:程式社設計人員透過分離表現層、應用程式層、資料存取層的程式， 當程式需要變更時只需修改或抽換對應的程式層，而不需重寫整個應用程式。 易於維護:多層式架構中程式碼各司其職，容易定位問題發生點。 利於平行開發。 易於擴展。 BLL;Business Logic Layer 又稱為 Service Layer，命名習慣是 Service、Helper 結尾 DAL;Data Access Layer，命名習慣是 Repo 結尾
+one-tier:所有的邏輯全部寫在這 two-tier:抽離 BLL，BLL負責商業邏輯與資料存取 three-tier:從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取 分層 Presentation Layer(PL) Business Logic Layer(BLL) Service Layer(SL) Data Access Layer(DAL) Service Layer(SL) 是 Presentation Layer與Business Layer的中介層，使用的目的在於降低PL與BL之間的耦合， PL將商務邏輯功能委派給BL執行， Coarse-grained systemsfine-grained systems 一個SL操作(coarse-grained operation)通常包含複數BL操作(fine-grained operation) Presentation Layer Business Logic Layer DTO(Data transfer object) 或 Value Object，只有屬性沒有方法 business object (BO)</description>
+    </item>
+    
+    
+  </channel>
+</rss>

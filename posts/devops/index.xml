@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[維運] DevOps on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/posts/devops/</link>
+    <description>Recent content in [維運] DevOps on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Jan 2023 09:20:00 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/devops/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[DIY] Git Action 附加編譯檔案到 Release Tag (Dotnet)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/git-action-release-dotnet/</link>
+      <pubDate>Wed, 18 Jan 2023 09:20:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/git-action-release-dotnet/</guid>
+      <description>效果：新增一個 v 開頭的 Tag，等 Action 結束之後該 Release 會獲得相對應的 Release 壓縮檔案。
+步驟 新增檔案.github/workflow/Release.yml
+name: Release # 新增 tag 的時候觸發 on: push: tags: - &amp;#34;*&amp;#34; # 讓 workflow 獲得上傳檔案的權限 permissions: contents: write jobs: build: runs-on: ubuntu-latest strategy: matrix: dotnet-version: [&amp;#34;5.0.x&amp;#34;] # 判斷 tag 如果是 v 開頭才繼續 if: startsWith(github.ref, &amp;#39;refs/tags/v&amp;#39;) steps: # 取得 Git 中的原始碼 - uses: actions/checkout@v3 - name: Setup .NET Core SDK ${{ matrix.dotnet-version }} uses: actions/setup-dotnet@v3 with: dotnet-version: ${{ matrix.dotnet-version }} # 還原套件 - name: Restore run: dotnet restore # 編譯 - name: Build run: dotnet build --configuration Release --no-restore --no-restore -o api # 壓縮編譯檔 - name: Compress run: zip -r api.</description>
+    </item>
+    
+    <item>
+      <title>[DIY] Git Action 附加編譯檔案到 Release Tag (Vue)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/git-action-release-vue/</link>
+      <pubDate>Wed, 18 Jan 2023 09:20:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/git-action-release-vue/</guid>
+      <description>效果：新增一個 v 開頭的 Tag，等 Action 結束之後該 Release 會獲得相對應的 Release 壓縮檔案。
+步驟 新增檔案.github/workflow/Release.yml
+name: Release # 新增 tag 的時候觸發 on: push: tags: - &amp;#34;*&amp;#34; # 讓 workflow 獲得上傳檔案的權限 permissions: contents: write jobs: build: runs-on: ubuntu-latest # 判斷 tag 如果是 v 開頭才繼續 if: startsWith(github.ref, &amp;#39;refs/tags/v&amp;#39;) steps: # 取得 Git 中的原始碼 - uses: actions/checkout@v3 # 編譯 - name: Build SPA run: yarn &amp;amp;&amp;amp; yarn build &amp;amp;&amp;amp; mv dist/ app/ # 壓縮編譯檔 - name: Compress run: zip -r app.</description>
+    </item>
+    
+    <item>
+      <title>[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</title>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/git-orphan-worktree/</link>
+      <pubDate>Thu, 25 Aug 2022 14:23:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/git-orphan-worktree/</guid>
+      <description>目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。
+一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。 在同一 Git Repo 管理部屬的靜態資源與原始碼。 P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash 環境執行，build 指令是 quasar build，輸出的 路徑是 dist/spa，不同專案架構需要作相對應調整。 Git 設定 建立一個 spa orphan branch P.S. 不需在 gitlab 上事先新增相對應的 branch
+git checkout --orphan spa git reset --hard git commit --allow-empty -m &amp;#34;Initializing gh-pages branch&amp;#34; git push origin spa git checkout master 新增部屬腳本 deploy.sh 新增到專案跟目錄
+#!/bin/bash # 如果要檢查是否有 commit才進行部屬，就取消註解 # if [ &amp;#34;`git status -s`&amp;#34; ] # then # echo &amp;#34;The working directory is dirty.</description>
+    </item>
+    
+    <item>
+      <title>[DevOps] CI/CD-01 安裝 Jenkins</title>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</link>
+      <pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/pipeline/01_install_jenkins/</guid>
+      <description>環境 硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。 環境部分需要安裝 Java (8 或 11) 和 Docker
+安裝 Docker # 卸載舊的 docker sudo apt-get remove -y docker docker-engine docker.io containerd runc # 安裝必要的套件 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo sudo apt-get update sudo apt-get install -y \ apt-transport-https \ ca-certificates \ curl \ gnupg \ lsb-release # 添加 Docker 官方 GPG key curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.</description>
+    </item>
+    
+    <item>
+      <title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title>
+      <link>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</link>
+      <pubDate>Wed, 22 Sep 2021 11:11:00 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/devops/sonarqube_netcore31/</guid>
+      <description>弱點掃描時常使用 owasp top 10 作為報告， 然而 owasp 軟體一年要價不菲，委外掃一次也是非常貴， 使用免費的 SonarQube 將弱點掃描整合到 CI/CD 階段， 要交付前再花錢委外掃一次似乎是個折衷的作法，避免一次檢測出來的弱點過多改動過大。
+SonarQube 分為兩個部分 SonarQube Server、Scanner (Client 端程式)。 Scanner 負責進行掃描並將結果上傳 Server， 而 Server 作為負責處理和儲存分析報告的 compute engine 會分析上傳的結果， 並提供 Web 使用者介面、搜尋功能，因此分析完成後就可以直接在 Web 上查看報告， Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server 上進行程式碼品質掃描。 雖說可以拿 localhost 直接作為 Server 使用， 這裡還是紀錄如何在虛擬機器上實際安裝 SonarQube， 以後在實際機器上安裝就可以作為參考，
+準備 Linux Server 硬體 個人使用或小規模的團隊在一台機器上安裝就足夠使用了， 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。
+這裡紀錄在一台 Ubuntu 20.04 上架設。 關於 Linux 安裝過程在這裡不加贅述， 官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：
+RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。 上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。 server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。 安裝 OpenJDK 11 sudo apt update sudo apt upgrade sudo apt install openjdk-11-jdk # 確認 java 版本 java --version 然後在 .</description>
+    </item>
+    
+    
+  </channel>
+</rss>

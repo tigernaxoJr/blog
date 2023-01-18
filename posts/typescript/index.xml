@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Typescript on YuCheng&#39;s Site</title>
+    <link>https://tigernaxojr.github.io/blog/posts/typescript/</link>
+    <description>Recent content in Typescript on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 May 2020 09:37:18 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/typescript/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[TS] Typescript 在標準內建物件加上屬性</title>
+      <link>https://tigernaxojr.github.io/blog/posts/typescript/ts-extend-global-obj/</link>
+      <pubDate>Wed, 20 May 2020 09:37:18 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/typescript/ts-extend-global-obj/</guid>
+      <description>宣告 這個動作是 Extends Array Interface
+interface Array&amp;lt;T&amp;gt; { newfunc(o: T): Array&amp;lt;T&amp;gt;; } Array.prototype.newfunc = function (o) { // some code return this; } 使用 使用者要先拿到被 extend 的 interface
+declare global { interface Array&amp;lt;T&amp;gt; { newfunc(o: T): Array&amp;lt;T&amp;gt;; } } Reference stackoverflow - extending array in typescript </description>
+    </item>
+    
+    
+  </channel>
+</rss>
