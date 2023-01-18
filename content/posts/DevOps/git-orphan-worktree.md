@@ -6,7 +6,7 @@ hero:
 discription: 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支
 menu:
   sidebar:
-    name: "[Git] CLI 專案 CI/CD Git 設定"
+    name: "[Git] orphan branch/worktree"
     identifier: devops-git-orphan-worktree
     parent: devops
     weight: 1000
