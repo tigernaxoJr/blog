@@ -75,6 +75,10 @@ systemctl start dhcpd
 useradd -m naxo
 usermod -aG wheel naxo
 https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/
+## openssh
+pacman -S openssh
+systemctl enable sshd
+systemctl start sshd
 ## Reference
 - [Arch-Installation_guide](https://wiki.archlinux.org/title/Installation_guide)
 https://itsfoss.com/install-arch-linux/
