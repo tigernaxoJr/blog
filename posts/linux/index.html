@@ -913,7 +913,7 @@
       <div class="card-body">
         <h5 class="card-title">[Arch] 安裝(Virtualbox)</h5>
         <p class="card-text post-summary">Timezone timedatectl set-timezone Asia/Taipei 分割磁碟 fdisk /dev/sda mkswap /dev/sda1 mkfs.ext4 /dev/sda2 mount /dev/sda2 /mnt swapon /dev/sda1 安裝
-pacstrap -K /mnt base linux linux-firmware vim sudo openssh fstab 產生 fstab
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh docker docker-compose bash-completion fstab 產生 fstab
 # -U Use UUIDs for source identifiers genfstab -U /mnt &gt;&gt; /mnt/etc/fstab Chroot arch-chroot /mnt Time zone ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime # generate /etc/adjtime hwclock --systohc Localization 在/etc/locale.gen裡面把en_US.UTF-8 UTF-8、zh_TW.UTF-8 UTF-8解除註解。
 locale-gen echo &#34;LANG=en_US.UTF-8&#34; &gt;&gt; /etc/locale.conf Boot loader pacman -S grub # don’t put the disk number sda1, just the disk name sda grub-install /dev/sda grub-mkconfig -o /boot/grub/grub.</p>
       </div>
