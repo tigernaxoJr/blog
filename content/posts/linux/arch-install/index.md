@@ -27,7 +27,7 @@ swapon /dev/sda1
 ##
 安裝
 ```bash
-pacstrap -K /mnt base linux linux-firmware vim sudo openssh 
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh docker docker-compose bash-completion
 ```
 ## fstab
 產生 fstab
