@@ -164,6 +164,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
   
 
@@ -893,6 +902,35 @@
     <div class="container-fluid post-card-holder" id="post-card-holder">
       
       
+      
+        
+          <div class="post-card">
+  <a href="/blog/posts/linux/arch-install/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Arch] 安裝(Virtualbox)</h5>
+        <p class="card-text post-summary">Timezone timedatectl set-timezone Asia/Taipei 分割磁碟 fdisk /dev/sda mkswap /dev/sda1 mkfs.ext4 /dev/sda2 mount /dev/sda2 /mnt swapon /dev/sda1 安裝
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh fstab 產生 fstab
+# -U Use UUIDs for source identifiers genfstab -U /mnt &gt;&gt; /mnt/etc/fstab Chroot arch-chroot /mnt Time zone ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime # generate /etc/adjtime hwclock --systohc Localization 在/etc/locale.gen裡面把en_US.UTF-8 UTF-8、zh_TW.UTF-8 UTF-8解除註解。
+locale-gen echo &#34;LANG=en_US.UTF-8&#34; &gt;&gt; /etc/locale.conf Boot loader pacman -S grub # don’t put the disk number sda1, just the disk name sda grub-install /dev/sda grub-mkconfig -o /boot/grub/grub.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 20, 2023</span>
+        
+        <a
+        href="/blog/posts/linux/arch-install/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
       
         
           <div class="post-card">

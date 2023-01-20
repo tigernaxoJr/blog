@@ -102,6 +102,18 @@
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <priority>0.1</priority>
   </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/linux/arch-install/</loc>
+    <lastmod>2023-01-20T11:14:30+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/linux/</loc>
+    <lastmod>2023-01-20T11:14:30+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/posts/</loc>
+    <lastmod>2023-01-20T11:14:30+08:00</lastmod>
+  </url><url>
+    <loc>https://tigernaxojr.github.io/blog/</loc>
+    <lastmod>2023-01-20T11:14:30+08:00</lastmod>
+  </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/devops/git-action-release-dotnet/</loc>
     <lastmod>2023-01-18T09:20:00+08:00</lastmod>
   </url><url>
@@ -109,12 +121,6 @@
     <lastmod>2023-01-18T09:20:00+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/devops/</loc>
-    <lastmod>2023-01-18T09:20:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/</loc>
-    <lastmod>2023-01-18T09:20:00+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/</loc>
     <lastmod>2023-01-18T09:20:00+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/frontend-vue/vue-comp-global/</loc>
@@ -151,9 +157,6 @@
     <lastmod>2022-11-17T11:49:00+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/linux/ubuntu22-ssh/</loc>
-    <lastmod>2022-11-15T10:23:18+08:00</lastmod>
-  </url><url>
-    <loc>https://tigernaxojr.github.io/blog/posts/linux/</loc>
     <lastmod>2022-11-15T10:23:18+08:00</lastmod>
   </url><url>
     <loc>https://tigernaxojr.github.io/blog/posts/container/docker-install/</loc>

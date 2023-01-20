@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>[.NET] JsonElement 的操作</title>
+    <title>[Arch] 安裝(Virtualbox)</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -22,18 +22,20 @@
 
 
 
-<meta property="og:title" content="[.NET] JsonElement 的操作" />
-<meta property="og:description" content=".NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺， 需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument， 如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument， 下面是添加一個屬性的範例。
-public static class JsonExt { public static void Add(ref this JsonElement source, string name, string value) { using (MemoryStream ms = new MemoryStream()) { using (Utf8JsonWriter writer = new Utf8JsonWriter(ms)) { using (JsonDocument json = JsonDocument.Parse(&#34;{}&#34;)) { writer.WriteStartObject(); // 開始 foreach (var el in source.EnumerateObject()) el.WriteTo(writer); // 寫入新屬性 writer.WritePropertyName(name); writer.WriteStringValue(value); writer.WriteEndObject(); // 結束 } } var resultStr = Encoding." />
+<meta property="og:title" content="[Arch] 安裝(Virtualbox)" />
+<meta property="og:description" content="Timezone timedatectl set-timezone Asia/Taipei 分割磁碟 fdisk /dev/sda mkswap /dev/sda1 mkfs.ext4 /dev/sda2 mount /dev/sda2 /mnt swapon /dev/sda1 安裝
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh fstab 產生 fstab
+# -U Use UUIDs for source identifiers genfstab -U /mnt &gt;&gt; /mnt/etc/fstab Chroot arch-chroot /mnt Time zone ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime # generate /etc/adjtime hwclock --systohc Localization 在/etc/locale.gen裡面把en_US.UTF-8 UTF-8、zh_TW.UTF-8 UTF-8解除註解。
+locale-gen echo &#34;LANG=en_US.UTF-8&#34; &gt;&gt; /etc/locale.conf Boot loader pacman -S grub # don’t put the disk number sda1, just the disk name sda grub-install /dev/sda grub-mkconfig -o /boot/grub/grub." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/dotnet/snippet-json-operate/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-08-06T14:37:00+08:00" />
-<meta property="article:modified_time" content="2021-08-06T14:37:00+08:00" />
+<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/linux/arch-install/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-01-20T11:14:30+08:00" />
+<meta property="article:modified_time" content="2023-01-20T11:14:30+08:00" />
 
 
     
     
-<meta name="description" content="[.NET] JsonElement 的操作" />
+<meta name="description" content="[Arch] 安裝(Virtualbox)" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
 <link rel="stylesheet" href="/blog/css/layouts/single.css"/>
 <link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
@@ -150,20 +152,26 @@ public static class JsonExt { public static void Add(ref this JsonElement source
   
   
   
+    
+    
+  
   
     
     <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/linux/">[OS] Linux</a>
       
-      <ul class="">
+      <ul class="active">
         
   
   
   
   
+    
+    
+  
   
     
-    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+    <li><a class="active" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
   
 
   
@@ -428,15 +436,12 @@ public static class JsonExt { public static void Add(ref this JsonElement source
   
   
   
-    
-    
-  
   
     
     <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/dotnet/">[後端] .NET</a>
+      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
       
-      <ul class="active">
+      <ul class="">
         
   
   
@@ -478,12 +483,9 @@ public static class JsonExt { public static void Add(ref this JsonElement source
   
   
   
-    
-    
-  
   
     
-    <li><a class="active" href="/blog/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
+    <li><a class="" href="/blog/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
   
 
   
@@ -914,51 +916,76 @@ public static class JsonExt { public static void Add(ref this JsonElement source
         <div class="author-profile ml-auto align-self-lg-center">
           <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
           <h5 class="author-name">Yu Cheng</h5>
-          <p>Friday, August 6, 2021</p>
+          <p>Friday, January 20, 2023</p>
         </div>
 
         <div class="title">
-          <h1>[.NET] JsonElement 的操作</h1>
+          <h1>[Arch] 安裝(Virtualbox)</h1>
         </div>
         
         <div class="post-content" id="post-content">
-          <p>.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺，
-需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument，
-如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument，
-下面是添加一個屬性的範例。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JsonExt</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Add(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span> JsonElement source, <span style="color:#66d9ef">string</span> name, <span style="color:#66d9ef">string</span> <span style="color:#66d9ef">value</span>)
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">using</span> (MemoryStream ms = <span style="color:#66d9ef">new</span> MemoryStream())
-</span></span><span style="display:flex;"><span>		{
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">using</span> (Utf8JsonWriter writer = <span style="color:#66d9ef">new</span> Utf8JsonWriter(ms))
-</span></span><span style="display:flex;"><span>			{
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">using</span> (JsonDocument json = JsonDocument.Parse(<span style="color:#e6db74">&#34;{}&#34;</span>))
-</span></span><span style="display:flex;"><span>				{
-</span></span><span style="display:flex;"><span>					writer.WriteStartObject(); <span style="color:#75715e">// 開始</span>
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> el <span style="color:#66d9ef">in</span> source.EnumerateObject())
-</span></span><span style="display:flex;"><span>						el.WriteTo(writer);
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// 寫入新屬性</span>
-</span></span><span style="display:flex;"><span>					writer.WritePropertyName(name);
-</span></span><span style="display:flex;"><span>					writer.WriteStringValue(<span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>					writer.WriteEndObject(); <span style="color:#75715e">// 結束</span>
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> resultStr = Encoding.UTF8.GetString(ms.ToArray());
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> resultEl = JsonDocument.Parse(resultStr).RootElement;
-</span></span><span style="display:flex;"><span>			source = resultEl;
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>通常我們會解析從其他 api 來的 json 字串，然後再進行一些操作：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#75715e">// 解析一個 json string ()，拿到 JsonDocument</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> jo = JsonDocument.Parse(<span style="color:#e6db74">&#34;{}&#34;</span>) 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 從 RootElement 屬性拿到解析出的 JsonElement </span>
-</span></span><span style="display:flex;"><span>JsonElement je = jo.RootElement;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 對 JsonElement 添加一對 key-value &#34;hello&#34;:&#34;word&#34;</span>
-</span></span><span style="display:flex;"><span>je.Add(<span style="color:#e6db74">&#34;hello&#34;</span>,<span style="color:#e6db74">&#34;word&#34;</span>); 
-</span></span></code></pre></div>
+          <h2 id="timezone">Timezone</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>timedatectl set-timezone Asia/Taipei
+</span></span></code></pre></div><h2 id="分割磁碟">分割磁碟</h2>
+<pre tabindex="0"><code>fdisk /dev/sda
+</code></pre><pre tabindex="0"><code>mkswap /dev/sda1
+mkfs.ext4 /dev/sda2
+mount /dev/sda2 /mnt
+swapon /dev/sda1
+</code></pre><h2 id="heading"></h2>
+<p>安裝</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pacstrap -K /mnt base linux linux-firmware vim sudo openssh 
+</span></span></code></pre></div><h2 id="fstab">fstab</h2>
+<p>產生 fstab</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># -U Use UUIDs for source identifiers </span>
+</span></span><span style="display:flex;"><span>genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</span></span></code></pre></div><h2 id="chroot">Chroot</h2>
+<pre tabindex="0"><code>arch-chroot /mnt
+</code></pre><h2 id="time-zone">Time zone</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># generate /etc/adjtime</span>
+</span></span><span style="display:flex;"><span>hwclock --systohc
+</span></span></code></pre></div><h2 id="localization">Localization</h2>
+<p>在<code>/etc/locale.gen</code>裡面把<code>en_US.UTF-8 UTF-8</code>、<code>zh_TW.UTF-8 UTF-8</code>解除註解。</p>
+<pre tabindex="0"><code>locale-gen
+</code></pre><pre tabindex="0"><code>echo &#34;LANG=en_US.UTF-8&#34; &gt;&gt; /etc/locale.conf
+</code></pre><h2 id="boot-loader">Boot loader</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pacman -S grub
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># don’t put the disk number sda1, just the disk name sda</span>
+</span></span><span style="display:flex;"><span>grub-install /dev/sda
+</span></span><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></div><h2 id="root-password">Root password</h2>
+<pre tabindex="0"><code>passwd
+</code></pre><p>&hellip; 然後重開機</p>
+<h2 id="network-configuration">Network configuration</h2>
+<pre tabindex="0"><code>touch /etc/hostname
+</code></pre><p>使用內建的 systemd-networkd，新增檔案 <code>/etc/systemd/network/default.network</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>[<span style="color:#ae81ff">Match]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">Name=*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">Network]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">DHCP=yes</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># enable</span>
+</span></span><span style="display:flex;"><span>systemctl enable systemd-networkd
+</span></span><span style="display:flex;"><span>systemctl enable systemd-resolved
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># start</span>
+</span></span><span style="display:flex;"><span>systemctl start systemd-networkd
+</span></span><span style="display:flex;"><span>systemctl start systemd-resolved
+</span></span></code></pre></div><h2 id="openssh">openssh</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl enable sshd
+</span></span><span style="display:flex;"><span>systemctl start sshd
+</span></span></code></pre></div><h2 id="sudo-user">sudo user&hellip;</h2>
+<p>visudo，讓 %wheel 成為 sudor
+useradd -m naxo
+usermod -aG wheel naxo
+<a href="https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/">https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/</a></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://wiki.archlinux.org/title/Installation_guide">Arch-Installation_guide</a>
+<a href="https://itsfoss.com/install-arch-linux/">https://itsfoss.com/install-arch-linux/</a></li>
+</ul>
+
         </div>
 
         
@@ -975,7 +1002,7 @@ public static class JsonExt { public static void Add(ref this JsonElement source
           
           <div class="col-md-6 btn-improve-page">
              
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/dotnet/snippet-json-operate/index.md" title="Improve this page" target="_blank" rel="noopener">
+               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/linux/arch-install/index.md" title="Improve this page" target="_blank" rel="noopener">
             
                 <i class="fas fa-code-branch"></i>
                 Improve this page
@@ -1012,86 +1039,86 @@ public static class JsonExt { public static void Add(ref this JsonElement source
   
 
   
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
     
     
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
   
   
 
@@ -1195,9 +1222,9 @@ public static class JsonExt { public static void Add(ref this JsonElement source
 <div class="row next-prev-navigator">
   
     <div class="col-md-6 previous-article">
-      <a href="/blog/posts/dotnet/snippet-json-dt/" title="[.NET] JsonDocument 與 DataTable 的互相轉換" class="btn btn-outline-info">
+      <a href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking" class="btn btn-outline-info">
         <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[.NET] JsonDocument 與 DataTable 的互相轉換</div>
+        <div class="next-prev-text">[SQL] Ranking</div>
       </a>
     </div>
   
@@ -1207,9 +1234,9 @@ public static class JsonExt { public static void Add(ref this JsonElement source
         
       
       <div class="col-md-6 next-article">
-        <a href="/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)" class="btn btn-outline-info">
+        <a href="/blog/posts/linux/centos8-static-ip/" title="[Linux] CentOS 8 設定網路靜態IP" class="btn btn-outline-info">
           <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)</div>
+          <div class="next-prev-text">[Linux] CentOS 8 設定網路靜態IP</div>
         </a>
       </div>
     
@@ -1239,7 +1266,23 @@ public static class JsonExt { public static void Add(ref this JsonElement source
       <h5 class="text-center pl-3">Table of Contents</h5>
       <hr>
       <div class="toc">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#timezone">Timezone</a></li>
+    <li><a href="#分割磁碟">分割磁碟</a></li>
+    <li><a href="#heading"></a></li>
+    <li><a href="#fstab">fstab</a></li>
+    <li><a href="#chroot">Chroot</a></li>
+    <li><a href="#time-zone">Time zone</a></li>
+    <li><a href="#localization">Localization</a></li>
+    <li><a href="#boot-loader">Boot loader</a></li>
+    <li><a href="#root-password">Root password</a></li>
+    <li><a href="#network-configuration">Network configuration</a></li>
+    <li><a href="#openssh">openssh</a></li>
+    <li><a href="#sudo-user">sudo user&hellip;</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
       </div>
     </div>
     

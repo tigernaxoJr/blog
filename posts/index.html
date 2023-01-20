@@ -161,6 +161,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
   
 
@@ -893,6 +902,35 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/linux/arch-install/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Arch] 安裝(Virtualbox)</h5>
+        <p class="card-text post-summary">Timezone timedatectl set-timezone Asia/Taipei 分割磁碟 fdisk /dev/sda mkswap /dev/sda1 mkfs.ext4 /dev/sda2 mount /dev/sda2 /mnt swapon /dev/sda1 安裝
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh fstab 產生 fstab
+# -U Use UUIDs for source identifiers genfstab -U /mnt &gt;&gt; /mnt/etc/fstab Chroot arch-chroot /mnt Time zone ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime # generate /etc/adjtime hwclock --systohc Localization 在/etc/locale.gen裡面把en_US.UTF-8 UTF-8、zh_TW.UTF-8 UTF-8解除註解。
+locale-gen echo &#34;LANG=en_US.UTF-8&#34; &gt;&gt; /etc/locale.conf Boot loader pacman -S grub # don’t put the disk number sda1, just the disk name sda grub-install /dev/sda grub-mkconfig -o /boot/grub/grub.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">January 20, 2023</span>
+        
+        <a
+        href="/blog/posts/linux/arch-install/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/devops/git-action-release-dotnet/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1194,36 +1232,6 @@ service sshd restart https://www.hostinger.com/tutorials/how-to-change-ssh-port-
         
         <a
         href="/blog/posts/container/docker-install/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/frontend-vue/vue-comp-promise/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h5>
-        <p class="card-text post-summary">有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
-Dialog 元件設計原理:
-元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
-這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this.</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">August 26, 2022</span>
-        
-        <a
-        href="/blog/posts/frontend-vue/vue-comp-promise/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

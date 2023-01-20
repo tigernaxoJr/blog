@@ -6,7 +6,19 @@
     <description>Recent content in Linux on YuCheng&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Nov 2022 10:23:18 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Fri, 20 Jan 2023 11:14:30 +0800</lastBuildDate><atom:link href="https://tigernaxojr.github.io/blog/posts/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[Arch] 安裝(Virtualbox)</title>
+      <link>https://tigernaxojr.github.io/blog/posts/linux/arch-install/</link>
+      <pubDate>Fri, 20 Jan 2023 11:14:30 +0800</pubDate>
+      
+      <guid>https://tigernaxojr.github.io/blog/posts/linux/arch-install/</guid>
+      <description>Timezone timedatectl set-timezone Asia/Taipei 分割磁碟 fdisk /dev/sda mkswap /dev/sda1 mkfs.ext4 /dev/sda2 mount /dev/sda2 /mnt swapon /dev/sda1 安裝
+pacstrap -K /mnt base linux linux-firmware vim sudo openssh fstab 產生 fstab
+# -U Use UUIDs for source identifiers genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab Chroot arch-chroot /mnt Time zone ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime # generate /etc/adjtime hwclock --systohc Localization 在/etc/locale.gen裡面把en_US.UTF-8 UTF-8、zh_TW.UTF-8 UTF-8解除註解。
+locale-gen echo &amp;#34;LANG=en_US.UTF-8&amp;#34; &amp;gt;&amp;gt; /etc/locale.conf Boot loader pacman -S grub # don’t put the disk number sda1, just the disk name sda grub-install /dev/sda grub-mkconfig -o /boot/grub/grub.</description>
+    </item>
+    
+    <item>
       <title>[Linux] Ubuntu SSH 連線</title>
       <link>https://tigernaxojr.github.io/blog/posts/linux/ubuntu22-ssh/</link>
       <pubDate>Tue, 15 Nov 2022 10:23:18 +0800</pubDate>

@@ -161,6 +161,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
   
 
@@ -893,6 +902,37 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/dotnet/startup-auth/auth_guild_1/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</h5>
+        <p class="card-text post-summary">在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。
+驗證(Authentication) 驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼， 因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)， ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)， 使應用程式驗證簽發時能夠取用。
+授權(Authorization) 授權的作用是界定用戶可存取資源範圍，作用描述如下：
+限制所存取的資源是否需要驗證。 已獲得驗證的特定用戶、特定腳色方能存取特定資源。 所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。 挑戰和禁止 有些名詞需要先解釋： 驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。
+挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
+cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。 禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">November 23, 2020</span>
+        
+        <a
+        href="/blog/posts/dotnet/startup-auth/auth_guild_1/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/dotnet/startup-signalr/guild_3_validate_token/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1195,37 +1235,6 @@ Object.create Object.create(proto, [propertiesObject])
         
         <a
         href="/blog/posts/javascript/js-obj-func/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/javascript/js-prototype/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[JS] JavaScript 當中的原型繼承鏈模型</h5>
-        <p class="card-text post-summary">基於原型 (Prototype-Based) 的 JavaScript 一般物件導向式(OOP; Object Oriented Programming) 程式語言 (如：java、c++、c#) 當中的物件是由類別模板 (class) 產生實體物件 (instance)，實體物件的屬性各自獨立。類別模板上可設置共用的靜態資源包含靜態方法 (static method)、靜態屬性 (static field)，而這些靜態資源可以在沒有建立實體的情況下透過類別名稱直接取用。
-JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似物件導向語言的繼承，而在這種關係中的上層物件稱為原型 (Prototype)。原型本身又有自己所屬的原型，這種物件層層繼承的關係稱為原型鏈 (Prototype Chain)，幾乎所有物件的最上層原型是一個構造函數叫做 Object 的物件。
-因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。
-建立物件原型 JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。
-建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。
-// 宣告一個函數 Foo function Foo (){} // Foo.prototype 在 Foo 被宣告時自動建立 Foo.prototype // {constructor: ƒ} // Foo.prototype 的 constructor 屬性自動指向 Foo Foo.prototype.constructor === Foo // true 建立物件 透過構造函數 // 建立一個物件 let bar = new Foo{} // {} 直接對變數賦值 JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">May 20, 2020</span>
-        
-        <a
-        href="/blog/posts/javascript/js-prototype/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >

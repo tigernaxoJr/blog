@@ -161,6 +161,15 @@
   
   
     
+    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
     <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
   
 
@@ -893,6 +902,35 @@
       
         
           <div class="post-card">
+  <a href="/blog/posts/container/docker-command/" class="post-card-link">
+    <div class="card">
+      <div class="card-head">
+        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">[Docker] Docker Basic Command</h5>
+        <p class="card-text post-summary">執行容器
+docker run [image] [overwrite defalut commain] 列出正在執行的容器， &ndash;all 可以列出曾經執行過的容器
+docker ps [--all] docker run docker ps --all docker create docker start (what different from docker run?) docker system prune docker logs docker stop (send sigterm) 10s then docker kill docker kill docker build -t &lt;dockerid&gt;/&lt;project&gt;:latest . docker exec -it &lt;containerId&gt; /bin/bash (i, t stands for?) # execute new command build context! port mapping 是為了處理 into docker，docker 出來從來沒有被限制
+Docker Compose 所有的 docker-compose 都要在 yml 資料夾下作用 可啟動多個 Contailner 並連接 Container 之間的網路 docker-compose.</p>
+      </div>
+      <div class="card-footer">
+        <span class="float-left">April 25, 2022</span>
+        
+        <a
+        href="/blog/posts/container/docker-command/"
+        class="float-right btn btn-outline-info btn-sm"
+        >Read</a
+        >
+      </div>
+    </div>
+  </a>
+</div>
+
+        
+      
+        
+          <div class="post-card">
   <a href="/blog/posts/container/docker-namespace/" class="post-card-link">
     <div class="card">
       <div class="card-head">
@@ -1185,37 +1223,6 @@ public static class JsonExt { public static void Add(ref this JsonElement source
         
         <a
         href="/blog/posts/frontend-vue/vue-comp-yncheckbox/"
-        class="float-right btn btn-outline-info btn-sm"
-        >Read</a
-        >
-      </div>
-    </div>
-  </a>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <a href="/blog/posts/software/arch-n-tier/" class="post-card-link">
-    <div class="card">
-      <div class="card-head">
-        <img class="card-img-top" src='/blog/images/default-hero.jpg' alt="Hero Image">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">[架構] 多層式架構(Multitier Architecture)</h5>
-        <p class="card-text post-summary">多層式架構 Multitier Architecture 或稱 N-Tier Architecture， 是 Client–server architecture 的一種， 多層架構的層可以是 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置； 而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。 這一篇的層指的是 tier。
-N-tier model N-tier model，層與層之間的邊界有 N-1 個，而程式跨邊界會造成巨大的效能損失， 一說為光是跨越同一台機器上不同進程(process)邊界存取資源損失就大約1000倍， 如果透過網路進行遠端呼叫勢必損失更多， 因此每跨越一個邊界進行資源存取效能就會以幾何級數損失。 且增加邊界在軟體設計上會增加複雜度，簡單的應用程式使用多層式架構很容易造成過度設計(over design)， 因此如何適當添加層級(tier)也是一門學問，添加層級時必需考量如何在應用程式所部屬的環境獲取最大的成本效益。 軟體是否採用多層式架構必須以多層式架構的優缺點進行取捨(尤其是可擴展性與效能之間)。
-提高可擴展性(scalability)。 提高效能(performance)。 提高容錯率(fault tolerance)。 提高安全性(security)。 1-tier model 所有的 layer 都在同一機器、同一記憶體空間內運行，因此不需考慮網路造成的性能損失。
-2-tier model layer 分配至兩個不同的記憶體空間運行，記憶體空間可能位於相同或兩台不同的機器上(通常是不同機器)，典型的例子是分配到 client、server 上運行。
-3-tier model 多層式架構當中最常使用的就是三層架構(three-tier architecture)。 三層架構與Web應用程式來說明如下：
-表現層(Presentation)：又稱為 UI 層，以Web來說就是呈現出來的前端網頁。 應用程式層(Application)：以 Web 來說相當於伺服器上執行的應用程式。 資料層(Data)：這一層包含資料儲存、呈現機制，以 Web 來說通常指 Database。 Reference wikipedia - Multitier architecture Rockford Lhotka - Should all apps be n-tier?</p>
-      </div>
-      <div class="card-footer">
-        <span class="float-left">May 17, 2021</span>
-        
-        <a
-        href="/blog/posts/software/arch-n-tier/"
         class="float-right btn btn-outline-info btn-sm"
         >Read</a
         >
