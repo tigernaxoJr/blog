@@ -12,9 +12,9 @@ menu:
 ---
 
 ## 環境需求：
-- Hugo Version 0.109.0 (extended) or higher
-- Go language 1.18 or higher (require for hugo modules)
-- Node version v18.x or later and npm 8.x or later.
+- [Hugo Version 0.109.0 (extended) or higher](https://github.com/gohugoio/hugo/releases)
+- [Go language 1.18 or higher (require for hugo modules)](https://github.com/golang/go/tags)
+- [Node version v18.x or later and npm 8.x or later.](https://nodejs.org/en/download/)
 - git
 
 ## GitHub 設定
