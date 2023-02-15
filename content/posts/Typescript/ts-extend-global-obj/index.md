@@ -32,3 +32,4 @@ declare global {
 ```
 ## Reference
 - [stackoverflow - extending array in typescript](https://stackoverflow.com/questions/12802383/extending-array-in-typescript)
+- [bobbyhadz - typescript-array-extend](https://bobbyhadz.com/blog/typescript-array-extend)
