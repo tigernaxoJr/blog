@@ -31,7 +31,7 @@ cd <GitAccount>.github.io
 hugo mod tidy
 ```
 設置 config.yaml
-```
+```bash
 rm config.toml
 wget https://github.com/hugo-toha/hugo-toha.github.io/blob/main/config.yaml
 # 然後修改 config.yaml 裡面的 title、baseURL、gitRepo
