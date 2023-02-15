@@ -8,10 +8,10 @@ rm config.toml wget https://github."><meta property="og:type" content="article">
 </span></span><span style=display:flex><span>mv hugo-toha.github.io &lt;GitAccount&gt;.github.io
 </span></span><span style=display:flex><span>cd &lt;GitAccount&gt;.github.io
 </span></span><span style=display:flex><span>hugo mod tidy
-</span></span></code></pre></div><p>設置 config.yaml</p><pre tabindex=0><code>rm config.toml
-wget https://github.com/hugo-toha/hugo-toha.github.io/blob/main/config.yaml
-# 然後修改 config.yaml 裡面的 title、baseURL、gitRepo
-</code></pre><p>安裝套件</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hugo mod npm pack
+</span></span></code></pre></div><p>設置 config.yaml</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rm config.toml
+</span></span><span style=display:flex><span>wget https://github.com/hugo-toha/hugo-toha.github.io/blob/main/config.yaml
+</span></span><span style=display:flex><span><span style=color:#75715e># 然後修改 config.yaml 裡面的 title、baseURL、gitRepo</span>
+</span></span></code></pre></div><p>安裝套件</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hugo mod npm pack
 </span></span><span style=display:flex><span>npm install
 </span></span></code></pre></div><p>加入 git</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git remote rm origin
 </span></span><span style=display:flex><span>git remote add origin https://github.com/&lt;GitAccount&gt;/&lt;GitAccount&gt;.github.io
