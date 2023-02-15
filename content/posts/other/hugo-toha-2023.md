@@ -26,6 +26,8 @@ menu:
 抓 template
 ```bash
 git clone https://github.com/hugo-toha/hugo-toha.github.io.git
+mv hugo-toha.github.io <GitAccount>.github.io
+cd <GitAccount>.github.io
 hugo mod tidy
 ```
 安裝套件
