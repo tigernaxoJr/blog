@@ -30,6 +30,12 @@ mv hugo-toha.github.io <GitAccount>.github.io
 cd <GitAccount>.github.io
 hugo mod tidy
 ```
+設置 config.yaml
+```
+rm config.toml
+wget https://github.com/hugo-toha/hugo-toha.github.io/blob/main/config.yaml
+# 然後修改 config.yaml 裡面的 title、baseURL、gitRepo
+```
 安裝套件
 ```bash
 hugo mod npm pack
