@@ -51,7 +51,7 @@ git remote add origin https://github.com/<GitAccount>/<GitAccount>.github.io
 ```bash
 git add .
 git commit -m 'first commit'
-git push -u origin
+git push -u origin main
 ```
 
 完成！ 之後推送到 main 的時候就會更新內容到 `https://<GitAccount>.github.io`
