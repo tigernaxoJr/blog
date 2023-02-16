@@ -19,8 +19,9 @@ menu:
 
 ## GitHub 設定
  - 建立一個 repo 叫做 `<GitAccount>.github.io`，進入 repo 頁面
- - 左側 Settings -> Pages 
- - 右側 Build and deployment -> Branch -> 選擇 gh-pages -> Save
+ - 建立一個 Branch 叫做 `gh-pages` (??)
+ - 左側 `Settings` -> `Pages` -> 右側 `Build and deployment` -> `Branch` -> 選擇 `gh-pages` -> `Save`
+ - 進入Repo -> `Setting` -> `Code and automation` -> `Actions` -> `General` -> `Workflow permissions` -> 勾選 `Read and write permissions`
 
 ## Repo 設定
 抓 template
