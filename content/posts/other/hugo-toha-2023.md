@@ -19,8 +19,7 @@ menu:
 
 ## GitHub 設定
  - 建立一個 repo 叫做 `<GitAccount>.github.io`，進入 repo 頁面
- - 建立一個 Branch 叫做 `gh-pages` (??)
- - 左側 `Settings` -> `Pages` -> 右側 `Build and deployment` -> `Branch` -> 選擇 `gh-pages` -> `Save`
+ <!-- - 建立一個 Branch 叫做 `gh-pages` (??) -->
  - 進入Repo -> `Setting` -> `Code and automation` -> `Actions` -> `General` -> `Workflow permissions` -> 勾選 `Read and write permissions`
 
 ## Repo 設定
@@ -53,5 +52,8 @@ git add .
 git commit -m 'first commit'
 git push -u origin main
 ```
+
+## GitHub 設定
+左側 `Settings` -> `Pages` -> 右側 `Build and deployment` -> `Branch` -> 選擇 `gh-pages` -> `Save`
 
 完成！ 之後推送到 main 的時候就會更新內容到 `https://<GitAccount>.github.io`
