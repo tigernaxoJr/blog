@@ -1,1625 +1,181 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</title>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-
-<link rel="stylesheet" href="/blog/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/main.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/navbar.css"/>
-<link rel="stylesheet" href="/blog/css/plyr.css"/>
-<link rel="stylesheet" href="/blog/css/flag-icon.min.css"/>
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600">
-
-
-<link rel="stylesheet" href="/blog/fontawesome/css/all.min.css"/>
-
-
-
-
-<meta property="og:title" content="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法" />
-<meta property="og:description" content="有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
+<!doctype html><html><head><title>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/blog/css/bootstrap.min.css><link rel=stylesheet href=/blog/css/layouts/main.css><link rel=stylesheet href=/blog/css/navigators/navbar.css><link rel=stylesheet href=/blog/css/plyr.css><link rel=stylesheet href=/blog/css/flag-icon.min.css><link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600"><link rel=stylesheet href=/blog/fontawesome/css/all.min.css><meta property="og:title" content="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法"><meta property="og:description" content="有用過 sweetalert2 的話，應該會喜歡可以同步等待對話框回傳值的方式， 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise， 如此一來就能夠在同一個函式當中處理使用者輸入值。
 Dialog 元件設計原理:
 元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。 設置watcher讓元件取得使用者輸入後 resolve promise 得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)， 如此不需在上層元件撰寫使用者輸入取值的監視邏輯， 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
-Vuejs 實作 &lt;button id=&#34;xBtn&#34;&gt;執行測試&lt;/button&gt; &lt;div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;&gt; &lt;div class=&#34;modal-content&#34;&gt; &lt;span class=&#34;close&#34;&gt;Test Modal&lt;/span&gt; &lt;p&gt;The value selected will resolve by promise.&lt;/p&gt; &lt;button @click=&#34;choose(1)&#34;&gt;1&lt;/button&gt; &lt;button @click=&#34;choose(2)&#34;&gt;2&lt;/button&gt; &lt;/div&gt; &lt;/div&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;&gt;&lt;/script&gt; &lt;script&gt; let data = { result: null, dialog: false } let dialog = new Vue({ el: &#39;#xApp&#39;, data:() =&gt; data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend-vue/vue-comp-promise/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-08-26T15:03:00+08:00" />
-<meta property="article:modified_time" content="2022-08-26T15:03:00+08:00" />
-
-
-    
-    
-<meta name="description" content="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css"/>
-<link rel="stylesheet" href="/blog/css/layouts/single.css"/>
-<link rel="stylesheet" href="/blog/css/navigators/sidebar.css">
-
-<link rel="stylesheet" href="/blog/css/style.css"/>
-
-
-
-    
-
-
-
-
-</head>
-
-  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
-    <div class="container-fluid bg-dimmed wrapper">
-      
-      
-    
-
-
-
-
-
-
-
-
-
-
-
-
-<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
-  <div class="container">
-      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/blog">
-      YuCheng&#39;s Site</a>
-    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
-      <ul class="navbar-nav ml-auto">
-      
-      </ul>
-    </div>
-  </div>
-  
-  
-  
-</nav>
-
-
-
-      
-      
-  <section class="sidebar-section" id="sidebar-section">
-    <div class="sidebar-holder">
-      <div class="sidebar" id="sidebar">
-        <form class="mx-auto" method="get" action="/blog/search">
-          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
-        </form>
-        <div class="sidebar-tree">
-          <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/blog/posts" data-filter="all">Posts</a></li>
-            <div class="subtree">
-                
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/database/">[DB] Database</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/linux/">[OS] Linux</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/linux/ubuntu22-ssh/" title="[Ubuntu] SSH 連線">[Ubuntu] SSH 連線</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/linux/ubuntu204-static-ip/" title="[Ubuntu] 設定網路靜態IP">[Ubuntu] 設定網路靜態IP</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/web/">[Web] Web 相關</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/javascript/">[前端] Javascript</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/typescript/">[前端] Typescript</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/typescript/ts-extend-global-obj/" title="[TS] 擴充標準內建物件">[TS] 擴充標準內建物件</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-    
-    
-  
-  
-    
-    <li>
-      <i class="fas fa-minus-circle"></i><a class="active" href="/blog/posts/frontend-vue/">[前端] Vue</a>
-      
-      <ul class="active">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-router_add_query/" title="[Router] Navigation Guard 加入查詢參數">[Router] Navigation Guard 加入查詢參數</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-ts-provide/" title="[TS] TS-Provide">[TS] TS-Provide</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-yncheckbox/" title="[元件] CheckBox">[元件] CheckBox</a></li>
-  
-
-  
-  
-  
-  
-    
-    
-  
-  
-    
-    <li><a class="active" href="/blog/posts/frontend-vue/vue-comp-promise/" title="[元件] Promise 元件方法">[元件] Promise 元件方法</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-ts-bug/" title="[元件] TypeScript 注意事項">[元件] TypeScript 注意事項</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Wrapper Component">[元件] Wrapper Component</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/frontend-vue/vue-comp-global/" title="[元件] 全域元件">[元件] 全域元件</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/">[後端] .NET</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-auth/">[練習] 認證與授權</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/dotnet/startup-signalr/">[練習] 即時聊天專案</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/dotnet/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/software/">[系統] 軟體設計</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/software/arch-n-tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/software/arch-clean-arch-review/" title="[架構] 無暇的程式碼">[架構] 無暇的程式碼</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/container/">[維運] Container 容器</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/basic-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/docker-namespace/" title="[Basic] Namespace">[Basic] Namespace</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/docker-postgresql/" title="[Docker] Postgresql">[Docker] Postgresql</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/docker-command/" title="[Docker] 基礎指令">[Docker] 基礎指令</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/docker-install/" title="[Docker] 安裝">[Docker] 安裝</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/devops/">[維運] DevOps</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/devops/git-orphan-worktree/" title="[Git] orphan branch/worktree">[Git] orphan branch/worktree</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/devops/git-action-release-dotnet/" title="[Git] Release Action (Dotnet)">[Git] Release Action (Dotnet)</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/devops/git-action-release-vue/" title="[Git] Release Action (Vue)">[Git] Release Action (Vue)</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/devops/sonarqube_netcore31/" title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/">[其他] Other</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li>
-      <i class="fas fa-plus-circle"></i><a class="" href="/blog/posts/other/homeassistant/">[智能家居] Home Assistant</a>
-      
-      <ul class="">
-        
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/homeassistant/ha-install/" title="[安裝] 使用 Docker 安裝">[安裝] 使用 Docker 安裝</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/telegram-bot/" title="[Bot] Telegram Bot">[Bot] Telegram Bot</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/hugo-toha-2023/" title="[Hugo] Toha Theme">[Hugo] Toha Theme</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
-  
-
-  
-  
-  
-  
-  
-    
-    <li><a class="" href="/blog/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
-  
-
-
-      </ul>
-    </li>
-  
-
-
-            </div>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-      
-      
-<section class="content-section" id="content-section">
-  <div class="content">
-    <div class="container p-0 read-area">
-      
-      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/blog/images/default-hero.jpg);'>
-      </div>
-
-      
-      <div class="page-content">
-        <div class="author-profile ml-auto align-self-lg-center">
-          <img class="rounded-circle" src='/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png' alt="Author Image">
-          <h5 class="author-name">Yu Cheng</h5>
-          <p>Friday, August 26, 2022</p>
-        </div>
-
-        <div class="title">
-          <h1>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h1>
-        </div>
-        
-        <div class="post-content" id="post-content">
-          <p>有用過 <a href="https://sweetalert2.github.io/">sweetalert2</a> 的話，應該會喜歡可以同步等待對話框回傳值的方式，
+Vuejs 實作 <button id=&#34;xBtn&#34;>執行測試</button> <div id=&#34;xApp&#34; class=&#34;modal&#34; :style=&#34;{display: dialog?'block':'none'}&#34;> <div class=&#34;modal-content&#34;> <span class=&#34;close&#34;>Test Modal</span> <p>The value selected will resolve by promise.</p> <button @click=&#34;choose(1)&#34;>1</button> <button @click=&#34;choose(2)&#34;>2</button> </div> </div> <script src=&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;></script> <script> let data = { result: null, dialog: false } let dialog = new Vue({ el: '#xApp', data:() => data, methods: { getConfirm() { // 先清空 result (避免兩次選中一樣的值無法觸發 watcher) this."><meta property="og:type" content="article"><meta property="og:url" content="https://tigernaxojr.github.io/blog/posts/frontend-vue/vue-comp-promise/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-08-26T15:03:00+08:00"><meta property="article:modified_time" content="2022-08-26T15:03:00+08:00"><meta name=description content="[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/rainbow.min.css><link rel=stylesheet href=/blog/css/layouts/single.css><link rel=stylesheet href=/blog/css/navigators/sidebar.css><link rel=stylesheet href=/blog/css/style.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<span class=navbar-toggler-icon></span></button>
+<a class=navbar-brand href=/blog>YuCheng's Site</a>
+<button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/blog/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/blog/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/database/>[DB] Database</a><ul><li><a href=/blog/posts/database/sql-cte/ title="[SQL] CTE">[SQL] CTE</a></li><li><a href=/blog/posts/database/sql-merge/ title="[SQL] Merge">[SQL] Merge</a></li><li><a href=/blog/posts/database/sql-ranking/ title="[SQL] Ranking">[SQL] Ranking</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/linux/>[OS] Linux</a><ul><li><a href=/blog/posts/linux/arch-install/ title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li><li><a href=/blog/posts/linux/centos8-static-ip/ title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li><li><a href=/blog/posts/linux/ubuntu22-ssh/ title="[Ubuntu] SSH 連線">[Ubuntu] SSH 連線</a></li><li><a href=/blog/posts/linux/ubuntu204-static-ip/ title="[Ubuntu] 設定網路靜態IP">[Ubuntu] 設定網路靜態IP</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/web/>[Web] Web 相關</a><ul><li><a href=/blog/posts/web/web-tool-eudc-frontforge/eudc/ title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li><li><a href=/blog/posts/web/security-get/ title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/javascript/>[前端] Javascript</a><ul><li><a href=/blog/posts/javascript/js-arr-func/ title="[JS] Array 常用方法">[JS] Array 常用方法</a></li><li><a href=/blog/posts/javascript/js-obj-func/ title="[JS] Object 常用方法">[JS] Object 常用方法</a></li><li><a href=/blog/posts/javascript/js-module/ title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li><li><a href=/blog/posts/javascript/js-hoisting/ title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li><li><a href=/blog/posts/javascript/js-async/ title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li><li><a href=/blog/posts/javascript/js-prototype/ title=[JS]原型繼承鏈模型>[JS]原型繼承鏈模型</a></li><li><a href=/blog/posts/javascript/code-copy-html-content/ title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li><li><a href=/blog/posts/javascript/diy-simple-router/ title="[DIY] 前端路由">[DIY] 前端路由</a></li><li><a href=/blog/posts/javascript/diy-http-proxy-middleware/ title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/typescript/>[前端] Typescript</a><ul><li><a href=/blog/posts/typescript/ts-extend-global-obj/ title="[TS] 擴充標準內建物件">[TS] 擴充標準內建物件</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/blog/posts/frontend-vue/>[前端] Vue</a><ul class=active><li><a href=/blog/posts/frontend-vue/vue-router_add_query/ title="[Router] Navigation Guard 加入查詢參數">[Router] Navigation Guard 加入查詢參數</a></li><li><a href=/blog/posts/frontend-vue/vue-ts-provide/ title="[TS] TS-Provide">[TS] TS-Provide</a></li><li><a href=/blog/posts/frontend-vue/vue-comp-yncheckbox/ title="[元件] CheckBox">[元件] CheckBox</a></li><li><a class=active href=/blog/posts/frontend-vue/vue-comp-promise/ title="[元件] Promise 元件方法">[元件] Promise 元件方法</a></li><li><a href=/blog/posts/frontend-vue/vue-ts-bug/ title="[元件] TypeScript 注意事項">[元件] TypeScript 注意事項</a></li><li><a href=/blog/posts/frontend-vue/vue-comp-wrapper/ title="[元件] Wrapper Component">[元件] Wrapper Component</a></li><li><a href=/blog/posts/frontend-vue/vue-comp-global/ title="[元件] 全域元件">[元件] 全域元件</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/dotnet/>[後端] .NET</a><ul><li><a href=/blog/posts/dotnet/startup-webapi/ title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li><li><a href=/blog/posts/dotnet/nuget/ title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li><li><a href=/blog/posts/dotnet/secret/ title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li><li><a href=/blog/posts/dotnet/snippet-json-dt/ title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li><li><a href=/blog/posts/dotnet/snippet-json-operate/ title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li><li><a href=/blog/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/ title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li><li><a href=/blog/posts/dotnet/basic-async-controller/ title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/dotnet/startup-auth/>[練習] 認證與授權</a><ul><li><a href=/blog/posts/dotnet/startup-auth/auth_guild_1/ title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li><li><a href=/blog/posts/dotnet/startup-auth/auth_guild_2/ title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li><li><a href=/blog/posts/dotnet/startup-auth/auth_guild_3/ title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li><li><a href=/blog/posts/dotnet/startup-auth/auth_guild_4/ title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li><li><a href=/blog/posts/dotnet/startup-auth/auth_guild_memo/ title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/dotnet/startup-signalr/>[練習] 即時聊天專案</a><ul><li><a href=/blog/posts/dotnet/startup-signalr/guild_1_start/ title="[SignalR] 建立專案">[SignalR] 建立專案</a></li><li><a href=/blog/posts/dotnet/startup-signalr/guild_2_issue_token/ title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li><li><a href=/blog/posts/dotnet/startup-signalr/guild_4_front_end_login/ title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li><li><a href=/blog/posts/dotnet/startup-signalr/guild_3_validate_token/ title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li></ul></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/software/>[系統] 軟體設計</a><ul><li><a href=/blog/posts/software/arch-multi-layer/ title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li><li><a href=/blog/posts/software/arch-n-tier/ title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li><li><a href=/blog/posts/software/arch-clean-arch-review/ title="[架構] 無暇的程式碼">[架構] 無暇的程式碼</a></li><li><a href=/blog/posts/software/quality-nest/ title="[程式] 巢狀結構">[程式] 巢狀結構</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/container/>[維運] Container 容器</a><ul><li><a href=/blog/posts/container/basic-resource/ title="[Basic] 學習資源">[Basic] 學習資源</a></li><li><a href=/blog/posts/container/docker-namespace/ title="[Basic] Namespace">[Basic] Namespace</a></li><li><a href=/blog/posts/container/docker-postgresql/ title="[Docker] Postgresql">[Docker] Postgresql</a></li><li><a href=/blog/posts/container/docker-command/ title="[Docker] 基礎指令">[Docker] 基礎指令</a></li><li><a href=/blog/posts/container/docker-install/ title="[Docker] 安裝">[Docker] 安裝</a></li><li><a href=/blog/posts/container/k8s-example-tnsnames.ora/ title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li><li><a href=/blog/posts/container/k8s-basc-install/ title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/devops/>[維運] DevOps</a><ul><li><a href=/blog/posts/devops/git-orphan-worktree/ title="[Git] orphan branch/worktree">[Git] orphan branch/worktree</a></li><li><a href=/blog/posts/devops/git-action-release-dotnet/ title="[Git] Release Action (Dotnet)">[Git] Release Action (Dotnet)</a></li><li><a href=/blog/posts/devops/git-action-release-vue/ title="[Git] Release Action (Vue)">[Git] Release Action (Vue)</a></li><li><a href=/blog/posts/devops/sonarqube_netcore31/ title="[Tips] SonarQube 檢測">[Tips] SonarQube 檢測</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/other/>[其他] Other</a><ul><li><i class="fas fa-plus-circle"></i><a href=/blog/posts/other/homeassistant/>[智能家居] Home Assistant</a><ul><li><a href=/blog/posts/other/homeassistant/ha-install/ title="[安裝] 使用 Docker 安裝">[安裝] 使用 Docker 安裝</a></li></ul></li><li><a href=/blog/posts/other/telegram-bot/ title="[Bot] Telegram Bot">[Bot] Telegram Bot</a></li><li><a href=/blog/posts/other/taiwania_login_oneclick/ title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li><li><a href=/blog/posts/other/hugo-toha-2023/ title="[Hugo] Toha Theme">[Hugo] Toha Theme</a></li><li><a href=/blog/posts/other/linux-gdrive-cli/ title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li><li><a href=/blog/posts/other/vim-plugin-ycm/ title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li><li><a href=/blog/posts/other/auth-oauth2/ title="[授權] OAuth2.0">[授權] OAuth2.0</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(/blog/images/default-hero.jpg)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/blog/images/default-avatar_hu6902af5411c8e2aeb5d4a7246d8a617a_6271_120x120_fit_box_3.png alt="Author Image"><h5 class=author-name>Yu Cheng</h5><p>Friday, August 26, 2022</p></div><div class=title><h1>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</h1></div><div class=post-content id=post-content><p>有用過 <a href=https://sweetalert2.github.io/>sweetalert2</a> 的話，應該會喜歡可以同步等待對話框回傳值的方式，
 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise，
-如此一來就能夠在同一個函式當中處理使用者輸入值。</p>
-<p>Dialog 元件設計原理:</p>
-<ol>
-<li>元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。</li>
-<li>設置<a href="https://vuejs.org/v2/api/#vm-watch">watcher</a>讓元件取得使用者輸入後 resolve promise</li>
-</ol>
-<p>得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)，
+如此一來就能夠在同一個函式當中處理使用者輸入值。</p><p>Dialog 元件設計原理:</p><ol><li>元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。</li><li>設置<a href=https://vuejs.org/v2/api/#vm-watch>watcher</a>讓元件取得使用者輸入後 resolve promise</li></ol><p>得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)，
 如此不需在上層元件撰寫使用者輸入取值的監視邏輯，
-讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。</p>
-<p>這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。</p>
-<h2 id="vuejs-實作">Vuejs 實作</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;xBtn&#34;</span>&gt;執行測試&lt;/<span style="color:#f92672">button</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;xApp&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;modal&#34;</span> <span style="color:#a6e22e">:style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;modal-content&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">span</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;close&#34;</span>&gt;Test Modal&lt;/<span style="color:#f92672">span</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">p</span>&gt;The value selected will resolve by promise.&lt;/<span style="color:#f92672">p</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;choose(1)&#34;</span>&gt;1&lt;/<span style="color:#f92672">button</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;choose(2)&#34;</span>&gt;2&lt;/<span style="color:#f92672">button</span>&gt;
-</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">result</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">dialog</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span> }
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#xApp&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>() =&gt; <span style="color:#a6e22e">data</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">getConfirm</span>() {
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// 先清空 result (避免兩次選中一樣的值無法觸發 watcher)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span> 
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// open dialog
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span> 
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">watcher</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$watch</span>(
-</span></span><span style="display:flex;"><span>           <span style="color:#75715e">// 設置監視的對象為 result
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>           () =&gt; <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">result</span> ,
-</span></span><span style="display:flex;"><span>           <span style="color:#75715e">// 一旦 result 的值有改變，就 resolve promise，並啟動下一輪 watcher 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>           (<span style="color:#a6e22e">newVal</span>) =&gt; <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">newVal</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">watcher</span>()
-</span></span><span style="display:flex;"><span>         )
-</span></span><span style="display:flex;"><span>       } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
-</span></span><span style="display:flex;"><span>         <span style="color:#75715e">// 如果出錯就 reject promise
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">error</span>)
-</span></span><span style="display:flex;"><span>       }
-</span></span><span style="display:flex;"><span>     })
-</span></span><span style="display:flex;"><span>   },
-</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">choose</span>(<span style="color:#a6e22e">value</span>) {
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// 為 result 設置值觸發 watcher 解開 promise
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">value</span> 
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// 關閉 dialog
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>})
-</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;xBtn&#39;</span>)
-</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">addEventListener</span>( <span style="color:#e6db74">&#39;click&#39;</span>, 
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">async</span> <span style="color:#a6e22e">e</span> =&gt; <span style="color:#a6e22e">alert</span>( <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">dialog</span>.<span style="color:#a6e22e">getConfirm</span>() )
-</span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* The Modal (background) */</span>
-</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">modal</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">none</span>; <span style="color:#75715e">/* Hidden by default */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">position</span>: <span style="color:#66d9ef">fixed</span>; <span style="color:#75715e">/* Stay in place */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">z-index</span>: <span style="color:#ae81ff">1</span>; <span style="color:#75715e">/* Sit on top */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">padding-top</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">px</span>; <span style="color:#75715e">/* Location of the box */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">left</span>: <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">top</span>: <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>; <span style="color:#75715e">/* Full width */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">height</span>: <span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>; <span style="color:#75715e">/* Full height */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">overflow</span>: <span style="color:#66d9ef">auto</span>; <span style="color:#75715e">/* Enable scroll if needed */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background-color</span>: rgb(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>); <span style="color:#75715e">/* Fallback color */</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background-color</span>: rgba(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0.4</span>); <span style="color:#75715e">/* Black w/ opacity */</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Modal Content */</span>
-</span></span><span style="display:flex;"><span>.<span style="color:#a6e22e">modal-content</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#fefefe</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">margin</span>: <span style="color:#66d9ef">auto</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">border</span>: <span style="color:#ae81ff">1</span><span style="color:#66d9ef">px</span> <span style="color:#66d9ef">solid</span> <span style="color:#ae81ff">#888</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">80</span><span style="color:#66d9ef">%</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="vue-next-實作">Vue-next 實作</h2>
-<p>這裡使用 vue-next/setup/quasar/typescript</p>
-<h3 id="程式碼">程式碼</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">template</span>&gt;
-</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">q-dialog</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;model&#34;</span> <span style="color:#a6e22e">:persistent</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;persistent&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">q-card</span>&gt;
-</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">slot</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">q-card-section</span>&gt; {{ textComputed }} &lt;/<span style="color:#f92672">q-card-section</span>&gt;
-</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#f92672">slot</span>&gt;
-</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">q-card-actions</span> <span style="color:#a6e22e">align</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;right&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>        &lt;<span style="color:#f92672">slot</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;action&#34;</span> <span style="color:#a6e22e">:setter</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SetResult&#34;</span>&gt;
-</span></span><span style="display:flex;"><span>          &lt;<span style="color:#f92672">q-btn</span> <span style="color:#a6e22e">dense</span> <span style="color:#a6e22e">color</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;primary&#34;</span> <span style="color:#a6e22e">label</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;確認&#34;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SetResult(true)&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>          &lt;<span style="color:#f92672">q-btn</span> <span style="color:#a6e22e">dense</span> <span style="color:#a6e22e">color</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span> <span style="color:#a6e22e">label</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;取消&#34;</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SetResult(false)&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>        &lt;/<span style="color:#f92672">slot</span>&gt;
-</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#f92672">q-card-actions</span>&gt;
-</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">q-card</span>&gt;
-</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">q-dialog</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">template</span>&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">setup</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts&#34;</span>&gt;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">computed</span>, <span style="color:#a6e22e">ref</span>, <span style="color:#a6e22e">watch</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">model</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ref</span>(<span style="color:#66d9ef">false</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">unknown</span><span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">null</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IProps</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">text</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">string</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">persistent</span><span style="color:#f92672">?:</span> <span style="color:#66d9ef">boolean</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">width</span><span style="color:#f92672">?:</span> <span style="color:#e6db74">&#39;xs&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;sm&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;md&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;lg&#39;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#39;max&#39;</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">props</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">withDefaults</span>(<span style="color:#a6e22e">defineProps</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">IProps</span><span style="color:#f92672">&gt;</span>(), {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;確認或取消？&#39;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">persistent</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;max&#39;</span>,
-</span></span><span style="display:flex;"><span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">defineEmits</span>([<span style="color:#e6db74">&#39;input&#39;</span>]);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">SetResult</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">v</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">unknown</span>) =&gt; (<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">v</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">textTmp</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">string</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">null</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">textComputed</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">computed</span>(() =&gt; <span style="color:#a6e22e">textTmp</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">props</span>.<span style="color:#a6e22e">text</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">GetResult</span>(<span style="color:#a6e22e">text</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">string</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">textTmp</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;new promise...&#39;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">watcher</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">watch</span>(
-</span></span><span style="display:flex;"><span>        () =&gt; <span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">value</span>,
-</span></span><span style="display:flex;"><span>        (<span style="color:#a6e22e">cur</span>) =&gt; {
-</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">cur</span>);
-</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">watcher</span>();
-</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>      );
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
-</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">error</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>  });
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">defineExpose</span>({ <span style="color:#a6e22e">SetResult</span>, <span style="color:#a6e22e">GetResult</span>, <span style="color:#a6e22e">model</span> });
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
-</span></span></code></pre></div><h3 id="使用方法">使用方法</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">template</span>&gt;
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">&lt;!-- 確認 Dialog --&gt;</span>
-</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">DialogAsync</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;dlg&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sm&#34;</span> /&gt;
-</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">q-btn</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;getUserInput()&#34;</span>&gt; &lt;/<span style="color:#f92672">q-btn</span>&gt;
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">template</span>&gt;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">setup</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ts&#34;</span>&gt;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">DialogAsync</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;../../components/DialogAsync/IndexPage.vue&#39;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">ref</span>, <span style="color:#a6e22e">Ref</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;vue&#39;</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">dlg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ref</span>(<span style="color:#66d9ef">null</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 顯示文字並取得使用者輸入的 true 或 false
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">check</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">async</span> (<span style="color:#a6e22e">str</span><span style="color:#f92672">?:</span> <span style="color:#a6e22e">string</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>) =&gt;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">await</span> (<span style="color:#a6e22e">dlg</span>.<span style="color:#a6e22e">value</span> <span style="color:#a6e22e">as</span> <span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">DialogAsync</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>)<span style="color:#f92672">?</span>.<span style="color:#a6e22e">GetResult</span>(<span style="color:#a6e22e">str</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">getUserInput</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">async</span> () =&gt; {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">check</span>(<span style="color:#e6db74">&#39;請確認&#39;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;使用者選擇了：&#39;</span>, <span style="color:#a6e22e">result</span>)
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
-</span></span></code></pre></div>
-        </div>
-
-        
-        <div class="row pl-3 pr-3">
-        
-        <div class="col-md-6 share-buttons">
-        
-          </div>
-
-        
-        
-          
-            
-          
-          <div class="col-md-6 btn-improve-page">
-             
-               <a href="https://github.com/tigernaxoJr/blog/edit/main/content/posts/frontend-vue/vue-comp-promise.md" title="Improve this page" target="_blank" rel="noopener">
-            
-                <i class="fas fa-code-branch"></i>
-                Improve this page
-              </a>
-          </div>
-        
-        </div>
-
-
-
-      
-      <hr />
-        
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-    
-    
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-
-<div class="row next-prev-navigator">
-  
-    <div class="col-md-6 previous-article">
-      <a href="/blog/posts/frontend-vue/vue-comp-yncheckbox/" title="[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例" class="btn btn-outline-info">
-        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-        <div class="next-prev-text">[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</div>
-      </a>
-    </div>
-  
-  
-      
-      
-        
-      
-      <div class="col-md-6 next-article">
-        <a href="/blog/posts/frontend-vue/vue-ts-bug/" title="[But] TypeScript 注意事項" class="btn btn-outline-info">
-          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
-          <div class="next-prev-text">[But] TypeScript 注意事項</div>
-        </a>
-      </div>
-    
-</div>
-
-      <hr />
-
-      
-      
-      
-      
-
-      </div>
-    </div>
-  </div>
-  
-  <a id="scroll-to-top" class="btn"><i class="fas fa-chevron-circle-up"></i></a>
-  
-</section>
-
-
-      
-      
-  <section class="toc-section" id="toc-section">
-    
-    <div class="toc-holder">
-      <h5 class="text-center pl-3">Table of Contents</h5>
-      <hr>
-      <div class="toc">
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#vuejs-實作">Vuejs 實作</a></li>
-    <li><a href="#vue-next-實作">Vue-next 實作</a>
-      <ul>
-        <li><a href="#程式碼">程式碼</a></li>
-        <li><a href="#使用方法">使用方法</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-      </div>
-    </div>
-    
-  </section>
-
-    </div>
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-  
-    
-  
-
-
-
-  
-  
-    
-  
-
-  
-  
-    
-  
-
-  
-  
-
-  
-  
-    
-    
-      
-    
-  
-
-
-  
-  
-  
-
-  
-  
-  
-
-  
-  
-  
-    
-  
-  
-
-  
-  
-  
-
-  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
-    <div class="container pt-5">
-      <div class="row text-left">
-        
-        <div class="col-md-4 col-sm-12">
-          <h5>Navigation</h5>
-          
-          <ul>
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#about">About</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#skills">Skills</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#experiences">Experiences</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://tigernaxojr.github.io/blog/#education">Education</a>
-                </li>
-              
-            
-              
-            
-          </ul>
-          
-        </div>
-        
-        
-        <div class="col-md-4 col-sm-12">
-          <h5>Contact me:</h5>
-          <ul>
-            
-              
-                <li><a href=mailto:tigernaxo.co.cc@gmail.com target="_blank" rel="noopener">
-                  <span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span>
-                </a></li>
-              
-            
-              
-                <li><span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span></li>
-              
-            
-          </ul>
-        </div>
-        
-        
-        
-          
-          <div class="col-md-4 col-sm-12">
-            <p>Stay up to date with email notification</p>
-            
-              <form method='post' action='https://blogtrottr.com'>
-              <div class="form-group">
-              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
-              <input type='hidden' name='btr_url' value='https://tigernaxojr.github.io/blog/index.xml' />
-              <input type='hidden' name='schedule_type' value='1' />
-              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
-              <button type="submit" class="btn btn-info"> Submit </button>
-              </div>
-              </form>
-            
-          </div>
-        
-      </div>
-    </div>
-    
-    
-    <hr />
-    <div class="container">
-      <div class="row text-left">
-        <div class="col-md-4">
-          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
-            <img src="/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
-            Toha
-          </a>
-        </div>
-        <div class="col-md-4 text-center">© 2022 Copyright.</div>
-        <div class="col-md-4 text-right">
-          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
-          <img
-            src="/blog/images/hugo-logo.svg"
-            alt="Hugo Logo"
-            height="18"
-          />
-          </a>
-        </div>
-      </div>
-    </div>
-    
-  </footer>
-
-
-    <script type="text/javascript" src="/blog/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/blog/js/popper.min.js"></script>
-<script type="text/javascript" src="/blog/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="/blog/js/navbar.js"></script>
-<script type="text/javascript" src="/blog/js/plyr.js"></script>
-<script type="text/javascript" src="/blog/js/main.js"></script>
-
-
-    
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
-<script src="https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js"></script>
-<script src="/blog/js/single.js"></script>
-<script>
-  hljs.highlightAll();
-  setTimeout( ()=>window.highlightJsBadge(), 1000); 
-</script>
-
-
-
-
-
-
-
-
-
-    
-</body>
-</html>
+讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。</p><p>這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。</p><h2 id=vuejs-實作>Vuejs 實作</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;xBtn&#34;</span>&gt;執行測試&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;xApp&#34;</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;modal&#34;</span> <span style=color:#a6e22e>:style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;{display: dialog?&#39;block&#39;:&#39;none&#39;}&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;modal-content&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>span</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;close&#34;</span>&gt;Test Modal&lt;/<span style=color:#f92672>span</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>p</span>&gt;The value selected will resolve by promise.&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>button</span> <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;choose(1)&#34;</span>&gt;1&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>button</span> <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;choose(2)&#34;</span>&gt;2&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>data</span> <span style=color:#f92672>=</span> { <span style=color:#a6e22e>result</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>, <span style=color:#a6e22e>dialog</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>false</span> }
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>dialog</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Vue</span>({
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>el</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;#xApp&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span>() =&gt; <span style=color:#a6e22e>data</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>   <span style=color:#a6e22e>getConfirm</span>() {
+</span></span><span style=display:flex><span>     <span style=color:#75715e>// 先清空 result (避免兩次選中一樣的值無法觸發 watcher)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>     <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>result</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span> 
+</span></span><span style=display:flex><span>     <span style=color:#75715e>// open dialog
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>     <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>dialog</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span> 
+</span></span><span style=display:flex><span>     <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Promise((<span style=color:#a6e22e>resolve</span>, <span style=color:#a6e22e>reject</span>) =&gt; {
+</span></span><span style=display:flex><span>       <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>         <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>watcher</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>$watch</span>(
+</span></span><span style=display:flex><span>           <span style=color:#75715e>// 設置監視的對象為 result
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>           () =&gt; <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>result</span> ,
+</span></span><span style=display:flex><span>           <span style=color:#75715e>// 一旦 result 的值有改變，就 resolve promise，並啟動下一輪 watcher 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>           (<span style=color:#a6e22e>newVal</span>) =&gt; <span style=color:#a6e22e>resolve</span>(<span style=color:#a6e22e>newVal</span>) <span style=color:#f92672>&amp;&amp;</span> <span style=color:#a6e22e>watcher</span>()
+</span></span><span style=display:flex><span>         )
+</span></span><span style=display:flex><span>       } <span style=color:#66d9ef>catch</span> (<span style=color:#a6e22e>error</span>) {
+</span></span><span style=display:flex><span>         <span style=color:#75715e>// 如果出錯就 reject promise
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>         <span style=color:#a6e22e>reject</span>(<span style=color:#a6e22e>error</span>)
+</span></span><span style=display:flex><span>       }
+</span></span><span style=display:flex><span>     })
+</span></span><span style=display:flex><span>   },
+</span></span><span style=display:flex><span>   <span style=color:#a6e22e>choose</span>(<span style=color:#a6e22e>value</span>) {
+</span></span><span style=display:flex><span>     <span style=color:#75715e>// 為 result 設置值觸發 watcher 解開 promise
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>     <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>result</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>value</span> 
+</span></span><span style=display:flex><span>     <span style=color:#75715e>// 關閉 dialog
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>     <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>dialog</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span>   }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>})
+</span></span><span style=display:flex><span>document.<span style=color:#a6e22e>getElementById</span>(<span style=color:#e6db74>&#39;xBtn&#39;</span>)
+</span></span><span style=display:flex><span>  .<span style=color:#a6e22e>addEventListener</span>( <span style=color:#e6db74>&#39;click&#39;</span>, 
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>async</span> <span style=color:#a6e22e>e</span> =&gt; <span style=color:#a6e22e>alert</span>( <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>dialog</span>.<span style=color:#a6e22e>getConfirm</span>() )
+</span></span><span style=display:flex><span>    );
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=display:flex><span><span style=color:#75715e>/* The Modal (background) */</span>
+</span></span><span style=display:flex><span>.<span style=color:#a6e22e>modal</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>display</span>: <span style=color:#66d9ef>none</span>; <span style=color:#75715e>/* Hidden by default */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>position</span>: <span style=color:#66d9ef>fixed</span>; <span style=color:#75715e>/* Stay in place */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>z-index</span>: <span style=color:#ae81ff>1</span>; <span style=color:#75715e>/* Sit on top */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>padding-top</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>px</span>; <span style=color:#75715e>/* Location of the box */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>left</span>: <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>top</span>: <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>; <span style=color:#75715e>/* Full width */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>; <span style=color:#75715e>/* Full height */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>overflow</span>: <span style=color:#66d9ef>auto</span>; <span style=color:#75715e>/* Enable scroll if needed */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>background-color</span>: rgb(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>); <span style=color:#75715e>/* Fallback color */</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>background-color</span>: rgba(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>0.4</span>); <span style=color:#75715e>/* Black w/ opacity */</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>/* Modal Content */</span>
+</span></span><span style=display:flex><span>.<span style=color:#a6e22e>modal-content</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>background-color</span>: <span style=color:#ae81ff>#fefefe</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>margin</span>: <span style=color:#66d9ef>auto</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>padding</span>: <span style=color:#ae81ff>20</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>border</span>: <span style=color:#ae81ff>1</span><span style=color:#66d9ef>px</span> <span style=color:#66d9ef>solid</span> <span style=color:#ae81ff>#888</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>80</span><span style=color:#66d9ef>%</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=vue-next-實作>Vue-next 實作</h2><p>這裡使用 vue-next/setup/quasar/typescript</p><h3 id=程式碼>程式碼</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>q-dialog</span> <span style=color:#a6e22e>v-model</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;model&#34;</span> <span style=color:#a6e22e>:persistent</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;persistent&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>q-card</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>slot</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>q-card-section</span>&gt; {{ textComputed }} &lt;/<span style=color:#f92672>q-card-section</span>&gt;
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>slot</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>q-card-actions</span> <span style=color:#a6e22e>align</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;right&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>slot</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;action&#34;</span> <span style=color:#a6e22e>:setter</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SetResult&#34;</span>&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>q-btn</span> <span style=color:#a6e22e>dense</span> <span style=color:#a6e22e>color</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;primary&#34;</span> <span style=color:#a6e22e>label</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;確認&#34;</span> <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SetResult(true)&#34;</span> /&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>q-btn</span> <span style=color:#a6e22e>dense</span> <span style=color:#a6e22e>color</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;info&#34;</span> <span style=color:#a6e22e>label</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;取消&#34;</span> <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SetResult(false)&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>slot</span>&gt;
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>q-card-actions</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>q-card</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>q-dialog</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>setup</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ts&#34;</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>computed</span>, <span style=color:#a6e22e>ref</span>, <span style=color:#a6e22e>watch</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;vue&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>model</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>ref</span>(<span style=color:#66d9ef>false</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>result</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>ref</span><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>unknown</span><span style=color:#f92672>&gt;</span>(<span style=color:#66d9ef>null</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>IProps</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>text</span><span style=color:#f92672>?:</span> <span style=color:#a6e22e>string</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>persistent</span><span style=color:#f92672>?:</span> <span style=color:#66d9ef>boolean</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>width</span><span style=color:#f92672>?:</span> <span style=color:#e6db74>&#39;xs&#39;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#39;sm&#39;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#39;md&#39;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#39;lg&#39;</span> <span style=color:#f92672>|</span> <span style=color:#e6db74>&#39;max&#39;</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>props</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>withDefaults</span>(<span style=color:#a6e22e>defineProps</span><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>IProps</span><span style=color:#f92672>&gt;</span>(), {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>text</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;確認或取消？&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>persistent</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>width</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;max&#39;</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>defineEmits</span>([<span style=color:#e6db74>&#39;input&#39;</span>]);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>SetResult</span> <span style=color:#f92672>=</span> (<span style=color:#a6e22e>v</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>unknown</span>) =&gt; (<span style=color:#a6e22e>result</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>v</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>textTmp</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>ref</span><span style=color:#f92672>&lt;</span><span style=color:#a6e22e>string</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>null</span><span style=color:#f92672>&gt;</span>(<span style=color:#66d9ef>null</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>textComputed</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>computed</span>(() =&gt; <span style=color:#a6e22e>textTmp</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>||</span> <span style=color:#a6e22e>props</span>.<span style=color:#a6e22e>text</span>);
+</span></span><span style=display:flex><span><span style=color:#66d9ef>async</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>GetResult</span>(<span style=color:#a6e22e>text</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>string</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>null</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>textTmp</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>text</span> <span style=color:#f92672>||</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>result</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>null</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>model</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>new</span> Promise((<span style=color:#a6e22e>resolve</span>, <span style=color:#a6e22e>reject</span>) =&gt; {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#39;new promise...&#39;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>watcher</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>watch</span>(
+</span></span><span style=display:flex><span>        () =&gt; <span style=color:#a6e22e>result</span>.<span style=color:#a6e22e>value</span>,
+</span></span><span style=display:flex><span>        (<span style=color:#a6e22e>cur</span>) =&gt; {
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>resolve</span>(<span style=color:#a6e22e>cur</span>);
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>watcher</span>();
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>model</span>.<span style=color:#a6e22e>value</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>      );
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (<span style=color:#a6e22e>error</span>) {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>reject</span>(<span style=color:#a6e22e>error</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  });
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#a6e22e>defineExpose</span>({ <span style=color:#a6e22e>SetResult</span>, <span style=color:#a6e22e>GetResult</span>, <span style=color:#a6e22e>model</span> });
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><h3 id=使用方法>使用方法</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>  <span style=color:#75715e>&lt;!-- 確認 Dialog --&gt;</span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>DialogAsync</span> <span style=color:#a6e22e>ref</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;dlg&#34;</span> <span style=color:#a6e22e>width</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;sm&#34;</span> /&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>q-btn</span> <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;getUserInput()&#34;</span>&gt; &lt;/<span style=color:#f92672>q-btn</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>setup</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ts&#34;</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>DialogAsync</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;../../components/DialogAsync/IndexPage.vue&#39;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> { <span style=color:#a6e22e>ref</span>, <span style=color:#a6e22e>Ref</span> } <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;vue&#39;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>dlg</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>ref</span>(<span style=color:#66d9ef>null</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 顯示文字並取得使用者輸入的 true 或 false
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>check</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> (<span style=color:#a6e22e>str</span><span style=color:#f92672>?:</span> <span style=color:#a6e22e>string</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>null</span>) =&gt;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>await</span> (<span style=color:#a6e22e>dlg</span>.<span style=color:#a6e22e>value</span> <span style=color:#a6e22e>as</span> <span style=color:#66d9ef>typeof</span> <span style=color:#a6e22e>DialogAsync</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>null</span>)<span style=color:#f92672>?</span>.<span style=color:#a6e22e>GetResult</span>(<span style=color:#a6e22e>str</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>getUserInput</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>async</span> () =&gt; {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>result</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>await</span> <span style=color:#a6e22e>check</span>(<span style=color:#e6db74>&#39;請確認&#39;</span>)
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#39;使用者選擇了：&#39;</span>, <span style=color:#a6e22e>result</span>)
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/tigernaxoJr/blog/edit/main/content/posts/frontend-vue/vue-comp-promise.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/blog/posts/frontend-vue/vue-comp-yncheckbox/ title="[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</div></a></div><div class="col-md-6 next-article"><a href=/blog/posts/frontend-vue/vue-ts-bug/ title="[But] TypeScript 注意事項" class="btn btn-outline-info"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>[But] TypeScript 注意事項</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#vuejs-實作>Vuejs 實作</a></li><li><a href=#vue-next-實作>Vue-next 實作</a><ul><li><a href=#程式碼>程式碼</a></li><li><a href=#使用方法>使用方法</a></li></ul></li></ul></nav></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://tigernaxojr.github.io/blog/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://tigernaxojr.github.io/blog/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://tigernaxojr.github.io/blog/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://tigernaxojr.github.io/blog/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:tigernaxo.co.cc@gmail.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>tigernaxo.co.cc@gmail.com</span></a></li><li><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://tigernaxojr.github.io/blog/index.xml>
+<input type=hidden name=schedule_type value=1>
+<small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+<button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/blog/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
+Toha</a></div><div class="col-md-4 text-center">© 2022 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
+<img src=/blog/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/blog/js/jquery-3.4.1.min.js></script>
+<script type=text/javascript src=/blog/js/popper.min.js></script>
+<script type=text/javascript src=/blog/js/bootstrap.min.js></script>
+<script type=text/javascript src=/blog/js/navbar.js></script>
+<script type=text/javascript src=/blog/js/plyr.js></script>
+<script type=text/javascript src=/blog/js/main.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js></script>
+<script src=https://unpkg.com/highlightjs-badge@0.1.9/highlightjs-badge.min.js></script>
+<script src=/blog/js/single.js></script>
+<script>hljs.highlightAll(),setTimeout(()=>window.highlightJsBadge(),1e3)</script></body></html>
