@@ -10,7 +10,7 @@ menu:
     parent: software
     weight: 1000
 ---
-中文多層架構的層可翻作 layer 或 tier，這兩者之間主要的差別在於 layer 指程式邏輯在應用程式的位置；而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。這一篇的層談的是 layer，談如何在軟體層面利用分層 (layer) 妥善安排程式碼，以 multi-layer 撰寫程式碼能將複雜的邏輯隔離開達成關注點分離(SoC, Separation of concerns)，好處有：
+中文多層架構的層可翻作 layer 或 tier，兩者主要的差別在於 layer 指程式邏輯在應用程式的位置；而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。這一篇的層說的是 layer，談如何在軟體層面利用分層 (layer) 妥善安排程式碼，以 multi-layer 撰寫程式碼能將複雜的邏輯隔離開達成關注點分離(SoC, Separation of concerns)，好處有：
   - 降低耦合：程式拆成各司其職的單元，降低彼此耦合，增加程式單元彈性(擴展性)、複用性。
   - 易於維護：多層式架構中程式碼各司其職，容易定位問題發生點、而非從整個應用程式邏輯找。
   - 敏捷開發：程式可快速回應需求修改(理由與易於維護類似，但是在開發時獲得的好處)。
@@ -18,40 +18,38 @@ menu:
 
 # 分層
 ## 三層式架構
+
 一般來說最常用的三層式架構組成為：
 - 表現層 (PL; Presentation Layer)：ASP 內就是 Controller 結尾。
 - 商業邏輯繩 (BLL; Business Logic Layer)：又稱為 Service Layer，命名習慣是 Service、Helper 結尾。
 - 資料存取層(DAL; Data Access Layer)：命名習慣是 Repo 結尾。
 
-
+另外有人將 Domain、Common 稱為一層，但這個部分其實不太像層，因為會被每一層引用，在架構上呈現比較不像層那樣扁平，裡面包含：
+Model、Entity、DTO(Data transfer object) 或 Value Object，這裡只有屬性沒有方法。
 
 ## 四層式架構
-為了降低 PL 與 BL 之間的耦合，有的人會在 Business Logic Layer(BLL) 上再疊加一層 Service Layer(SL)，作為 Presentation Layer 與 Business Layer 的中介層，這時 Business Logic Layer 的命名就不以 Serviece 結尾，通常較大型專案才需要如此分法。  
+為了降低 PL 與 BL 之間的耦合，有時會在 Business Logic Layer(BLL) 上再疊一層 Service Layer(SL)，作為 Presentation Layer 與 Business Layer 的中介層，這時 Business Logic Layer 的命名就不以 Serviece 結尾，通常較大型專案才需要如此分法。  
 而 SL 和 BLL 的差別在於商業邏輯精細度，一個SL操作 (coarse-grained operation) 通常包含複數BL操作 (fine-grained operation)。
 - Presentation Layer(PL)
 - Service Layer(SL)
 - Business Logic Layer(BLL)
 - Data Access Layer(DAL)
 
-## 避免過度設計
-但並非所有的程式都必須要分為三層，較小型、單純的專案分層會增加複雜度，可視專案複雜度分 1~3 層，分層邏輯如下：
+## 整理
+| 中文      | 英文                      | Naming Convention | 3 layer | 4 layer |
+| --------- | ------------------------- | ----------------- | ------- | ------- |
+| 表現層    | PL, Presentation Layer    | Controller        | 1       | 1       |
+| 服務層    | BLL, Business Logic Layer | Service           | -       | 2       |
+| 業務層    | BLL, Business Logic Layer | Helper, Service   | 2       | 3       |
+| 資料層    | DAL, Data Access Layer    | Repoitory         | 3       | 4       |
+| 共用(層?) | Common Layer              | Domain, Common    | o       | o       |
+
+# 避免過度設計
+並非所有的程式都必須要分為三層，較小型、單純的專案分層會增加複雜度，可視專案複雜度分 1~3 層，分層邏輯如下：
 - one-layer：也就是不分層，所有邏輯全寫在一起。
 - two-layer：抽離 BLL，BLL負責商業邏輯與資料存取。
 - three-layer：從 BLL 抽離 DAL，BLL負責商業邏輯、DAL負責資料存取。
 
-## 一般層
-另外有人將 Domain、Common 稱為一層，但這個部分其實不太像層，因為會被每一層引用，在架構上呈現比較不像一層那樣扁平，裡面包含：
-Model、Entity
-DTO(Data transfer object) 或 Value Object，只有屬性沒有方法
-
-## 整理
-|中文|英文|Naming Convention|3 layer|4 layer|
-|-|-|-|-|-|
-|表現層|PL, Presentation Layer| Controller|1|1|
-|服務層|BLL, Business Logic Layer| Service|-|2|
-|業務層|BLL, Business Logic Layer| Helper, Service|2|3|
-|資料層|DAL, Data Access Layer| Repoitory|3|4|
-|共用(層?)|Common Layer| Domain, Common|o|o|
 
 # Business Logic Layer
 business object (BO)
@@ -93,7 +91,12 @@ make the service(s) transaction aware (https://stackoverflow.com/questions/41301
 應該提供該方法適當的參數，而難處在於決定該方法的參數要接收數個參數或是額外定義一個類別作為參數用
 ### 群組化
 可以將相關的 Table Group 起來，否則會變得很複雜而難以維護
-## 命名(Naming Convention)
+
+# memo
+Interface 應該定義在上層組件中，interface、entity 的依賴關係必須是終點以避免閉鎖環出現，如此一來在追蹤閉鎖環的時候可以排除只依賴於 interface, enetity 的依賴關係? 
+DI Container 的地位是"組合根"應該是唯一和所有所有模組都有依賴關係的組件。 
+Dto 各層都存在，是為了隔離沒有直接依賴的層，只依賴於 interface 但卻無法迴避直接依賴 Dto? 因為方 interface 是為了抽換不同方法，而 dto 沒有方法嗎？
+
 
 
 # Reference
