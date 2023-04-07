@@ -29,23 +29,21 @@ Vue3 裡面只要綁定 $attrs 即可，attrs, props, event 全部自動綁定�
 ```html
 <template>
   <q-btn v-bind="$attrs">
-    <template v-for="(_, slot) of $slots" v-slot:[slot]="scope">
-      <slot :name="slot" v-bind="scope"></slot>
+    <template v-for="(slot, index) of Object.keys($slots)" :key="index" v-slot:[slot]>
+      <slot :name="slot"></slot>
     </template>
     <slot></slot>
   </q-btn>
 </template>
 ```
-## TS-SFC
-### Quasar2
+### Quasar2-TS
 Quasar 裡面 Props, Slot 有獨立的 interface 定義，因此可直接拿到。
 ```html
 <template>
   <q-btn v-bind="$attrs">
-    <template v-for="(_, slot) in slots" :key="slot" v-slot:[slot]="scope" >
-      <slot :name="slot" v-bind="scope" :key="slot" />
+    <template v-for="(slot, index) of Object.keys($slots)" :key="index" v-slot:[slot]>
+      <slot :name="slot"></slot>
     </template>
-    <slot></slot>
   </q-btn>
 </template>
 
@@ -62,27 +60,25 @@ const slots = useSlot() as never as QBtnSlots;
 <style scoped></style>
 ```
 ### Vuetify3
-Vuetify3 裡面 Props, Slot 沒有獨立的 interface 定義，因此需傳入物件來描述 Prop, Slot。(An object literal type)
+Vuetify3 裡面 Props, Slot 沒有獨立的 interface 定義，因此需額外定義。
+`MyBtn.vue`
 ```html
 <template>
-  <v-btn v-bind="$attrs">
-    <template v-for="(_, slot) in slots" :key="slot" v-slot:[slot]="scope" >
-      <slot :name="slot" v-bind="scope" :key="slot" />
-    </template>
-    <slot></slot>
-  </v-btn>
+  <div>
+    <v-btn v-bind="$attrs">
+      <template v-for="(slot, index) of Object.keys($slots)" :key="index" v-slot:[slot]>
+        <slot :name="slot"></slot>
+      </template>
+    </v-btn>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { VBtn } from 'vuetify/components';
-import { useSlots} from 'vue';
-var c = new VBtn()
-type Props = typeof c.$props
-type Slots = typeof c.$slots
-const props = withDefaults(defineProps<Props>(), {
-  // here comes default settings
-});
-const slots = useSlots() as never as Slots;
+<script setup></script>
+```
+`MyBtn.vue.d.ts`，這裡要注意`"vuetify/components"`而不是`"vuetify/lib/components"`，
+```ts
+import { VBtn } from "vuetify/components";
+export default VBtn
 ```
 
 ## Reference
