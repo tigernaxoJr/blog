@@ -50,11 +50,9 @@ Quasar 裡面 Props, Slot 有獨立的 interface 定義，因此可直接拿到�
 <script setup lang="ts">
 import type { QBtnSlots, QBtnProps } from 'quasar';
 import { QBtn } from 'quasar';
-import { useSlots } from 'vue';
 const props = withDefaults(defineProps<QBtnProps>(),{
   // here comes default settings
 });
-const slots = useSlot() as never as QBtnSlots;
 </script>
 
 <style scoped></style>
