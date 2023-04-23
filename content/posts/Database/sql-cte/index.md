@@ -21,8 +21,8 @@ WITH CTE (id, name, parentId, lvl) AS
   UNION ALL
   -- 遞迴取得 Recursive member
   (
-    SELECT A.id, A.name, A.parentId, CTE.lvl + 1 AS lvl FROM menus A
-    INNER JOIN CTE B on A.id = B.parentId
+    SELECT A.id, A.name, A.parentId, B.lvl + 1 AS lvl FROM menus A
+    INNER JOIN CTE B on A.parentIdi = B.d
   )
 )
 SELECT * FROM CTE WHERE id=1 ORDER BY LEVEL
