@@ -37,8 +37,8 @@ const handler = {
     // Property is function, Wrap it
     return function (...args) {
       const result = target[prop].apply(target, args)
-      if (Object.getPrototypeOf(result) === prototype) return p(result, handler)
-      return result
+      const isReturnDayjs = Object.getPrototypeOf(result) === prototype
+      return isReturnDayjs ? p(result, handler) : result
     }
   },
   set(obj, prop, v, receiver) {
