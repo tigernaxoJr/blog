@@ -9,8 +9,10 @@ menu:
     parent: Javascript
     weight: 2000
 ---
+這個方法用 proxy 擴充 dayjs，讓 dayjs 支援格式化民國年。
 ## JS 程式碼
  ```js
+ // dayx.js
 import day from 'dayjs'
 const rocyyy = (dt)=>(dt.getFullYear() - 1911).toString().padStart(3, '0')
 const prototype = Object.getPrototypeOf(day())
@@ -64,6 +66,7 @@ export default p
  ```
 ## 型別定義
 ```ts
+// dayx.d.ts
 import dayjs from "dayjs";
 
 declare module 'dayjs' {
@@ -77,3 +80,29 @@ declare module 'dayjs' {
 export = dayjs;
 export as namespace dayjs;
 ```
+## 使用方式
+可直接設定民國年，此外時間的加減乘除都可以參照 [dayjs 文件](https://day.js.org/docs/en/manipulate/manipulate)
+```js
+import dayx from "./dayx";
+//#region 從資料庫的 dte, tme 欄位
+let d = dayx();
+d.dte = "1110315";
+d.tme = "123338";
+console.log(d.format("民國YYY年MM月DD日 HH:mm:ss"));
+// 民國110年03月15日 12:33:38
+//#endregion
+
+//#region 從原生 Date
+d = dayx("2022-03-15T12:33:38");
+console.log(d.format("民國YYY年MM月DD日 HH:mm:ss"));
+// 民國110年03月15日 12:33:38
+//#endregion
+
+//#region 使用當下時間不需要任何參數
+d = dayx();
+console.log(d.format("民國YYY年MM月DD日 HH:mm:ss"));
+//#endregion
+```
+
+## Reference
+- [Dayjs](https://day.js.org/docs/en/manipulate/manipulate)
