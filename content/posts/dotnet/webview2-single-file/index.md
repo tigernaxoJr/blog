@@ -1,6 +1,6 @@
 ---
 title: "[.NET] WebView2 單一檔案部屬"
-date: 2023-06-15T11:03:00+08:00
+date: 2023-06-15T11:31:00+08:00
 draft: false
 hero: 
 menu:
@@ -10,6 +10,18 @@ menu:
     parent: dotnet
     weight: 1000
 ---
+有些部屬環境要求能單一執行檔，如果要使用自己的 DLL 就會有問題，研究了內嵌 DLL 的作法應用於 WebView2 專案上。  
+以 .NET Framework 4.7.2 的 WinForm 專案為例，目標環境為 windows x64。
+## Dependency
+1. 安裝 Nuget 上的 Microsoft.Web.WebView2。
+2. 把這些資料夾底下的 Dll 複製到專案資料夾下，並加入版控
+    - `packages\Microsoft.Web.WebView2.1.0.1823.32\runtimes`
+    - `packages\Microsoft.Web.WebView2.1.0.1823.32\lib\net45`  
+3. 參考移除上述 Dll 參考(移除 Nuget 參考)，改直接參考專案資料夾下的 Dll。  
+    ![參考](./reference.png)
+
+4. 把參考的 Dll 調整為內嵌資源  
+    ![參考](./embed.png)
 ## AssemblyHelper.cs
 ```c#
 public class AssemblyHelper
@@ -23,12 +35,13 @@ public class AssemblyHelper
   }
   public string AppDataPath { get; set; }
   private Assembly assembly;
-  public AssemblyHelper() {
 
+  public AssemblyHelper() {
     assembly = Assembly.GetCallingAssembly();
     AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     AppDataPath = Path.Combine(AppDataPath, Name);
   }
+
   /// <summary>
   /// Extract embeded dll to target path
   /// </summary>
@@ -47,6 +60,7 @@ public class AssemblyHelper
       }
     }
   }
+
   /// <summary>
   /// 設置解析組件路徑的事件處理常式
   /// </summary>
@@ -111,3 +125,5 @@ public class AssemblyHelper
     }
   }
 ```
+## 部屬
+編譯之後可以直接部屬單一 exe 檔案(其他產生的 dll 檔案不用理會)，這個做法也不會留下瀏覽器的暫存檔。
