@@ -126,5 +126,23 @@ internal static class Program
   }
 }
 ```
+## 隱藏暫存檔
+假設 webview2 元件變數是`wv`：
+```c#
+private async Task showWeb(string url) {
+
+  // 重設網頁暫存檔案位置
+  var asm = new AssemblyHelper();
+  var webView2DataPath = Path.Combine(asm.AppDataPath, $"webview2");
+  Directory.CreateDirectory(webView2DataPath);
+  var webView2Environment = await CoreWebView2Environment.CreateAsync(null, webView2DataPath);
+
+  await wv.EnsureCoreWebView2Async(webView2Environment);
+  wv.CoreWebView2.SetVirtualHostNameToFolderMapping("appdata", webView2DataPath, CoreWebView2HostResourceAccessKind.Allow);
+  wv.Source = new Uri(url);
+
+}
+```
+
 ## 部屬
-編譯之後可以直接部屬單一 exe 檔案(其他產生的 dll 檔案不用理會)，這個做法也不會留下瀏覽器的暫存檔。
+編譯之後可以直接部屬單一 exe 檔案(其他產生的 dll 檔案不用理會)，這個做法也不會在執行黨所在資料夾留下瀏覽器暫存檔。
