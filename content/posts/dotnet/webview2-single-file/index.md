@@ -36,7 +36,8 @@ public class AssemblyHelper
   public string AppDataPath { get; set; }
   private Assembly assembly;
 
-  public AssemblyHelper() {
+  public AssemblyHelper()
+  {
     assembly = Assembly.GetCallingAssembly();
     AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
     AppDataPath = Path.Combine(AppDataPath, Name);
@@ -74,12 +75,11 @@ public class AssemblyHelper
   /// <returns></returns>
   public static Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
   {
-
-    Assembly executName = Assembly.GetExecutingAssembly();
+    Assembly assembly = Assembly.GetCallingAssembly();
 
     string project = Assembly.GetEntryAssembly().GetName().Name;
     string manifestItem = $"{project}.{new AssemblyName(args.Name).Name}.dll";
-    using (Stream stream = executName.GetManifestResourceStream(manifestItem))
+    using (Stream stream = assembly.GetManifestResourceStream(manifestItem))
     {
       if (stream == null) return null;
 
@@ -92,38 +92,39 @@ public class AssemblyHelper
 ```
 ## Program.cs
 ```C#
-  internal static class Program
+internal static class Program
+{
+  [STAThread]
+  static void Main()
   {
-    [STAThread]
-    static void Main()
+    try
     {
-      try
-      {
+      var asm = new AssemblyHelper();
+      // Load an extracted DLL dynamically
+      asm.EnableEmbededManifestDll();
 
-        var asm = new AssemblyHelper();
-        asm.EnableEmbededManifestDll();
+      var loaderDllFolderPath = Path.Combine(asm.AppDataPath, "runtimes\\win-x64\\native");
+      var dll = Path.Combine(loaderDllFolderPath, "WebView2Loader.dll");
+      var loaderDllEmbedPath = $"{asm.Name}.runtimes.win_x64.native.WebView2Loader.dll";
+      asm.ExtractEmbeddedDLL(loaderDllEmbedPath, dll);
 
-        // 抽出 webview2 runtimes (WebView2Loader.dll)， 依需要抽出 x64, x86, arm 版本
-        var loaderDllEmbededPath = $"{asm.Name}.runtimes.win_x64.native.WebView2Loader.dll";
-        var loaderDllFolderPath = Path.Combine(asm.AppDataPath, "runtimes\\win-x64\\native\\WebView2Loader.dll");
-        asm.ExtractEmbeddedDLL(loaderDllEmbededPath, loaderDllFolderPath);
-
-        // 將需注入 DLL 的邏輯抽離 Main 才能跑
-        run(loaderDllFolderPath);
-      } catch (Exception ex) {
-        MessageBox.Show(ex.Message);
-      }
+      // 將需注入 DLL 的邏輯抽離 Main 才能跑
+      run(loaderDllFolderPath);
     }
-    private static void run(string loaderDllFolderPath)
+    catch (Exception ex)
     {
-      // Set LoaderDllFolderPath for WebView2 
-      CoreWebView2Environment.SetLoaderDllFolderPath(loaderDllFolderPath);
-
-      Application.EnableVisualStyles();
-      Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new Form1());
+      MessageBox.Show(ex.Message);
     }
   }
+  private static void run(string loaderDllFolderPath)
+  {
+    CoreWebView2Environment.SetLoaderDllFolderPath(loaderDllFolderPath);
+
+    Application.EnableVisualStyles();
+    Application.SetCompatibleTextRenderingDefault(false);
+    Application.Run(new Form1());
+  }
+}
 ```
 ## 部屬
 編譯之後可以直接部屬單一 exe 檔案(其他產生的 dll 檔案不用理會)，這個做法也不會留下瀏覽器的暫存檔。
