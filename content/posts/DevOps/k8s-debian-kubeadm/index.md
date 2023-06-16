@@ -1,6 +1,6 @@
 ---
 title: "[K8s] 安裝"
-date: 2023-10-23T11:11:00+08:00
+date: 2023-06-16T11:11:00+08:00
 draft: false
 hero: 
 menu:
@@ -115,7 +115,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```bash
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
-## 
+## 其他
 讓 control plane 所在 node 可以部屬
 ```bash
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
