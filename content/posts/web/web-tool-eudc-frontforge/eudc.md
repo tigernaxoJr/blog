@@ -58,3 +58,7 @@ Web 在顯示姓名的時候常會遇到中文難字無法顯示，
       font-display: auto;
       }
       ```
+## 其他：讓 RDLC 可顯示字造難字
+### windows
+ - ttf 丟到 `C:\Windows\Fonts`，可能要重啟 IDE 才抓得到字型。
+ - report 裡面的字型選擇 EUDC
