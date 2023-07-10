@@ -5,7 +5,7 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[FHIR] SMART Health IT"
+    name: "[FHIR] SMART"
     identifier: fhir-smart-00overview
     parent: fhir 
     weight: 1000

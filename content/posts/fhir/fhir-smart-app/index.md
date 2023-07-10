@@ -27,8 +27,8 @@ Launch and Authorization
  - 傳輸`敏感性資料`的時候只能透過 `TLS` (就是 HTTPS) 傳輸給`信任的伺服器`。
  - App 應生成一組不可預測的狀態參數(state parameter)並夾帶在所有授權請求當中，當應用程式從授權伺服器重新導向回來的時候，應檢查狀態參數是否和先前生成的匹配，這是為了防止 CSFR  
     > (大意：類似 CSFR token 的概念)。
- - App 不應將將不受信任的使用者輸入作為程式執行。
-  > 大意：防止各種 injection
+ - App 不應將將不受信任的使用者輸入作為程式執行。  
+    > 大意：防止各種 injection
 
 ## Scopes and Launch Context
 
