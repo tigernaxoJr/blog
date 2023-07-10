@@ -6,8 +6,8 @@ hero:
 menu:
   sidebar:
     name: "[Other] FHIRcast"
-    identifier: other-FHIRcast
-    parent: other 
+    identifier: fhir-FHIRcast
+    parent: fhir 
     weight: 1000
 ---
 ### topic:
