@@ -1,12 +1,12 @@
 ---
 title: "[FHIR] SMART Health IT"
 date: 2023-07-10T16:11:00+08:00
-draft: true
+draft: false
 hero: 
 menu:
   sidebar:
-    name: "[FHIR] SMART App Launch"
-    identifier: fhir-FHIRcast
+    name: "[FHIR] SMART Health IT"
+    identifier: fhir-smart-00overview
     parent: fhir 
     weight: 1000
 ---
@@ -39,22 +39,6 @@ SMART 定義兩種 Client 端 App `認證`模式，也就是對稱/不對稱加�
 SMART 定義一個 Token Introspection API，用來檢查 token 的 scopes、用戶、病患、等等前後文訊息，透過這個模式讓 `Resource Server` 和 `Authorization Server` 解耦。
 
 
-
-
-
-
-## 
-SMART App Launch 提供一份供 Client 端應用程序基於 OAuth 2.0 進行授權(authorize)、身份驗證(authenticate)、以及與 FHIR 的數據系統整合的指引。
-## Terminology
- - EHR：電子健康紀錄(Electronic Health Record)
-STU for "Standard for Trial Use."
-## 一致性onformance)
-是擴充 `OpenID Connect Discovery` 而來，
-### OpenID Connect Discovery
-metadata 端點 `/.well-known/openid-configuration`
-### SMART 
-metadata 端點`/.well-known/smart-configuration`
-### 
 ## Reference
 - [SMART](https://smarthealthit.org/)
 - [SMART App Launch](https://build.fhir.org/ig/HL7/smart-app-launch/toc.html)
