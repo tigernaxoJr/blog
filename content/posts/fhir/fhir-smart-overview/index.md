@@ -76,20 +76,20 @@ token=mF_9.B5f-4.1JqM&token_type_hint=access_token
 
 ### Response
 回應範例：`JSON`
-| 欄位       | 必要     | 說明                          |
-| ---------- | -------- | ----------------------------- |
-| active     | REQUIRED | token 是否可用                |
-| scope      | OPTIONAL | 授權範圍                      |
-| client_id  | OPTIONAL | 要求授權的 client (SMART App) |
-| username   | OPTIONAL | user ID                       |
-| token_type | OPTIONAL | token 類型(access/refresh..)  |
-| exp        | OPTIONAL | `標準 token 欄位`             |
-| iat        | OPTIONAL | `標準 token 欄位`             |
-| nbf        | OPTIONAL | `標準 token 欄位`             |
-| sub        | OPTIONAL | `標準 token 欄位`             |
-| aud        | OPTIONAL | `標準 token 欄位`             |
-| iss        | OPTIONAL | `標準 token 欄位`             |
-| jti        | OPTIONAL | `標準 token 欄位`             |
+| 欄位       | 必要     | 說明                                      |
+| ---------- | -------- | ----------------------------------------- |
+| active     | REQUIRED | token 是否可用                            |
+| scope      | OPTIONAL | 授權範圍                                  |
+| client_id  | OPTIONAL | 要求授權的 client (SMART App)             |
+| username   | OPTIONAL | user ID                                   |
+| token_type | OPTIONAL | token 類型(access/refresh..)              |
+| exp        | OPTIONAL | expiration time `(JWT Registered Claims)` |
+| iat        | OPTIONAL | issued at `(JWT Registered Claims)`       |
+| nbf        | OPTIONAL | not before `(JWT Registered Claims)`      |
+| sub        | OPTIONAL | subject `(JWT Registered Claims)`         |
+| aud        | OPTIONAL | audience `(JWT Registered Claims)`        |
+| iss        | OPTIONAL | issuer `(JWT Registered Claims)`          |
+| jti        | OPTIONAL | JWT ID `(JWT Registered Claims)`          |
 
 ## Reference
 - [SMART](https://smarthealthit.org/)
