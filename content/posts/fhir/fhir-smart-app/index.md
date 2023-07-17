@@ -61,24 +61,36 @@ Launch and Authorization
     > 為了防止 開放式重定向 `open redirector` 攻擊。
  - `不得`將 token 存儲在以明文傳輸的 cookie 中。
  - `應該`只將 token 和其他敏感資料持久化存儲在專屬於應用程式的存儲位置中，`不應該`存儲在系統範圍可被發現的位置。
-### 公共/機密應用程序支持 
-參照 [ OAuth 2.0 specification: confidential and public](https://tools.ietf.org/html/rfc6749#section-2.1) 根據應用程序運行的執行環境是否使應用程序能夠保護機密，制定兩種類型：
-純客戶端應用程序（例如，基於 HTML5/JS 瀏覽器的應用程序、iOS 移動應用程序或 Windows 桌面應用程序）可以提供足夠的安全性，但它們可能無法在 OAuth2 意義上“保守秘密”。
-換句話說，應用程序中靜態嵌入的任何“秘密”密鑰、代碼或字符串都可能被最終用戶或攻擊者提取。因此，這些應用程序的安全性不能依賴於安裝時嵌入的秘密。
-for client_id 的 secret 無法被 client side app 保存作為 basic auth 用
 
-根據 OAuth 2.0 規範中定義，基於應用程式運行的執行環境是否能夠保護機密資訊進行區分：機密和公開。
-純客戶端應用程式可提供足夠的安全性，但能無法「保守 secret」，因此不能夠應用程式中靜態嵌入「secret」金鑰。
+### Client 密鑰保護 
+參照 [ OAuth 2.0 specification: confidential and public](https://tools.ietf.org/html/rfc6749#section-2.1)，應用程式分為兩種類型：
+#### `confidential app`
+執行環境能夠保護密鑰的應用程序，例如：
+ - 在受信任的`伺服器運行`，只有伺服器端才能訪問密鑰。
+ - 使用`附加技術保護秘密`的`本機應用程序`（例如動態客戶端註冊和通用redirect_uris）。
+#### `public app`
+執行環境不能夠保護密鑰的應用程序
+純客戶端應用程序，**可提供足夠的安全性**，但它們可能**無法保護密鑰"**，應用程序中`靜態嵌入的密鑰`、代碼或字符串都可能被最終用戶或攻擊者`提取`。因此這些應用程序的驗證不能依賴於安裝時嵌入的密鑰，例如：
+ - 基於 HTML5/JS 的瀏覽器應用程序
+ - 移動裝置應用程序 
+ - Windows 桌面應用程序
+
+### Authorization Code with PKCE
+"Authorization Code with PKCE" 流程，即 Proof Key for Code Exchange，這個流程在不需要 client_secret 的情況下提供了額外的安全性。  
+在 OAuth 2.0 的標準授權流程中，攻擊者可能會嘗試攔截網頁上的授權請求取得授權碼，並使用該授權碼來換取存取 token。這是因為在傳統的 "Authorization Code" 流程中，只需要授權碼本身，不需要額外的驗證。
+PKCE 確保授權碼只能由 client （ex: SPA）取得，因為攻擊者只能攔截 code_challenge 不會知道 code_verifier ，故攻擊者無法成功換取 token。
+public app 無法儲存 client_secret，需要使用 PKCE，Web 的 具體流程：
+1. client 產生 `code_verifier` 和 `code_challenge`， client 儲存 `code_verifier`。
+2. client 將 `code_challenge` (和對應的演算法)附在網址一起給 `authentication server`
+3. `authentication server` 記得 `code_challenge`，把 `authentication_code` 給 client
+4. client 使用 `authentication_code` 和 `code_verifier` 和 `authentication server` 交換 token
+
+OAuth 2.0 授權伺服器負責處理驗證過程並在驗證流程中驗證 client_id 和 code_challenge。client_id 用於識別您的 SPA，而 code_challenge 則提供了一種安全的方式來驗證授權碼是來自您的 SPA。
+ - code_challenge 
+ - code_verifier
+
 
 ## 授權範圍與啟動上下文(Scopes and Launch Context)
-
-
-
-
-
-
-
-
 
 ## 一致性onformance)
 是擴充 `OpenID Connect Discovery` 而來，
@@ -93,5 +105,7 @@ metadata 端點`/.well-known/smart-configuration`
 - [iThome - 簡介其他 OpenID Connect 協定的內容](https://ithelp.ithome.com.tw/articles/10227389)
 - [HIPAA Compliant Software](http://whatishipaa.org/hipaa-compliant-software.php)
 - [ medium - 網站安全🔒 開放式重定向 Open Redirect 攻擊手法 — 「導遊放你自由行」](https://medium.com/%E7%A8%8B%E5%BC%8F%E7%8C%BF%E5%90%83%E9%A6%99%E8%95%89/%E7%B6%B2%E7%AB%99%E5%AE%89%E5%85%A8-%E9%96%8B%E6%94%BE%E5%BC%8F%E9%87%8D%E5%AE%9A%E5%90%91-open-redirect-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95-68c745b53a3b)
- - [RFC6819 - OAuth 2.0 Threat Model and Security Considerations](https://datatracker.ietf.org/doc/html/rfc6819)
  - [ OAuth 2.0 specification: confidential and public](https://tools.ietf.org/html/rfc6749#section-2.1)
+ - [RFC6819 - OAuth 2.0 Threat Model and Security Considerations](https://datatracker.ietf.org/doc/html/rfc6819)
+- [RFC7636 - Proof Key for Code Exchange by OAuth Public Clients](https://datatracker.ietf.org/doc/html/rfc7636)
+- [auth0.com - Authorization Code Flow with Proof Key for Code Exchange (PKCE)](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow-with-proof-key-for-code-exchange-pkce#how-it-works)
