@@ -6,7 +6,7 @@ hero:
 menu:
   sidebar:
     name: "[授權] OAuth 2.0 - OIDC"
-    identifier: secure-oicd-00
+    identifier: secure-oauth20-oicd
     parent: secure
     weight: 1030
 ---
