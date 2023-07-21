@@ -12,6 +12,21 @@ menu:
 ---
 
 Token..
+## Token 種類
+
+ - Opaque Token：不透明的 Token，對使用者來說本身只是無意義的字串，無法直接檢視裡面的內容，需要透過驗證伺服器解釋。
+ - Not Opaque Token：token 內含有意義的資訊，使用者可以直接檢視。
+ - JWT(Json Web Token)：是一種 Not Opaque Token，Header、Paload、Signature組成。
+ - ID Token：是一種 JWT，
+透明的 Token，本身就帶有資訊 ex: ID Token、 JWT
+
+### JWT(Json Web Token)
+JWT 結構為三個分隔部分：
+ - Header（標頭）
+ - Payload（有效載荷）
+ - Signature（簽名）。  
+
+標頭(Header)和有效載荷(Payload)是 JSON 格式以 Base64 編碼組成，可以包含有關使用者、資源或其他資訊。簽名(Signature)則用於驗證，以確保Token在傳遞過程未被篡改。
 
 ## 儲存位址
 
