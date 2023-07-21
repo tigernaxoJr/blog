@@ -64,18 +64,18 @@ Launch and Authorization
 
 ### Client 密鑰保護 
 參照 [ OAuth 2.0 specification: confidential and public](https://tools.ietf.org/html/rfc6749#section-2.1)，應用程式分為兩種類型：
-#### `confidential app`
-執行環境能夠保護密鑰的應用程序，例如：
- - 在受信任的`伺服器運行`，只有伺服器端才能訪問密鑰。
- - 使用`附加技術保護秘密`的`本機應用程序`（例如動態客戶端註冊和通用redirect_uris）。
-#### `public app`
-執行環境不能夠保護密鑰的應用程序
+- `confidential app`
+  > 執行環境能夠保護密鑰的應用程序，例如：
+  > - 在受信任的`伺服器運行`，只有伺服器端才能訪問密鑰。
+  > - 使用`附加技術保護秘密`的`本機應用程序`（例如動態客戶端註冊和通用redirect_uris）。
+- `public app`  
+  > 執行環境不能夠保護密鑰的應用程序
 純客戶端應用程序，**可提供足夠的安全性**，但它們可能**無法保護密鑰"**，應用程序中`靜態嵌入的密鑰`、代碼或字符串都可能被最終用戶或攻擊者`提取`。因此這些應用程序的驗證不能依賴於安裝時嵌入的密鑰，例如：
- - 基於 HTML5/JS 的瀏覽器應用程序
- - 移動裝置應用程序 
- - Windows 桌面應用程序
+  > - 基於 HTML5/JS 的瀏覽器應用程序
+  > - 移動裝置應用程序 
+  > - Windows 桌面應用程序
 
-### Authorization Code with PKCE
+#### Authorization Code with PKCE
 "Authorization Code with PKCE" 流程，即 Proof Key for Code Exchange，這個流程在不需要 client_secret 的情況下提供了額外的安全性。  
 在 OAuth 2.0 的標準授權流程中，攻擊者可能會嘗試攔截網頁上的授權請求取得授權碼，並使用該授權碼來換取存取 token。這是因為在傳統的 "Authorization Code" 流程中，只需要授權碼本身，不需要額外的驗證。
 PKCE 確保授權碼只能由 client （ex: SPA）取得，因為攻擊者只能攔截 code_challenge 不會知道 code_verifier ，故攻擊者無法成功換取 token。
