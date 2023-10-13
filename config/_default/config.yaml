@@ -40,3 +40,14 @@ params:
   # Currently, you can just hide it from the footer.
   newsletter:
     enable: true
+
+  features:
+    analytics:
+      enabled: true
+      services:
+        # cloudflare web analytics
+        # cloudflare:
+        #   token: "<token>"
+        # Google Analytics
+        google:
+          id: G-4R5HFG9WHB
