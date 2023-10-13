@@ -25,7 +25,34 @@ Dialog 元件設計原理:
 
 這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。
 
-## Vuejs 實作
+## Vue3 實作
+```html
+<template>
+  <v-dialog v-model="dialog" v-bind="$attrs">
+    <slot v-bind="{ Resolve }"></slot>
+  </v-dialog>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const dialog = ref(false);
+let resolve = null;
+
+const Resolve = (v) => {
+  resolve(v);
+  dialog.value = false;
+};
+
+const GetResult = async () => {
+  dialog.value = true;
+  return new Promise((res) => (resolve = res));
+};
+defineExpose({ GetResult, Resolve });
+</script>
+```
+
+## \[舊]Vuejs 實作
 ```html
 <button id="xBtn">執行測試</button>
 <div id="xApp" class="modal" :style="{display: dialog?'block':'none'}">
@@ -106,7 +133,7 @@ document.getElementById('xBtn')
   width: 80%;
 }
 ```
-## Vue-next 實作
+## \[舊]Vue-next 實作
 這裡使用 vue-next/setup/quasar/typescript
 ### 程式碼
 ```html
