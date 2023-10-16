@@ -9,24 +9,24 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     steps:
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2.6.0
-      with:
-        hugo-version: 'latest'
-        extended: true
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2.6.0
+        with:
+          hugo-version: "latest"
+          extended: true
 
-    - name: Update Hugo Modules
-      run: hugo mod tidy
+      - name: Update Hugo Modules
+        run: hugo mod tidy
 
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install node modules
-      run: |
-        hugo mod npm pack
-        npm install     
+      - name: Install node modules
+        run: |
+          hugo mod npm pack
+          npm install
       # - uses: actions/checkout@v3
       #   with:
       #     submodules: true # Fetch Hugo themes (true OR recursive)
