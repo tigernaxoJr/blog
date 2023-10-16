@@ -6,7 +6,7 @@ hero:
 menu:
   sidebar:
     name: "[Web] 敏感性 GET 參數"
-    identifier: web-security-get
+    identifier: web-api-design
     parent: web
     weight: 1000
 ---
