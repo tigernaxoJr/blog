@@ -10,23 +10,10 @@
 
         <!-- Counter.dev -->
         {{ with .counterDev }}
-            <script>
-            if (
-                !sessionStorage.getItem("_swa") &&
-                document.referrer.indexOf(location.protocol + "//" + location.host) !== 0
-            ) {
-                fetch(
-                "https://counter.dev/track?" +
-                    new URLSearchParams({
-                    referrer: document.referrer,
-                    screen: screen.width + "x" + screen.height,
-                    user: "{{ .id }}",
-                    utcoffset: "1",
-                    })
-                );
-            }
-            sessionStorage.setItem("_swa", "1");
-            </script>
+            <script src="https://cdn.counter.dev/script.js"
+                data-id="{{ .id }}"
+                data-utcoffset="1"
+            ></script>
         {{ end }}
 
         <!-- GoatCounter -->
@@ -34,8 +21,26 @@
             <script
             data-goatcounter="https://{{ .code }}.goatcounter.com/count"
             async
-            src="//gc.zgo.at/count.js"
+            src="/js/goat-counter.js"
             ></script>
+        {{ end }}
+
+        <!-- Piwik/Matomo -->
+        {{ with .matomo }}
+        <!-- Matomo -->
+            <script>
+            var _paq = window._paq = window._paq || [];
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u="//{{ .instance }}/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', '{{ .siteId }}']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+            </script>
         {{ end }}
     {{ end }}
 {{ end }}
