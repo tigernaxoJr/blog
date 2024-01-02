@@ -12,7 +12,7 @@ menu:
 ---
 
 ## Introduction
-Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料庫連線資訊可以透過：
+Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Client，資料庫連線資訊可以透過：
 - 程式內直接設定 connection string。
 - 解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。
 
@@ -25,11 +25,11 @@ Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Clien，資料
 3. **Secret Volume** 共用 tnsnames.ora。
 
 三種連線資訊共用策略是否能反映連線資訊修改：
-|                 | ExternalName Service | Service + Endpoints | Secret Volume |
-|-----------------|----------------------|---------------------|---------------|
-|Ip/Domain        | 可                   | 可                  | 可            | 
-|Port             | 不能                 | 可                   |可            |  
-|Service Name/SID | 不能                 | 不能                 |可            |  
+|                  | ExternalName Service | Service + Endpoints | Secret Volume |
+| ---------------- | -------------------- | ------------------- | ------------- |
+| Ip/Domain        | 可                   | 可                  | 可            |
+| Port             | 不能                 | 可                  | 可            |
+| Service Name/SID | 不能                 | 不能                | 可            |
 
 
 ## Step
