@@ -7,7 +7,7 @@ menu:
   sidebar:
     name: "[Nginx] Subrequest"
     identifier: devops-nginx-subrequest
-    parent: devops-nginx
+    parent: devops
     weight: 1000
 ---
 在Nginx中，您可以使用subrequest來發送一個子請求，並將其嵌入到父請求中。這個功能可以讓您在處理一個請求的同時，發送一個額外的請求並將其返回值合併到主請求中，從而實現更靈活的功能。

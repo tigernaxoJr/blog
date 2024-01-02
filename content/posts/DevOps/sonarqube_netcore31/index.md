@@ -5,7 +5,7 @@ draft: false
 hero: 
 menu:
   sidebar:
-    name: "[Tips] SonarQube 檢測"
+    name: "[SonarQube] 安裝與.NET 檢測"
     identifier: devops-netcore31-sonarqube
     parent: devops
     weight: 1000
