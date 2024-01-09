@@ -79,8 +79,9 @@ menu:
     mkswap /dev/sda1
     mkfs.fat -F32 /dev/sda2
     mkfs.ext4 /dev/sda3
-    mount /dev/sda2 /mnt/boot/efi --mkdir
+    # 注意順序，一定要先掛載根目錄再掛載 /mnt/boot/efi
     mount /dev/sda3 /mnt
+    mount /dev/sda2 /mnt/boot/efi --mkdir
     swapon /dev/sda1
     ```
 2. 安裝(arch 核心、linux 核心、韌體)
