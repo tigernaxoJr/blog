@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[Secure] 安全性議題 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/secure/</link><description>Recent content in [Secure] 安全性議題 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 16 Jul 2023 00:25:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/secure/index.xml" rel="self" type="application/rss+xml"/><item><title>[授權] OAuth 2.0 Authorization Framework</title><link>https://blog.tigernaxo.com/posts/secure/oauth2-01protocol/</link><pubDate>Sun, 16 Jul 2023 00:25:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/secure/oauth2-01protocol/</guid><description>&lt;h2 id="介紹-introduction">介紹 Introduction&lt;/h2>
+&lt;p>OAuth 是一套授權框架，讓第三方應用程式(被授權方)不需取得原始帳號、密碼等敏感資訊，獲得有限的權限以存取資源，目前版本為 2.0。
+運作方式為&lt;code>授權伺服器&lt;/code>發放 &lt;code>token&lt;/code>給&lt;code>第三方應用&lt;/code>，token 上記載相關權限範圍(scope)，&lt;code>資源伺服器&lt;/code>需要權限存取時&lt;code>第三方應用&lt;/code>再把 token 出示給系統驗證。&lt;/p>
+&lt;h3 id="腳色roles">腳色(Roles)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;code>授權伺服器 (Authorization Server)&lt;/code>：負責管理使用者授權的伺服器。&lt;/li>
+&lt;li>&lt;code>資源伺服器 (Resource Server)&lt;/code>：儲存資源的伺服器。&lt;/li>
+&lt;li>&lt;code>第三方應用程式 (Third-Party Application)&lt;/code>：需要存取資源的應用程式。&lt;/li>
+&lt;li>&lt;code>使用者 (User)&lt;/code>：授權第三方應用程式存取其資源的使用者。&lt;/li>
+&lt;/ul>
+&lt;h3 id="rfc-規範">RFC 規範&lt;/h3>
+&lt;ul>
+&lt;li>RFC 6749&lt;br>
+是 OAuth 2.0 的核心規範，描述了 OAuth 2.0 的&lt;code>授權框架&lt;/code>和&lt;code>授權流程&lt;/code>。&lt;/li>
+&lt;li>RFC 6750&lt;br>
+OAuth 2.0 的另一個相關規範，定義了用於訪問受保護資源的&lt;code>身份驗證方法&lt;/code>，規範包括 Bearer Token 的身份驗證。&lt;/li>
+&lt;/ul>
+&lt;!-- ### 協定流程 -->
+&lt;!-- todo: flow -->
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="http://www.rfcreader.com/#rfc6749" target="_blank" rel="noopener">RFC 6749&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>[授權] OAuth 2.0 Authorization Framework 授權許可</title><link>https://blog.tigernaxo.com/posts/secure/oauth2-02grants/</link><pubDate>Sun, 16 Jul 2023 00:19:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/secure/oauth2-02grants/</guid><description>&lt;h2 id="授權許可-authorization-grant">授權許可 (Authorization Grant)&lt;/h2>
+&lt;p>理解授權許可前需要先瞭解解幾個名詞：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>授權碼 (Authorization Code)&lt;/code>：由授權伺服器產生，用於授權第三方應用程式存取資源的授權憑證。&lt;/li>
+&lt;li>&lt;code>存取權杖 (Access Token)&lt;/code>：由授權伺服器產生，用於允許第三方應用程式存取資源的授權憑證，時效通常較短。&lt;/li>
+&lt;li>&lt;code>刷新令牌 (Refresh Token)&lt;/code>：由授權伺服器產生，用於重新產生存取權杖的授權憑證，時效通常較長。&lt;/li>
+&lt;li>&lt;code>客戶端憑證&lt;/code>：第三方應用程式本身用於 Basic Access Authentication 的驗證資訊，具體來說是 client_id、client_secret。&lt;/li>
+&lt;/ul>
+&lt;p>OAth 2.0 根據授權許可的方式分為四種：&lt;/p>
+&lt;ul>
+&lt;li>授權碼許可(Authorization Code Grant)&lt;/li>
+&lt;li>隱含許可(Implicit Grant)&lt;/li>
+&lt;li>資源擁有者密碼憑證許可(Resource Owner Password Credentials Grant)&lt;/li>
+&lt;li>客戶端憑證許可(Client Credentials Grant)&lt;/li>
+&lt;/ul>
+&lt;h3 id="授權碼許可authorization-code-grant">授權碼許可(Authorization Code Grant)&lt;/h3>
+&lt;p>第三方應用程式向授權伺服器請求授權碼，並將授權碼傳遞給資源伺服器以存取資源的授權流程，這是最常用的模式。&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>網站使用者&lt;/code>在&lt;code>授權伺服器&lt;/code>的登入站點申請&lt;code>授權碼&lt;/code>。&lt;/li>
+&lt;li>&lt;code>授權伺服器&lt;/code>將授權碼告知&lt;code>第三方應用程式&lt;/code>&lt;/li>
+&lt;li>&lt;code>第三方應用程式&lt;/code>使用&lt;code>客戶端憑證&lt;/code>和收到的&lt;code>授權碼&lt;/code> 向 &lt;code>授權伺服器&lt;/code> 發起請求獲得 token。&lt;/li>
+&lt;/ol>
+&lt;h3 id="隱含許可implicit-grant">隱含許可(Implicit Grant)&lt;/h3>
+&lt;p>因省略對第三方應用的授權碼直接以前端網址列取得 token ，故稱隱含式許可，但直接以前端網址參數的方式傳送 token 給網站使用者，是&lt;strong>非常不安全的作法&lt;/strong>，一般 token 的有效期間設定為 session 期間有效 (關閉網頁即失效)。&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>網站使用者&lt;/code>從&lt;code>授權伺服器&lt;/code>登入。&lt;/li>
+&lt;li>&lt;code>授權伺服器&lt;/code>直接在網址列帶入 access_token 轉跳第三方應用程式。&lt;/li>
+&lt;/ol>
+&lt;h3 id="資源擁有者密碼憑證許可resource-owner-password-credentials-grant">資源擁有者密碼憑證許可(Resource Owner Password Credentials Grant)&lt;/h3>
+&lt;p>讓第三方應用直接以網站使用者密碼取得 token，必須要是高度信任的第三方應用才能用此方法。&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>第三方應用程式&lt;/code>向&lt;code>使用者&lt;/code>請求其&lt;code>帳戶密碼&lt;/code>(使用者憑證)。&lt;/li>
+&lt;li>&lt;code>第三方應用程式&lt;/code>以&lt;code>使用者帳戶密碼&lt;/code>向&lt;code>授權伺服器&lt;/code>請求 token。&lt;/li>
+&lt;/ol>
+&lt;h3 id="客戶端憑證許可client-credentials-grant">客戶端憑證許可(Client Credentials Grant)&lt;/h3>
+&lt;p>此種 token 針發放對象為第三方應用而非用戶，與用戶認証無關，由第三方應用傳送其自己的 user credentials 獲得 token。&lt;/p></description></item></channel></rss>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[練習] 即時聊天專案 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/</link><description>Recent content in [練習] 即時聊天專案 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 04 Jan 2021 09:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/dotnet/startup-signalr/index.xml" rel="self" type="application/rss+xml"/><item><title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</link><pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</guid><description>&lt;h1 id="安裝套件">安裝套件&lt;/h1>
+&lt;p>要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="註冊認證服務">註冊認證服務&lt;/h1>
+&lt;p>新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務，
+在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應，
+而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId，
+因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用
+，該檔案程式碼如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cs" data-lang="cs">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Authentication.JwtBearer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.SignalR;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Configuration;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.DependencyInjection;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.IdentityModel.Tokens;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Diagnostics.CodeAnalysis;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.IdentityModel.Tokens.Jwt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">namespace&lt;/span> SignalR.Extensions.DependencyInjection
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">MyAddConfig&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IServiceCollection AddMyJWTAuth(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e"> [NotNull]&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span> IServiceCollection services,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IConfiguration config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> services.AddAuthentication(options =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Identity 預設是使用 Cookie authentication，必須手動設置為 JWT Bearer Auth:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }).AddJwtBearer(options =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// [注意]先解除 MapInboundClaims ，否則會因為套件中某些為向前相容而保留的 legacy code 使得 RoleClaimType 無法生效&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1214&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (options.SecurityTokenValidators.FirstOrDefault() &lt;span style="color:#66d9ef">is&lt;/span> JwtSecurityTokenHandler jwtSecurityTokenHandler)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> jwtSecurityTokenHandler.MapInboundClaims = &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設置 Token 在授權後是否要儲存於 AuthenticationProperties &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.SaveToken = &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設置各認證參數&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.TokenValidationParameters = &lt;span style="color:#66d9ef">new&lt;/span> TokenValidationParameters
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> NameClaimType = &lt;span style="color:#e6db74">&amp;#34;userId&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 設置 Http 請求的 User.Identity.Name、Hub 中 UserIdentifier 取值的 Claim 是 userId&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RoleClaimType = &lt;span style="color:#e6db74">&amp;#34;roles&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 設置使用者的腳色從 type=&amp;#34;roles&amp;#34; 的 claims 對應&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateLifetime = &lt;span style="color:#66d9ef">true&lt;/span>, &lt;span style="color:#75715e">// 認證 Token 有效期間&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateIssuerSigningKey = &lt;span style="color:#66d9ef">true&lt;/span>, &lt;span style="color:#75715e">//驗證 token 中的 key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IssuerSigningKey = &lt;span style="color:#66d9ef">new&lt;/span> SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;JWT:SignKey&amp;#34;&lt;/span>))), &lt;span style="color:#75715e">// SignKey&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateIssuer = &lt;span style="color:#66d9ef">false&lt;/span>, &lt;span style="color:#75715e">// 不驗證簽發者&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateAudience = &lt;span style="color:#66d9ef">false&lt;/span> &lt;span style="color:#75715e">// 不驗證 Audience (Token接收方)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.Events = &lt;span style="color:#66d9ef">new&lt;/span> JwtBearerEvents
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設定當 OnMessageReceived 事件被觸發時，獲取認證用的 access_token &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> OnMessageReceived = context =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 不同於標準夾帶於 header 的 http token，signalr 會透過網址參數發送 access token &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ASP .NET Core 預設會將請求的 URL 皆做成 Log 紀錄，如果不想要網址列的 Token 被 Log 記錄下來必須參考&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// https://docs.microsoft.com/aspnet/core/signalr/security#access-token-logging&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span> accessToken = context.Request.Query[&lt;span style="color:#e6db74">&amp;#34;access_token&amp;#34;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 檢查請求路徑是否為 chathub&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> path = context.HttpContext.Request.Path;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (!&lt;span style="color:#66d9ef">string&lt;/span>.IsNullOrEmpty(accessToken) &amp;amp;&amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (path.StartsWithSegments(&lt;span style="color:#e6db74">&amp;#34;/chathub&amp;#34;&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 把 token 丟進 MessageReceiveContext 當中&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> context.Token = accessToken;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.CompletedTask;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> services.AddSingleton&amp;lt;IUserIdProvider, NameUserIdProvider&amp;gt;();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果是使用 email claim 作為 user identifier 用下面這行並實作 EmailBasedUserIdProvider&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// services.AddSingleton&amp;lt;IUserIdProvider, EmailBasedUserIdProvider&amp;gt;();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// NameUserIdProvider 和 EmailBasedUserIdProvider 無法同時使用!!&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> services;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 實作 SignalR 抓取使用者 Identity 的方法 IUserIdProvider.GetUserId&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 提供服務容器注入給 SignalR 使用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">NameUserIdProvider&lt;/span> : IUserIdProvider
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> GetUserId(HubConnectionContext connection)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 認證設定時設置好 NameClaimType，這裡直接回傳 User.Identity.Name 即可&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> connection.User?.Identity?.Name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然後在 Startup.cs 當中添加對該類別的引用：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</link><pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</guid><description>&lt;h1 id="安裝-axios">安裝 axios&lt;/h1>
+&lt;p>SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：&lt;/p>
+&lt;p>axios 一樣可以透過 LibMan 安裝~&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>libman install axios@latest &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p unpkg &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -d wwwroot/js/axios &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/axios.min.js
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 wwwRoot/index.html 添加對 axios 的引用：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/axios/dist/axios.min.js&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;lt;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="簡易登入ui">簡易登入UI&lt;/h1>
+&lt;p>雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>libman install bootstrap@5.0.0-alpha2 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p unpkg &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -d wwwroot/lib/bootstrap &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/js/bootstrap.min.js &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/css/bootstrap.min.css
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 wwwRoot/index.html 添加對 bootstrap css 的引用：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/js/bootstrap.min.js&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;lt;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>現在將 wwwRoot/index.html 修改如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">charset&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf-8&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">title&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">title&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">link&lt;/span> &lt;span style="color:#a6e22e">rel&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">href&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/css/bootstrap.min.css&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;container&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-1 mt-4&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 使用者名稱輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;userInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;User&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 密碼輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;passInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;password&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Password&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 登入按鈕 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-auto&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;loginButton&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;btn btn-outline-secondary&amp;#34;&lt;/span>&amp;gt;登入&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-1 mt-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 訊息輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-4&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;messageInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Message&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 送出按鈕 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-auto&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;sendButton&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;btn btn-outline-success&amp;#34;&lt;/span>&amp;gt;Send&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-12&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">hr&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-6&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 顯示訊息的ul --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">ul&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;messagesList&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">ul&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./js/signalr/dist/browser/signalr.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./js/chat.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/js/bootstrap.min.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/axios/dist/axios.min.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="修改-chatjs">修改 Chat.js&lt;/h1>
+&lt;p>官方範例中，SignalR連線是由網址參數傳遞，方法是在 withUrl 的第二個物件參數給一個 accessTokenFactory 回傳 token：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</link><pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</guid><description>&lt;h1 id="signalr驗證方式">SignalR驗證方式&lt;/h1>
+&lt;p>SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：&lt;/p>
+&lt;ul>
+&lt;li>Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。&lt;/li>
+&lt;li>Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。&lt;/li>
+&lt;/ul>
+&lt;p>將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。&lt;/p>
+&lt;h1 id="以-option-pattern-取得-jwt-設定">以 Option pattern 取得 JWT 設定&lt;/h1>
+&lt;p>這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：&lt;/p>
+&lt;h2 id="appsettingjson">appsetting.json&lt;/h2>
+&lt;p>將 JWT 相關的設定寫到 appsetting.json 當中：
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Logging&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Warning&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;JWT&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Issuer&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Naxo&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Expires&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1440&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 憑證有效分鐘數
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#f92672">&amp;#34;SignKey&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&amp;#34;&lt;/span> &lt;span style="color:#75715e">// 設定簽發/解密憑證的對稱式加密金鑰
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;AllowedHosts&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</link><pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</guid><description>&lt;p>這個系列會&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&amp;amp;tabs=visual-studio" target="_blank" rel="noopener">官方文件&lt;/a>為主，保留必要的部分，並視情況修改部份程式、添加說明文字。&lt;/p>
+&lt;h1 id="建立-signalr-專案">建立 SignalR 專案&lt;/h1>
+&lt;p>這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 建立專案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dotnet new webapi -o SignalR
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 以 VS Code 打開專案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>code -r signalr
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="建立-signalr-中樞">建立 SignalR 中樞&lt;/h1>
+&lt;p>在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.SignalR;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">namespace&lt;/span> SignalR.Hubs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 這就是所謂的 SignalR 中樞&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ChatHub&lt;/span> : Hub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task SendMessage(&lt;span style="color:#66d9ef">string&lt;/span> user, &lt;span style="color:#66d9ef">string&lt;/span> message)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> Clients.All.SendAsync(&lt;span style="color:#e6db74">&amp;#34;ReceiveMessage&amp;#34;&lt;/span>, user, message);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="設定-startupcs">設定 Startup.cs&lt;/h1>
+&lt;p>依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：&lt;/p></description></item></channel></rss>

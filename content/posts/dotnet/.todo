@@ -1,8 +1,0 @@
-- [] install .NET Core 
-- [] use vscode
-- [] host, generic host
-- [] startup.cs, configureService
-- [] dependency injection
-- [] deploy on IIS
-- [] deploy on nginx
-- [] sonar

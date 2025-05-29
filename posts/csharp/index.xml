@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CSharp on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/csharp/</link><description>Recent content in CSharp on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 28 Jul 2023 11:06:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/csharp/index.xml" rel="self" type="application/rss+xml"/><item><title>[C#] 非同步</title><link>https://blog.tigernaxo.com/posts/csharp/async/</link><pubDate>Fri, 28 Jul 2023 11:06:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/csharp/async/</guid><description>&lt;h1 id="deadlock">DeadLock&lt;/h1>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="https://stackoverflow.com/questions/13140523/await-vs-task-wait-deadlock" target="_blank" rel="noopener">&lt;/a>&lt;/li>
+&lt;li>[]https://blog.darkthread.net/blog/await-task-block-deadlock/)&lt;/li>
+&lt;li>[]https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html)&lt;/li>
+&lt;li>[]https://learn.microsoft.com/en-us/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming)&lt;/li>
+&lt;/ul></description></item><item><title>[Code] 處理民國年</title><link>https://blog.tigernaxo.com/posts/csharp/cultureinfo/</link><pubDate>Wed, 10 May 2023 11:06:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/csharp/cultureinfo/</guid><description>&lt;h2 id="預設-cultureinfo">預設 CultureInfo&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cs" data-lang="cs">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Program.cs&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>CultureInfo.DefaultThreadCurrentCulture = &lt;span style="color:#66d9ef">new&lt;/span> CultureInfo(&lt;span style="color:#e6db74">&amp;#34;zh-TW&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> DateTimeFormat = { Calendar = &lt;span style="color:#66d9ef">new&lt;/span> TaiwanCalendar() }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="民國年轉換西元年">民國年轉換西元年&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cs" data-lang="cs">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">string&lt;/span> dtestr1 = &lt;span style="color:#e6db74">&amp;#34;1010229&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// ParseExact 的時候，民國年的年分要補成4碼，3碼不合法&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> dte1 = DateTime.ParseExact(dtestr1.PadLeft(&lt;span style="color:#ae81ff">8&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;0&amp;#39;&lt;/span>), &lt;span style="color:#e6db74">&amp;#34;yyMMdd&amp;#34;&lt;/span>, CultureInfo.CurrentCulture);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> cedte = dte1.ToString(&lt;span style="color:#e6db74">&amp;#34;yyyy/MM/dd&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="西元年轉民國年">西元年轉民國年&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cs" data-lang="cs">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> dtestr2 = &lt;span style="color:#e6db74">&amp;#34;20230508&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> dte2 = DateTime.ParseExact(dtestr2, &lt;span style="color:#e6db74">&amp;#34;yyyyMMdd&amp;#34;&lt;/span>, CultureInfo.InvariantCulture);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> rocdte = dte2.ToString(&lt;span style="color:#e6db74">&amp;#34;yyMMdd&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[後端] .NET on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/dotnet/</link><description>Recent content in [後端] .NET on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 05 Jan 2024 11:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/dotnet/index.xml" rel="self" type="application/rss+xml"/><item><title>[.NET] C# 將 PDF 轉為列印文件送出至印表機</title><link>https://blog.tigernaxo.com/posts/dotnet/pdf-print/</link><pubDate>Fri, 05 Jan 2024 11:11:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/pdf-print/</guid><description>&lt;p>PdfiumViewer 是開源的 C# 控件，用於顯示和列印 PDF 文件。它基於 Chromium 瀏覽器使用的 PDF 渲染引擎 Pdfium 所開發。
+而Pdfium 是 Chromium 瀏覽器使用的 PDF 渲染引擎，由 Google 和 Mozilla 共同開發。它是一個開放原始碼的函式庫，用於 PDF 文件的解碼、渲染和編輯。
+PdfiumViewer 提供以下功能：&lt;/p>
+&lt;ul>
+&lt;li>顯示 PDF 文件的所有頁面。&lt;/li>
+&lt;li>支持縮放、旋轉、翻頁等操作。&lt;/li>
+&lt;li>支持列印 PDF 文件。&lt;/li>
+&lt;/ul>
+&lt;p>在 c# 中使用 PdfiumViewer 可以將 PDF 轉換為列印文件，送至印表機進行列印。&lt;/p>
+&lt;ol>
+&lt;li>安裝 Nuget 套件：&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;a href="https://www.nuget.org/packages/PdfiumViewer/2.13.0" target="_blank" rel="noopener">PdfiumViewer&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.nuget.org/packages/PdfiumViewer.Native.x86.v8-xfa/" target="_blank" rel="noopener">PdfiumViewer.Native.x86.v8-xfa&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>
+&lt;p>引用&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> PdfiumViewer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Drawing.Printing;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.IO;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>程式範例&lt;/p>
+&lt;ul>
+&lt;li>從記憶體列印：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> pdfBytes = &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#66d9ef">byte&lt;/span>[] { }; &lt;span style="color:#75715e">// todo: 取得 PDF by docid&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> printerName = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>; &lt;span style="color:#75715e">// todo 取得印表機名稱&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 列印&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> (MemoryStream memoryStream = &lt;span style="color:#66d9ef">new&lt;/span> MemoryStream(pdfBytes))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> pageSettings = &lt;span style="color:#66d9ef">new&lt;/span> PageSettings() { Margins = &lt;span style="color:#66d9ef">new&lt;/span> Margins(&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>) };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> printerSettings = &lt;span style="color:#66d9ef">new&lt;/span> PrinterSettings();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (!&lt;span style="color:#66d9ef">string&lt;/span>.IsNullOrEmpty(printerName)) printerSettings.PrinterName = printerName;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> document = PdfDocument.Load(memoryStream))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (PrintDocument printDocument = document.CreatePrintDocument())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.PrinterSettings = printerSettings;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.DefaultPageSettings = pageSettings;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.PrintController = &lt;span style="color:#66d9ef">new&lt;/span> StandardPrintController();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.Print();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>從檔案列印：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> file = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>; &lt;span style="color:#75715e">// todo 取得檔案路徑&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> printerName = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>; &lt;span style="color:#75715e">// todo 取得印表機名稱&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 列印&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> pageSettings = &lt;span style="color:#66d9ef">new&lt;/span> PageSettings() { Margins = &lt;span style="color:#66d9ef">new&lt;/span> Margins(&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>) };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">var&lt;/span> printerSettings = &lt;span style="color:#66d9ef">new&lt;/span> PrinterSettings();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (!&lt;span style="color:#66d9ef">string&lt;/span>.IsNullOrEmpty(printerName)) printerSettings.PrinterName = printerName;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> document = PdfDocument.Load(file))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (PrintDocument printDocument = document.CreatePrintDocument())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.PrinterSettings = printerSettings;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.DefaultPageSettings = pageSettings;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.PrintController = &lt;span style="color:#66d9ef">new&lt;/span> StandardPrintController();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printDocument.Print();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="reference">Reference&lt;/h2>
+&lt;ul>
+&lt;li>&lt;a href="http://github.com/pvginkel/PdfiumViewer" target="_blank" rel="noopener">Github-PdfiumViewer&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.nuget.org/packages/PdfiumViewer/2.13.0" target="_blank" rel="noopener">Nuget-PdfiumViewer&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.nuget.org/packages/PdfiumViewer.Native.x86.v8-xfa/" target="_blank" rel="noopener">Nuget-PdfiumViewer.Native.x86.v8-xfa&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>[.NET] WebView2 單一檔案部屬</title><link>https://blog.tigernaxo.com/posts/dotnet/webview2-single-file/</link><pubDate>Thu, 15 Jun 2023 11:31:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/webview2-single-file/</guid><description>&lt;p>有些部屬環境要求能單一執行檔，如果要使用自己的 DLL 就會有問題，研究了內嵌 DLL 的作法應用於 WebView2 專案上。&lt;br>
+以 .NET Framework 4.7.2 的 WinForm 專案為例，目標環境為 windows x64。&lt;/p>
+&lt;h2 id="dependency">Dependency&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>安裝 Nuget 上的 Microsoft.Web.WebView2。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>把這些資料夾底下的 Dll 複製到專案資料夾下，並加入版控&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>packages\Microsoft.Web.WebView2.1.0.1823.32\runtimes&lt;/code>&lt;/li>
+&lt;li>&lt;code>packages\Microsoft.Web.WebView2.1.0.1823.32\lib\net45&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>參考移除上述 Dll 參考(移除 Nuget 參考)，改直接參考專案資料夾下的 Dll。&lt;br>
+&lt;img src="https://blog.tigernaxo.com/posts/dotnet/webview2-single-file/reference.png" alt="參考">&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>把參考的 Dll 調整為內嵌資源&lt;br>
+&lt;img src="https://blog.tigernaxo.com/posts/dotnet/webview2-single-file/embed.png" alt="參考">&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="assemblyhelpercs">AssemblyHelper.cs&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">AssemblyHelper&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Name
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">get&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.assembly.GetName().Name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> AppDataPath { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> Assembly assembly;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> AssemblyHelper()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> assembly = Assembly.GetCallingAssembly();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> AppDataPath = Path.Combine(AppDataPath, Name);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// Extract embeded dll to target path&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;/summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;param name=&amp;#34;resourceName&amp;#34;&amp;gt;Dll embed path&amp;lt;/param&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;param name=&amp;#34;targetPath&amp;#34;&amp;gt;Dll extract distination&amp;lt;/param&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ExtractEmbeddedDLL(&lt;span style="color:#66d9ef">string&lt;/span> resourceName, &lt;span style="color:#66d9ef">string&lt;/span> targetPath)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> targetDir = Path.GetDirectoryName(targetPath);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (!&lt;span style="color:#66d9ef">string&lt;/span>.IsNullOrEmpty(targetDir) &amp;amp;&amp;amp; !Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (FileStream fileStream = &lt;span style="color:#66d9ef">new&lt;/span> FileStream(targetPath, FileMode.Create))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> resourceStream.CopyTo(fileStream);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// 設置解析組件路徑的事件處理常式&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;/summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> EnableEmbededManifestDll() =&amp;gt; AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// Assembly 解析行為&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;/summary&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;param name=&amp;#34;sender&amp;#34;&amp;gt;&amp;lt;/param&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;param name=&amp;#34;args&amp;#34;&amp;gt;&amp;lt;/param&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/// &amp;lt;returns&amp;gt;&amp;lt;/returns&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> Assembly OnResolveAssembly(&lt;span style="color:#66d9ef">object&lt;/span> sender, ResolveEventArgs args)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assembly assembly = Assembly.GetCallingAssembly();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span> project = Assembly.GetEntryAssembly().GetName().Name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span> manifestItem = &lt;span style="color:#e6db74">$&amp;#34;{project}.{new AssemblyName(args.Name).Name}.dll&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (Stream stream = assembly.GetManifestResourceStream(manifestItem))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (stream == &lt;span style="color:#66d9ef">null&lt;/span>) &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">byte&lt;/span>[] assemblyRawBytes = &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#66d9ef">byte&lt;/span>[stream.Length];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> stream.Read(assemblyRawBytes, &lt;span style="color:#ae81ff">0&lt;/span>, assemblyRawBytes.Length);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Assembly.Load(assemblyRawBytes);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="programcs">Program.cs&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-C#" data-lang="C#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">internal&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Program&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e"> [STAThread]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Main()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> asm = &lt;span style="color:#66d9ef">new&lt;/span> AssemblyHelper();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Load an extracted DLL dynamically&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> asm.EnableEmbededManifestDll();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> loaderDllFolderPath = Path.Combine(asm.AppDataPath, &lt;span style="color:#e6db74">&amp;#34;runtimes\\win-x64\\native&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> dll = Path.Combine(loaderDllFolderPath, &lt;span style="color:#e6db74">&amp;#34;WebView2Loader.dll&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> loaderDllEmbedPath = &lt;span style="color:#e6db74">$&amp;#34;{asm.Name}.runtimes.win_x64.native.WebView2Loader.dll&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> asm.ExtractEmbeddedDLL(loaderDllEmbedPath, dll);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 將需注入 DLL 的邏輯抽離 Main 才能跑&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> run(loaderDllFolderPath);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">catch&lt;/span> (Exception ex)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MessageBox.Show(ex.Message);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> run(&lt;span style="color:#66d9ef">string&lt;/span> loaderDllFolderPath)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> CoreWebView2Environment.SetLoaderDllFolderPath(loaderDllFolderPath);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Application.EnableVisualStyles();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Application.SetCompatibleTextRenderingDefault(&lt;span style="color:#66d9ef">false&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Application.Run(&lt;span style="color:#66d9ef">new&lt;/span> Form1());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="隱藏暫存檔">隱藏暫存檔&lt;/h2>
+&lt;p>假設 webview2 元件變數是&lt;code>wv&lt;/code>：&lt;/p></description></item><item><title>[.NET] 開發階段管理應用程式的敏感資料</title><link>https://blog.tigernaxo.com/posts/dotnet/secret/</link><pubDate>Fri, 29 Jul 2022 14:57:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/secret/</guid><description>&lt;p>基於資訊安全的理由，密碼等敏感性資訊不應該出現在程式碼裡面，
+應該把敏感性資料儲存在專案以外的地方，防止對 Git Server 提交專案程式碼的時候把密碼推送到伺服器上，
+因此程式開發、部屬階段都應該用適當的策略存放敏感性資料讓程式讀取使用，
+.NET 儲存敏感性資料大致上來說可以用這兩種方式：&lt;/p>
+&lt;ul>
+&lt;li>環境變數&lt;/li>
+&lt;li>Secret Manager&lt;/li>
+&lt;/ul>
+&lt;p>這裡紀錄要如何在 .NET 開發環境以 Secret 儲存敏感性資料，以及程式讀取的方式。&lt;/p>
+&lt;h2 id="secret-manager">Secret Manager&lt;/h2>
+&lt;p>Secret Manager 就是在本地端特定路徑存放 secret.json 檔案：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bat" data-lang="bat">&lt;span style="display:flex;">&lt;span>%APPDATA%\Microsoft\UserSecrets\&amp;lt;user_secrets_id&amp;gt;\secrets.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code class="language-Linux/MacOS" data-lang="Linux/MacOS">~/.microsoft/usersecrets/&amp;lt;user_secrets_id&amp;gt;/secrets.json
+&lt;/code>&lt;/pre>&lt;p>需要先針對個別專案啟用專案的 Secret Storage 支援，切換到專案目錄執行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>dotnet user-secrets init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在專案檔裡的 UserSecretsId 區段會得到一段 GUID，這個要作為 user_secrets_id 資料夾名稱。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;PropertyGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;TargetFramework&amp;gt;&lt;/span>netcoreapp3.1&lt;span style="color:#f92672">&amp;lt;/TargetFramework&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;UserSecretsId&amp;gt;&lt;/span>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed&lt;span style="color:#f92672">&amp;lt;/UserSecretsId&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;/PropertyGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>以指令設置一組 secret，例如連線字串：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>dotnet user-secrets set &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings:POSTGRES&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;User ID=root;Password=myPassword;Host=localhost;Port=5432;Database=myDataBase;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;&amp;#34;&lt;/span> --project &lt;span style="color:#e6db74">&amp;#34;D:\workspace\MySolution\MyProject&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>以檔案直接設置 secret
+windows&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bat" data-lang="bat">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> .\input.json | dotnet user-secrets set
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Linux/MacOS&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cat ./input.json | dotnet user-secrets set
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在程式裡面存在 secret.json 裡面，感覺就像寫在 appsettings.json 裡面一樣，存取方式沒有有任何差別：&lt;/p></description></item><item><title>[.NET] 製作 Nuget package</title><link>https://blog.tigernaxo.com/posts/dotnet/nuget/</link><pubDate>Fri, 22 Jul 2022 14:07:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/nuget/</guid><description>&lt;h2 id="安裝-nugetexe-cli">安裝 nuget.exe CLI&lt;/h2>
+&lt;p>安裝 &lt;a href="https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli" target="_blank" rel="noopener">nuget.exe CLI&lt;/a>，並在環境變數 PATH 新增路徑。&lt;/p>
+&lt;h2 id="建立-nuspec-設定檔">建立 nuspec 設定檔&lt;/h2>
+&lt;p>example&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-xml" data-lang="xml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;package&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;metadata&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;id&amp;gt;&lt;/span>MyPackage&lt;span style="color:#f92672">&amp;lt;/id&amp;gt;&lt;/span> &lt;span style="color:#75715e">&amp;lt;!--package id --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;version&amp;gt;&lt;/span>1.0.0&lt;span style="color:#f92672">&amp;lt;/version&amp;gt;&lt;/span> &lt;span style="color:#75715e">&amp;lt;!--版本號--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;title&amp;gt;&lt;/span>MyPackage&lt;span style="color:#f92672">&amp;lt;/title&amp;gt;&lt;/span> &lt;span style="color:#75715e">&amp;lt;!-- package title --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;authors&amp;gt;&lt;/span>Chen, Yu Cheng&lt;span style="color:#f92672">&amp;lt;/authors&amp;gt;&lt;/span> &lt;span style="color:#75715e">&amp;lt;!-- 作者 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;requireLicenseAcceptance&amp;gt;&lt;/span>false&lt;span style="color:#f92672">&amp;lt;/requireLicenseAcceptance&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;license&lt;/span> &lt;span style="color:#a6e22e">type=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;expression&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>MIT&lt;span style="color:#f92672">&amp;lt;/license&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- &amp;lt;icon&amp;gt;icon.png&amp;lt;/icon&amp;gt; --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!--&amp;lt;projectUrl&amp;gt;http://project_url_here_or_delete_this_line/&amp;lt;/projectUrl&amp;gt;--&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;description&amp;gt;&lt;/span>MyPackage&lt;span style="color:#f92672">&amp;lt;/description&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;releaseNotes&amp;gt;&lt;/span>Test release of MyPackage package.&lt;span style="color:#f92672">&amp;lt;/releaseNotes&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;copyright&amp;gt;&lt;/span>-&lt;span style="color:#f92672">&amp;lt;/copyright&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;tags&amp;gt;&amp;lt;/tags&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 定義 .net framework 4.0 使用時需要的相依姓套件 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;group&lt;/span> &lt;span style="color:#a6e22e">targetFramework=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;.NETFramework4.0.0&amp;#34;&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;dependency&lt;/span> &lt;span style="color:#a6e22e">id=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Dapper&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">version=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;1.50.2&amp;#34;&lt;/span> &lt;span style="color:#f92672">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;dependency&lt;/span> &lt;span style="color:#a6e22e">id=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Newtonsoft.Json&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">version=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;7.0.1&amp;#34;&lt;/span> &lt;span style="color:#f92672">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;/group&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;/dependencies&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;/metadata&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;/package&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="打包檔案">打包檔案&lt;/h2>
+&lt;p>假設最低系統需求為 .net framework 4.0，將 Release 複製檔案複製到對應版本的資料夾內，目錄結構如下：&lt;/p>
+&lt;pre tabindex="0">&lt;code>根目錄
+├─MyPack.1.0.0.nupkg
+└─lib
+└─net40
+└─MyPack.dll
+&lt;/code>&lt;/pre>&lt;p>編譯專案，打包指令：&lt;/p></description></item><item><title>[.NET] .NET 6 Web API 專案</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-webapi/</link><pubDate>Mon, 18 Jul 2022 11:35:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-webapi/</guid><description>&lt;h2 id="添加-swagger">添加 Swagger&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>dotnet add web-logger.csproj package Swashbuckle.AspNetCore -v 6.2.3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Program.cs&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>builder.Services.AddControllers();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>builder.Services.AddEndpointsApiExplorer();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>builder.Services.AddSwaggerGen();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>https://localhost:&amp;lt;port&amp;gt;/swagger/index.html&lt;/code>
+添加一行 uniFormat 設置，讓專案除錯啟動的時候打開 swagger
+讓Swagger 認得 IActionResult 的 api 接收/回傳型別
+&lt;a href="https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult" target="_blank" rel="noopener">https://stackoverflow.com/questions/53105513/swagger-not-generating-model-for-object-wrapped-by-iactionresult&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#34;serverReadyAction&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;action&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;openExternally&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;pattern&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;^\\s*Now listening on:\\s+(https?://\\S+)&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;uriFormat&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;%s/swagger&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>ASP.NET Core doesn&amp;rsquo;t include a logging provider for writing logs to files. To write logs to files from an ASP.NET Core app, consider using a third-party logging provider.
+&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0&lt;/a>
+.NET Standard 2.0 之後內建沒有 ConfigurationManager ，需要額外安裝
+&lt;code>dotnet add package System.Configuration.ConfigurationManager --version 6.0.0&lt;/code>
+&lt;a href="https://stackoverflow.com/questions/46360716/cant-use-system-configuration-configuration-manager-in-a-net-standard2-0-libra" target="_blank" rel="noopener">https://stackoverflow.com/questions/46360716/cant-use-system-configuration-configuration-manager-in-a-net-standard2-0-libra&lt;/a>&lt;/p></description></item><item><title>[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)</title><link>https://blog.tigernaxo.com/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</link><pubDate>Wed, 11 Aug 2021 16:48:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/</guid><description>&lt;h1 id="設置-ubuntu">設置 Ubuntu&lt;/h1>
+&lt;h2 id="安裝-net-core-runtime">安裝 .NET Core Runtime&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dpkg -i packages-microsoft-prod.deb
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install apt-transport-https
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install dotnet-runtime-3.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安裝-nginx">安裝 Nginx&lt;/h2>
+&lt;p>新增套件來源，新增檔案 /etc/apt/sources.list.d/nginx.list&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#/etc/apt/sources.list.d/nginx.list.&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>deb https://nginx.org/packages/ubuntu/ focal nginx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>deb-src https://nginx.org/packages/ubuntu/ focal nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>安裝&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo apt update
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install nginx -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>啟動、設定開機啟動&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 啟動 nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo systemctl start nginx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 設置 nginx 開機啟動&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo systemctl enable nginx
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 確認 nginx 運行狀態&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo systemctl status nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>設置 Nginx 反向代理本機的 5000 連接埠(之後 Kestrel 的 http 服務端口)&lt;/p></description></item><item><title>[.NET] JsonDocument 與 DataTable 的互相轉換</title><link>https://blog.tigernaxo.com/posts/dotnet/snippet-json-dt/</link><pubDate>Fri, 06 Aug 2021 14:56:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/snippet-json-dt/</guid><description>&lt;p>在 LINQ 當道的時代雖然 DataTable 比較少用了，但還是難免會碰到，
+下面紀錄如何在.NET Core 裡面把 DataTable 的資料轉成 JsonElement，&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> JsonElement jsonFromDataTable(DataTable dt) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> stream = &lt;span style="color:#66d9ef">new&lt;/span> MemoryStream()) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> writer = &lt;span style="color:#66d9ef">new&lt;/span> Utf8JsonWriter(stream)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 起始一個裝 JElement 的陣列&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteStartArray();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">foreach&lt;/span> (DataRow row &lt;span style="color:#66d9ef">in&lt;/span> dt.Rows) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 開始寫入每個 Row 各自對應的 JElement 寫入程序&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteStartObject();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">foreach&lt;/span> (DataColumn column &lt;span style="color:#66d9ef">in&lt;/span> row.Table.Columns) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 先寫入屬性名稱&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WritePropertyName(column.ColumnName);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 判斷欄位值是否為 DBNull 來寫入值或 Null&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (row[column.ColumnName] == DBNull.Value)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteNullValue();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> JsonSerializer.Serialize(writer, row[column]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 結束一列資料對應的 JElement 寫入程序&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteEndObject();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 結束整個陣列的寫入&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteEndArray();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 最後 Stream 讀取的資料會寫成 JsonDocument 的 RootElement&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> JsonDocument.Parse( stream.ToArray() ).RootElement;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>使用方式：&lt;/p></description></item><item><title>[.NET] JsonElement 的操作</title><link>https://blog.tigernaxo.com/posts/dotnet/snippet-json-operate/</link><pubDate>Fri, 06 Aug 2021 14:37:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/snippet-json-operate/</guid><description>&lt;p>.NET Core 中對 JsonElement 的操作不像以往 Newtonsoft.Json 一樣直覺，
+需要自己建立一個方便的讀寫方法，原理是寫到另一個 JsonDocument，
+如果要移除某個屬性也是一樣的道理，變成從從屬性名稱判斷是不是要寫到新的 JsonDocument，
+下面是添加一個屬性的範例。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">JsonExt&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> Add(&lt;span style="color:#66d9ef">ref&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span> JsonElement source, &lt;span style="color:#66d9ef">string&lt;/span> name, &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#66d9ef">value&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (MemoryStream ms = &lt;span style="color:#66d9ef">new&lt;/span> MemoryStream())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (Utf8JsonWriter writer = &lt;span style="color:#66d9ef">new&lt;/span> Utf8JsonWriter(ms))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">using&lt;/span> (JsonDocument json = JsonDocument.Parse(&lt;span style="color:#e6db74">&amp;#34;{}&amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteStartObject(); &lt;span style="color:#75715e">// 開始&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> el &lt;span style="color:#66d9ef">in&lt;/span> source.EnumerateObject())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> el.WriteTo(writer);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 寫入新屬性&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WritePropertyName(name);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteStringValue(&lt;span style="color:#66d9ef">value&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> writer.WriteEndObject(); &lt;span style="color:#75715e">// 結束&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> resultStr = Encoding.UTF8.GetString(ms.ToArray());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> resultEl = JsonDocument.Parse(resultStr).RootElement;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> source = resultEl;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>通常我們會解析從其他 api 來的 json 字串，然後再進行一些操作：&lt;/p></description></item><item><title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title><link>https://blog.tigernaxo.com/posts/dotnet/basic-async-controller/</link><pubDate>Wed, 17 Mar 2021 03:32:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/basic-async-controller/</guid><description>&lt;p>ASP .NET Core 當中的 Web 控制器屬於IO密集的應用程式，當中主要使用的 TAP 是一種簡易使用、語言層級的非同步設計模式。
+透過 TAP 可設計出非同步(Asynchronous)/非阻塞(Non-Blocking)的 Web API，大幅提高 Web 應用程式的併發性(Concurrency)。&lt;/p>
+&lt;h1 id="非同步方法">非同步方法&lt;/h1>
+&lt;p>C# 當中基於 TAP 設計的的非同步方法 (TAP method) 有幾個特性：&lt;/p>
+&lt;ul>
+&lt;li>產生可等待 awaitable 型別
+(Task, Task&amp;lt;TResult&amp;gt;, ValueTask, 和 ValueTask&amp;lt;TResult&amp;gt;)，
+其中以 Task、Task&amp;lt;TResult&amp;gt;最常見。&lt;/li>
+&lt;li>非同步方法的參數順序通常跟同步版本的方法相同，但方法名稱以 Async 結尾。&lt;/li>
+&lt;/ul>
+&lt;h1 id="asyncawait">async、await&lt;/h1>
+&lt;p>await 運算子用來等待非同步行為完成，
+或等待非同步行為完成後解析回傳值，
+await 運算子只能用在非同步方法中，
+因此 await 運算子的外層方法必須套用 async 修飾，
+否則會出現錯誤。&lt;/p>
+&lt;h1 id="非同步-action-設計原則">非同步 Action 設計原則：&lt;/h1>
+&lt;h2 id="總是加上-async-關鍵字">總是加上 async 關鍵字&lt;/h2>
+&lt;p>async 的方法裡面可以等待非同步方法。
+action 前加上 async 的作用在於建立一個管理回傳任務的狀態機(state machine)，
+當 async 方法擲出例外時會被狀態機捕獲並放到任務中回傳，
+而這也是以 Task 作為回傳值的方法的預期行為。
+如果沒有 async 關鍵字則擲出的例外會被直接傳遞到呼叫者(caller)，
+因此除非確定該 aciton 不會擲出任何例外，否則一律加上 async。&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_2/</link><pubDate>Fri, 12 Mar 2021 23:08:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_2/</guid><description>&lt;h1 id="驗證方案authentication-scheme">驗證方案(Authentication Scheme)&lt;/h1>
+&lt;p>驗證方案包含兩個部分：&lt;/p>
+&lt;ul>
+&lt;li>驗證處理函式(Authentication handler)，可能是
+&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationhandler?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationHandler&lt;/a> 或
+&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1?view=aspnetcore-3.1" target="_blank" rel="noopener">AuthenticationHandler&lt;TOptions>&lt;/a>
+的實作，相當於驗證方案的&lt;strong>行為&lt;/strong>，責任範圍涵蓋:
+&lt;ul>
+&lt;li>驗證使用者，&lt;/li>
+&lt;li>驗證成功時，建構呈現使用者識別(user identity)的 &lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationticket?view=aspnetcore-3.1" target="_blank" rel="noopener">AuthenticationTicket&lt;/a>。&lt;/li>
+&lt;li>驗證失敗時，回傳 &amp;rsquo;no result&amp;rsquo; 或 &amp;lsquo;failure&amp;rsquo;&lt;/li>
+&lt;li>負責從請求上下文(request context)中建構使用者識別 (user identity)。&lt;/li>
+&lt;li>定義了 challenge/forbid action。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>驗證處理函式的設定選項(Opitons of Authentication handler)。&lt;/li>
+&lt;/ul>
+&lt;p>驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)，
+常見的例子為：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>cookie authentication scheme&lt;/strong> 從 cookie 資訊建構 user identity.&lt;/li>
+&lt;li>&lt;strong>JWT bearer scheme&lt;/strong> 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity&lt;/li>
+&lt;/ul>
+&lt;h2 id="使用驗證方案">使用驗證方案&lt;/h2>
+&lt;p>在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder，
+AuthenticationBuilder 設定驗證方案的方式有：&lt;/p>
+&lt;ul>
+&lt;li>呼叫 &lt;strong>scheme-specific 擴充方法&lt;/strong>，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。&lt;/li>
+&lt;li>以 AuthenticationBuilder &lt;strong>內建方法 AddScheme&lt;/strong> 手動設定，一般來說較少使用。&lt;/li>
+&lt;/ul>
+&lt;p>P.S.另外可使用 &lt;a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/policyschemes?view=aspnetcore-3.1" target="_blank" rel="noopener">polycy schemes&lt;/a> 把多個 scheme 整合到一個使用。&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_4/</link><pubDate>Thu, 31 Dec 2020 14:08:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_4/</guid><description>&lt;h1 id="授權authorization">授權(Authorization)&lt;/h1>
+&lt;ul>
+&lt;li>授權(Authorization): 界定用戶可存取資源範圍的程序。&lt;/li>
+&lt;/ul>
+&lt;h2 id="policy-based-authorization">Policy-based authorization&lt;/h2>
+&lt;p>ASP .NET Core 的授權以政策 Policy 進行設定&lt;/p>
+&lt;h2 id="自訂授權">自訂授權&lt;/h2>
+&lt;h2 id="rbac">RBAC&lt;/h2>
+&lt;p>Name 記載使用者識別名稱(User Identity)
+userData 記載以 &lt;code>|&lt;/code> 分隔的使用者角色 Role&lt;/p>
+&lt;h1 id="驗證與授權">驗證與授權&lt;/h1>
+&lt;h2 id="challengeforbid">Challenge、Forbid&lt;/h2>
+&lt;h2 id="中間件順序">中間件順序&lt;/h2>
+&lt;p>先驗證、再授權
+The Order of UseAuthentication、UseAuthorization&lt;/p>
+&lt;h1 id="reference">Reference&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/standard/security/principal-and-identity-objects" target="_blank" rel="noopener">MSDN - Principal and Identity Objects&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - IAuthenticationService Interface&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.authenticationservice?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - AuthenticationService Class&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Overview of ASP.NET Core Security&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Overview of ASP.NET Core authentication&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Policy-based authorization in ASP.NET Core&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.cookies?view=aspnetcore-5.0" target="_blank" rel="noopener">MSDN - Microsoft.AspNetCore.Authentication.Cookies Namespace&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer?view=aspnetcore-5.0" target="_blank" rel="noopener">MSDN - Microsoft.AspNetCore.Authentication.JwtBearer Namespace&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://dotblogs.com.tw/Null/2020/04/09/162252" target="_blank" rel="noopener">[ASP.NET Core] 加上簡單的Cookie登入驗證&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://blog.johnwu.cc/article/ironman-day11-asp-net-core-cookies-session.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/ironman-day11-asp-net-core-cookies-session.html&lt;/a>&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_3/</link><pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_3/</guid><description>&lt;p>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;&lt;/p>
+&lt;h1 id="configuration">Configuration&lt;/h1>
+&lt;p>在 Startup.ConfigureServices 方法中設置驗證方案，
+並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設置 cookie 驗證作為應用程式預設的驗證方案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 將 cookie 服務添加到服務容器當中&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .AddCookie();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization，
+啟用驗證中間件並設置 HttpContext.User 屬性，
+UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseAuthentication(); &lt;span style="color:#75715e">// 驗證&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseAuthorization(); &lt;span style="color:#75715e">// 授權&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 端點對應&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseEndpoints(endpoints =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapControllers();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapRazorPages();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="cookie-policy-middleware">Cookie Policy Middleware&lt;/h1>
+&lt;p>在中間件當中設置的驗證政策會作用於全域(每個請求)，
+舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性，
+所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseCookiePolicy(&lt;span style="color:#66d9ef">new&lt;/span> CookiePolicyOptions {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 所有 Cookie.SamSite 設置都會被提升為 Strict&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MinimumSameSitePolicy = SameSiteMode.Strict,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Cookie.SamSite 設置為 None 的話會被提升為 Lax&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.Lax, &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// MinimumSameSitePolicy 設置為最寬鬆，因此不會影響 Cookie.SamSite&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.None, &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="create-an-authentication-cookie">Create an authentication cookie&lt;/h1>
+&lt;p>.NET Core 利用 ClaimsPrincipal 將序列化的使用者資訊儲存在 Cookie 當中
+而 ClaimsPrincipal 可包含很多 ClaimsIdentity(但通常只有一個)；
+ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
+而每個 Claims 是包含型別(ClaimType)、值(ClaimValue)。
+因此為登入使用者建立 Cookie 驗證的步驟如下：&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_memo/</link><pubDate>Mon, 23 Nov 2020 15:48:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_memo/</guid><description>&lt;h2 id="identity-objects">Identity Objects&lt;/h2>
+&lt;h2 id="principal-objects">Principal Objects&lt;/h2>
+&lt;p>IPrincipal 物件帶有 IIdentity 物件的參考
+可指定 Authentication Scheme 獲得 Identity&lt;/p>
+&lt;h2 id="iauthenticationservice">IAuthenticationService&lt;/h2>
+&lt;p>SignOutAsync 清除 Cookie 的 Claims
+在 Cookie 寫入 Claims&lt;/p>
+&lt;h2 id="token-登入">Token 登入&lt;/h2>
+&lt;h1 id="登入-api-實作">登入 API 實作&lt;/h1>
+&lt;p>宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。
+使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：&lt;/p>
+&lt;ol>
+&lt;li>ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。&lt;/li>
+&lt;li>AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。&lt;/li>
+&lt;li>authProperties (Optional)，可指定自訂認證選項&lt;/li>
+&lt;/ol>
+&lt;h1 id="authenticationhttpcontextextensions">AuthenticationHttpContextExtensions&lt;/h1>
+&lt;p>AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法，
+從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。&lt;/p>
+&lt;h1 id="iauthenticationservice-1">IAuthenticationService&lt;/h1>
+&lt;p>SignOutAsync 清除 Cookie 的 Claims
+可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_1/</link><pubDate>Mon, 23 Nov 2020 08:39:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_1/</guid><description>&lt;p>在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。&lt;/p>
+&lt;h1 id="驗證authentication">驗證(Authentication)&lt;/h1>
+&lt;p>驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼，
+因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)，
+ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)，
+使應用程式驗證簽發時能夠取用。&lt;/p>
+&lt;h1 id="授權authorization">授權(Authorization)&lt;/h1>
+&lt;p>授權的作用是界定用戶可存取資源範圍，作用描述如下：&lt;/p>
+&lt;ul>
+&lt;li>限制所存取的資源是否需要驗證。&lt;/li>
+&lt;li>已獲得驗證的特定用戶、特定腳色方能存取特定資源。&lt;/li>
+&lt;li>所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。&lt;/li>
+&lt;/ul>
+&lt;h1 id="挑戰和禁止">挑戰和禁止&lt;/h1>
+&lt;p>有些名詞需要先解釋：
+驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。&lt;/p>
+&lt;h2 id="挑戰challenge">挑戰(Challenge)&lt;/h2>
+&lt;p>未驗證使用者要存取需驗證才能存取的資源時，
+授權服務會叫用 &lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice.challengeasync?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationService.ChallengeAsync&lt;/a> 發起 challenge，
+challenge 被發起後所伴隨採取的行動稱為 challenge action，
+且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：&lt;/p>
+&lt;ul>
+&lt;li>cookie 驗證方案將使用者轉址到登入頁面。&lt;/li>
+&lt;li>JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 &lt;code>www-authenticate: bearer&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="禁止forbid">禁止(Forbid)&lt;/h2>
+&lt;p>已驗證的使用者要存取授權之外的資源時，
+授權會叫用 &lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice.forbidasync?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationService.ForbidAsync&lt;/a> 發起 Forbid，
+Forbid 發起後所伴隨採取的行動稱為 Forbid action，
+Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源，
+常見的具體範例有：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</link><pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</guid><description>&lt;h1 id="安裝套件">安裝套件&lt;/h1>
+&lt;p>要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="註冊認證服務">註冊認證服務&lt;/h1>
+&lt;p>新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務，
+在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應，
+而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId，
+因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用
+，該檔案程式碼如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cs" data-lang="cs">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Authentication.JwtBearer;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.SignalR;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Configuration;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.DependencyInjection;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.IdentityModel.Tokens;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Diagnostics.CodeAnalysis;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.IdentityModel.Tokens.Jwt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">namespace&lt;/span> SignalR.Extensions.DependencyInjection
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">MyAddConfig&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IServiceCollection AddMyJWTAuth(
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e"> [NotNull]&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span> IServiceCollection services,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IConfiguration config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> services.AddAuthentication(options =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Identity 預設是使用 Cookie authentication，必須手動設置為 JWT Bearer Auth:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }).AddJwtBearer(options =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// [注意]先解除 MapInboundClaims ，否則會因為套件中某些為向前相容而保留的 legacy code 使得 RoleClaimType 無法生效&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1214&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (options.SecurityTokenValidators.FirstOrDefault() &lt;span style="color:#66d9ef">is&lt;/span> JwtSecurityTokenHandler jwtSecurityTokenHandler)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> jwtSecurityTokenHandler.MapInboundClaims = &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設置 Token 在授權後是否要儲存於 AuthenticationProperties &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.SaveToken = &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設置各認證參數&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.TokenValidationParameters = &lt;span style="color:#66d9ef">new&lt;/span> TokenValidationParameters
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> NameClaimType = &lt;span style="color:#e6db74">&amp;#34;userId&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 設置 Http 請求的 User.Identity.Name、Hub 中 UserIdentifier 取值的 Claim 是 userId&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> RoleClaimType = &lt;span style="color:#e6db74">&amp;#34;roles&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 設置使用者的腳色從 type=&amp;#34;roles&amp;#34; 的 claims 對應&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateLifetime = &lt;span style="color:#66d9ef">true&lt;/span>, &lt;span style="color:#75715e">// 認證 Token 有效期間&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateIssuerSigningKey = &lt;span style="color:#66d9ef">true&lt;/span>, &lt;span style="color:#75715e">//驗證 token 中的 key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> IssuerSigningKey = &lt;span style="color:#66d9ef">new&lt;/span> SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;JWT:SignKey&amp;#34;&lt;/span>))), &lt;span style="color:#75715e">// SignKey&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateIssuer = &lt;span style="color:#66d9ef">false&lt;/span>, &lt;span style="color:#75715e">// 不驗證簽發者&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ValidateAudience = &lt;span style="color:#66d9ef">false&lt;/span> &lt;span style="color:#75715e">// 不驗證 Audience (Token接收方)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> options.Events = &lt;span style="color:#66d9ef">new&lt;/span> JwtBearerEvents
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設定當 OnMessageReceived 事件被觸發時，獲取認證用的 access_token &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> OnMessageReceived = context =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 不同於標準夾帶於 header 的 http token，signalr 會透過網址參數發送 access token &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ASP .NET Core 預設會將請求的 URL 皆做成 Log 紀錄，如果不想要網址列的 Token 被 Log 記錄下來必須參考&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// https://docs.microsoft.com/aspnet/core/signalr/security#access-token-logging&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span> accessToken = context.Request.Query[&lt;span style="color:#e6db74">&amp;#34;access_token&amp;#34;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 檢查請求路徑是否為 chathub&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> path = context.HttpContext.Request.Path;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (!&lt;span style="color:#66d9ef">string&lt;/span>.IsNullOrEmpty(accessToken) &amp;amp;&amp;amp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> (path.StartsWithSegments(&lt;span style="color:#e6db74">&amp;#34;/chathub&amp;#34;&lt;/span>)))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 把 token 丟進 MessageReceiveContext 當中&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> context.Token = accessToken;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.CompletedTask;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> });
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> services.AddSingleton&amp;lt;IUserIdProvider, NameUserIdProvider&amp;gt;();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果是使用 email claim 作為 user identifier 用下面這行並實作 EmailBasedUserIdProvider&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// services.AddSingleton&amp;lt;IUserIdProvider, EmailBasedUserIdProvider&amp;gt;();&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// NameUserIdProvider 和 EmailBasedUserIdProvider 無法同時使用!!&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> services;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 實作 SignalR 抓取使用者 Identity 的方法 IUserIdProvider.GetUserId&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 提供服務容器注入給 SignalR 使用&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">NameUserIdProvider&lt;/span> : IUserIdProvider
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> GetUserId(HubConnectionContext connection)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 認證設定時設置好 NameClaimType，這裡直接回傳 User.Identity.Name 即可&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> connection.User?.Identity?.Name;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然後在 Startup.cs 當中添加對該類別的引用：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</link><pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</guid><description>&lt;h1 id="安裝-axios">安裝 axios&lt;/h1>
+&lt;p>SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：&lt;/p>
+&lt;p>axios 一樣可以透過 LibMan 安裝~&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>libman install axios@latest &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p unpkg &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -d wwwroot/js/axios &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/axios.min.js
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 wwwRoot/index.html 添加對 axios 的引用：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/axios/dist/axios.min.js&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;lt;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="簡易登入ui">簡易登入UI&lt;/h1>
+&lt;p>雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>libman install bootstrap@5.0.0-alpha2 &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -p unpkg &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -d wwwroot/lib/bootstrap &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/js/bootstrap.min.js &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> --files dist/css/bootstrap.min.css
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 wwwRoot/index.html 添加對 bootstrap css 的引用：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/js/bootstrap.min.js&amp;#34;&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;lt;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">/script&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>現在將 wwwRoot/index.html 修改如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">charset&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;utf-8&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">title&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">title&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">link&lt;/span> &lt;span style="color:#a6e22e">rel&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;stylesheet&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">href&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/css/bootstrap.min.css&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;container&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-1 mt-4&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 使用者名稱輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;userInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;User&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 密碼輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;passInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;password&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Password&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 登入按鈕 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-auto&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;loginButton&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;btn btn-outline-secondary&amp;#34;&lt;/span>&amp;gt;登入&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-1 mt-2&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 訊息輸入框 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-4&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">input&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;messageInput&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;form-control&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">placeholder&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Message&amp;#34;&lt;/span>/&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 送出按鈕 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-auto&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;sendButton&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;button&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;btn btn-outline-success&amp;#34;&lt;/span>&amp;gt;Send&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-12&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">hr&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;col-6&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">&amp;lt;!-- 顯示訊息的ul --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">ul&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;messagesList&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">ul&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./js/signalr/dist/browser/signalr.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./js/chat.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/bootstrap/dist/js/bootstrap.min.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;./lib/axios/dist/axios.min.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">html&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="修改-chatjs">修改 Chat.js&lt;/h1>
+&lt;p>官方範例中，SignalR連線是由網址參數傳遞，方法是在 withUrl 的第二個物件參數給一個 accessTokenFactory 回傳 token：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</link><pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</guid><description>&lt;h1 id="signalr驗證方式">SignalR驗證方式&lt;/h1>
+&lt;p>SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：&lt;/p>
+&lt;ul>
+&lt;li>Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。&lt;/li>
+&lt;li>Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。&lt;/li>
+&lt;/ul>
+&lt;p>將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。&lt;/p>
+&lt;h1 id="以-option-pattern-取得-jwt-設定">以 Option pattern 取得 JWT 設定&lt;/h1>
+&lt;p>這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：&lt;/p>
+&lt;h2 id="appsettingjson">appsetting.json&lt;/h2>
+&lt;p>將 JWT 相關的設定寫到 appsetting.json 當中：
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Logging&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Warning&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;JWT&amp;#34;&lt;/span>: {
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Issuer&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Naxo&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Expires&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1440&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 憑證有效分鐘數
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#f92672">&amp;#34;SignKey&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&amp;#34;&lt;/span> &lt;span style="color:#75715e">// 設定簽發/解密憑證的對稱式加密金鑰
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;AllowedHosts&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</link><pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</guid><description>&lt;p>這個系列會&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&amp;amp;tabs=visual-studio" target="_blank" rel="noopener">官方文件&lt;/a>為主，保留必要的部分，並視情況修改部份程式、添加說明文字。&lt;/p>
+&lt;h1 id="建立-signalr-專案">建立 SignalR 專案&lt;/h1>
+&lt;p>這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 建立專案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>dotnet new webapi -o SignalR
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 以 VS Code 打開專案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>code -r signalr
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="建立-signalr-中樞">建立 SignalR 中樞&lt;/h1>
+&lt;p>在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.SignalR;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">namespace&lt;/span> SignalR.Hubs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 這就是所謂的 SignalR 中樞&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">ChatHub&lt;/span> : Hub
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task SendMessage(&lt;span style="color:#66d9ef">string&lt;/span> user, &lt;span style="color:#66d9ef">string&lt;/span> message)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> Clients.All.SendAsync(&lt;span style="color:#e6db74">&amp;#34;ReceiveMessage&amp;#34;&lt;/span>, user, message);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="設定-startupcs">設定 Startup.cs&lt;/h1>
+&lt;p>依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：&lt;/p></description></item></channel></rss>

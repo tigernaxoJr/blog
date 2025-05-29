@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>FHIR on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/fhir/</link><description>Recent content in FHIR on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 10 Jul 2023 16:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/fhir/index.xml" rel="self" type="application/rss+xml"/><item><title>[FHIR] SMART Health IT</title><link>https://blog.tigernaxo.com/posts/fhir/fhir-smart-overview/</link><pubDate>Mon, 10 Jul 2023 16:11:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/fhir/fhir-smart-overview/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>&lt;a href="https://smarthealthit.org/" target="_blank" rel="noopener">SMART Health IT&lt;/a> 最早在《新英格蘭醫學雜誌》的一篇文章中推出，提出&lt;code>編寫一次應用程序，然後讓它在醫療保健系統的任何地方運行&lt;/code>，制定通用 API。
+SMART 已成為 &lt;code>21st Century Cures Act&lt;/code>和&lt;code>2020 Final Rule from the ONC&lt;/code>認證要求項目。&lt;/p>
+&lt;h2 id="pre-erequirement">Pre-erequirement&lt;/h2>
+&lt;p>需要先熟悉 OAuth 2.0 的流程。&lt;/p>
+&lt;h2 id="discovery-document">Discovery document&lt;/h2>
+&lt;p>SMART 定義了一個標準的 metadata 端點 &lt;code>/.well-known/smart-configuration&lt;/code> 稱為 discovery document
+用來告訴使用者仲介訊息：&lt;/p>
+&lt;ul>
+&lt;li>Server Capabilities (server 可以做什麼)&lt;/li>
+&lt;li>Configuration (配置?)&lt;/li>
+&lt;/ul>
+&lt;h2 id="認證與授權">認證與授權&lt;/h2>
+&lt;h3 id="授權authorization">授權(Authorization)&lt;/h3>
+&lt;p>SMART 定義兩種 Client 端 App &lt;code>授權&lt;/code>模式，差別主要在於被授權是否有使用者參與：&lt;/p>
+&lt;ul>
+&lt;li>Authorization via SMART App Launch&lt;br>
+透過 1.EHR 或其他健康軟體的登入 session 或2.使用者手動授權，將用戶權限委託給&lt;code>面向使用者的 App&lt;/code>本身連接到 FHIR Server 存取資源，被授權方獲得授權方分向的資訊稱為 &lt;code>lanuch context&lt;/code> (例如用戶資訊)。&lt;/li>
+&lt;li>Authorization via SMART Backend Services&lt;br>
+授權在與用戶無關的情況下完成。&lt;/li>
+&lt;/ul>
+&lt;h3 id="認證authentication">認證(Authentication)&lt;/h3>
+&lt;p>SMART 定義兩種 Client 端 App &lt;code>認證&lt;/code>模式，也就是對稱/不對稱加密，官方建議是使用不對稱加密：&lt;/p></description></item></channel></rss>

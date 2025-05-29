@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home Assistant on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/</link><description>Recent content in Home Assistant on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Nov 2022 08:50:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/other/homeassistant/index.xml" rel="self" type="application/rss+xml"/><item><title>[HA] 使用 Docker Compose 安裝 Home Assistant</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</link><pubDate>Tue, 22 Nov 2022 08:50:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</guid><description>&lt;p>這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。
+採用的映象檔是 &lt;code>ghcr.io/home-assistant/home-assistant:stable&lt;/code> ，因為我需要使用網址來區分服務(同一個 443 port 的情況下)，所以採取反向代理的方式，一方面讓之後要部屬其他應用、加上憑證、等等操作都交給 nginx 比較方便，因此不會將 8123 port 直接對外。&lt;/p>
+&lt;ol>
+&lt;li>建立 &lt;code>mynetwork&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker create network mynetwork
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>建立 &lt;code>ha&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>ha/docker-compose.yml&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ha&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">container_name&lt;/span>: &lt;span style="color:#ae81ff">homeassistant&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">#image: &amp;#34;homeassistant/home-assistant:stable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">${HA_IMAGE}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">./volume/ha/config:/config&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/etc/localtime:/etc/localtime:ro&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/run/dbus:/run/dbus:ro&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">unless-stopped&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">privileged&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>ha/.env&lt;/code>
+&lt;pre tabindex="0">&lt;code>HA_IMAGE=&amp;#34;homeassistant/home-assistant:stable&amp;#34;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>&lt;code>ha/.gitignore&lt;/code>
+&lt;pre tabindex="0">&lt;code>volume/
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;ol start="3">
+&lt;li>建立 &lt;code>nginx&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>&lt;code>nginx/docker-compose.yml&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">web&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># - ./templates:/etc/nginx/templates&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/usr/share/nginx/html:/usr/share/nginx/html&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">./nginx.conf:/etc/nginx/nginx.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/etc/letsencrypt:/etc/letsencrypt&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;80:80&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;443:443&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">NGINX_PORT=80&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>&lt;code>nginx/nginx.conf&lt;/code>
+&lt;pre tabindex="0">&lt;code>events {
+}
+http {
+upstream ha {
+server ha:8123;
+}
+error_log /etc/nginx/error_log.log warn;
+client_max_body_size 20m;
+# proxy_cache_path /etc/nginx/cache keys_zone=one:500m max_size=1000m;
+proxy_cache off;
+server {
+server_name localhost;
+location / {
+root /usr/share/nginx/html;
+index index.html index.htm;
+try_files $uri $uri/ /index.html;
+}
+}
+server {
+listen 80;
+#listen 443 ssl;
+#server_name home.example.com;
+# SSL certificate and key configuration
+#ssl_certificate /etc/letsencrypt/live/home.example.com/fullchain.pem;
+#ssl_certificate_key /etc/letsencrypt/live/home.example.com/privkey.pem;
+# Additional SSL configurations (e.g., enable secure ciphers, etc.)
+#ssl_protocols TLSv1.2 TLSv1.3;
+#ssl_ciphers &amp;#39;TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384&amp;#39;;
+location /.well-known/acme-challenge {
+root /usr/share/nginx/html;
+}
+location / {
+proxy_pass http://ha;
+proxy_set_header Host $host;
+proxy_http_version 1.1;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection &amp;#34;Upgrade&amp;#34;;
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;ol start="4">
+&lt;li>啟動服務
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker-compose -f ha/docker-compose.yml up -d
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker-compose -f nginx/docker-compose.yml up -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol>
+&lt;h2 id="創建帳號">創建帳號&lt;/h2>
+&lt;p>例如我的 IP 是 192.168.56.100
+現在可以進入 &lt;code>http://192.168.56.100/&lt;/code> 開始創建帳號。&lt;/p></description></item></channel></rss>

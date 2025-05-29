@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[練習] 認證與授權 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/</link><description>Recent content in [練習] 認證與授權 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 12 Mar 2021 23:08:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/dotnet/startup-auth/index.xml" rel="self" type="application/rss+xml"/><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(二)-驗證設定</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_2/</link><pubDate>Fri, 12 Mar 2021 23:08:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_2/</guid><description>&lt;h1 id="驗證方案authentication-scheme">驗證方案(Authentication Scheme)&lt;/h1>
+&lt;p>驗證方案包含兩個部分：&lt;/p>
+&lt;ul>
+&lt;li>驗證處理函式(Authentication handler)，可能是
+&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationhandler?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationHandler&lt;/a> 或
+&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationhandler-1?view=aspnetcore-3.1" target="_blank" rel="noopener">AuthenticationHandler&lt;TOptions>&lt;/a>
+的實作，相當於驗證方案的&lt;strong>行為&lt;/strong>，責任範圍涵蓋:
+&lt;ul>
+&lt;li>驗證使用者，&lt;/li>
+&lt;li>驗證成功時，建構呈現使用者識別(user identity)的 &lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.authenticationticket?view=aspnetcore-3.1" target="_blank" rel="noopener">AuthenticationTicket&lt;/a>。&lt;/li>
+&lt;li>驗證失敗時，回傳 &amp;rsquo;no result&amp;rsquo; 或 &amp;lsquo;failure&amp;rsquo;&lt;/li>
+&lt;li>負責從請求上下文(request context)中建構使用者識別 (user identity)。&lt;/li>
+&lt;li>定義了 challenge/forbid action。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>驗證處理函式的設定選項(Opitons of Authentication handler)。&lt;/li>
+&lt;/ul>
+&lt;p>驗證方案當中的 authencate action 負責從請求上下文(request context)中建構使用者識別 (user identity)，
+常見的例子為：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>cookie authentication scheme&lt;/strong> 從 cookie 資訊建構 user identity.&lt;/li>
+&lt;li>&lt;strong>JWT bearer scheme&lt;/strong> 反序列化(deserialize)、驗證(validate) token，並從 token 所攜帶資訊建構 user identity&lt;/li>
+&lt;/ul>
+&lt;h2 id="使用驗證方案">使用驗證方案&lt;/h2>
+&lt;p>在 Startup.ConfigureServices 以 AddAuthentication 註冊驗證服務時會回傳一個 AuthenticationBuilder，
+AuthenticationBuilder 設定驗證方案的方式有：&lt;/p>
+&lt;ul>
+&lt;li>呼叫 &lt;strong>scheme-specific 擴充方法&lt;/strong>，例如 AddJwtBearer、AddCookie，這些擴充方法會自動呼叫 AuthenticationBuilder.AddScheme 設定需要的驗證方式。&lt;/li>
+&lt;li>以 AuthenticationBuilder &lt;strong>內建方法 AddScheme&lt;/strong> 手動設定，一般來說較少使用。&lt;/li>
+&lt;/ul>
+&lt;p>P.S.另外可使用 &lt;a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/authentication/policyschemes?view=aspnetcore-3.1" target="_blank" rel="noopener">polycy schemes&lt;/a> 把多個 scheme 整合到一個使用。&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(四)-授權設定</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_4/</link><pubDate>Thu, 31 Dec 2020 14:08:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_4/</guid><description>&lt;h1 id="授權authorization">授權(Authorization)&lt;/h1>
+&lt;ul>
+&lt;li>授權(Authorization): 界定用戶可存取資源範圍的程序。&lt;/li>
+&lt;/ul>
+&lt;h2 id="policy-based-authorization">Policy-based authorization&lt;/h2>
+&lt;p>ASP .NET Core 的授權以政策 Policy 進行設定&lt;/p>
+&lt;h2 id="自訂授權">自訂授權&lt;/h2>
+&lt;h2 id="rbac">RBAC&lt;/h2>
+&lt;p>Name 記載使用者識別名稱(User Identity)
+userData 記載以 &lt;code>|&lt;/code> 分隔的使用者角色 Role&lt;/p>
+&lt;h1 id="驗證與授權">驗證與授權&lt;/h1>
+&lt;h2 id="challengeforbid">Challenge、Forbid&lt;/h2>
+&lt;h2 id="中間件順序">中間件順序&lt;/h2>
+&lt;p>先驗證、再授權
+The Order of UseAuthentication、UseAuthorization&lt;/p>
+&lt;h1 id="reference">Reference&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/standard/security/principal-and-identity-objects" target="_blank" rel="noopener">MSDN - Principal and Identity Objects&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - IAuthenticationService Interface&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.authenticationservice?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - AuthenticationService Class&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/zh-tw/aspnet/core/security/?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Overview of ASP.NET Core Security&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Overview of ASP.NET Core authentication&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-3.1" target="_blank" rel="noopener">MSDN - Policy-based authorization in ASP.NET Core&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.cookies?view=aspnetcore-5.0" target="_blank" rel="noopener">MSDN - Microsoft.AspNetCore.Authentication.Cookies Namespace&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer?view=aspnetcore-5.0" target="_blank" rel="noopener">MSDN - Microsoft.AspNetCore.Authentication.JwtBearer Namespace&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://dotblogs.com.tw/Null/2020/04/09/162252" target="_blank" rel="noopener">[ASP.NET Core] 加上簡單的Cookie登入驗證&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;a href="https://blog.johnwu.cc/article/ironman-day11-asp-net-core-cookies-session.html" target="_blank" rel="noopener">https://blog.johnwu.cc/article/ironman-day11-asp-net-core-cookies-session.html&lt;/a>&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(三)-Cookie 驗證實例</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_3/</link><pubDate>Wed, 30 Dec 2020 23:24:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_3/</guid><description>&lt;p>前兩篇介紹了驗證、授權在 .NET Core 當中的基本的概念，本節實作 Cookie 驗證的設定、簽發、登出&amp;hellip;&lt;/p>
+&lt;h1 id="configuration">Configuration&lt;/h1>
+&lt;p>在 Startup.ConfigureServices 方法中設置驗證方案，
+並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設置 cookie 驗證作為應用程式預設的驗證方案&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 將 cookie 服務添加到服務容器當中&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .AddCookie();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization，
+啟用驗證中間件並設置 HttpContext.User 屬性，
+UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseAuthentication(); &lt;span style="color:#75715e">// 驗證&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseAuthorization(); &lt;span style="color:#75715e">// 授權&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 端點對應&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseEndpoints(endpoints =&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapControllers();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapRazorPages();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="cookie-policy-middleware">Cookie Policy Middleware&lt;/h1>
+&lt;p>在中間件當中設置的驗證政策會作用於全域(每個請求)，
+舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性，
+所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseCookiePolicy(&lt;span style="color:#66d9ef">new&lt;/span> CookiePolicyOptions {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 所有 Cookie.SamSite 設置都會被提升為 Strict&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MinimumSameSitePolicy = SameSiteMode.Strict,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Cookie.SamSite 設置為 None 的話會被提升為 Lax&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.Lax, &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// MinimumSameSitePolicy 設置為最寬鬆，因此不會影響 Cookie.SamSite&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.None, &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="create-an-authentication-cookie">Create an authentication cookie&lt;/h1>
+&lt;p>.NET Core 利用 ClaimsPrincipal 將序列化的使用者資訊儲存在 Cookie 當中
+而 ClaimsPrincipal 可包含很多 ClaimsIdentity(但通常只有一個)；
+ClaimsIdentity 可以且通常包含很多 Claims(聲明)，
+而每個 Claims 是包含型別(ClaimType)、值(ClaimValue)。
+因此為登入使用者建立 Cookie 驗證的步驟如下：&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(X)-備註頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_memo/</link><pubDate>Mon, 23 Nov 2020 15:48:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_memo/</guid><description>&lt;h2 id="identity-objects">Identity Objects&lt;/h2>
+&lt;h2 id="principal-objects">Principal Objects&lt;/h2>
+&lt;p>IPrincipal 物件帶有 IIdentity 物件的參考
+可指定 Authentication Scheme 獲得 Identity&lt;/p>
+&lt;h2 id="iauthenticationservice">IAuthenticationService&lt;/h2>
+&lt;p>SignOutAsync 清除 Cookie 的 Claims
+在 Cookie 寫入 Claims&lt;/p>
+&lt;h2 id="token-登入">Token 登入&lt;/h2>
+&lt;h1 id="登入-api-實作">登入 API 實作&lt;/h1>
+&lt;p>宣告 ClaimsPrincipal 後，可利用服務容器已注入的認證服務(實作 IAuthencationService 的類別)，進行登入、登出。
+使用 SignInAsync 方法登入(寫入認證資訊)需要這些東西：&lt;/p>
+&lt;ol>
+&lt;li>ClaimsPrincipal(必要)，我們需要 ClaimsPrincipal 攜帶 ClaimsIdentity 及 Claims。&lt;/li>
+&lt;li>AuthenticationScheme string (Optional)可指定 Scheme，若沒有給就是使用預設的 Scheme。&lt;/li>
+&lt;li>authProperties (Optional)，可指定自訂認證選項&lt;/li>
+&lt;/ol>
+&lt;h1 id="authenticationhttpcontextextensions">AuthenticationHttpContextExtensions&lt;/h1>
+&lt;p>AuthenticationHttpContextExtensions 類別對 HttpContext 類別擴展出認證方法，
+從服務容器中獲取 IAuthenticationService 實體類別，並調用同名方法。&lt;/p>
+&lt;h1 id="iauthenticationservice-1">IAuthenticationService&lt;/h1>
+&lt;p>SignOutAsync 清除 Cookie 的 Claims
+可儲存 ClaimsPrincipal進行簽發(登入)認證，作為身分識別。&lt;/p></description></item><item><title>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_1/</link><pubDate>Mon, 23 Nov 2020 08:39:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-auth/auth_guild_1/</guid><description>&lt;p>在進入 ASP .NET Core 3.1 中驗證(Authentication)與授權(Authorization)的作用流程前，應當對兩者有抽象概念上的認識，以及了解兩者的差異。&lt;/p>
+&lt;h1 id="驗證authentication">驗證(Authentication)&lt;/h1>
+&lt;p>驗證是確認用戶識別碼(User Identity)的程序，通過驗證的用戶可具有一或多個用戶識別碼，
+因此驗證服務本身就是使用者識別碼提供者 (User Identity Provider)，
+ASP.NET Core 3.1 當中以依賴注入(DI; Dependency Injection)將驗證服務注入服務容器 (Service Container)，
+使應用程式驗證簽發時能夠取用。&lt;/p>
+&lt;h1 id="授權authorization">授權(Authorization)&lt;/h1>
+&lt;p>授權的作用是界定用戶可存取資源範圍，作用描述如下：&lt;/p>
+&lt;ul>
+&lt;li>限制所存取的資源是否需要驗證。&lt;/li>
+&lt;li>已獲得驗證的特定用戶、特定腳色方能存取特定資源。&lt;/li>
+&lt;li>所存取的資源需要以何種授權政策(Authorizaton Policy)、即驗證方案(Authencation Scheme)。&lt;/li>
+&lt;/ul>
+&lt;h1 id="挑戰和禁止">挑戰和禁止&lt;/h1>
+&lt;p>有些名詞需要先解釋：
+驗證方案(Authentication Scheme)當中設置了挑戰(Chellange)與禁止(Forbid)應該進行的動作，這些註冊於驗證方案的動作動作由授權叫用。&lt;/p>
+&lt;h2 id="挑戰challenge">挑戰(Challenge)&lt;/h2>
+&lt;p>未驗證使用者要存取需驗證才能存取的資源時，
+授權服務會叫用 &lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice.challengeasync?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationService.ChallengeAsync&lt;/a> 發起 challenge，
+challenge 被發起後所伴隨採取的行動稱為 challenge action，
+且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：&lt;/p>
+&lt;ul>
+&lt;li>cookie 驗證方案將使用者轉址到登入頁面。&lt;/li>
+&lt;li>JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 &lt;code>www-authenticate: bearer&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="禁止forbid">禁止(Forbid)&lt;/h2>
+&lt;p>已驗證的使用者要存取授權之外的資源時，
+授權會叫用 &lt;a href="https://docs.microsoft.com/zh-tw/dotnet/api/microsoft.aspnetcore.authentication.iauthenticationservice.forbidasync?view=aspnetcore-3.1" target="_blank" rel="noopener">IAuthenticationService.ForbidAsync&lt;/a> 發起 Forbid，
+Forbid 發起後所伴隨採取的行動稱為 Forbid action，
+Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源，
+常見的具體範例有：&lt;/p></description></item></channel></rss>

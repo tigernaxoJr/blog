@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[Web] Web 相關 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/web/</link><description>Recent content in [Web] Web 相關 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 07 Jul 2023 08:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/web/index.xml" rel="self" type="application/rss+xml"/><item><title>[Keycloak] docker 安裝</title><link>https://blog.tigernaxo.com/posts/web/keycloak-docker-compose/</link><pubDate>Sun, 01 Jan 2023 07:44:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/keycloak-docker-compose/</guid><description>&lt;p>採用的映象檔是 &lt;code>bitnami/keycloak&lt;/code> ，因為我需要使用網址來區分服務(同一個 port 的情況下)，所以採取反向代理的方式，一方面讓之後要部屬其他應用、加上憑證、等等操作都交給 nginx 比較方便。&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>建立 docker 網路 &lt;code>mynetwork&lt;/code>，如果設定其他名稱，以下步驟再自行調整對應。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker create network mynetwork
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>建立 docker-compose 環境 &lt;code>keycloak/.env&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>KEYCLOCK_IMAGE&lt;span style="color:#f92672">=&lt;/span>bitnami/keycloak:23.0.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_VENDOR&lt;span style="color:#f92672">=&lt;/span>postgresql
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_PORT&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">5432&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_USER&lt;span style="color:#f92672">=&lt;/span>keycloak
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_PASSWORD&lt;span style="color:#f92672">=&lt;/span>password
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_NAME&lt;span style="color:#f92672">=&lt;/span>keycloak
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_ADMIN_USER&lt;span style="color:#f92672">=&lt;/span>admin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_ADMIN_PASSWORD&lt;span style="color:#f92672">=&lt;/span>admin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>&lt;code>keycloak/docker-compose.yml&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">volumes&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">postgres_data&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">driver&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">keycloak_db&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">postgres&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">postgres_data:/var/lib/postgresql/data&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_DB&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_NAME}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_USER}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PASSWORD}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">keycloak&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOCK_IMAGE}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_VENDOR&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_VENDOR}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_HOST&lt;/span>: &lt;span style="color:#ae81ff">keycloak_db&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_PORT&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PORT}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_NAME&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_NAME}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_USER}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PASSWORD}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_SCHEMA&lt;/span>: &lt;span style="color:#ae81ff">public&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ADMIN_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_ADMIN_USER}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ADMIN_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_ADMIN_PASSWORD}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ENABLE_HEALTH_ENDPOINTS&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ENABLE_STATISTICS&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_PROXY&lt;/span>: &lt;span style="color:#ae81ff">edge&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_PROXY_ADDRESS_FORWARDING&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_HTTP_ENABLED&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">unless-stopped&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">depends_on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">keycloak_db&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>建立 &lt;code>nginx/nginx.conf&lt;/code>，這裡我把 &lt;code>keycloak.docker.vm&lt;/code> 給 keycloak，裡面有一些設置 ssl 用得到的區塊放置在註解。&lt;/p></description></item><item><title>[Web] API Design</title><link>https://blog.tigernaxo.com/posts/web/web-api-design/</link><pubDate>Mon, 11 Jul 2022 11:35:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/web-api-design/</guid><description>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;p>&lt;a href="https://learn.microsoft.com/en-us/azure/architecture/best-practices/index-best-practices" target="_blank" rel="noopener">Best practices in cloud applications&lt;/a>&lt;/p></description></item><item><title>[Web] RESTful 敏感性 GET 參數</title><link>https://blog.tigernaxo.com/posts/web/security-get/</link><pubDate>Mon, 11 Jul 2022 11:35:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/security-get/</guid><description>&lt;h2 id="網址列參數洩漏風險">網址列參數洩漏風險&lt;/h2>
+&lt;p>目前網頁後端資源存取大多以 RESTful Api 開發，
+REST 標準下 API 的設計需符合冪等性(idempotent)，
+SSL 連線連接 TCP 層與 HTTP 層，因此透過 HTTPS 傳輸的網頁，網址進入 TCP 層之後是被加密的，
+即使封包被截取也只能看見要傳送的目標主機
+那麼敏感性資料可以透過 GET 參數傳送嗎？&lt;/p>
+&lt;p>如果將機敏性資料夾帶於網址列當中會有洩漏的安全性風險，諸如：&lt;/p>
+&lt;ul>
+&lt;li>被 Shoulder surfers 竊取。(你的螢幕被偷看)&lt;/li>
+&lt;li>隨著頁面列印被印出。&lt;/li>
+&lt;li>使用者將連結加入書籤。&lt;/li>
+&lt;li>儲存在瀏覽器瀏覽歷史紀錄。&lt;/li>
+&lt;li>被記錄在 Web Server 的 Log，而 Log 本身可能不安全。&lt;/li>
+&lt;/ul>
+&lt;h2 id="隱藏-restful-get-參數">隱藏 RESTful GET 參數&lt;/h2>
+&lt;p>因此避免這些資料外洩的可能，根本的做法就是讓機敏性資料從網址列消失，最好的做法是依據 OWASP 的建議把 參數夾帶在 Header 裡面，其他手段整理：&lt;/p>
+&lt;ul>
+&lt;li>將機敏性資料加密，但加密也&lt;strong>會破壞 API RESTful 特性&lt;/strong>，在後端需要先解密無法直接對應回物件。&lt;/li>
+&lt;li>以 POST 的一部份傳輸(透過 HTTPS)，但&lt;strong>會直接破壞 API 的 RESTful 特性&lt;/strong>。&lt;/li>
+&lt;li>根據 &lt;a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP REST Security Cheat Sheet&lt;/a>，應該把敏感性參數夾帶在 GET 請求的 HTTP Header 裡面透過 HTTPS 傳輸。&lt;/li>
+&lt;/ul>
+&lt;p>P.S. OWASP 的 Cheat Sheet 可看出並非所有資料都要不能出現在網址列，只有機敏性資料才需要考慮從網址列移除。`&lt;/p></description></item><item><title>[Web] 把電腦的難字造字檔用 FontForge 轉為字型放到網頁上使用</title><link>https://blog.tigernaxo.com/posts/web/web-tool-eudc-frontforge/eudc/</link><pubDate>Tue, 24 Aug 2021 10:07:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/web-tool-eudc-frontforge/eudc/</guid><description>&lt;p>Web 在顯示姓名的時候常會遇到中文難字無法顯示，
+此時開發者在本機端如果有安裝造字檔 EUDC.TTE 就可以轉為 &lt;code>woff&lt;/code>、&lt;code>woff2&lt;/code>、&lt;code>ttf&lt;/code> 讓網頁正確顯示難字。
+過程需要字型工具軟體 &lt;a href="https://fontforge.org/en-US/" target="_blank" rel="noopener">FontForge&lt;/a>，
+步驟如下：&lt;/p>
+&lt;ol>
+&lt;li>拿到造字檔 EUDC.TTE&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>用 &lt;code>cmd&lt;/code> 打開 &lt;code>regedit&lt;/code> (win10 搜尋圖示點下後，輸入 &lt;code>cmd&lt;/code>，出現小黑窗後再輸入 &lt;code>regedit&lt;/code>)&lt;/li>
+&lt;li>找到機碼 HKEY_CURRENT_USER -&amp;gt; EUDC -&amp;gt; 950 資料夾下的 &lt;code>SystemDefaultEUDCFont&lt;/code> 設定檔。&lt;/li>
+&lt;li>從設定檔的值就是 EUDC 的存放位址取出 &lt;code>EUDC.tte&lt;/code>，我這裡是 &lt;code>C:\CIBEN\EUDC.tte&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>安裝 &lt;a href="https://fontforge.org/en-US/" target="_blank" rel="noopener">FontForge&lt;/a>，找到 &lt;code>fontforge.exe&lt;/code> 的位址 (&lt;strong>注意，跟桌面捷徑呼叫的執行檔不一樣！&lt;/strong>)，我的是在 &lt;code>C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe&lt;/code>&lt;/li>
+&lt;li>建立一個轉檔腳本 &lt;code>tte-extract.pe&lt;/code>，內容如下
+&lt;pre tabindex="0">&lt;code># Open EUDC TTE
+Open(&amp;#34;EUDC.tte&amp;#34;, 4)
+# CHANGE TTFNAME 2 EUDC
+SetTTFName(0x409,1,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x409,2,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x409,3,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x409,4,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x404,1,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x404,2,&amp;#34;EUDC&amp;#34;)
+SetTTFName(0x409,3,&amp;#34;&amp;#34;)
+SetTTFName(0x404,4,&amp;#34;EUDC&amp;#34;)
+SetFontNames(&amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;Regular&amp;#34;, &amp;#34;655&amp;#34;, &amp;#34;1.0.0&amp;#34;)
+Generate(&amp;#34;EUDC.ttf&amp;#34;)
+Generate(&amp;#34;EUDC.woff&amp;#34;)
+Generate(&amp;#34;EUDC.woff2&amp;#34;)
+Close()
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>把 &lt;code>EUDC.tte&lt;/code>、&lt;code>tte-extract&lt;/code>放在同一個位址，在該目錄下用指令執行轉檔 (fontforge.exe 的位址可能需要修改)： &lt;code>C:/Program\ Files\ \(x86\)/FontForgeBuilds/bin/fontforge.exe -script tte-extract.pe&lt;/code>&lt;/li>
+&lt;li>得到的 &lt;code>woff&lt;/code>、&lt;code>woff2&lt;/code>、&lt;code>ttf&lt;/code> 用 css 設定為網頁字形：
+&lt;ul>
+&lt;li>設定網頁字形
+&lt;pre tabindex="0">&lt;code>font-family: &amp;#34;EUDC&amp;#34;;
+font-style: normal;
+src: url(&amp;#39;./fonts/EUDC.woff2&amp;#39;) format(&amp;#39;woff2&amp;#39;),
+url(&amp;#39;./fonts/EUDC.woff&amp;#39;) format(&amp;#39;woff&amp;#39;),
+url(&amp;#39;./fonts/EUDC.ttf&amp;#39;) format(&amp;#39;truetype&amp;#39;);
+}
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>套用網頁字形
+&lt;pre tabindex="0">&lt;code>-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+font-family: &amp;#39;其他優先使用的字型&amp;#39;, &amp;#39;EUDC&amp;#39;, sans-serif;
+font-display: auto;
+}
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="其他讓-rdlc-可顯示字造難字">其他：讓 RDLC 可顯示字造難字&lt;/h2>
+&lt;h3 id="windows">windows&lt;/h3>
+&lt;ul>
+&lt;li>ttf 丟到 &lt;code>C:\Windows\Fonts&lt;/code>，可能要重啟 IDE 才抓得到字型。&lt;/li>
+&lt;li>report 裡面的字型選擇 EUDC&lt;/li>
+&lt;/ul></description></item></channel></rss>

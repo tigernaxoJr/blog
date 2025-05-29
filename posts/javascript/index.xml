@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Javascript on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/javascript/</link><description>Recent content in Javascript on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 06 Jun 2023 06:00:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/javascript/index.xml" rel="self" type="application/rss+xml"/><item><title>[Code] 格式化民國年</title><link>https://blog.tigernaxo.com/posts/javascript/code-roc-format/</link><pubDate>Tue, 06 Jun 2023 06:00:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/code-roc-format/</guid><description>&lt;p>這個方法用 proxy 擴充 dayjs，讓 dayjs 支援格式化民國年。&lt;/p>
+&lt;h2 id="js-程式碼">JS 程式碼&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// dayx.js
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#a6e22e">day&lt;/span> &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;dayjs&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">prototype&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Object.&lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">day&lt;/span>());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">yyy&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#a6e22e">dt&lt;/span>) =&amp;gt; (&lt;span style="color:#a6e22e">dt&lt;/span>.&lt;span style="color:#a6e22e">getFullYear&lt;/span>() &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1911&lt;/span>).&lt;span style="color:#a6e22e">toString&lt;/span>().&lt;span style="color:#a6e22e">padStart&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">handler&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> (&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">receiver&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// age, dte, tme
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;age&amp;#34;&lt;/span>) &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">day&lt;/span>().&lt;span style="color:#a6e22e">diff&lt;/span>(&lt;span style="color:#a6e22e">receiver&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;years&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">false&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;dte&amp;#34;&lt;/span>) &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">receiver&lt;/span>.&lt;span style="color:#a6e22e">format&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;YYYMMDD&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;tme&amp;#34;&lt;/span>) &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">receiver&lt;/span>.&lt;span style="color:#a6e22e">format&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;HHmmss&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// format
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;format&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (&lt;span style="color:#a6e22e">format&lt;/span>) =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">formattingTokens&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">/Y{4,}|Y{3}|[^Y{3}]+/g&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">format&lt;/span>.&lt;span style="color:#a6e22e">match&lt;/span>(&lt;span style="color:#a6e22e">formattingTokens&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">format2&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">map&lt;/span>((&lt;span style="color:#a6e22e">x&lt;/span>) =&amp;gt; (&lt;span style="color:#a6e22e">x&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;YYY&amp;#34;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">yyy&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>) &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">join&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;ktformat&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">format2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">day&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>).&lt;span style="color:#a6e22e">format&lt;/span>(&lt;span style="color:#a6e22e">format2&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Return the original property value
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>] &lt;span style="color:#f92672">!==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;function&amp;#34;&lt;/span>) &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Wrap the original function with custom behavior
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> (...&lt;span style="color:#a6e22e">args&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span>[&lt;span style="color:#a6e22e">prop&lt;/span>].&lt;span style="color:#a6e22e">apply&lt;/span>(&lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">args&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">isReturnDayjs&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Object.&lt;span style="color:#a6e22e">getPrototypeOf&lt;/span>(&lt;span style="color:#a6e22e">result&lt;/span>) &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">prototype&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">isReturnDayjs&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span>(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#a6e22e">handler&lt;/span>) &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">obj&lt;/span>, &lt;span style="color:#a6e22e">prop&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>, &lt;span style="color:#a6e22e">receiver&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;dte&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">v&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">padStart&lt;/span>(&lt;span style="color:#ae81ff">7&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">yyy&lt;/span> &lt;span style="color:#f92672">=&lt;/span> parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>)) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1911&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setFullYear&lt;/span>(&lt;span style="color:#a6e22e">yyy&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setMonth&lt;/span>(parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>)) &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setDate&lt;/span>(parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#ae81ff">7&lt;/span>)));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">receiver&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">prop&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#e6db74">&amp;#34;tme&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">v&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">padEnd&lt;/span>(&lt;span style="color:#ae81ff">6&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;0&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setHours&lt;/span>(parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>)));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setMinutes&lt;/span>(parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>)));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">$d&lt;/span>.&lt;span style="color:#a6e22e">setSeconds&lt;/span>(parseInt(&lt;span style="color:#a6e22e">v&lt;/span>.&lt;span style="color:#a6e22e">substring&lt;/span>(&lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#ae81ff">6&lt;/span>)));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">receiver&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">Reflect&lt;/span>.&lt;span style="color:#a6e22e">set&lt;/span>(...&lt;span style="color:#a6e22e">arguments&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (...&lt;span style="color:#a6e22e">args&lt;/span>) =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> Proxy(&lt;span style="color:#a6e22e">day&lt;/span>(...&lt;span style="color:#a6e22e">args&lt;/span>), &lt;span style="color:#a6e22e">handler&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">default&lt;/span> &lt;span style="color:#a6e22e">p&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="型別定義">型別定義&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// dayx.d.ts
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#a6e22e">dayjs&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;dayjs&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">declare&lt;/span> &lt;span style="color:#66d9ef">module&lt;/span> &lt;span style="color:#a6e22e">&amp;#34;dayjs&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">Dayjs&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">age&lt;/span>: &lt;span style="color:#66d9ef">number&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dte&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tme&lt;/span>: &lt;span style="color:#66d9ef">string&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">dayjs&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">as&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> &lt;span style="color:#a6e22e">dayjs&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="使用方式">使用方式&lt;/h2>
+&lt;p>可直接設定民國年，此外時間的加減乘除都可以參照 &lt;a href="https://day.js.org/docs/en/manipulate/manipulate" target="_blank" rel="noopener">dayjs 文件&lt;/a>&lt;/p></description></item><item><title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title><link>https://blog.tigernaxo.com/posts/javascript/diy-http-proxy-middleware/</link><pubDate>Sat, 20 Mar 2021 08:45:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/diy-http-proxy-middleware/</guid><description>&lt;p>前後端分離的開發環境以 Ajax 呼叫資源時時會遇到跨網域存取的問題，
+一些比較全面的開發環境像是 webpack、vue-cli 等等通常提供內建開發代理伺服器可供設置，
+如果要對於不熟悉的開發環境進行快速除錯
+(例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)，
+重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間
+(不過最終還是要搭建起來阿，喂~~)，
+因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。&lt;/p>
+&lt;h1 id="步驟">步驟&lt;/h1>
+&lt;h2 id="首先安裝-nodejs">首先安裝 &lt;a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js&lt;/a>&lt;/h2>
+&lt;h2 id="建立專案資料夾">建立專案資料夾&lt;/h2>
+&lt;p>建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir proxy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="起始專案">起始專案&lt;/h2>
+&lt;p>用指令移動到該專案資料夾下，起始專案：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cd proxy
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>npm init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安裝相依性">安裝相依性&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm i express http-proxy-middleware cors
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="建立-appjs">建立 app.js&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">express&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">require&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;express&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">cors&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">require&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;cors&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> { &lt;span style="color:#a6e22e">createProxyMiddleware&lt;/span> } &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">require&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;http-proxy-middleware&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 建立一個 Express 伺服器
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">app&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">express&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">use&lt;/span>(&lt;span style="color:#a6e22e">cors&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設定 Express 伺服器的 Host、Port
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">PORT&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">3000&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">HOST&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設定代理到 google 的 Proxy 端點
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">use&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;/google&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">createProxyMiddleware&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">target&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://www.google.com/&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">changeOrigin&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">pathRewrite&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#e6db74">`^/google`&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設定代理到 yahoo 的 Proxy 端點
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">use&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;/yahoo&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">createProxyMiddleware&lt;/span>({
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">target&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://tw.yahoo.com/&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">changeOrigin&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">pathRewrite&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> [&lt;span style="color:#e6db74">`^/yahoo`&lt;/span>]&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 啟動代理伺服器
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">listen&lt;/span>(&lt;span style="color:#a6e22e">PORT&lt;/span>, &lt;span style="color:#a6e22e">HOST&lt;/span>, () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#e6db74">`Starting Proxy at &lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">HOST&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">:&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>&lt;span style="color:#a6e22e">PORT&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="啟動代理伺服器">啟動代理伺服器&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ node app.js
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>HPM&lt;span style="color:#f92672">]&lt;/span> Proxy created: / -&amp;gt; https://www.google.com/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>HPM&lt;span style="color:#f92672">]&lt;/span> Proxy rewrite rule created: &lt;span style="color:#e6db74">&amp;#34;^/google&amp;#34;&lt;/span> ~&amp;gt; &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>HPM&lt;span style="color:#f92672">]&lt;/span> Proxy created: / -&amp;gt; https://tw.yahoo.com/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>HPM&lt;span style="color:#f92672">]&lt;/span> Proxy rewrite rule created: &lt;span style="color:#e6db74">&amp;#34;^/yahoo&amp;#34;&lt;/span> ~&amp;gt; &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Starting Proxy at localhost:3000
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="測試">測試&lt;/h2>
+&lt;p>打開隨意網頁 F12，用 fetch api 透過 proxy 對 google 或 yahoo 發起 get 請求成功獲得資訊，且 Header 裡面會有&lt;code>Access-Control-Allow-Origin: *&lt;/code>：&lt;/p></description></item><item><title>[JS] 非同步程式設計-Promise 與 Async/Await</title><link>https://blog.tigernaxo.com/posts/javascript/js-async/</link><pubDate>Sat, 09 Jan 2021 01:32:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-async/</guid><description>&lt;h1 id="promise">Promise&lt;/h1>
+&lt;h2 id="promise-狀態">Promise 狀態&lt;/h2>
+&lt;p>Promise function 執行後會立即回傳一個稱為 Promise 的物件，
+Promise 本身帶有三種狀態：&lt;/p>
+&lt;ul>
+&lt;li>pending: 已初始化，但尚未成功或失敗。&lt;/li>
+&lt;li>fulfilled: 操作成功完成。&lt;/li>
+&lt;li>rejected: 操作失敗結束。&lt;/li>
+&lt;/ul>
+&lt;p>promise 一但被回傳就處於 pending 狀態，
+promise 的建構式有兩個參數個接收一個 function，可以操作 Promise 的 fulfilled 和 rejected。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// resolve(value): 放入解析的值
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// reject(reson): 放入拒絕的理由
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">test&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">reason&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;找不到 value&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Promise((&lt;span style="color:#a6e22e">resolve&lt;/span>, &lt;span style="color:#a6e22e">reject&lt;/span>)=&amp;gt;{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">resolve&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>) &lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#a6e22e">reject&lt;/span>(&lt;span style="color:#a6e22e">reason&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="將-promise-繫結回呼函式">將 Promise 繫結回呼函式&lt;/h2>
+&lt;p>若要將某個程式語句安排在 Promise 被滿足之後執行。
+可以利用 Promise.prototype 上的三個物件方法(Instance Method)方法繫結回呼函式(callback function)：
+then catch finally
+resolve 會被 then 捕獲，reject 會被最近的 catch 捕獲&lt;/p>
+&lt;h2 id="管理多個同時執行的-promise">管理多個同時執行的 Promise&lt;/h2>
+&lt;p>假設需要同時控管多個需要等待的函數，
+讓這些函數都回傳 promise，
+判斷這些 promise function 其中一個/全部滿足某某狀態時就進行什麼動作，
+Promise 上定義的靜態方法(Static Method)常被用來對一個以上的 Promise 進行一波騷操作：&lt;/p></description></item><item><title>[JS] 提升(Hoisting)與暫時性死區(Temporal Dead Zone)</title><link>https://blog.tigernaxo.com/posts/javascript/js-hoisting/</link><pubDate>Sat, 09 Jan 2021 01:31:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-hoisting/</guid><description>&lt;p>網路上時常見到充滿 function 與 var 的 JavaScript 求值題目，
+筆者在釐清 Hoisting 和 TDZ 的觀念前時常覺得答案出乎意料，
+雖然現在撰寫程式碼都已經避免使用 var，但是維護 legacy code 還是會用到，因此在這裡做個筆記。&lt;/p>
+&lt;h1 id="hoisting">Hoisting&lt;/h1>
+&lt;p>對學過伺服器端語言(C#、C/C++&amp;hellip;)的人來說，預期試圖對未宣告的變數取值會出現 ReferenceError是很正常的事，
+在 JavaScript 中也是如此：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">x&lt;/span>) &lt;span style="color:#75715e">// ReferenceError: x is not defined
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>但 JavaScript 把 var 宣告變數放在後面，x 前面對 x 取值就變成 undefine，
+在 JavaScript 當中對變數取值獲得 undefine 代表變數處於宣告後&lt;strong>已分配記憶體空間(初始化、initiation)&lt;strong>但&lt;/strong>尚未賦值&lt;/strong>的狀態，
+但是明明 JavaScript 在宣告前就取值，怎麼能夠認得 x、而且知道 x 被初始化為 undefined 呢？&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">x&lt;/span>) &lt;span style="color:#75715e">// undefined
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">x&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>原因在於 javascript 會先程式中的蒐集 var(let/const/function) 宣告並釐清對應的作用域，
+最後再執行程式碼，這個行為就如同宣告被提升(Hoisting)到前面行數的程式碼中一樣。&lt;/p>
+&lt;p>JavaScript 跟傳統 OOP 語言一樣，在變數提升後、宣告初始化、賦值等等時機取用變數會獲得不同輸出結果，
+這篇文章(&lt;a href="https://www.iteye.com/blog/rednaxelafx-492667" target="_blank" rel="noopener">link&lt;/a>)中提到，
+稱 JavaScript 為直譯式(解釋型)語言實際上是通俗的說法，語言本身沒有規定實現的方式(編/直譯)，
+舉例來說 Chrome 瀏覽器所使用的 Google V8 JavaScript engine，
+所帶的解釋器 (interpreter) 會將程式編譯 (compile) 成字節碼 (bytecode)，
+最後再由編譯器 (compiler) 即時編譯 (JIT;just-in-time compilation) 編譯成機器碼執行，
+而 JavaScript 被編譯時宣告會被蒐集到最頂端進行定義並區分作用域(scope)，這個行為就是 Hoisting
+，記住重點在於&lt;strong>JS編譯後會先定義變數及區分作用域&lt;/strong>，編譯後的程式看起來就像這樣：&lt;/p></description></item><item><title>[Code] 複製元件內的文字</title><link>https://blog.tigernaxo.com/posts/javascript/code-copy-html-content/</link><pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/code-copy-html-content/</guid><description>&lt;p>要在前端用 JavaScript 將 DOM 的內容複製到剪貼簿有幾種姿勢：&lt;/p>
+&lt;h2 id="clipboard-api">Clipboard API&lt;/h2>
+&lt;p>基本上目前(2020年底)，主流瀏覽器近期版本都支援了，如果不考慮 IE 的話倒是可以使用，語法精簡而且能非同步操作。&lt;/p>
+&lt;ul>
+&lt;li>不支援 IE&lt;/li>
+&lt;li>是非同步方法，會傳回 Promise&lt;/li>
+&lt;li>支援從變數直接複製到剪貼簿&lt;/li>
+&lt;li>只有 HTTPS 網頁可以使用此 API&lt;/li>
+&lt;li>Chrome 66 之後透過 Clipboard 複製已經不會彈出提示視窗&lt;/li>
+&lt;li>只能在 active tab 發生作用 (a.k.a. 開發者無法在 colsole 做測試，會得到 &lt;code>DOMException: Document is not focused.&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">copyText&lt;/span>(&lt;span style="color:#a6e22e">text&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 判斷瀏覽器支援
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#a6e22e">navigator&lt;/span>.&lt;span style="color:#a6e22e">clipboard&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">alert&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;瀏覽器不支援 Clipboard API&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 這裡可以改用 document.execCommand(&amp;#39;copy&amp;#39;) 的方法
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 非同步複製至剪貼簿
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">resolve&lt;/span> &lt;span style="color:#f92672">=&lt;/span> () =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;透過 Clipboard 複製至剪貼簿成功&amp;#39;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">reject&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#a6e22e">err&lt;/span>) =&amp;gt; {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">error&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;透過 Clipboard 複製至剪貼簿失敗:&amp;#39;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>.&lt;span style="color:#a6e22e">toString&lt;/span>() );
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">navigator&lt;/span>.&lt;span style="color:#a6e22e">clipboard&lt;/span>.&lt;span style="color:#a6e22e">writeText&lt;/span>(&lt;span style="color:#a6e22e">text&lt;/span>).&lt;span style="color:#a6e22e">then&lt;/span>(&lt;span style="color:#a6e22e">resolve&lt;/span>, &lt;span style="color:#a6e22e">reject&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="複製隱藏元素">複製隱藏元素&lt;/h2>
+&lt;p>document.execCommand(&amp;lsquo;copy&amp;rsquo;)&lt;/p></description></item><item><title>[DIY] 用Typescript搭建簡易前端路由</title><link>https://blog.tigernaxo.com/posts/javascript/diy-simple-router/</link><pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/diy-simple-router/</guid><description>&lt;p>起始一個使用 vallina-ts 的 vite 專案並安裝套件，並使用 bootstrap 做簡單的 css 套用：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>npm init vite@latest route-test
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#依序選擇 vallina-&amp;gt;vallina-ts&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd route-test
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>npm i &lt;span style="color:#75715e"># 安裝套件&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>npm i bootstrap &lt;span style="color:#75715e"># 安裝 bootstrap&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 index.html 新增元素 app
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&amp;lt;!DOCTYPE html&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">html&lt;/span> &lt;span style="color:#a6e22e">lang&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;en&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">charset&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;UTF-8&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">link&lt;/span> &lt;span style="color:#a6e22e">rel&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;icon&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;image/svg+xml&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">href&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;favicon.svg&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">meta&lt;/span> &lt;span style="color:#a6e22e">name&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;viewport&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">content&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;width=device-width, initial-scale=1.0&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">title&lt;/span>&amp;gt;Vite App&amp;lt;/&lt;span style="color:#f92672">title&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">head&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;app&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;container-fluid&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;menu&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-0&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;root&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;row g-0&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;module&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;/src/main.ts&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">body&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">html&lt;/span>&amp;gt;&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p></description></item><item><title>[JS] 各種模組(module)</title><link>https://blog.tigernaxo.com/posts/javascript/js-module/</link><pubDate>Fri, 13 Nov 2020 06:26:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-module/</guid><description>&lt;p>JS模組規範有很多：AMD、UMD、CMD、commonJS、ES6 module&lt;/p>
+&lt;h1 id="reference">Reference&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/150248/" target="_blank" rel="noopener">JS模組規範：AMD、UMD、CMD、commonJS、ES6 module&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>[JS] Object 常用方法</title><link>https://blog.tigernaxo.com/posts/javascript/js-obj-func/</link><pubDate>Wed, 20 May 2020 23:31:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-obj-func/</guid><description>&lt;p>紀錄常用的 Object 方法，細節可以到MDN看&lt;/p>
+&lt;h1 id="objectcreate">Object.create&lt;/h1>
+&lt;blockquote>
+&lt;p>Object.create(proto, [propertiesObject])&lt;/p>&lt;/blockquote>
+&lt;p>以傳入的參數作為prototype建立一個新物件，這個方法只能複製只帶有 primitive type 無法 deep copy，建立的物件所帶的函式、巢狀物件、Array等等…都和 prototype 共用。&lt;/p>
+&lt;h2 id="以特定object-作為-prototype-建立新物件">以特定Object 作為 Prototype 建立新物件&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">objParent&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">parentFeild&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;parent feild&amp;#39;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">parentFunc&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> () {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;This is parent Func&amp;#39;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">deepObj&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">a&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">b&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 以 objParent 作為 prototype 建立 obj 物件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">obj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> Object.&lt;span style="color:#a6e22e">create&lt;/span>(&lt;span style="color:#a6e22e">objParent&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// objFeild 只存在 obj 上
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">objFeild&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;obj feild&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 可從建立的 obj 呼叫 prototype 的屬性, 方法
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">parentFeild&lt;/span> &lt;span style="color:#75715e">// &amp;#34;parent feild&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">parentFunc&lt;/span>() &lt;span style="color:#75715e">// This is parent Func
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 從 prototype 繼承的屬性可覆寫
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">parentFeild&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;overite str&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">parentFeild&lt;/span> &lt;span style="color:#75715e">// &amp;#34;overite str&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 父子元件的深層物件仍然指向同一個
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">deepObj&lt;/span>.&lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#75715e">// 1
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">objParent&lt;/span>.&lt;span style="color:#a6e22e">deepObj&lt;/span>.&lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">9&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">obj&lt;/span>.&lt;span style="color:#a6e22e">deepObj&lt;/span>.&lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#75715e">// 9
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="objectfromentries">Object.fromEntries&lt;/h1>
+&lt;p>從 Array 或 key-value map 產生 Object&lt;/p></description></item><item><title>[JS] JavaScript 當中的原型繼承鏈模型</title><link>https://blog.tigernaxo.com/posts/javascript/js-prototype/</link><pubDate>Wed, 20 May 2020 09:37:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-prototype/</guid><description>&lt;h1 id="基於原型-prototype-based-的-javascript">基於原型 (Prototype-Based) 的 JavaScript&lt;/h1>
+&lt;p>一般物件導向式(OOP; Object Oriented Programming) 程式語言 (如：java、c++、c#) 當中的物件是由類別模板 (class) 產生實體物件 (instance)，實體物件的屬性各自獨立。類別模板上可設置共用的靜態資源包含靜態方法 (static method)、靜態屬性 (static field)，而這些靜態資源可以在沒有建立實體的情況下透過類別名稱直接取用。&lt;/p>
+&lt;p>JavaScript 中的物件通常隸屬於另一個物件，這種隸屬關係類似物件導向語言的繼承，而在這種關係中的上層物件稱為原型 (Prototype)。原型本身又有自己所屬的原型，這種物件層層繼承的關係稱為原型鏈 (Prototype Chain)，幾乎所有物件的最上層原型是一個構造函數叫做 Object 的物件。&lt;/p>
+&lt;p>因此一般物件導向式語言稱為基於類別 (Class-Based) 的語言；而 Javascript 是基於原型 (Prototype-Based) 的語言。&lt;/p>
+&lt;h1 id="建立物件原型">建立物件原型&lt;/h1>
+&lt;p>JavaScript 本身沒有類別模板的概念，是以構造函數 (constructor) 建立物件，物件可以將 constructor 屬性指向構造函數，但並非所有物件都有構造函數，具有構造函數的物件可直接以構造函數產生原型鏈下一層物件；不具有構造函數的物件只能在其他物件建立完成後，以其他方式設置為其他物件的原型。&lt;/p>
+&lt;p>建立原型的方法就是直接宣告一個函數，JavaScript 會自動把該函數作為構造函數，並自動建立一個隸屬於 Object.prototype 之下的匿名物件，並把宣告的函數指定給該匿名物件的 constructor 屬性。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 宣告一個函數 Foo
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">Foo&lt;/span> (){}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Foo.prototype 在 Foo 被宣告時自動建立
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>.&lt;span style="color:#a6e22e">prototype&lt;/span> &lt;span style="color:#75715e">// {constructor: ƒ}
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// Foo.prototype 的 constructor 屬性自動指向 Foo
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>.&lt;span style="color:#a6e22e">prototype&lt;/span>.&lt;span style="color:#a6e22e">constructor&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">Foo&lt;/span> &lt;span style="color:#75715e">// true
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="建立物件">建立物件&lt;/h1>
+&lt;h2 id="透過構造函數">透過構造函數&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 建立一個物件
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">bar&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Foo&lt;/span>{} &lt;span style="color:#75715e">// {}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="直接對變數賦值">直接對變數賦值&lt;/h2>
+&lt;p>JavaScript 對變數賦值底層行為：以 Object 構造函數建立物件，然後對物件並賦值（故賦值發生在物件建立之後）&lt;/p></description></item><item><title>[JS] Array 常用方法</title><link>https://blog.tigernaxo.com/posts/javascript/js-arr-func/</link><pubDate>Wed, 29 Apr 2020 23:31:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/javascript/js-arr-func/</guid><description>&lt;p>紀錄常用的 Array 方法，細節可以到MDN看&lt;/p>
+&lt;h1 id="陣列操作">陣列操作&lt;/h1>
+&lt;h2 id="尾端彈出-arrayprototypepop推入-arrayprototypepush">尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()&lt;/h2>
+&lt;blockquote>
+&lt;p>arr.pop()&lt;br>
+arr.push(element1[, &amp;hellip;[, elementN]])&lt;/p>&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">pop&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [1, 2, 3]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">push&lt;/span>(&lt;span style="color:#ae81ff">5&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [1, 2, 3, 5]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="首端彈出-arrayprototypeshift推入-arrayprototypeunshift">首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()&lt;/h2>
+&lt;blockquote>
+&lt;p>arr.shift()&lt;br>
+arr.unshift(element1[, &amp;hellip;[, elementN]])&lt;/p>&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">shift&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [2, 3, 4]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">unshift&lt;/span>(&lt;span style="color:#ae81ff">0&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [0, 2, 3, 4]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="指定位置插入移除取代-arrayprototypesplice">指定位置插入/移除/取代 Array.prototype.splice()&lt;/h2>
+&lt;blockquote>
+&lt;p>let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &amp;hellip;]]]])&lt;/p>&lt;/blockquote>
+&lt;p>可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th style="text-align: center">添加item&lt;/th>
+&lt;th style="text-align: right">不添加item&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>deleteCount=0&lt;/td>
+&lt;td style="text-align: center">在現有位置添加元素&lt;/td>
+&lt;td style="text-align: right">(無意義)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>deleteCount&amp;gt;0&lt;/td>
+&lt;td style="text-align: center">取代現有元素&lt;/td>
+&lt;td style="text-align: right">範圍移除元素&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="範圍移除元素">範圍移除元素&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#ae81ff">6&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 移除索引位置3的元素，移除範圍為1
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">removed&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">splice&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">removed&lt;/span>) &lt;span style="color:#75715e">// [3]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [0, 1, 2, 4, 5, 6]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="在現有位置添加元素">在現有位置添加元素&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#ae81ff">6&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 移除索引位置3的元素，移除範圍為0，並且插入3.1, 3.2
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">removed&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">splice&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">3.1&lt;/span>, &lt;span style="color:#ae81ff">3.2&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 這時候獲得的 removed 為空陣列
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">removed&lt;/span>) &lt;span style="color:#75715e">// []
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 插入的元素從索引位置3的地方開始
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [0, 1, 2, 3.1, 3.2, 3, 4, 5, 6]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="取代現有元素">取代現有元素&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>&lt;span style="color:#f92672">=&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">4&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#ae81ff">6&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 移除索引為3的元素，移除長度範圍為2
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 並且插入元素 10, 11, 12
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">removed&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">arr&lt;/span>.&lt;span style="color:#a6e22e">splice&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>, &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#ae81ff">10&lt;/span>, &lt;span style="color:#ae81ff">11&lt;/span>, &lt;span style="color:#ae81ff">12&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">removed&lt;/span>) &lt;span style="color:#75715e">// [3, 4]
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#a6e22e">console&lt;/span>.&lt;span style="color:#a6e22e">log&lt;/span>(&lt;span style="color:#a6e22e">arr&lt;/span>) &lt;span style="color:#75715e">// [0, 1, 2, 10, 11, 12, 5, 6]
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="複製陣列內特定區塊至特定位置-arrayprototypecopywithin">複製陣列內特定區塊至特定位置 Array.prototype.copyWithin()&lt;/h2>
+&lt;blockquote>
+&lt;p>arr.copyWithin(target[, start[, end]])&lt;/p></description></item></channel></rss>
