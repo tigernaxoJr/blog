@@ -1,166 +1,151 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[維運] DevOps on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/devops/</link><description>Recent content in [維運] DevOps on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 27 May 2025 14:31:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>[K8s] 安裝</title><link>https://blog.tigernaxo.com/posts/devops/k8s-debian-kubeadm/</link><pubDate>Sat, 17 Jun 2023 22:28:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/k8s-debian-kubeadm/</guid><description>&lt;h2 id="prerequest">Prerequest&lt;/h2>
 &lt;p>已安裝 Debian 11，並且 ssh 可連線&lt;/p>
 &lt;h3 id="disable-swap">disable swap&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sed -i &lt;span style="color:#e6db74">&amp;#39;/\/swap/s/^/#/&amp;#39;&lt;/span> /etc/fstab
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>swapoff -a
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="container-runtime-cri-o">Container Runtime (CRI-O)&lt;/h2>
+&lt;pre>&lt;code class="language-bash">sed -i '/\/swap/s/^/#/' /etc/fstab
+swapoff -a
+&lt;/code>&lt;/pre>
+&lt;h2 id="container-runtime-cri-o">Container Runtime (CRI-O)&lt;/h2>
 &lt;p>Forwarding IPv4 and letting iptables&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>cat &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">overlay
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">br_netfilter
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">EOF&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>modprobe overlay
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>modprobe br_netfilter
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># sysctl params required by setup, params persist across reboots&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cat &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">net.bridge.bridge-nf-call-iptables = 1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">net.bridge.bridge-nf-call-ip6tables = 1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">net.ipv4.ip_forward = 1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">EOF&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Apply sysctl params without reboot&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sysctl --system
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>OS&lt;span style="color:#f92672">=&lt;/span>Debian_11
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>VERSION&lt;span style="color:#f92672">=&lt;/span>1.27
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#39;deb http://deb.debian.org/debian buster-backports main&amp;#39;&lt;/span> &amp;gt; /etc/apt/sources.list.d/backports.list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt install -y -t buster-backports libseccomp2 &lt;span style="color:#f92672">||&lt;/span> apt update -y -t buster-backports libseccomp2
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt install -y gnupg gnupg2 curl
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;deb [signed-by=/usr/share/keyrings/libcontainers-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/&lt;/span>$OS&lt;span style="color:#e6db74">/ /&amp;#34;&lt;/span> &amp;gt; /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;deb [signed-by=/usr/share/keyrings/libcontainers-crio-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/&lt;/span>$VERSION&lt;span style="color:#e6db74">/&lt;/span>$OS&lt;span style="color:#e6db74">/ /&amp;#34;&lt;/span> &amp;gt; /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mkdir -p /usr/share/keyrings
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | gpg --dearmor -o /usr/share/keyrings/libcontainers-archive-keyring.gpg
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/Release.key | gpg --dearmor -o /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-get update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-get install -y cri-o cri-o-runc
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>systemctl daemon-reload
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>systemctl enable crio
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>systemctl start crio
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="install-kubeadm">Install kubeadm&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>apt-get update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-get install -y apt-transport-https ca-certificates curl
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mkdir -p /etc/apt/keyrings
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&amp;#34;&lt;/span> | sudo tee /etc/apt/sources.list.d/kubernetes.list
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-get update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-get install -y kubelet kubeadm kubectl
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>apt-mark hold kubelet kubeadm kubectl
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="creating-a-cluster-with-kubeadm">Creating a cluster with kubeadm&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 設定 k8s server上網路&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cat &lt;span style="color:#e6db74">&amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">net.bridge.bridge-nf-call-ip6tables = 1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">net.bridge.bridge-nf-call-iptables = 1
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">EOF&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo sysctl --system
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>kubeadm init --pod-network-cidr&lt;span style="color:#f92672">=&lt;/span>10.85.0.0/16 --cri-socket&lt;span style="color:#f92672">=&lt;/span>unix:///var/run/crio/crio.sock
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">## kubectl 設定&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">### root&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">```&lt;/span>bash
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export KUBECONFIG&lt;span style="color:#f92672">=&lt;/span>/etc/kubernetes/admin.conf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="non-root-user">non-root user&lt;/h3>
+&lt;pre>&lt;code class="language-bash">cat &amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+modprobe overlay
+modprobe br_netfilter
+# sysctl params required by setup, params persist across reboots
+cat &amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+EOF
+# Apply sysctl params without reboot
+sysctl --system
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code class="language-bash">#!/bin/bash
+OS=Debian_11
+VERSION=1.27
+echo 'deb http://deb.debian.org/debian buster-backports main' &amp;gt; /etc/apt/sources.list.d/backports.list
+apt update
+apt install -y -t buster-backports libseccomp2 || apt update -y -t buster-backports libseccomp2
+apt install -y gnupg gnupg2 curl
+echo &amp;quot;deb [signed-by=/usr/share/keyrings/libcontainers-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/ /&amp;quot; &amp;gt; /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+echo &amp;quot;deb [signed-by=/usr/share/keyrings/libcontainers-crio-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/ /&amp;quot; &amp;gt; /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.list
+mkdir -p /usr/share/keyrings
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/$OS/Release.key | gpg --dearmor -o /usr/share/keyrings/libcontainers-archive-keyring.gpg
+curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/$VERSION/$OS/Release.key | gpg --dearmor -o /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg
+apt-get update
+apt-get install -y cri-o cri-o-runc
+systemctl daemon-reload
+systemctl enable crio
+systemctl start crio
+&lt;/code>&lt;/pre>
+&lt;h2 id="install-kubeadm">Install kubeadm&lt;/h2>
+&lt;pre>&lt;code class="language-bash">apt-get update
+apt-get install -y apt-transport-https ca-certificates curl
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+echo &amp;quot;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&amp;quot; | sudo tee /etc/apt/sources.list.d/kubernetes.list
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+&lt;/code>&lt;/pre>
+&lt;h2 id="creating-a-cluster-with-kubeadm">Creating a cluster with kubeadm&lt;/h2>
+&lt;pre>&lt;code class="language-bash"># 設定 k8s server上網路
+cat &amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sudo sysctl --system
+kubeadm init --pod-network-cidr=10.85.0.0/16 --cri-socket=unix:///var/run/crio/crio.sock
+## kubectl 設定
+### root
+```bash
+export KUBECONFIG=/etc/kubernetes/admin.conf
+&lt;/code>&lt;/pre>
+&lt;h3 id="non-root-user">non-root user&lt;/h3>
 &lt;p>make user sudor&lt;/p></description></item><item><title>[DIY] Git Action 附加編譯檔案到 Release Tag (Dotnet)</title><link>https://blog.tigernaxo.com/posts/devops/git-action-release-dotnet/</link><pubDate>Wed, 18 Jan 2023 09:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/git-action-release-dotnet/</guid><description>&lt;p>效果：新增一個 v 開頭的 Tag，等 Action 結束之後該 Release 會獲得相對應的 Release 壓縮檔案。&lt;/p>
 &lt;h2 id="步驟">步驟&lt;/h2>
 &lt;p>新增檔案&lt;code>.github/workflow/Release.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Release&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 新增 tag 的時候觸發&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tags&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 讓 workflow 獲得上傳檔案的權限&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">permissions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">contents&lt;/span>: &lt;span style="color:#ae81ff">write&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">build&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">strategy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">matrix&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">dotnet-version&lt;/span>: [&lt;span style="color:#e6db74">&amp;#34;5.0.x&amp;#34;&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 判斷 tag 如果是 v 開頭才繼續&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">if&lt;/span>: &lt;span style="color:#ae81ff">startsWith(github.ref, &amp;#39;refs/tags/v&amp;#39;)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 取得 Git 中的原始碼&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup .NET Core SDK ${{ matrix.dotnet-version }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/setup-dotnet@v3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">dotnet-version&lt;/span>: &lt;span style="color:#ae81ff">${{ matrix.dotnet-version }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 還原套件&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Restore&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 編譯&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">dotnet build --configuration Release --no-restore --no-restore -o api&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 壓縮編譯檔&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Compress&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">zip -r api.${{ github.ref_name }}.zip ./api&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 建立 Release 、上傳檔案&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Create Release and Upload Release Asset&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">softprops/action-gh-release@v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tag_name&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">body&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">draft&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">prerelease&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">files&lt;/span>: &lt;span style="color:#ae81ff">api.${{ github.ref_name }}.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>[DIY] Git Action 附加編譯檔案到 Release Tag (Vue)</title><link>https://blog.tigernaxo.com/posts/devops/git-action-release-vue/</link><pubDate>Wed, 18 Jan 2023 09:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/git-action-release-vue/</guid><description>&lt;p>效果：新增一個 v 開頭的 Tag，等 Action 結束之後該 Release 會獲得相對應的 Release 壓縮檔案。&lt;/p>
+&lt;pre>&lt;code class="language-yaml">name: Release
+# 新增 tag 的時候觸發
+on:
+push:
+tags:
+- &amp;quot;*&amp;quot;
+# 讓 workflow 獲得上傳檔案的權限
+permissions:
+contents: write
+jobs:
+build:
+runs-on: ubuntu-latest
+strategy:
+matrix:
+dotnet-version: [&amp;quot;5.0.x&amp;quot;]
+# 判斷 tag 如果是 v 開頭才繼續
+if: startsWith(github.ref, 'refs/tags/v')
+steps:
+# 取得 Git 中的原始碼
+- uses: actions/checkout@v3
+- name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+uses: actions/setup-dotnet@v3
+with:
+dotnet-version: ${{ matrix.dotnet-version }}
+# 還原套件
+- name: Restore
+run: dotnet restore
+# 編譯
+- name: Build
+run: dotnet build --configuration Release --no-restore --no-restore -o api
+# 壓縮編譯檔
+- name: Compress
+run: zip -r api.${{ github.ref_name }}.zip ./api
+# 建立 Release 、上傳檔案
+- name: Create Release and Upload Release Asset
+uses: softprops/action-gh-release@v1
+with:
+tag_name: ${{ github.ref_name }}
+name: ${{ github.ref_name }}
+body: ${{ github.ref_name }}
+draft: false
+prerelease: false
+files: api.${{ github.ref_name }}.zip
+&lt;/code>&lt;/pre></description></item><item><title>[DIY] Git Action 附加編譯檔案到 Release Tag (Vue)</title><link>https://blog.tigernaxo.com/posts/devops/git-action-release-vue/</link><pubDate>Wed, 18 Jan 2023 09:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/git-action-release-vue/</guid><description>&lt;p>效果：新增一個 v 開頭的 Tag，等 Action 結束之後該 Release 會獲得相對應的 Release 壓縮檔案。&lt;/p>
 &lt;h2 id="步驟">步驟&lt;/h2>
 &lt;p>新增檔案&lt;code>.github/workflow/Release.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Release&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 新增 tag 的時候觸發&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tags&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 讓 workflow 獲得上傳檔案的權限&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">permissions&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">contents&lt;/span>: &lt;span style="color:#ae81ff">write&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">build&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 判斷 tag 如果是 v 開頭才繼續&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">if&lt;/span>: &lt;span style="color:#ae81ff">startsWith(github.ref, &amp;#39;refs/tags/v&amp;#39;)&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 取得 Git 中的原始碼&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v3&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 編譯&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build SPA&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">yarn &amp;amp;&amp;amp; yarn build &amp;amp;&amp;amp; mv dist/ app/&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 壓縮編譯檔&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Compress&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">zip -r app.${{ github.ref_name }}.zip ./app&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># 建立 Release 、上傳檔案&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Create Release and Upload Release Asset&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">softprops/action-gh-release@v1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tag_name&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }} &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">body&lt;/span>: &lt;span style="color:#ae81ff">${{ github.ref_name }}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">draft&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">prerelease&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">files&lt;/span>: &lt;span style="color:#ae81ff">app.${{ github.ref_name }}.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</title><link>https://blog.tigernaxo.com/posts/devops/git-orphan-worktree/</link><pubDate>Thu, 25 Aug 2022 14:23:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/git-orphan-worktree/</guid><description>&lt;p>目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。&lt;/p>
+&lt;pre>&lt;code class="language-yaml">name: Release
+# 新增 tag 的時候觸發
+on:
+push:
+tags:
+- &amp;quot;*&amp;quot;
+# 讓 workflow 獲得上傳檔案的權限
+permissions:
+contents: write
+jobs:
+build:
+runs-on: ubuntu-latest
+# 判斷 tag 如果是 v 開頭才繼續
+if: startsWith(github.ref, 'refs/tags/v')
+steps:
+# 取得 Git 中的原始碼
+- uses: actions/checkout@v3
+# 編譯
+- name: Build SPA
+run: yarn &amp;amp;&amp;amp; yarn build &amp;amp;&amp;amp; mv dist/ app/
+# 壓縮編譯檔
+- name: Compress
+run: zip -r app.${{ github.ref_name }}.zip ./app
+# 建立 Release 、上傳檔案
+- name: Create Release and Upload Release Asset
+uses: softprops/action-gh-release@v1
+with:
+tag_name: ${{ github.ref_name }}
+name: ${{ github.ref_name }}
+body: ${{ github.ref_name }}
+draft: false
+prerelease: false
+files: app.${{ github.ref_name }}.zip
+&lt;/code>&lt;/pre></description></item><item><title>[DIY] 利用 orphan branch 和 worktree 在同一 Git 儲存庫控管原始碼與靜態資源分支</title><link>https://blog.tigernaxo.com/posts/devops/git-orphan-worktree/</link><pubDate>Thu, 25 Aug 2022 14:23:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/git-orphan-worktree/</guid><description>&lt;p>目前使用 docker 疊前端的編譯環境比較複雜，不比本機端方便，本篇的把 SSG 發布流程移植到前端專案。&lt;/p>
 &lt;ul>
 &lt;li>一鍵產生前端靜態資源到特定分支，可設定該分支進入 CI/CD 流程。&lt;/li>
 &lt;li>在同一 Git Repo 管理部屬的靜態資源與原始碼。
@@ -169,76 +154,70 @@ P.S.這裡是以 quasar CLI 為例，專案放在 gitlab，腳本可在 git bash
 &lt;h2 id="git-設定">Git 設定&lt;/h2>
 &lt;h3 id="建立一個-spa-orphan-branch">建立一個 spa orphan branch&lt;/h3>
 &lt;p>P.S. 不需在 gitlab 上事先新增相對應的 branch&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git checkout --orphan spa
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git reset --hard
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git commit --allow-empty -m &lt;span style="color:#e6db74">&amp;#34;Initializing gh-pages branch&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push origin spa
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git checkout master
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="新增部屬腳本-deploysh">新增部屬腳本 deploy.sh&lt;/h3>
+&lt;pre>&lt;code class="language-bash">git checkout --orphan spa
+git reset --hard
+git commit --allow-empty -m &amp;quot;Initializing gh-pages branch&amp;quot;
+git push origin spa
+git checkout master
+&lt;/code>&lt;/pre>
+&lt;h3 id="新增部屬腳本-deploysh">新增部屬腳本 deploy.sh&lt;/h3>
 &lt;p>新增到專案跟目錄&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#75715e"># 如果要檢查是否有 commit才進行部屬，就取消註解&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># if [ &amp;#34;`git status -s`&amp;#34; ]&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># then &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># echo &amp;#34;The working directory is dirty. Please commit any pending changes.&amp;#34; &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># exit 1;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># fi&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Deleting old publication&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rm -rf dist
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mkdir dist
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 清空 worktree&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git worktree prune
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rm -rf .git/worktrees/dist/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 新增 worktree&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Checking out spa branch into /dist&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git worktree add -B spa dist origin/spa
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Generating site&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>quasar build &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> cp -r deploy/. dist/
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;Updating spa branch&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd dist &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> git add --all &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> git commit -m &lt;span style="color:#e6db74">&amp;#34;Publishing to spa &amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#echo &amp;#34;Pushing to github&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git push --all
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改-packagejson-新增一項-scriptdeploy">修改 package.json 新增一項 script：deploy&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#34;deploy&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;bash deploy.sh&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="把-branch-設置為-protected">把 branch 設置為 Protected&lt;/h3>
+&lt;pre>&lt;code class="language-bash">#!/bin/bash
+# 如果要檢查是否有 commit才進行部屬，就取消註解
+# if [ &amp;quot;`git status -s`&amp;quot; ]
+# then
+# echo &amp;quot;The working directory is dirty. Please commit any pending changes.&amp;quot;
+# exit 1;
+# fi
+echo &amp;quot;Deleting old publication&amp;quot;
+rm -rf dist
+mkdir dist
+# 清空 worktree
+git worktree prune
+rm -rf .git/worktrees/dist/
+# 新增 worktree
+echo &amp;quot;Checking out spa branch into /dist&amp;quot;
+git worktree add -B spa dist origin/spa
+echo &amp;quot;Generating site&amp;quot;
+quasar build &amp;amp;&amp;amp; cp -r deploy/. dist/
+echo &amp;quot;Updating spa branch&amp;quot;
+cd dist &amp;amp;&amp;amp; git add --all &amp;amp;&amp;amp; git commit -m &amp;quot;Publishing to spa &amp;quot;
+#echo &amp;quot;Pushing to github&amp;quot;
+git push --all
+&lt;/code>&lt;/pre>
+&lt;h3 id="修改-packagejson-新增一項-scriptdeploy">修改 package.json 新增一項 script：deploy&lt;/h3>
+&lt;pre>&lt;code class="language-json">&amp;quot;deploy&amp;quot;: &amp;quot;bash deploy.sh&amp;quot;,
+&lt;/code>&lt;/pre>
+&lt;h3 id="把-branch-設置為-protected">把 branch 設置為 Protected&lt;/h3>
 &lt;p>先執行一次 &lt;code>npm run deploy&lt;/code>，讓 git 上產生 spa 這個 orphan branch
 再到這裡把 spa 設定為 Protected Branche：&lt;code>Settings-&amp;gt;Repository-&amp;gt;Protected Branches&lt;/code>&lt;/p></description></item><item><title>[DevOps] CI/CD-01 安裝 Jenkins</title><link>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</link><pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</guid><description>&lt;h1 id="環境">環境&lt;/h1>
 &lt;p>硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。
 環境部分需要安裝 Java (8 或 11) 和 Docker&lt;/p>
 &lt;h1 id="安裝-docker">安裝 Docker&lt;/h1>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 卸載舊的 docker&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt-get remove -y docker docker-engine docker.io containerd runc
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 安裝必要的套件&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt-get update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt-get install -y &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> apt-transport-https &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> ca-certificates &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> curl &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> gnupg &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> lsb-release
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 添加 Docker 官方 GPG key&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 設置 stable 版本的 docker repository&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#e6db74">&amp;#34;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> &lt;/span>&lt;span style="color:#66d9ef">$(&lt;/span>lsb_release -cs&lt;span style="color:#66d9ef">)&lt;/span>&lt;span style="color:#e6db74"> stable&amp;#34;&lt;/span> | sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 安裝 Docker Engine&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt-get update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 下載測試 image 並執行，預期會得到輸出然後 container 就會結束&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo docker run hello-world
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="執行-jenkins">執行 Jenkins&lt;/h1>
+&lt;pre>&lt;code class="language-bash"># 卸載舊的 docker
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+# 安裝必要的套件
+# apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo
+sudo apt-get update
+sudo apt-get install -y \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg \
+lsb-release
+# 添加 Docker 官方 GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# 設置 stable 版本的 docker repository
+echo \
+&amp;quot;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable&amp;quot; | sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+# 安裝 Docker Engine
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+# 下載測試 image 並執行，預期會得到輸出然後 container 就會結束
+sudo docker run hello-world
+&lt;/code>&lt;/pre>
+&lt;h1 id="執行-jenkins">執行 Jenkins&lt;/h1>
 &lt;p>接著執行 Jenkins image，取得首次登入密碼&lt;/p></description></item><item><title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title><link>https://blog.tigernaxo.com/posts/devops/sonarqube_netcore31/</link><pubDate>Wed, 22 Sep 2021 11:11:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/sonarqube_netcore31/</guid><description>&lt;p>弱點掃描時常使用 owasp top 10 作為報告，
 然而 owasp 軟體一年要價不菲，委外掃一次也是非常貴，
 使用免費的 SonarQube 將弱點掃描整合到 CI/CD 階段，
@@ -264,9 +243,10 @@ Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server �
 &lt;li>server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。&lt;/li>
 &lt;/ul>
 &lt;h2 id="安裝-openjdk-11">安裝 OpenJDK 11&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo apt update
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt upgrade
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo apt install openjdk-11-jdk
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 確認 java 版本&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>java --version
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然後在 &lt;code>.bashrc&lt;/code> 裡面把 Java 添加到 PATH 變數上。&lt;/p></description></item></channel></rss>
+&lt;pre>&lt;code class="language-bash">sudo apt update
+sudo apt upgrade
+sudo apt install openjdk-11-jdk
+# 確認 java 版本
+java --version
+&lt;/code>&lt;/pre>
+&lt;p>然後在 &lt;code>.bashrc&lt;/code> 裡面把 Java 添加到 PATH 變數上。&lt;/p></description></item></channel></rss>

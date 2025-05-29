@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
+<!doctype html><html lang=en><head><title>[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.1d0a40547a1ee0f84ea97e79640ba8cc1ab51593037b50b8f4ec8055371dd70a.css integrity="sha256-HQpAVHoe4PhOqX55ZAuozBq1FZMDe1C49OyAVTcd1wo="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[Security] 利用免費開源資安檢測軟體 SonarQube 檢測 .NET Core 程式碼"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
 <i data-feather=sidebar></i>
 </button>
 <a class=navbar-brand href=/>YuCheng's Site</a>
@@ -16,70 +16,70 @@ Scanner 除了能夠在 locale 端使用，還能直接整合到 CI/CD Server �
 以後在實際機器上安裝就可以作為參考，</p><h1 id=準備-linux-server>準備 Linux Server</h1><h2 id=硬體>硬體</h2><p>個人使用或小規模的團隊在一台機器上安裝就足夠使用了，
 如果需要架設提供大量服務的伺服器，官網也提供 Cluster 的安裝方式方便做 Loading Balance。</p><p>這裡紀錄在一台 Ubuntu 20.04 上架設。
 關於 Linux 安裝過程在這裡不加贅述，
-官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：</p><ul><li>RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。</li><li>上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。</li><li>server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。</li></ul><h2 id=安裝-openjdk-11>安裝 OpenJDK 11</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo apt update
-</span></span><span style=display:flex><span>sudo apt upgrade
-</span></span><span style=display:flex><span>sudo apt install openjdk-11-jdk
-</span></span><span style=display:flex><span><span style=color:#75715e># 確認 java 版本</span>
-</span></span><span style=display:flex><span>java --version
-</span></span></code></pre></div><p>然後在 <code>.bashrc</code> 裡面把 Java 添加到 PATH 變數上。</p><h2 id=安裝-postgresql-13>安裝 PostgreSQL 13</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#添加 apt-key</span>
-</span></span><span style=display:flex><span>wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-</span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main&#34;</span> |sudo tee  /etc/apt/sources.list.d/pgdg.list
-</span></span><span style=display:flex><span>sudo apt update
-</span></span><span style=display:flex><span><span style=color:#75715e># 安裝資料庫</span>
-</span></span><span style=display:flex><span>sudo apt install postgresql-13 postgresql-client-13
-</span></span><span style=display:flex><span>systemctl status postgresql.service <span style=color:#75715e>#查看 postgresql 服務狀態</span>
-</span></span></code></pre></div><p>設置密碼</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>$</span> sudo <span style=color:#f92672>-</span>u postgres psql
-</span></span><span style=display:flex><span><span style=color:#f92672>#</span> <span style=color:#66d9ef>create</span> <span style=color:#66d9ef>database</span> sonarqube; <span style=color:#75715e>-- 建立資料庫
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>DATABASE</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>#</span> <span style=color:#66d9ef>create</span> <span style=color:#66d9ef>user</span> sonarqube <span style=color:#66d9ef>with</span> <span style=color:#66d9ef>encrypted</span> password <span style=color:#e6db74>&#39;mypass&#39;</span>; <span style=color:#75715e>-- 建立資料庫使用者和密碼
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>CREATE</span> <span style=color:#66d9ef>ROLE</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>#</span> <span style=color:#66d9ef>grant</span> <span style=color:#66d9ef>all</span> <span style=color:#66d9ef>privileges</span> <span style=color:#66d9ef>on</span> <span style=color:#66d9ef>database</span> sonarqube <span style=color:#66d9ef>to</span> sonarqube; <span style=color:#75715e>-- 設定資料庫權限
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>GRANT</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>#</span> EXIT;
-</span></span></code></pre></div><p>如果資料庫和 SonarQube Server 不在同一台機器上，
-必須透過網路連線則要設定監聽、白名單設定檔：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># /etc/postgresql/13/main/postgresql.conf</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 監聽所有位址連線</span>
-</span></span><span style=display:flex><span>listen_addresses <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;*&#39;</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 或是只監聽特定 IP 的連線</span>
-</span></span><span style=display:flex><span>listen_addresses <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;192.168.10.11&#39;</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># /etc/postgresql/13/main/pg_hba.conf</span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 所有連線都視為白名單</span>
-</span></span><span style=display:flex><span>host all all 0.0.0.0/0 md5
-</span></span><span style=display:flex><span><span style=color:#75715e># 或是只將特定的 IP 加為白名單</span>
-</span></span><span style=display:flex><span>host all all 10.10.10.0/24 md5
-</span></span></code></pre></div><h2 id=調整-linux-限制>調整 Linux 限制</h2><p>SonarQube 對於 Linux 作為 Server 有下面的要求：</p><ul><li>vm.max_map_count >= 524288</li><li>fs.file-max >= 131072</li><li>SonarQube user 可開啟的 file descriptors >= 131072</li><li>SonarQube user 可開啟的 threads >= 8192</li></ul><p>首先查看 Ubuntu 20.04 的預設限制，發現只需要調整 vm.max_map_count 和 ulimit -n</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sysctl vm.max_map_count <span style=color:#75715e># 65530</span>
-</span></span><span style=display:flex><span>sysctl fs.file-max <span style=color:#75715e># 9223372036854775807</span>
-</span></span><span style=display:flex><span>ulimit -n <span style=color:#75715e># 1024</span>
-</span></span><span style=display:flex><span>ulimit -u <span style=color:#75715e>#15392</span>
-</span></span></code></pre></div><p>進行調整，附上其他參數的調整方法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo sysctl -w vm.max_map_count<span style=color:#f92672>=</span><span style=color:#ae81ff>524288</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#sudo sysctl -w fs.file-max=131072</span>
-</span></span><span style=display:flex><span><span style=color:#75715e>#ulimit -n 131072</span>
-</span></span><span style=display:flex><span>ulimit -u <span style=color:#ae81ff>8192</span>
-</span></span></code></pre></div><p>上面的調整都是只對使用者登入階段暫時發生作用，
-因此另外新增 conf 文件為使用者 sonarqube 預設解除限制：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># /etc/sysctl.d/99-sonarqube.conf</span>
-</span></span><span style=display:flex><span>sonarqube   -   nofile   <span style=color:#ae81ff>131072</span>
-</span></span><span style=display:flex><span>sonarqube   -   nproc    <span style=color:#ae81ff>8192</span>
-</span></span></code></pre></div><h2 id=安裝-sonarqube-server-901>安裝 SonarQube Server 9.0.1</h2><h3 id=下載-server-端程式>下載 Server 端程式</h3><p>先從<a href=https://www.sonarqube.org/downloads/ target=_blank rel=noopener>這裡</a>找到下載連結，
-我下載的是 Community 最新版本。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 下載</span>
-</span></span><span style=display:flex><span>wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.1.46107.zip
-</span></span><span style=display:flex><span><span style=color:#75715e># 解壓縮</span>
-</span></span><span style=display:flex><span>unzip sonarqube-9.0.1.46107.zip
-</span></span></code></pre></div><h3 id=設置>設置</h3><p>修改檔案 <code>$SONARQUBE-HOME/conf/sonar.properties</code>，
+官方提到硬體有幾個注意事項，對現代的硬體來說其實都還好，比較要注意的是硬碟空間：</p><ul><li>RAM 至少要 2G；free RAM 至少要 1G (所以用 Windows server 就要準備大很多喔)。</li><li>上傳報告需要一定的空間，因次對硬碟的空間與效能有一定的要求，不夠的話容易太慢。</li><li>server side 不支援 32-bit 作業系統；但 Scanner 可以支援 32-bit systems。</li></ul><h2 id=安裝-openjdk-11>安裝 OpenJDK 11</h2><pre><code class=language-bash>sudo apt update
+sudo apt upgrade
+sudo apt install openjdk-11-jdk
+# 確認 java 版本
+java --version
+</code></pre><p>然後在 <code>.bashrc</code> 裡面把 Java 添加到 PATH 變數上。</p><h2 id=安裝-postgresql-13>安裝 PostgreSQL 13</h2><pre><code class=language-bash>#添加 apt-key
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+echo &quot;deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main&quot; |sudo tee  /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+# 安裝資料庫
+sudo apt install postgresql-13 postgresql-client-13
+systemctl status postgresql.service #查看 postgresql 服務狀態
+</code></pre><p>設置密碼</p><pre><code class=language-sql>$ sudo -u postgres psql
+# create database sonarqube; -- 建立資料庫
+CREATE DATABASE
+# create user sonarqube with encrypted password 'mypass'; -- 建立資料庫使用者和密碼
+CREATE ROLE
+# grant all privileges on database sonarqube to sonarqube; -- 設定資料庫權限
+GRANT
+# EXIT;
+</code></pre><p>如果資料庫和 SonarQube Server 不在同一台機器上，
+必須透過網路連線則要設定監聽、白名單設定檔：</p><pre><code class=language-bash># /etc/postgresql/13/main/postgresql.conf
+# 監聽所有位址連線
+listen_addresses = '*'
+# 或是只監聽特定 IP 的連線
+listen_addresses = '192.168.10.11'
+</code></pre><pre><code class=language-bash># /etc/postgresql/13/main/pg_hba.conf
+# 所有連線都視為白名單
+host all all 0.0.0.0/0 md5
+# 或是只將特定的 IP 加為白名單
+host all all 10.10.10.0/24 md5
+</code></pre><h2 id=調整-linux-限制>調整 Linux 限制</h2><p>SonarQube 對於 Linux 作為 Server 有下面的要求：</p><ul><li>vm.max_map_count >= 524288</li><li>fs.file-max >= 131072</li><li>SonarQube user 可開啟的 file descriptors >= 131072</li><li>SonarQube user 可開啟的 threads >= 8192</li></ul><p>首先查看 Ubuntu 20.04 的預設限制，發現只需要調整 vm.max_map_count 和 ulimit -n</p><pre><code class=language-bash>sysctl vm.max_map_count # 65530
+sysctl fs.file-max # 9223372036854775807
+ulimit -n # 1024
+ulimit -u #15392
+</code></pre><p>進行調整，附上其他參數的調整方法：</p><pre><code class=language-bash>sudo sysctl -w vm.max_map_count=524288
+#sudo sysctl -w fs.file-max=131072
+#ulimit -n 131072
+ulimit -u 8192
+</code></pre><p>上面的調整都是只對使用者登入階段暫時發生作用，
+因此另外新增 conf 文件為使用者 sonarqube 預設解除限制：</p><pre><code class=language-bash># /etc/sysctl.d/99-sonarqube.conf
+sonarqube   -   nofile   131072
+sonarqube   -   nproc    8192
+</code></pre><h2 id=安裝-sonarqube-server-901>安裝 SonarQube Server 9.0.1</h2><h3 id=下載-server-端程式>下載 Server 端程式</h3><p>先從<a href=https://www.sonarqube.org/downloads/ target=_blank rel=noopener>這裡</a>找到下載連結，
+我下載的是 Community 最新版本。</p><pre><code class=language-bash># 下載
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.0.1.46107.zip
+# 解壓縮
+unzip sonarqube-9.0.1.46107.zip
+</code></pre><h3 id=設置>設置</h3><p>修改檔案 <code>$SONARQUBE-HOME/conf/sonar.properties</code>，
 設定 PostgreSQL 資料庫的連線，
-使用者名稱為 sonarqube，密碼 mypass， 使用的資料庫 sonarqube</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 資料庫設置</span>
-</span></span><span style=display:flex><span>sonar.jdbc.username<span style=color:#f92672>=</span>sonarqube
-</span></span><span style=display:flex><span>sonar.jdbc.password<span style=color:#f92672>=</span>mypass
-</span></span><span style=display:flex><span>sonar.jdbc.url<span style=color:#f92672>=</span>jdbc:postgresql://localhost/sonarqube
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># 設置 Elasticsearch data 存放位址</span>
-</span></span><span style=display:flex><span>sonar.path.data<span style=color:#f92672>=</span>/var/sonarqube/data
-</span></span><span style=display:flex><span>sonar.path.temp<span style=color:#f92672>=</span>/var/sonarqube/temp
-</span></span></code></pre></div><h3 id=設定密碼>設定密碼</h3><p>嘗試啟動 SonarQuebe Server</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>bin/linux-x86-64/sonar.sh start
-</span></span></code></pre></div><p>因為我是用連接埠轉送到虛擬機的9000，所以我打開的網址是 <code>http://127.0.0.1:8090</code>，
+使用者名稱為 sonarqube，密碼 mypass， 使用的資料庫 sonarqube</p><pre><code class=language-bash># 資料庫設置
+sonar.jdbc.username=sonarqube
+sonar.jdbc.password=mypass
+sonar.jdbc.url=jdbc:postgresql://localhost/sonarqube
+
+# 設置 Elasticsearch data 存放位址
+sonar.path.data=/var/sonarqube/data
+sonar.path.temp=/var/sonarqube/temp
+</code></pre><h3 id=設定密碼>設定密碼</h3><p>嘗試啟動 SonarQuebe Server</p><pre><code class=language-bash>bin/linux-x86-64/sonar.sh start
+</code></pre><p>因為我是用連接埠轉送到虛擬機的9000，所以我打開的網址是 <code>http://127.0.0.1:8090</code>，
 如果在本地機器上執行就是打開 <code>http://localhost:9000</code>，
 開啟後一開始會看到 SonarQube is starting，
 需要等待一下下就會出現登入畫面，
-用 admin/admin 登入後會馬上要求重設密碼。</p><h3 id=設置開機啟動>設置開機啟動</h3><p>新增一個 service 檔案 <code>/etc/systemd/system/sonarqube.service</code></p><pre tabindex=0><code>[Unit]
+用 admin/admin 登入後會馬上要求重設密碼。</p><h3 id=設置開機啟動>設置開機啟動</h3><p>新增一個 service 檔案 <code>/etc/systemd/system/sonarqube.service</code></p><pre><code>[Unit]
 Description=SonarQube Server
 
 [Service]
@@ -93,14 +93,14 @@ LimitNPROC=8192
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>設置開機啟動</p><pre tabindex=0><code>sudo systemctl enable sonarqube.service
+</code></pre><p>設置開機啟動</p><pre><code>sudo systemctl enable sonarqube.service
 </code></pre><h1 id=安裝-scanner>安裝 Scanner</h1><p>還沒有將 SonarQube 整合進 CI/CD 流程的需求之前，
 可以採取的方式是開發進行到一個階段在程式開發機掃描程式碼，
 再將結果上傳到 SonarQube Server，
 因為我的 .NET Core 開發環境是 Visual Studio 2019，
 所以 Scanner 安裝於 Windows 10 上。</p><blockquote><p>P.S.因為這裡的情境是在開發機上做分析，
 因此前提假設機器上已經安裝相應的 dotnet sdk，
-我是裝 3.1。</p></blockquote><h4 id=安裝-dotnet-sonarscanner>安裝 dotnet sonarscanner</h4><pre tabindex=0><code>dotnet tool install --global dotnet-sonarscanner
+我是裝 3.1。</p></blockquote><h4 id=安裝-dotnet-sonarscanner>安裝 dotnet sonarscanner</h4><pre><code>dotnet tool install --global dotnet-sonarscanner
 </code></pre><h4 id=安裝-jre-11>安裝 JRE 11</h4><p>到 Java 網站上抓 JRE 11安裝，這裡一樣要確認系統環境變數新增，
 新增 <code>JAVA_HOME</code> 系統變數，值為 <code>C:\Program Files\Java\jdk-11.0.12</code></p><h2 id=進行分析>進行分析</h2><p>從 SonarQube Web 介面新增一個專案，分析方式選擇 Locally：
 <img src=/posts/devops/sonarqube_netcore31/choose_analysis.jpg alt=選擇分析方式></p><p>建立一個分析專案，上面是專案名稱，
@@ -110,21 +110,21 @@ WantedBy=multi-user.target
 <img src=/posts/devops/sonarqube_netcore31/project_setting.png alt=專案設置></p><p>設置玩畢下面會自動出現程式碼，
 第一個區塊是要求先安裝剛剛安裝過的工具 dotnet-sonarqube 所以不需要理會，
 第二個區塊共有三行程式碼，
-把它複製起來貼到檔案 <code>sonarqube.bat</code>，然後把檔案放在要分析的專案資料夾底下。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bat data-lang=bat><span style=display:flex><span>dotnet sonarscanner begin /k:<span style=color:#e6db74>&#34;EVT-api&#34;</span> /d:sonar.host.url=<span style=color:#e6db74>&#34;http://localhost:6080&#34;</span>  /d:sonar.login=<span style=color:#e6db74>&#34;05759efdbea31b9abe4e5cba171841d88f2dc689&#34;</span>
-</span></span><span style=display:flex><span>dotnet build
-</span></span><span style=display:flex><span>dotnet sonarscanner end /d:sonar.login=<span style=color:#e6db74>&#34;05759efdbea31b9abe4e5cba171841d88f2dc689&#34;</span>
-</span></span></code></pre></div><p>最後打開小黑窗，切換到專案所在的工作目錄，執行這個 bat 檔案，
-接個 scanner 就會對程式碼進行分析、將結果上傳 SonarQube Server。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bat data-lang=bat><span style=display:flex><span>sonarqube.bat
-</span></span></code></pre></div><p>執行開始到完成大概長這樣：
+把它複製起來貼到檔案 <code>sonarqube.bat</code>，然後把檔案放在要分析的專案資料夾底下。</p><pre><code class=language-bat>dotnet sonarscanner begin /k:&quot;EVT-api&quot; /d:sonar.host.url=&quot;http://localhost:6080&quot;  /d:sonar.login=&quot;05759efdbea31b9abe4e5cba171841d88f2dc689&quot;
+dotnet build
+dotnet sonarscanner end /d:sonar.login=&quot;05759efdbea31b9abe4e5cba171841d88f2dc689&quot;
+</code></pre><p>最後打開小黑窗，切換到專案所在的工作目錄，執行這個 bat 檔案，
+接個 scanner 就會對程式碼進行分析、將結果上傳 SonarQube Server。</p><pre><code class=language-bat>sonarqube.bat
+</code></pre><p>執行開始到完成大概長這樣：
 <img src=/posts/devops/sonarqube_netcore31/scanner_start.png alt=掃描開始>
 <img src=/posts/devops/sonarqube_netcore31/scanner_finish.png alt=掃描完成></p><h2 id=檢視結果>檢視結果</h2><p>點選專案會呈現總覽頁面，就可以知道問題出在哪然後點選在意的看。
 <img src=/posts/devops/sonarqube_netcore31/project_overview.png alt="project overview">
 如果需要客製化的報表，
 可以使用 API 抓取資料再將資料用自己的方式呈現，
-在此暫不詳述。</p><h2 id=版本控制>版本控制</h2><p>再進行一次分析，會把新的程式碼有那些問題列出來，舊的程式碼有那些問題未改善</p><h2 id=不需要執行的事項>不需要執行的事項</h2><ul><li>Adding the JDBC Driver: 因為是使用 Postgresql，用內建的就好。</li></ul><h1 id=referecne>Referecne</h1><ul><li><a href=https://www.sonarqube.org/ target=_blank rel=noopener>SonarQube</a></li><li><a href=https://github.com/SonarSource/sonarqube target=_blank rel=noopener>SonarQube GitHub</a></li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts/DevOps/sonarqube_netcore31/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+在此暫不詳述。</p><h2 id=版本控制>版本控制</h2><p>再進行一次分析，會把新的程式碼有那些問題列出來，舊的程式碼有那些問題未改善</p><h2 id=不需要執行的事項>不需要執行的事項</h2><ul><li>Adding the JDBC Driver: 因為是使用 Postgresql，用內建的就好。</li></ul><h1 id=referecne>Referecne</h1><ul><li><a href=https://www.sonarqube.org/ target=_blank rel=noopener>SonarQube</a></li><li><a href=https://github.com/SonarSource/sonarqube target=_blank rel=noopener>SonarQube GitHub</a></li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/tigernaxoJr/blog/edit/main/content/posts/DevOps/sonarqube_netcore31/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
 Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/devops/k8s-debian-kubeadm/ title="[K8s] 安裝" class="btn filled-button"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>[K8s] 安裝</div></a></div><div class="col-md-6 next-article"><a href=/posts/fhir/fhir-smart-overview/ title="[FHIR] SMART Health IT" class="btn filled-button"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>[FHIR] SMART Health IT</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn type=button data-bs-toggle=tooltip data-bs-placement=left title="Scroll to top"><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center ps-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#硬體>硬體</a></li><li><a href=#安裝-openjdk-11>安裝 OpenJDK 11</a></li><li><a href=#安裝-postgresql-13>安裝 PostgreSQL 13</a></li><li><a href=#調整-linux-限制>調整 Linux 限制</a></li><li><a href=#安裝-sonarqube-server-901>安裝 SonarQube Server 9.0.1</a><ul><li><a href=#下載-server-端程式>下載 Server 端程式</a></li><li><a href=#設置>設置</a></li><li><a href=#設定密碼>設定密碼</a></li><li><a href=#設置開機啟動>設置開機啟動</a></li></ul></li></ul><ul><li><ul><li><ul><li><a href=#安裝-dotnet-sonarscanner>安裝 dotnet sonarscanner</a></li><li><a href=#安裝-jre-11>安裝 JRE 11</a></li></ul></li></ul></li><li><a href=#進行分析>進行分析</a></li><li><a href=#檢視結果>檢視結果</a></li><li><a href=#版本控制>版本控制</a></li><li><a href=#不需要執行的事項>不需要執行的事項</a></li></ul></nav></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-start"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:ycc@tigernaxo.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span></a></li><li><a href=https://github.com/tigernaxoJr target=_blank rel=noopener><span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span></a></li><li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target=_blank rel=noopener><span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span></a></li><li><a href=tel:+886919681059 target=_blank rel=noopener><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></a></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://blog.tigernaxo.com//index.xml>
 <input type=hidden name=schedule_type value=1>
 <small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
 <button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-start"><div class=col-md-4><a id=theme href=https://github.com/hugo-toha/toha target=_blank rel=noopener><img src=/images/theme-logo_hu_b3360284c55cf72d.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2020 Copyright.</div><div class="col-md-4 text-end"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.22babcef24279791b6f32a01a1f1cb863ef9ef9bc7102ea30d65299e2250e52e.js integrity="sha256-Irq87yQnl5G28yoBofHLhj7575vHEC6jDWUpniJQ5S4=" defer></script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.462fb4ab20b7246dd03f05bb696903160b324cc55d4ce20d423d37bd47a003ad.js integrity="sha256-Ri+0qyC3JG3QPwW7aWkDFgsyTMVdTOINQj03vUegA60=" defer></script></body></html>

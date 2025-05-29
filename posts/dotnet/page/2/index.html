@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><title>[後端] .NET</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o="><link rel=alternate type=application/rss+xml href=https://blog.tigernaxo.com/posts/dotnet/index.xml title="YuCheng's Site"><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-section" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
+<!doctype html><html lang=en><head><title>[後端] .NET</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.1d0a40547a1ee0f84ea97e79640ba8cc1ab51593037b50b8f4ec8055371dd70a.css integrity="sha256-HQpAVHoe4PhOqX55ZAuozBq1FZMDe1C49OyAVTcd1wo="><link rel=alternate type=application/rss+xml href=https://blog.tigernaxo.com/posts/dotnet/index.xml title="YuCheng's Site"><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-section" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
 <i data-feather=sidebar></i>
 </button>
 <a class=navbar-brand href=/>YuCheng's Site</a>
@@ -15,26 +15,133 @@ IAuthenticationService SignOutAsync 清除 Cookie 的 Claims 可儲存 ClaimsPri
 挑戰(Challenge) 未驗證使用者要存取需驗證才能存取的資源時， 授權服務會叫用 IAuthenticationService.ChallengeAsync 發起 challenge， challenge 被發起後所伴隨採取的行動稱為 challenge action， 且 challenge action 應讓使用者知道應該以哪一種驗證機制取得授權，常見的具體範例有：
 cookie 驗證方案將使用者轉址到登入頁面。 JWT 回傳 401 Unauthorized 狀態碼，並在 Header 帶入 www-authenticate: bearer。 禁止(Forbid) 已驗證的使用者要存取授權之外的資源時， 授權會叫用 IAuthenticationService.ForbidAsync 發起 Forbid， Forbid 發起後所伴隨採取的行動稱為 Forbid action， Forbid action 的目的是要讓使用者知道自己已通過認證、且不具權限訪問所請求的資源， 常見的具體範例有：</p></a></div><div class=card-footer><span class=float-start>Monday, November 23, 2020
 </span><a href=/posts/dotnet/startup-auth/auth_guild_1/ class="float-end btn btn-outline-info btn-sm">Read</a></div></div></div><div class=post-card><div class=card><div class=card-head><a href=/posts/dotnet/startup-signalr/guild_3_validate_token/ class=post-card-link><img class=card-img-top src=/images/default-hero.jpg alt="Hero Image"></a></div><div class=card-body><a href=/posts/dotnet/startup-signalr/guild_3_validate_token/ class=post-card-link><h5 class=card-title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</h5><p class="card-text post-summary">安裝套件 要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer 註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
-using Microsoft.AspNetCore.Authentication.JwtBearer; using Microsoft.AspNetCore.SignalR; using Microsoft.Extensions.Configuration; using Microsoft.Extensions.DependencyInjection; using Microsoft.IdentityModel.Tokens; using System.Diagnostics.CodeAnalysis; using System.IdentityModel.Tokens.Jwt; using System.Linq; using System.Threading.Tasks; namespace SignalR.Extensions.DependencyInjection { public static class MyAddConfig { public static IServiceCollection AddMyJWTAuth( [NotNull] this IServiceCollection services, IConfiguration config ) { services.AddAuthentication(options => { // Identity 預設是使用 Cookie authentication，必須手動設置為 JWT Bearer Auth: options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; }).AddJwtBearer(options => { // [注意]先解除 MapInboundClaims ，否則會因為套件中某些為向前相容而保留的 legacy code 使得 RoleClaimType 無法生效 // https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1214 if (options.SecurityTokenValidators.FirstOrDefault() is JwtSecurityTokenHandler jwtSecurityTokenHandler) jwtSecurityTokenHandler.MapInboundClaims = false; // 設置 Token 在授權後是否要儲存於 AuthenticationProperties options.SaveToken = true; // 設置各認證參數 options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "userId", // 設置 Http 請求的 User.Identity.Name、Hub 中 UserIdentifier 取值的 Claim 是 userId RoleClaimType = "roles", // 設置使用者的腳色從 type="roles" 的 claims 對應 ValidateLifetime = true, // 認證 Token 有效期間 ValidateIssuerSigningKey = true, //驗證 token 中的 key IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(config.GetValue&lt;string>("JWT:SignKey"))), // SignKey ValidateIssuer = false, // 不驗證簽發者 ValidateAudience = false // 不驗證 Audience (Token接收方) }; options.Events = new JwtBearerEvents { // 設定當 OnMessageReceived 事件被觸發時，獲取認證用的 access_token OnMessageReceived = context => { // 不同於標準夾帶於 header 的 http token，signalr 會透過網址參數發送 access token // ASP .NET Core 預設會將請求的 URL 皆做成 Log 紀錄，如果不想要網址列的 Token 被 Log 記錄下來必須參考 // https://docs.microsoft.com/aspnet/core/signalr/security#access-token-logging string accessToken = context.Request.Query["access_token"]; // 檢查請求路徑是否為 chathub var path = context.HttpContext.Request.Path; if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chathub"))) { // 把 token 丟進 MessageReceiveContext 當中 context.Token = accessToken; } return Task.CompletedTask; } }; }); services.AddSingleton&lt;IUserIdProvider, NameUserIdProvider>(); // 如果是使用 email claim 作為 user identifier 用下面這行並實作 EmailBasedUserIdProvider // services.AddSingleton&lt;IUserIdProvider, EmailBasedUserIdProvider>(); // NameUserIdProvider 和 EmailBasedUserIdProvider 無法同時使用!! return services; } } // 實作 SignalR 抓取使用者 Identity 的方法 IUserIdProvider.GetUserId // 提供服務容器注入給 SignalR 使用 public class NameUserIdProvider : IUserIdProvider { public string GetUserId(HubConnectionContext connection) { // 認證設定時設置好 NameClaimType，這裡直接回傳 User.Identity.Name 即可 return connection.User?.Identity?.Name; } } } 然後在 Startup.cs 當中添加對該類別的引用：</p></a></div><div class=card-footer><span class=float-start>Friday, November 20, 2020
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+註冊認證服務 新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務， 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應， 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId， 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用 ，該檔案程式碼如下：
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
+namespace SignalR.Extensions.DependencyInjection
+{
+public static class MyAddConfig
+{
+public static IServiceCollection AddMyJWTAuth(
+[NotNull] this IServiceCollection services,
+IConfiguration config
+)
+{
+services.AddAuthentication(options =>
+{
+// Identity 預設是使用 Cookie authentication，必須手動設置為 JWT Bearer Auth:
+options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+// [注意]先解除 MapInboundClaims ，否則會因為套件中某些為向前相容而保留的 legacy code 使得 RoleClaimType 無法生效
+// https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1214
+if (options.SecurityTokenValidators.FirstOrDefault() is JwtSecurityTokenHandler jwtSecurityTokenHandler)
+jwtSecurityTokenHandler.MapInboundClaims = false;
+// 設置 Token 在授權後是否要儲存於 AuthenticationProperties options.SaveToken = true;
+// 設置各認證參數
+options.TokenValidationParameters = new TokenValidationParameters
+{
+NameClaimType = "userId", // 設置 Http 請求的 User.Identity.Name、Hub 中 UserIdentifier 取值的 Claim 是 userId
+RoleClaimType = "roles", // 設置使用者的腳色從 type="roles" 的 claims 對應
+ValidateLifetime = true, // 認證 Token 有效期間
+ValidateIssuerSigningKey = true, //驗證 token 中的 key
+IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(config.GetValue&lt;string>("JWT:SignKey"))), // SignKey
+ValidateIssuer = false, // 不驗證簽發者
+ValidateAudience = false // 不驗證 Audience (Token接收方)
+};
+options.Events = new JwtBearerEvents
+{
+// 設定當 OnMessageReceived 事件被觸發時，獲取認證用的 access_token OnMessageReceived = context =>
+{
+// 不同於標準夾帶於 header 的 http token，signalr 會透過網址參數發送 access token // ASP .NET Core 預設會將請求的 URL 皆做成 Log 紀錄，如果不想要網址列的 Token 被 Log 記錄下來必須參考
+// https://docs.microsoft.com/aspnet/core/signalr/security#access-token-logging
+string accessToken = context.Request.Query["access_token"];
+// 檢查請求路徑是否為 chathub
+var path = context.HttpContext.Request.Path;
+if (!string.IsNullOrEmpty(accessToken) &&
+(path.StartsWithSegments("/chathub")))
+{
+// 把 token 丟進 MessageReceiveContext 當中
+context.Token = accessToken;
+}
+return Task.CompletedTask;
+}
+};
+});
+services.AddSingleton&lt;IUserIdProvider, NameUserIdProvider>();
+// 如果是使用 email claim 作為 user identifier 用下面這行並實作 EmailBasedUserIdProvider
+// services.AddSingleton&lt;IUserIdProvider, EmailBasedUserIdProvider>();
+// NameUserIdProvider 和 EmailBasedUserIdProvider 無法同時使用!!
+return services;
+}
+}
+// 實作 SignalR 抓取使用者 Identity 的方法 IUserIdProvider.GetUserId
+// 提供服務容器注入給 SignalR 使用
+public class NameUserIdProvider : IUserIdProvider
+{
+public string GetUserId(HubConnectionContext connection)
+{
+// 認證設定時設置好 NameClaimType，這裡直接回傳 User.Identity.Name 即可
+return connection.User?.Identity?.Name;
+}
+}
+}
+然後在 Startup.cs 當中添加對該類別的引用：</p></a></div><div class=card-footer><span class=float-start>Friday, November 20, 2020
 </span><a href=/posts/dotnet/startup-signalr/guild_3_validate_token/ class="float-end btn btn-outline-info btn-sm">Read</a></div></div></div><div class=post-card><div class=card><div class=card-head><a href=/posts/dotnet/startup-signalr/guild_4_front_end_login/ class=post-card-link><img class=card-img-top src=/images/default-hero.jpg alt="Hero Image"></a></div><div class=card-body><a href=/posts/dotnet/startup-signalr/guild_4_front_end_login/ class=post-card-link><h5 class=card-title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</h5><p class="card-text post-summary">安裝 axios SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：
 axios 一樣可以透過 LibMan 安裝~
-libman install axios@latest \ -p unpkg \ -d wwwroot/js/axios \ --files dist/axios.min.js 在 wwwRoot/index.html 添加對 axios 的引用：
-&lt;script src="./lib/axios/dist/axios.min.js">&lt;/script> 簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
-libman install bootstrap@5.0.0-alpha2 \ -p unpkg \ -d wwwroot/lib/bootstrap \ --files dist/js/bootstrap.min.js \ --files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
-&lt;script src="./lib/bootstrap/dist/js/bootstrap.min.js">&lt;/script> 現在將 wwwRoot/index.html 修改如下：
-&lt;!DOCTYPE html> &lt;html> &lt;head> &lt;meta charset="utf-8" /> &lt;title>&lt;/title> &lt;link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" /> &lt;/head> &lt;body> &lt;div class="container"> &lt;div class="row g-1 mt-4"> &lt;div class="col-2"> &lt;!-- 使用者名稱輸入框 --> &lt;input id="userInput" type="text" class="form-control" placeholder="User"> &lt;/div> &lt;div class="col-2"> &lt;!-- 密碼輸入框 --> &lt;input id="passInput" type="password" class="form-control" placeholder="Password"> &lt;/div> &lt;!-- 登入按鈕 --> &lt;div class="col-auto"> &lt;button id="loginButton" type="button" class="btn btn-outline-secondary">登入&lt;/button> &lt;/div> &lt;/div> &lt;div class="row g-1 mt-2"> &lt;!-- 訊息輸入框 --> &lt;div class="col-4"> &lt;input type="text" id="messageInput" class="form-control" placeholder="Message"/> &lt;/div> &lt;!-- 送出按鈕 --> &lt;div class="col-auto"> &lt;button id="sendButton" type="button" class="btn btn-outline-success">Send&lt;/button> &lt;/div> &lt;/div> &lt;/div> &lt;div class="row"> &lt;div class="col-12"> &lt;hr /> &lt;/div> &lt;/div> &lt;div class="row"> &lt;div class="col-6"> &lt;!-- 顯示訊息的ul --> &lt;ul id="messagesList">&lt;/ul> &lt;/div> &lt;/div> &lt;script src="./js/signalr/dist/browser/signalr.js">&lt;/script> &lt;script src="./js/chat.js">&lt;/script> &lt;script src="./lib/bootstrap/dist/js/bootstrap.min.js">&lt;/script> &lt;script src="./lib/axios/dist/axios.min.js">&lt;/script> &lt;/body> &lt;/html> 修改 Chat.js 官方範例中，SignalR連線是由網址參數傳遞，方法是在 withUrl 的第二個物件參數給一個 accessTokenFactory 回傳 token：</p></a></div><div class=card-footer><span class=float-start>Tuesday, November 10, 2020
+libman install axios@latest \
+-p unpkg \
+-d wwwroot/js/axios \
+--files dist/axios.min.js
+在 wwwRoot/index.html 添加對 axios 的引用：
+&lt;script src="./lib/axios/dist/axios.min.js">&lt;/script>
+簡易登入UI 雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：
+libman install bootstrap@5.0.0-alpha2 \
+-p unpkg \
+-d wwwroot/lib/bootstrap \
+--files dist/js/bootstrap.min.js \
+--files dist/css/bootstrap.min.css 在 wwwRoot/index.html 添加對 bootstrap css 的引用：
+&lt;script src="./lib/bootstrap/dist/js/bootstrap.min.js">&lt;/script>
+現在將 wwwRoot/index.html 修改如下：</p></a></div><div class=card-footer><span class=float-start>Tuesday, November 10, 2020
 </span><a href=/posts/dotnet/startup-signalr/guild_4_front_end_login/ class="float-end btn btn-outline-info btn-sm">Read</a></div></div></div><div class=post-card><div class=card><div class=card-head><a href=/posts/dotnet/startup-signalr/guild_2_issue_token/ class=post-card-link><img class=card-img-top src=/images/default-hero.jpg alt="Hero Image"></a></div><div class=card-body><a href=/posts/dotnet/startup-signalr/guild_2_issue_token/ class=post-card-link><h5 class=card-title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</h5><p class="card-text post-summary">SignalR驗證方式 SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：
 Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。 Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。 將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。
 以 Option pattern 取得 JWT 設定 這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：
 appsetting.json 將 JWT 相關的設定寫到 appsetting.json 當中： { "Logging": { "LogLevel": { "Default": "Information", "Microsoft": "Warning", "Microsoft.Hosting.Lifetime": "Information" } }, "JWT": { "Issuer": "Naxo", "Expires": "1440", // 憑證有效分鐘數 "SignKey": "myNameIsTigernaxo,ThisIsMyPersonalBlog" // 設定簽發/解密憑證的對稱式加密金鑰 }, "AllowedHosts": "*" }</p></a></div><div class=card-footer><span class=float-start>Saturday, November 7, 2020
 </span><a href=/posts/dotnet/startup-signalr/guild_2_issue_token/ class="float-end btn btn-outline-info btn-sm">Read</a></div></div></div><div class=post-card><div class=card><div class=card-head><a href=/posts/dotnet/startup-signalr/guild_1_start/ class=post-card-link><img class=card-img-top src=/images/default-hero.jpg alt="Hero Image"></a></div><div class=card-body><a href=/posts/dotnet/startup-signalr/guild_1_start/ class=post-card-link><h5 class=card-title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</h5><p class="card-text post-summary">這個系列會官方文件為主，保留必要的部分，並視情況修改部份程式、添加說明文字。
 建立 SignalR 專案 這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：
-# 建立專案 dotnet new webapi -o SignalR # 以 VS Code 打開專案 code -r signalr 建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
-using Microsoft.AspNetCore.SignalR; using System.Threading.Tasks; namespace SignalR.Hubs { // 這就是所謂的 SignalR 中樞 public class ChatHub : Hub { // 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數 public async Task SendMessage(string user, string message) { // 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message await Clients.All.SendAsync("ReceiveMessage", user, message); } } } 設定 Startup.cs 依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：</p></a></div><div class=card-footer><span class=float-start>Tuesday, November 3, 2020
+# 建立專案
+dotnet new webapi -o SignalR
+# 以 VS Code 打開專案
+code -r signalr
+建立 SignalR 中樞 在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
+namespace SignalR.Hubs
+{
+// 這就是所謂的 SignalR 中樞
+public class ChatHub : Hub
+{
+// 這是提供 Client (js)端呼叫的方法，後面是這個方法接受的參數
+public async Task SendMessage(string user, string message)
+{
+// 針對每個以連線的客戶端呼叫 ReceiceMassage 方法，並傳送參數 user、message
+await Clients.All.SendAsync("ReceiveMessage", user, message);
+}
+}
+}
+設定 Startup.cs 依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：</p></a></div><div class=card-footer><span class=float-start>Tuesday, November 3, 2020
 </span><a href=/posts/dotnet/startup-signalr/guild_1_start/ class="float-end btn btn-outline-info btn-sm">Read</a></div></div></div></div><div class=paginator><ul class="pagination pagination-default"><li class=page-item><a href=/posts/dotnet/ aria-label=First class=page-link role=button><span aria-hidden=true>&#171;&#171;</span></a></li><li class=page-item><a href=/posts/dotnet/ aria-label=Previous class=page-link role=button><span aria-hidden=true>&#171;</span></a></li><li class=page-item><a href=/posts/dotnet/ aria-label="Page 1" class=page-link role=button>1</a></li><li class="page-item active"><a aria-current=page aria-label="Page 2" class=page-link role=button>2</a></li><li class="page-item disabled"><a aria-disabled=true aria-label=Next class=page-link role=button tabindex=-1><span aria-hidden=true>&#187;</span></a></li><li class="page-item disabled"><a aria-disabled=true aria-label=Last class=page-link role=button tabindex=-1><span aria-hidden=true>&#187;&#187;</span></a></li></ul></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-start"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:ycc@tigernaxo.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span></a></li><li><a href=https://github.com/tigernaxoJr target=_blank rel=noopener><span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span></a></li><li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target=_blank rel=noopener><span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span></a></li><li><a href=tel:+886919681059 target=_blank rel=noopener><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></a></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://blog.tigernaxo.com//index.xml>
 <input type=hidden name=schedule_type value=1>
 <small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
 <button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-start"><div class=col-md-4><a id=theme href=https://github.com/hugo-toha/toha target=_blank rel=noopener><img src=/images/theme-logo_hu_b3360284c55cf72d.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2020 Copyright.</div><div class="col-md-4 text-end"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.22babcef24279791b6f32a01a1f1cb863ef9ef9bc7102ea30d65299e2250e52e.js integrity="sha256-Irq87yQnl5G28yoBofHLhj7575vHEC6jDWUpniJQ5S4=" defer></script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.462fb4ab20b7246dd03f05bb696903160b324cc55d4ce20d423d37bd47a003ad.js integrity="sha256-Ri+0qyC3JG3QPwW7aWkDFgsyTMVdTOINQj03vUegA60=" defer></script></body></html>

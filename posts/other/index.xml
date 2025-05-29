@@ -5,31 +5,36 @@
 &lt;li>MYNAT：用來建構內網。(enp0s8)&lt;/li>
 &lt;/ol>
 &lt;h3 id="開啟網卡-promisc">開啟網卡 promisc&lt;/h3>
-&lt;pre tabindex="0">&lt;code>ip link set enp0s3 promisc on
+&lt;pre>&lt;code>ip link set enp0s3 promisc on
 ip link set enp0s8 promisc on
-&lt;/code>&lt;/pre>&lt;p>###. 建立 docker 網路
+&lt;/code>&lt;/pre>
+&lt;p>###. 建立 docker 網路
 查詢路由所在網段、遮罩、閘道器。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ip route show dev enp0s3
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>結果：軟路由所在網段、遮罩為 &lt;code>10.0.2.0/24&lt;/code>、閘道器 &lt;code>10.0.2.2&lt;/code>。&lt;/p>
-&lt;pre tabindex="0">&lt;code>default via 10.0.2.2 proto dhcp src 10.0.2.15 metric 1024
+&lt;pre>&lt;code class="language-bash">ip route show dev enp0s3
+&lt;/code>&lt;/pre>
+&lt;p>結果：軟路由所在網段、遮罩為 &lt;code>10.0.2.0/24&lt;/code>、閘道器 &lt;code>10.0.2.2&lt;/code>。&lt;/p>
+&lt;pre>&lt;code>default via 10.0.2.2 proto dhcp src 10.0.2.15 metric 1024
 10.0.2.0/24 proto kernel scope link src 10.0.2.15 metric 1024
 10.0.2.2 proto dhcp scope link src 10.0.2.15 metric 1024
 192.73.141.230 via 10.0.2.2 proto dhcp src 10.0.2.15 metric 1024
 192.73.144.230 via 10.0.2.2 proto dhcp src 10.0.2.15 metric 1024
-&lt;/code>&lt;/pre>&lt;p>創建 docker 網路&lt;/p></description></item><item><title>[Tools] 使用 OpenApi Generator 產生 .Net Core Client</title><link>https://blog.tigernaxo.com/posts/other/tools-openapi-generator/</link><pubDate>Fri, 07 Apr 2023 11:00:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/tools-openapi-generator/</guid><description>&lt;h2 id="手動設置">手動設置&lt;/h2>
+&lt;/code>&lt;/pre>
+&lt;p>創建 docker 網路&lt;/p></description></item><item><title>[Tools] 使用 OpenApi Generator 產生 .Net Core Client</title><link>https://blog.tigernaxo.com/posts/other/tools-openapi-generator/</link><pubDate>Fri, 07 Apr 2023 11:00:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/tools-openapi-generator/</guid><description>&lt;h2 id="手動設置">手動設置&lt;/h2>
 &lt;p>需要 java 環境、npm 安裝執行檔，可參照&lt;a href="https://openapi-generator.tech/docs/installation" target="_blank" rel="noopener">CLI Installation&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>openapi-generator-cli generate &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -i &amp;lt;spec file|url&amp;gt; -o &amp;lt;outdir&amp;gt; &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#75715e"># 設定輸入 json/xml (檔案或網址)、輸出資料夾&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -g csharp-netcore &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#75715e"># 輸出 csharp .net core 專案&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --skip-validate-spec &lt;span style="color:#75715e"># 不檢查規格&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="docker">Docker&lt;/h2>
+&lt;pre>&lt;code class="language-bash">openapi-generator-cli generate \
+-i &amp;lt;spec file|url&amp;gt; -o &amp;lt;outdir&amp;gt; \ # 設定輸入 json/xml (檔案或網址)、輸出資料夾
+-g csharp-netcore \ # 輸出 csharp .net core 專案
+--skip-validate-spec # 不檢查規格
+&lt;/code>&lt;/pre>
+&lt;h2 id="docker">Docker&lt;/h2>
 &lt;p>更簡單，一行搞定：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run --rm &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -v &lt;span style="color:#e6db74">${&lt;/span>PWD&lt;span style="color:#e6db74">}&lt;/span>:/local openapitools/openapi-generator-cli generate &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> -i &amp;lt;spec file|url&amp;gt; -o &amp;lt;outdir&amp;gt; &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#75715e"># 設定輸入 json/xml (檔案或網址)、輸出資料夾&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -g csharp-netcore &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#75715e"># 輸出 csharp .net core 專案&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --skip-validate-spec &lt;span style="color:#75715e"># 不檢查規格&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;pre>&lt;code class="language-bash">docker run --rm \
+-v ${PWD}:/local openapitools/openapi-generator-cli generate \
+-i &amp;lt;spec file|url&amp;gt; -o &amp;lt;outdir&amp;gt; \ # 設定輸入 json/xml (檔案或網址)、輸出資料夾
+-g csharp-netcore \ # 輸出 csharp .net core 專案
+--skip-validate-spec # 不檢查規格
+&lt;/code>&lt;/pre>
+&lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a href="https://openapi-generator.tech/docs/installation" target="_blank" rel="noopener">CLI Installation&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://openapi-generator.tech/docs/generators/csharp-netcore/" target="_blank" rel="noopener">Documentation for the csharp-netcore Generator&lt;/a>&lt;/li>
@@ -50,11 +55,12 @@ ip link set enp0s8 promisc on
 &lt;/ul>
 &lt;h2 id="repo-設定">Repo 設定&lt;/h2>
 &lt;p>抓 template&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone https://github.com/hugo-toha/hugo-toha.github.io.git
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>mv hugo-toha.github.io &amp;lt;GitAccount&amp;gt;.github.io
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd &amp;lt;GitAccount&amp;gt;.github.io
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo mod tidy
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>設置 config.yaml&lt;/p></description></item><item><title>[授權] OAuth2.0</title><link>https://blog.tigernaxo.com/posts/other/auth-oauth2/</link><pubDate>Fri, 02 Dec 2022 12:43:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/auth-oauth2/</guid><description>&lt;p>OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題
+&lt;pre>&lt;code class="language-bash">git clone https://github.com/hugo-toha/hugo-toha.github.io.git
+mv hugo-toha.github.io &amp;lt;GitAccount&amp;gt;.github.io
+cd &amp;lt;GitAccount&amp;gt;.github.io
+hugo mod tidy
+&lt;/code>&lt;/pre>
+&lt;p>設置 config.yaml&lt;/p></description></item><item><title>[授權] OAuth2.0</title><link>https://blog.tigernaxo.com/posts/other/auth-oauth2/</link><pubDate>Fri, 02 Dec 2022 12:43:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/auth-oauth2/</guid><description>&lt;p>OAuth 是一個開發標準(Open Standard)，用來處理有關「授權」（Authorization）相關的問題
 允許授權當下的APP取得使用者在平台的相關資訊
 OAuth2 有很多變化&lt;/p>
 &lt;p>腳色：&lt;/p>
@@ -86,66 +92,70 @@ OAuth2 有很多變化&lt;/p>
 採用的映象檔是 &lt;code>ghcr.io/home-assistant/home-assistant:stable&lt;/code> ，因為我需要使用網址來區分服務(同一個 443 port 的情況下)，所以採取反向代理的方式，一方面讓之後要部屬其他應用、加上憑證、等等操作都交給 nginx 比較方便，因此不會將 8123 port 直接對外。&lt;/p>
 &lt;ol>
 &lt;li>建立 &lt;code>mynetwork&lt;/code>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker create network mynetwork
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">docker create network mynetwork
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>建立 &lt;code>ha&lt;/code>&lt;/li>
 &lt;/ol>
 &lt;ul>
 &lt;li>&lt;code>ha/docker-compose.yml&lt;/code>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ha&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">container_name&lt;/span>: &lt;span style="color:#ae81ff">homeassistant&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">#image: &amp;#34;homeassistant/home-assistant:stable&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">${HA_IMAGE}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">./volume/ha/config:/config&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/etc/localtime:/etc/localtime:ro&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/run/dbus:/run/dbus:ro&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">unless-stopped&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">privileged&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-yml">version: '3'
+services:
+ha:
+container_name: homeassistant
+#image: &amp;quot;homeassistant/home-assistant:stable&amp;quot;
+image: ${HA_IMAGE}
+volumes:
+- ./volume/ha/config:/config
+- /etc/localtime:/etc/localtime:ro
+- /run/dbus:/run/dbus:ro
+restart: unless-stopped
+privileged: true
+networks:
+- mynetwork
+networks:
+mynetwork:
+external: true
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>&lt;code>ha/.env&lt;/code>
-&lt;pre tabindex="0">&lt;code>HA_IMAGE=&amp;#34;homeassistant/home-assistant:stable&amp;#34;
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;pre>&lt;code>HA_IMAGE=&amp;quot;homeassistant/home-assistant:stable&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>&lt;code>ha/.gitignore&lt;/code>
-&lt;pre tabindex="0">&lt;code>volume/
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;pre>&lt;code>volume/
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ul>
 &lt;ol start="3">
 &lt;li>建立 &lt;code>nginx&lt;/code>&lt;/li>
 &lt;/ol>
 &lt;ul>
 &lt;li>&lt;code>nginx/docker-compose.yml&lt;/code>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">web&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">nginx&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># - ./templates:/etc/nginx/templates&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/usr/share/nginx/html:/usr/share/nginx/html&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">./nginx.conf:/etc/nginx/nginx.conf&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">/etc/letsencrypt:/etc/letsencrypt&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;80:80&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;443:443&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">NGINX_PORT=80&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-yml">version: '3'
+services:
+web:
+image: nginx
+volumes:
+# - ./templates:/etc/nginx/templates
+- /usr/share/nginx/html:/usr/share/nginx/html
+- ./nginx.conf:/etc/nginx/nginx.conf
+- /etc/letsencrypt:/etc/letsencrypt
+networks:
+- mynetwork
+ports:
+- &amp;quot;80:80&amp;quot;
+- &amp;quot;443:443&amp;quot;
+environment:
+- NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf
+- NGINX_PORT=80
+networks:
+mynetwork:
+external: true
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>&lt;code>nginx/nginx.conf&lt;/code>
-&lt;pre tabindex="0">&lt;code>events {
+&lt;pre>&lt;code>events {
 }
 http {
 upstream ha {
@@ -172,7 +182,7 @@ listen 80;
 #ssl_certificate_key /etc/letsencrypt/live/home.example.com/privkey.pem;
 # Additional SSL configurations (e.g., enable secure ciphers, etc.)
 #ssl_protocols TLSv1.2 TLSv1.3;
-#ssl_ciphers &amp;#39;TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384&amp;#39;;
+#ssl_ciphers 'TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384';
 location /.well-known/acme-challenge {
 root /usr/share/nginx/html;
 }
@@ -183,17 +193,19 @@ proxy_http_version 1.1;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Forwarded-Proto $scheme;
 proxy_set_header Upgrade $http_upgrade;
-proxy_set_header Connection &amp;#34;Upgrade&amp;#34;;
+proxy_set_header Connection &amp;quot;Upgrade&amp;quot;;
 }
 }
 }
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ul>
 &lt;ol start="4">
 &lt;li>啟動服務
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker-compose -f ha/docker-compose.yml up -d
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>docker-compose -f nginx/docker-compose.yml up -d
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">docker-compose -f ha/docker-compose.yml up -d
+docker-compose -f nginx/docker-compose.yml up -d
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ol>
 &lt;h2 id="創建帳號">創建帳號&lt;/h2>
 &lt;p>例如我的 IP 是 192.168.56.100
@@ -216,55 +228,64 @@ proxy_set_header Connection &amp;#34;Upgrade&amp;#34;;
 &lt;ul>
 &lt;li>1.安裝 &lt;a href="https://golang.org/dl/" target="_blank" rel="noopener">Golang&lt;/a>&lt;/li>
 &lt;li>2.下載 gdrive 專案
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>git clone git@github.com:prasmussen/gdrive.git
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">git clone git@github.com:prasmussen/gdrive.git
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>3.修改專案下的&lt;code>handlers_drive.go&lt;/code>，把下列兩行改成拿到的 Client ID、Secret
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">ClientId&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;*************************************.com&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">ClientSecret&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;*************&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-go">const ClientId = &amp;quot;*************************************.com&amp;quot;
+const ClientSecret = &amp;quot;*************&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>4.取得需要的 golang 套件
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>go get github.com/prasmussen/gdrive
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">go get github.com/prasmussen/gdrive
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>5.到專案資料夾下編譯，編譯完後就會有得到執行檔
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>go build
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">go build
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ul>
 &lt;h1 id="設定">設定&lt;/h1>
 &lt;h2 id="設置環境變數">設置環境變數&lt;/h2>
 &lt;p>將編譯好的執行檔上傳Linux，假設放在${HOME}/gdrive-linux-x64：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 建立${HOME}/bin&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ mkdir -p &lt;span style="color:#e6db74">${&lt;/span>HOME&lt;span style="color:#e6db74">}&lt;/span>/bin
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 把gdrive-linux-x64放進去重新命名為gdrive&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ mv &lt;span style="color:#e6db74">${&lt;/span>HOME&lt;span style="color:#e6db74">}&lt;/span>/gdrive-linux-x64 &lt;span style="color:#e6db74">${&lt;/span>HOME&lt;span style="color:#e6db74">}&lt;/span>/bin/gdrive
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 賦予gdrive執行權限&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ chmod u+x &lt;span style="color:#e6db74">${&lt;/span>HOME&lt;span style="color:#e6db74">}&lt;/span>/bin/gdrive
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ echo &lt;span style="color:#e6db74">${&lt;/span>PATH&lt;span style="color:#e6db74">}&lt;/span> | grep -qE &lt;span style="color:#e6db74">${&lt;/span>HOME&lt;span style="color:#e6db74">}&lt;/span>/bin&lt;span style="color:#f92672">[&lt;/span>^/&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span>&amp;gt; echo &lt;span style="color:#e6db74">&amp;#34;PATH=\${HOME}/bin:\${PATH}&amp;#34;&lt;/span> &amp;gt;&amp;gt; ~/.bashrc &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span>&amp;gt; . ~/.bashrc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="連結google帳戶">連結google帳戶&lt;/h2>
+&lt;pre>&lt;code class="language-bash"># 建立${HOME}/bin
+$ mkdir -p ${HOME}/bin
+# 把gdrive-linux-x64放進去重新命名為gdrive
+$ mv ${HOME}/gdrive-linux-x64 ${HOME}/bin/gdrive
+# 賦予gdrive執行權限
+$ chmod u+x ${HOME}/bin/gdrive
+# 如果PATH裡面找不到${HOME}/bin就新增並重新讀取環境設定
+$ echo ${PATH} | grep -qE ${HOME}/bin[^/] &amp;amp;&amp;amp; \
+&amp;gt; echo &amp;quot;PATH=\${HOME}/bin:\${PATH}&amp;quot; &amp;gt;&amp;gt; ~/.bashrc &amp;amp;&amp;amp; \
+&amp;gt; . ~/.bashrc
+&lt;/code>&lt;/pre>
+&lt;h2 id="連結google帳戶">連結google帳戶&lt;/h2>
 &lt;p>安裝好Google drive CLI後需要取得雲端硬碟帳戶授權，gdrive預設會在${HOME}/.gdrive底下找授權檔，
 由於目前我們沒有任何授權，所以需要先下簡單的指令觸發token請求，
 取得token之後會出現一個檔案叫做${HOME}/.gdrive/token_v2.json，
 並且在終端機出現雲端硬碟所有檔案及資料夾清單(預設最多出現30筆)：&lt;/p></description></item><item><title>[Linux] 在 Ubuntu 20.04 中設置 vim plugin YouCompleteMe</title><link>https://blog.tigernaxo.com/posts/other/vim-plugin-ycm/</link><pubDate>Wed, 18 Nov 2020 23:14:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/vim-plugin-ycm/</guid><description>&lt;h1 id="安裝-junegunnvim-plug-管理套件">安裝 junegunn/vim-plug 管理套件&lt;/h1>
 &lt;p>以指令安裝 junegunn/vim-plug&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>curl -fLo ~/.vim/autoload/plug.vim --create-dirs &lt;span style="color:#ae81ff">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span> https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 ~/.vimrc 加入 Plug &amp;lsquo;ycm-core/YouCompleteMe&amp;rsquo;&lt;/p>
-&lt;pre tabindex="0">&lt;code>&amp;#34; Specify a directory for plugins
-call plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)
-Plug &amp;#39;ycm-core/YouCompleteMe&amp;#39;
-&amp;#34; Initialize plugin system
+&lt;pre>&lt;code class="language-shell">curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+&lt;/code>&lt;/pre>
+&lt;p>在 ~/.vimrc 加入 Plug &amp;lsquo;ycm-core/YouCompleteMe&amp;rsquo;&lt;/p>
+&lt;pre>&lt;code>&amp;quot; Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+Plug 'ycm-core/YouCompleteMe'
+&amp;quot; Initialize plugin system
 call plug#end()
-&lt;/code>&lt;/pre>&lt;p>打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗&lt;/p>
-&lt;pre tabindex="0">&lt;code>:PlugInstall
-&lt;/code>&lt;/pre>&lt;h1 id="編譯ycm">編譯YCM&lt;/h1>
+&lt;/code>&lt;/pre>
+&lt;p>打開 vim，在 vim 命令列輸入安裝 Plugin 的指令下載 YCM，這個時候還沒編譯所以會顯示安裝失敗&lt;/p>
+&lt;pre>&lt;code>:PlugInstall
+&lt;/code>&lt;/pre>
+&lt;h1 id="編譯ycm">編譯YCM&lt;/h1>
 &lt;p>安裝編譯工具&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt install -y build-essential cmake vim python3-dev
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>編譯&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>~/.vim/plugged/YouCompleteMe/install.py
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="測試">測試&lt;/h1>
+&lt;pre>&lt;code class="language-shell">sudo apt install -y build-essential cmake vim python3-dev
+&lt;/code>&lt;/pre>
+&lt;p>編譯&lt;/p>
+&lt;pre>&lt;code class="language-shell">~/.vim/plugged/YouCompleteMe/install.py
+&lt;/code>&lt;/pre>
+&lt;h1 id="測試">測試&lt;/h1>
 &lt;p>打開 vim 確認，完工~&lt;/p>
 &lt;h1 id="reference">Reference&lt;/h1>
 &lt;ul>
@@ -276,16 +297,18 @@ call plug#end()
 &lt;ul>
 &lt;li>&lt;strong>校時&lt;/strong>&lt;br>
 由於TOTP演算法依據當前時間區間產生OTP，如果作業系統的時間不正確則會產生錯誤的OTP，在Windows環境之下可以到國家時間與頻率標準實驗室的網頁下載NTP校時軟體，以管理員身分執行進行校時；Linux環境可以用下述指令更新時間並寫入BIOS：
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 從NTP時間伺服器進行網路校時&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo ntpdate time.stdtime.gov.tw
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 將更新的時間寫入BIOS&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo hwclock -w
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash"># 從NTP時間伺服器進行網路校時
+sudo ntpdate time.stdtime.gov.tw
+# 將更新的時間寫入BIOS
+sudo hwclock -w
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>&lt;strong>所有登入行為之間必須間隔30秒(包含使用winSCP、putty或從Linux直接登入)。&lt;/strong>
 每個30秒區間會產生一個OTP，而該OTP一旦經過使用就會被伺服器廢棄而無法再用。我曾經連續登入以為程式壞了，但核對iService上面產生的密碼又是一樣的，後來才發現這件事…中間還因為連登失敗太頻繁還被鎖，因此記得間隔30秒以上再登入。&lt;/li>
 &lt;li>&lt;strong>Linux要登入台灣衫需要將台灣衫加入know host&lt;/strong>，以生醫節點為例:
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ssh-keyscan 140.110.148.14 1&amp;gt;&amp;gt;~/.ssh/known_hosts 2&amp;gt;/dev/null
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">ssh-keyscan 140.110.148.14 1&amp;gt;&amp;gt;~/.ssh/known_hosts 2&amp;gt;/dev/null
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ul>
 &lt;h1 id="從windows登入台灣杉">從Windows登入台灣杉&lt;/h1>
 &lt;h2 id="前置工作">前置工作&lt;/h2>
@@ -297,24 +320,20 @@ call plug#end()
 &lt;/ul>
 &lt;h2 id="編譯totp產生器">編譯TOTP產生器&lt;/h2>
 &lt;p>取得TOTP套件&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bat" data-lang="bat">&lt;span style="display:flex;">&lt;span>go get github.com/pquerna/otp/totp
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>撰寫程式碼main.go&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/pquerna/otp/totp&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">secret&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Args&lt;/span>[&lt;span style="color:#ae81ff">1&lt;/span>]
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">code&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">totp&lt;/span>.&lt;span style="color:#a6e22e">GenerateCode&lt;/span>(&lt;span style="color:#a6e22e">secret&lt;/span>, &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>().&lt;span style="color:#a6e22e">UTC&lt;/span>())
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Print&lt;/span>(&lt;span style="color:#a6e22e">code&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>編譯&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bat" data-lang="bat">&lt;span style="display:flex;">&lt;span>go build -o taiwaniaOTP.exe main.go
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="設置putty">設置putty&lt;/h2>
-&lt;p>按照圖片步驟設置putty session，如果不想修改預設字型可跳過步驟4~6，全部設置完成後要回Session標籤按Save(步驟7、8)
-&lt;img src="https://blog.tigernaxo.com/posts/other/taiwania_login_oneclick/set-putty-session.jpg" alt="設置Putty Session">&lt;/p></description></item></channel></rss>
+&lt;pre>&lt;code class="language-bat">go get github.com/pquerna/otp/totp
+&lt;/code>&lt;/pre>
+&lt;p>撰寫程式碼main.go&lt;/p>
+&lt;pre>&lt;code class="language-go">package main
+import (
+&amp;quot;fmt&amp;quot;
+&amp;quot;github.com/pquerna/otp/totp&amp;quot;
+&amp;quot;os&amp;quot;
+&amp;quot;time&amp;quot;
+)
+func main() {
+secret := os.Args[1]
+code, _ := totp.GenerateCode(secret, time.Now().UTC())
+fmt.Print(code)
+}
+&lt;/code>&lt;/pre>
+&lt;p>編譯&lt;/p></description></item></channel></rss>

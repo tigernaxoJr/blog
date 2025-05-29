@@ -1,99 +1,96 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vue on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/frontend-vue/</link><description>Recent content in Vue on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 06 Apr 2023 14:21:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/frontend-vue/index.xml" rel="self" type="application/rss+xml"/><item><title>[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</link><pubDate>Thu, 06 Apr 2023 14:21:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</guid><description>&lt;p>用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件&lt;/p>
 &lt;h2 id="vue3">Vue3&lt;/h2>
 &lt;h3 id="vue26">Vue2.6&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">q-btn&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;{ ...$attrs, ...$props }&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-on&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;$listeners&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">template&lt;/span> &lt;span style="color:#a6e22e">v-for&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;(_, slot) of $scopedSlots&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-slot:&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">[&lt;/span>&lt;span style="color:#a6e22e">slot&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">]=&amp;#34;&lt;/span>&lt;span style="color:#a6e22e">scope&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span> &lt;span style="color:#a6e22e">:name&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;slot&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;scope&amp;#34;&lt;/span>/&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">q-btn&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="vue3-1">Vue3&lt;/h3>
+&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&amp;lt;q-btn v-bind=&amp;quot;{ ...$attrs, ...$props }&amp;quot; v-on=&amp;quot;$listeners&amp;quot;&amp;gt;
+&amp;lt;template v-for=&amp;quot;(_, slot) of $scopedSlots&amp;quot; v-slot:[slot]=&amp;quot;scope&amp;quot;&amp;gt;
+&amp;lt;slot :name=&amp;quot;slot&amp;quot; v-bind=&amp;quot;scope&amp;quot;/&amp;gt;
+&amp;lt;/template&amp;gt;
+&amp;lt;slot&amp;gt;&amp;lt;/slot&amp;gt;
+&amp;lt;/q-btn&amp;gt;
+&amp;lt;/template&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h3 id="vue3-1">Vue3&lt;/h3>
 &lt;p>Vue3 裡面只要綁定 $attrs 即可，attrs, props, event 全部自動綁定進去。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">q-btn&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;$attrs&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">template&lt;/span> &lt;span style="color:#a6e22e">v-for&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;(slot, index) of Object.keys($slots)&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">:key&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;index&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-slot:&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">[&lt;/span>&lt;span style="color:#a6e22e">slot&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">]&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span> &lt;span style="color:#a6e22e">:name&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;slot&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">q-btn&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="quasar2-ts">Quasar2-TS&lt;/h3>
+&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&amp;lt;q-btn v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
+&amp;lt;template v-for=&amp;quot;(slot, index) of Object.keys($slots)&amp;quot; :key=&amp;quot;index&amp;quot; v-slot:[slot]&amp;gt;
+&amp;lt;slot :name=&amp;quot;slot&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
+&amp;lt;/template&amp;gt;
+&amp;lt;slot&amp;gt;&amp;lt;/slot&amp;gt;
+&amp;lt;/q-btn&amp;gt;
+&amp;lt;/template&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h3 id="quasar2-ts">Quasar2-TS&lt;/h3>
 &lt;p>Quasar 裡面 Props, Slot 有獨立的 interface 定義，因此可直接拿到。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">q-btn&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;$attrs&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">template&lt;/span> &lt;span style="color:#a6e22e">v-for&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;(slot, index) of Object.keys($slots)&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">:key&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;index&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-slot:&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">[&lt;/span>&lt;span style="color:#a6e22e">slot&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">]&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span> &lt;span style="color:#a6e22e">:name&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;slot&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">q-btn&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">setup&lt;/span> &lt;span style="color:#a6e22e">lang&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;ts&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#a6e22e">type&lt;/span> { &lt;span style="color:#a6e22e">QBtnSlots&lt;/span>, &lt;span style="color:#a6e22e">QBtnProps&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;quasar&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">QBtn&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;quasar&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">props&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">withDefaults&lt;/span>(&lt;span style="color:#a6e22e">defineProps&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">QBtnProps&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>(),{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// here comes default settings
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>});
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">style&lt;/span> &lt;span style="color:#a6e22e">scoped&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">style&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="vuetify3">Vuetify3&lt;/h3>
+&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&amp;lt;q-btn v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
+&amp;lt;template v-for=&amp;quot;(slot, index) of Object.keys($slots)&amp;quot; :key=&amp;quot;index&amp;quot; v-slot:[slot]&amp;gt;
+&amp;lt;slot :name=&amp;quot;slot&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
+&amp;lt;/template&amp;gt;
+&amp;lt;/q-btn&amp;gt;
+&amp;lt;/template&amp;gt;
+&amp;lt;script setup lang=&amp;quot;ts&amp;quot;&amp;gt;
+import type { QBtnSlots, QBtnProps } from 'quasar';
+import { QBtn } from 'quasar';
+const props = withDefaults(defineProps&amp;lt;QBtnProps&amp;gt;(),{
+// here comes default settings
+});
+&amp;lt;/script&amp;gt;
+&amp;lt;style scoped&amp;gt;&amp;lt;/style&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h3 id="vuetify3">Vuetify3&lt;/h3>
 &lt;p>Vuetify3 裡面 Props, Slot 沒有獨立的 interface 定義，因此需額外定義。
 &lt;code>MyBtn.vue&lt;/code>&lt;/p></description></item><item><title>[But] TypeScript 注意事項</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</link><pubDate>Fri, 10 Mar 2023 08:14:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</guid><description>&lt;p>用這樣的寫法，會造成 IDE 異常&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">:&lt;/span>&lt;span style="color:#a6e22e">columns&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;columns as QTableProps[&amp;#39;columns&amp;#39;]&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>[元件] 全域元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</link><pubDate>Tue, 13 Dec 2022 15:10:57 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</guid><description>&lt;h2 id="vue-的作法">Vue 的作法&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">component&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;component-name&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">component&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="quasar2-的做法">Quasar2 的做法&lt;/h2>
+&lt;pre>&lt;code class="language-js">:columns=&amp;quot;columns as QTableProps['columns']&amp;quot;
+&lt;/code>&lt;/pre></description></item><item><title>[元件] 全域元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</link><pubDate>Tue, 13 Dec 2022 15:10:57 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</guid><description>&lt;h2 id="vue-的作法">Vue 的作法&lt;/h2>
+&lt;pre>&lt;code class="language-js">app.component('component-name', component)
+&lt;/code>&lt;/pre>
+&lt;h2 id="quasar2-的做法">Quasar2 的做法&lt;/h2>
 &lt;p>Vite/Typescript&lt;/p>
 &lt;p>建立 src/boot/register-my-component.ts&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-typescript" data-lang="typescript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">boot&lt;/span> } &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;quasar/wrappers&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#a6e22e">BasicBtnVue&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;src/components/BasicBtn.vue&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// &amp;#34;async&amp;#34; is optional;
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">default&lt;/span> &lt;span style="color:#a6e22e">boot&lt;/span>(&lt;span style="color:#66d9ef">async&lt;/span> ({ &lt;span style="color:#a6e22e">app&lt;/span> }) &lt;span style="color:#f92672">=&amp;gt;&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">app&lt;/span>.&lt;span style="color:#a6e22e">component&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;x-btn&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">BasicBtnVue&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 quasar.conf.js 內新增設定&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">module&lt;/span>.&lt;span style="color:#a6e22e">exports&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">configure&lt;/span>(&lt;span style="color:#66d9ef">function&lt;/span> (&lt;span style="color:#75715e">/* ctx */&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ...上略
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#75715e">// https://v2.quasar.dev/quasar-cli-vite/boot-files
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">boot&lt;/span>&lt;span style="color:#f92672">:&lt;/span> [&lt;span style="color:#e6db74">&amp;#39;i18n&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;register-my-component&amp;#39;&lt;/span>],
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// ... 下略
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> };
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>建立型別定義檔，我放在 src/components 下
-components.d.ts&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> &lt;span style="color:#a6e22e">BasicBtn&lt;/span> &lt;span style="color:#66d9ef">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;./BasicBtn.vue&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">declare&lt;/span> &lt;span style="color:#a6e22e">module&lt;/span> &lt;span style="color:#e6db74">&amp;#39;@vue/runtime-core&amp;#39;&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">GlobalComponents&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">XBtn&lt;/span>: &lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">BasicBtn&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>[Typescript] Typescript 用 InjectionKey 達成強型別 provide</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</link><pubDate>Thu, 17 Nov 2022 11:49:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</guid><description>&lt;p>Working with Reactivity
+&lt;pre>&lt;code class="language-typescript">import { boot } from 'quasar/wrappers';
+import BasicBtnVue from 'src/components/BasicBtn.vue';
+// &amp;quot;async&amp;quot; is optional;
+// more info on params: https://v2.quasar.dev/quasar-cli/boot-files
+export default boot(async ({ app }) =&amp;gt; {
+app.component('x-btn', BasicBtnVue);
+});
+&lt;/code>&lt;/pre>
+&lt;p>在 quasar.conf.js 內新增設定&lt;/p>
+&lt;pre>&lt;code class="language-js">module.exports = configure(function (/* ctx */) {
+return {
+// ...上略
+// https://v2.quasar.dev/quasar-cli-vite/boot-files
+boot: ['i18n', 'register-my-component'],
+// ... 下略
+};
+});
+&lt;/code>&lt;/pre>
+&lt;p>建立型別定義檔，我放在 src/components 下
+components.d.ts&lt;/p></description></item><item><title>[Typescript] Typescript 用 InjectionKey 達成強型別 provide</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</link><pubDate>Thu, 17 Nov 2022 11:49:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</guid><description>&lt;p>Working with Reactivity
 上游元件&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">lang&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;ts&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">InjectionKey&lt;/span>, &lt;span style="color:#a6e22e">provide&lt;/span>, &lt;span style="color:#a6e22e">Ref&lt;/span>, &lt;span style="color:#a6e22e">reactive&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;vue&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// State
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> &lt;span style="color:#a6e22e">IState&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">drawer&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">boolean&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">export&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">stateKey&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">InjectionKey&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">Ref&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">IState&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">Symbol&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">state&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">reactive&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">IState&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>({
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">drawer&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">provide&lt;/span>&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#a6e22e">IState&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span>(&lt;span style="color:#a6e22e">stateKey&lt;/span>, &lt;span style="color:#a6e22e">computed&lt;/span>(()=&amp;gt;&lt;span style="color:#a6e22e">state&lt;/span>));
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>下游元件&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">setup&lt;/span> &lt;span style="color:#a6e22e">lang&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;ts&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">inject&lt;/span>, &lt;span style="color:#a6e22e">ref&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;vue&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">stateKey&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#39;./Parent.vue&amp;#39;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">state&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">inject&lt;/span>(&lt;span style="color:#a6e22e">stateKey&lt;/span>, &lt;span style="color:#a6e22e">ref&lt;/span>({ &lt;span style="color:#a6e22e">drawer&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span> }));
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;pre>&lt;code class="language-html">&amp;lt;script lang=&amp;quot;ts&amp;quot;&amp;gt;
+import { InjectionKey, provide, Ref, reactive } from 'vue';
+// State
+export interface IState {
+drawer: boolean;
+}
+export const stateKey: InjectionKey&amp;lt;Ref&amp;lt;IState&amp;gt;&amp;gt; = Symbol();
+const state = reactive&amp;lt;IState&amp;gt;({
+drawer: false,
+});
+provide&amp;lt;IState&amp;gt;(stateKey, computed(()=&amp;gt;state));
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>下游元件&lt;/p>
+&lt;pre>&lt;code class="language-html">&amp;lt;script setup lang=&amp;quot;ts&amp;quot;&amp;gt;
+import { inject, ref } from 'vue';
+import { stateKey } from './Parent.vue';
+const state = inject(stateKey, ref({ drawer: false }));
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a href="https://vuejs.org/guide/components/provide-inject.html" target="_blank" rel="noopener">Vue.js/guild - Provide / Inject&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://vuejs.org/api/composition-api-dependency-injection.html" target="_blank" rel="noopener">Vue.js/api - Composition API: Dependency Injection&lt;/a>&lt;/li>
@@ -110,114 +107,114 @@ components.d.ts&lt;/p>
 讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。&lt;/p>
 &lt;p>這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。&lt;/p>
 &lt;h2 id="vue3-實作">Vue3 實作&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">v-dialog&lt;/span> &lt;span style="color:#a6e22e">v-model&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;dialog&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;$attrs&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">slot&lt;/span> &lt;span style="color:#a6e22e">v-bind&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;{ Resolve }&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">slot&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">v-dialog&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">template&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">setup&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">import&lt;/span> { &lt;span style="color:#a6e22e">ref&lt;/span> } &lt;span style="color:#a6e22e">from&lt;/span> &lt;span style="color:#e6db74">&amp;#34;vue&amp;#34;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">dialog&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">ref&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">resolve&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">Resolve&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#a6e22e">v&lt;/span>) =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">resolve&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dialog&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">GetResult&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> () =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dialog&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Promise((&lt;span style="color:#a6e22e">res&lt;/span>) =&amp;gt; (&lt;span style="color:#a6e22e">resolve&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">res&lt;/span>));
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">defineExpose&lt;/span>({ &lt;span style="color:#a6e22e">GetResult&lt;/span>, &lt;span style="color:#a6e22e">Resolve&lt;/span> });
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="舊vuejs-實作">[舊]Vuejs 實作&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;xBtn&amp;#34;&lt;/span>&amp;gt;執行測試&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">id&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;xApp&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;modal&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">:style&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;{display: dialog?&amp;#39;block&amp;#39;:&amp;#39;none&amp;#39;}&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">div&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;modal-content&amp;#34;&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">span&lt;/span> &lt;span style="color:#a6e22e">class&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;close&amp;#34;&lt;/span>&amp;gt;Test Modal&amp;lt;/&lt;span style="color:#f92672">span&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">p&lt;/span>&amp;gt;The value selected will resolve by promise.&amp;lt;/&lt;span style="color:#f92672">p&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#960050;background-color:#1e0010">@&lt;/span>&lt;span style="color:#a6e22e">click&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;choose(1)&amp;#34;&lt;/span>&amp;gt;1&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#f92672">button&lt;/span> &lt;span style="color:#960050;background-color:#1e0010">@&lt;/span>&lt;span style="color:#a6e22e">click&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;choose(2)&amp;#34;&lt;/span>&amp;gt;2&amp;lt;/&lt;span style="color:#f92672">button&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">div&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span> &lt;span style="color:#a6e22e">src&lt;/span>&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&amp;#34;&lt;/span>&amp;gt;&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#f92672">=&lt;/span> { &lt;span style="color:#a6e22e">result&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>, &lt;span style="color:#a6e22e">dialog&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">dialog&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> &lt;span style="color:#a6e22e">Vue&lt;/span>({
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">el&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#39;#xApp&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>&lt;span style="color:#f92672">:&lt;/span>() =&amp;gt; &lt;span style="color:#a6e22e">data&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">methods&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">getConfirm&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 先清空 result (避免兩次選中一樣的值無法觸發 watcher)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// open dialog
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">dialog&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Promise((&lt;span style="color:#a6e22e">resolve&lt;/span>, &lt;span style="color:#a6e22e">reject&lt;/span>) =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">try&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">watcher&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">$watch&lt;/span>(
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設置監視的對象為 result
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> () =&amp;gt; &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">result&lt;/span> ,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 一旦 result 的值有改變，就 resolve promise，並啟動下一輪 watcher
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> (&lt;span style="color:#a6e22e">newVal&lt;/span>) =&amp;gt; &lt;span style="color:#a6e22e">resolve&lt;/span>(&lt;span style="color:#a6e22e">newVal&lt;/span>) &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#a6e22e">watcher&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">catch&lt;/span> (&lt;span style="color:#a6e22e">error&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果出錯就 reject promise
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">reject&lt;/span>(&lt;span style="color:#a6e22e">error&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">choose&lt;/span>(&lt;span style="color:#a6e22e">value&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 為 result 設置值觸發 watcher 解開 promise
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">result&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 關閉 dialog
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">dialog&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">false&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>})
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>document.&lt;span style="color:#a6e22e">getElementById&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;xBtn&amp;#39;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .&lt;span style="color:#a6e22e">addEventListener&lt;/span>( &lt;span style="color:#e6db74">&amp;#39;click&amp;#39;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">async&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span> =&amp;gt; &lt;span style="color:#a6e22e">alert&lt;/span>( &lt;span style="color:#66d9ef">await&lt;/span> &lt;span style="color:#a6e22e">dialog&lt;/span>.&lt;span style="color:#a6e22e">getConfirm&lt;/span>() )
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> );
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#f92672">script&lt;/span>&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-css" data-lang="css">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/* The Modal (background) */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>.&lt;span style="color:#a6e22e">modal&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">display&lt;/span>: &lt;span style="color:#66d9ef">none&lt;/span>; &lt;span style="color:#75715e">/* Hidden by default */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">position&lt;/span>: &lt;span style="color:#66d9ef">fixed&lt;/span>; &lt;span style="color:#75715e">/* Stay in place */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">z-index&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>; &lt;span style="color:#75715e">/* Sit on top */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">padding-top&lt;/span>: &lt;span style="color:#ae81ff">100&lt;/span>&lt;span style="color:#66d9ef">px&lt;/span>; &lt;span style="color:#75715e">/* Location of the box */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">left&lt;/span>: &lt;span style="color:#ae81ff">0&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">top&lt;/span>: &lt;span style="color:#ae81ff">0&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">width&lt;/span>: &lt;span style="color:#ae81ff">100&lt;/span>&lt;span style="color:#66d9ef">%&lt;/span>; &lt;span style="color:#75715e">/* Full width */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">height&lt;/span>: &lt;span style="color:#ae81ff">100&lt;/span>&lt;span style="color:#66d9ef">%&lt;/span>; &lt;span style="color:#75715e">/* Full height */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">overflow&lt;/span>: &lt;span style="color:#66d9ef">auto&lt;/span>; &lt;span style="color:#75715e">/* Enable scroll if needed */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">background-color&lt;/span>: rgb(&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#ae81ff">0&lt;/span>); &lt;span style="color:#75715e">/* Fallback color */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">background-color&lt;/span>: rgba(&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#ae81ff">0.4&lt;/span>); &lt;span style="color:#75715e">/* Black w/ opacity */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/* Modal Content */&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>.&lt;span style="color:#a6e22e">modal-content&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">background-color&lt;/span>: &lt;span style="color:#ae81ff">#fefefe&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">margin&lt;/span>: &lt;span style="color:#66d9ef">auto&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">padding&lt;/span>: &lt;span style="color:#ae81ff">20&lt;/span>&lt;span style="color:#66d9ef">px&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">border&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#66d9ef">px&lt;/span> &lt;span style="color:#66d9ef">solid&lt;/span> &lt;span style="color:#ae81ff">#888&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">width&lt;/span>: &lt;span style="color:#ae81ff">80&lt;/span>&lt;span style="color:#66d9ef">%&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="舊vue-next-實作">[舊]Vue-next 實作&lt;/h2>
+&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&amp;lt;v-dialog v-model=&amp;quot;dialog&amp;quot; v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
+&amp;lt;slot v-bind=&amp;quot;{ Resolve }&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
+&amp;lt;/v-dialog&amp;gt;
+&amp;lt;/template&amp;gt;
+&amp;lt;script setup&amp;gt;
+import { ref } from &amp;quot;vue&amp;quot;;
+const dialog = ref(false);
+let resolve = null;
+const Resolve = (v) =&amp;gt; {
+resolve(v);
+dialog.value = false;
+};
+const GetResult = async () =&amp;gt; {
+dialog.value = true;
+return new Promise((res) =&amp;gt; (resolve = res));
+};
+defineExpose({ GetResult, Resolve });
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h2 id="舊vuejs-實作">[舊]Vuejs 實作&lt;/h2>
+&lt;pre>&lt;code class="language-html">&amp;lt;button id=&amp;quot;xBtn&amp;quot;&amp;gt;執行測試&amp;lt;/button&amp;gt;
+&amp;lt;div id=&amp;quot;xApp&amp;quot; class=&amp;quot;modal&amp;quot; :style=&amp;quot;{display: dialog?'block':'none'}&amp;quot;&amp;gt;
+&amp;lt;div class=&amp;quot;modal-content&amp;quot;&amp;gt;
+&amp;lt;span class=&amp;quot;close&amp;quot;&amp;gt;Test Modal&amp;lt;/span&amp;gt;
+&amp;lt;p&amp;gt;The value selected will resolve by promise.&amp;lt;/p&amp;gt;
+&amp;lt;button @click=&amp;quot;choose(1)&amp;quot;&amp;gt;1&amp;lt;/button&amp;gt;
+&amp;lt;button @click=&amp;quot;choose(2)&amp;quot;&amp;gt;2&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code class="language-html">&amp;lt;script src=&amp;quot;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;
+let data = { result: null, dialog: false }
+let dialog = new Vue({
+el: '#xApp',
+data:() =&amp;gt; data,
+methods: {
+getConfirm() {
+// 先清空 result (避免兩次選中一樣的值無法觸發 watcher)
+this.result = null
+// open dialog
+this.dialog = true
+return new Promise((resolve, reject) =&amp;gt; {
+try {
+const watcher = this.$watch(
+// 設置監視的對象為 result
+() =&amp;gt; this.result ,
+// 一旦 result 的值有改變，就 resolve promise，並啟動下一輪 watcher
+(newVal) =&amp;gt; resolve(newVal) &amp;amp;&amp;amp; watcher()
+)
+} catch (error) {
+// 如果出錯就 reject promise
+reject(error)
+}
+})
+},
+choose(value) {
+// 為 result 設置值觸發 watcher 解開 promise
+this.result = value
+// 關閉 dialog
+this.dialog = false
+}
+}
+})
+document.getElementById('xBtn')
+.addEventListener( 'click',
+async e =&amp;gt; alert( await dialog.getConfirm() )
+);
+&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code class="language-css">/* The Modal (background) */
+.modal {
+display: none; /* Hidden by default */
+position: fixed; /* Stay in place */
+z-index: 1; /* Sit on top */
+padding-top: 100px; /* Location of the box */
+left: 0;
+top: 0;
+width: 100%; /* Full width */
+height: 100%; /* Full height */
+overflow: auto; /* Enable scroll if needed */
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+background-color: #fefefe;
+margin: auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="舊vue-next-實作">[舊]Vue-next 實作&lt;/h2>
 &lt;p>這裡使用 vue-next/setup/quasar/typescript&lt;/p></description></item><item><title>[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</link><pubDate>Thu, 19 Aug 2021 17:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</guid><description>&lt;p>工作上需要把每一個路由都加上同一個 query string
 第一直覺就是直接寫成這樣：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">router&lt;/span>.&lt;span style="color:#a6e22e">beforeEach&lt;/span>(&lt;span style="color:#66d9ef">async&lt;/span> (&lt;span style="color:#a6e22e">to&lt;/span>, &lt;span style="color:#a6e22e">from&lt;/span>, &lt;span style="color:#a6e22e">next&lt;/span>) =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">next&lt;/span>({
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">path&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">path&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">query&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {...&lt;span style="color:#a6e22e">to&lt;/span>.&lt;span style="color:#a6e22e">queryl&lt;/span> ,&lt;span style="color:#a6e22e">token&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">tokenStr&lt;/span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>})
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>結果卻跳出 &lt;code>Maximum call stack size exceeded&lt;/code> 的錯誤，判斷程式出現無窮迴圈：&lt;/p>
-&lt;pre tabindex="0">&lt;code>runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded
-&lt;/code>&lt;/pre>&lt;p>第一個反應是傻眼貓咪，為什麼 &lt;code>next()&lt;/code> 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會，
+&lt;pre>&lt;code class="language-js">router.beforeEach(async (to, from, next) =&amp;gt; {
+next({
+path: path,
+query: {...to.queryl ,token: tokenStr}
+})
+})
+&lt;/code>&lt;/pre>
+&lt;p>結果卻跳出 &lt;code>Maximum call stack size exceeded&lt;/code> 的錯誤，判斷程式出現無窮迴圈：&lt;/p>
+&lt;pre>&lt;code>runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded
+&lt;/code>&lt;/pre>
+&lt;p>第一個反應是傻眼貓咪，為什麼 &lt;code>next()&lt;/code> 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會，
 難道說 &lt;code>next()&lt;/code> 在傳入參數與不傳入參數的行為並不相同！！
 因此去翻閱官網對 &lt;code>next()&lt;/code> 的說明：&lt;/p>
 &lt;blockquote>
@@ -229,82 +226,80 @@ components.d.ts&lt;/p>
 &lt;/ul>
 &lt;h1 id="單選元件">單選元件&lt;/h1>
 &lt;h2 id="程式碼-code">程式碼 (Code)&lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">Vue&lt;/span>.&lt;span style="color:#a6e22e">component&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;x-ck-single&amp;#39;&lt;/span>, {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">props&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">disabled&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">:&lt;/span> Boolean, &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; &lt;span style="color:#66d9ef">false&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// checkbox 的標記 [string] || [{text:string, value:any}]
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">labels&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">:&lt;/span> Array, &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; [&lt;span style="color:#e6db74">&amp;#39;Yes&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;No&amp;#39;&lt;/span>] },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; &lt;span style="color:#66d9ef">null&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">trueValue&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; &lt;span style="color:#e6db74">&amp;#39;Y&amp;#39;&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">falseValue&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; &lt;span style="color:#e6db74">&amp;#39;N&amp;#39;&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">inline&lt;/span>&lt;span style="color:#f92672">:&lt;/span> { &lt;span style="color:#a6e22e">type&lt;/span>&lt;span style="color:#f92672">:&lt;/span> Boolean, &lt;span style="color:#66d9ef">default&lt;/span>&lt;span style="color:#f92672">:&lt;/span> () =&amp;gt; &lt;span style="color:#66d9ef">false&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">data&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">innervalue_&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">watch&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">value&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">innervalue_&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">computed&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">innervalue&lt;/span>&lt;span style="color:#f92672">:&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">get&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">innervalue_&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">set&lt;/span>(&lt;span style="color:#a6e22e">v&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">innervalue_&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">v&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">this&lt;/span>.&lt;span style="color:#a6e22e">$emit&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;input&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">v&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">render&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> (&lt;span style="color:#a6e22e">h&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">len&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">labels&lt;/span>.&lt;span style="color:#a6e22e">length&lt;/span> &lt;span style="color:#75715e">// labels 的長度
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">allStr&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">labels&lt;/span>.&lt;span style="color:#a6e22e">every&lt;/span>((&lt;span style="color:#a6e22e">label&lt;/span>) =&amp;gt; &lt;span style="color:#66d9ef">typeof&lt;/span> &lt;span style="color:#a6e22e">label&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#39;string&amp;#39;&lt;/span>) &lt;span style="color:#75715e">// 是否為 string
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">allOkObj&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">labels&lt;/span>.&lt;span style="color:#a6e22e">every&lt;/span>((&lt;span style="color:#a6e22e">l&lt;/span>) =&amp;gt; &lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">text&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">!!&lt;/span>&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>) &lt;span style="color:#75715e">// 是否為合法的物件(如果不是 string)
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">siblingConf&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">allOkObj&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">siblingConf&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">labels&lt;/span>.&lt;span style="color:#a6e22e">map&lt;/span>((&lt;span style="color:#a6e22e">l&lt;/span>) =&amp;gt; &lt;span style="color:#a6e22e">_&lt;/span>.&lt;span style="color:#a6e22e">pick&lt;/span>(&lt;span style="color:#a6e22e">l&lt;/span>, [&lt;span style="color:#e6db74">&amp;#39;text&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;value&amp;#39;&lt;/span>]))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">allStr&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#a6e22e">len&lt;/span> &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">siblingConf&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">labels&lt;/span>.&lt;span style="color:#a6e22e">map&lt;/span>((&lt;span style="color:#a6e22e">text&lt;/span>, &lt;span style="color:#a6e22e">idx&lt;/span>) =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">idx&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">trueValue&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">falseValue&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> { &lt;span style="color:#a6e22e">text&lt;/span>, &lt;span style="color:#a6e22e">value&lt;/span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">!&lt;/span>&lt;span style="color:#a6e22e">siblingConf&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">errStr&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#39;無法正確設定元件,len,allStr,allOkObj&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">h&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;div&amp;#39;&lt;/span>, &lt;span style="color:#a6e22e">errStr&lt;/span>, &lt;span style="color:#a6e22e">len&lt;/span>, &lt;span style="color:#a6e22e">allStr&lt;/span>, &lt;span style="color:#a6e22e">allOkObj&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 設定 CheckBox
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> { &lt;span style="color:#a6e22e">disabled&lt;/span> } &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">hideDetails&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">dense&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">baseProps&lt;/span> &lt;span style="color:#f92672">=&lt;/span> { &lt;span style="color:#a6e22e">hideDetails&lt;/span>, &lt;span style="color:#a6e22e">dense&lt;/span>, &lt;span style="color:#a6e22e">disabled&lt;/span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#a6e22e">baseClass&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">inline&lt;/span> &lt;span style="color:#f92672">?&lt;/span> [&lt;span style="color:#e6db74">&amp;#39;d-inline-block&amp;#39;&lt;/span>] &lt;span style="color:#f92672">:&lt;/span> []
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">siblings&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">siblingConf&lt;/span>.&lt;span style="color:#a6e22e">map&lt;/span>((&lt;span style="color:#a6e22e">c&lt;/span>) =&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">props&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">label&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">text&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">inputValue&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">innervalue&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...&lt;span style="color:#a6e22e">baseProps&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 如果只有一個選項，取消勾選時就顯示 falseValue
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">valueOnNull&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">len&lt;/span> &lt;span style="color:#f92672">===&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">falseValue&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#66d9ef">null&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">let&lt;/span> &lt;span style="color:#a6e22e">on&lt;/span> &lt;span style="color:#f92672">=&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">change&lt;/span>&lt;span style="color:#f92672">:&lt;/span> (&lt;span style="color:#a6e22e">e&lt;/span>) =&amp;gt; (&lt;span style="color:#a6e22e">self&lt;/span>.&lt;span style="color:#a6e22e">innervalue&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#a6e22e">e&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">valueOnNull&lt;/span>),
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">h&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;v-checkbox&amp;#34;&lt;/span>, { &lt;span style="color:#a6e22e">props&lt;/span>, &lt;span style="color:#66d9ef">class&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">baseClass&lt;/span>, &lt;span style="color:#a6e22e">on&lt;/span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 傳回整個元件
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">h&lt;/span>(&lt;span style="color:#e6db74">&amp;#39;div&amp;#39;&lt;/span>, {}, &lt;span style="color:#a6e22e">siblings&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>})
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div id="app">
+&lt;pre>&lt;code class="language-js">Vue.component('x-ck-single', {
+props: {
+disabled: { type: Boolean, default: () =&amp;gt; false },
+// checkbox 的標記 [string] || [{text:string, value:any}]
+labels: { type: Array, default: () =&amp;gt; ['Yes', 'No'] },
+value: { default: () =&amp;gt; null },
+trueValue: { default: () =&amp;gt; 'Y' },
+falseValue: { default: () =&amp;gt; 'N' },
+inline: { type: Boolean, default: () =&amp;gt; false },
+},
+data() {
+return {
+innervalue_: this.value,
+}
+},
+watch: {
+value(v) {
+this.innervalue_ = v
+},
+},
+computed: {
+innervalue: {
+get() {
+return this.innervalue_
+},
+set(v) {
+this.innervalue_ = v
+this.$emit('input', v)
+},
+},
+},
+render: function (h) {
+const self = this
+let len = self.labels.length // labels 的長度
+let allStr = self.labels.every((label) =&amp;gt; typeof label == 'string') // 是否為 string
+let allOkObj = self.labels.every((l) =&amp;gt; !!l.text &amp;amp;&amp;amp; !!l.value) // 是否為合法的物件(如果不是 string)
+let siblingConf = null
+if (allOkObj) {
+siblingConf = self.labels.map((l) =&amp;gt; _.pick(l, ['text', 'value']))
+} else if (allStr &amp;amp;&amp;amp; len &amp;lt;= 2) {
+siblingConf = self.labels.map((text, idx) =&amp;gt; {
+let value = idx === 0 ? self.trueValue : self.falseValue
+return { text, value }
+})
+}
+if (!siblingConf) {
+let errStr = '無法正確設定元件,len,allStr,allOkObj'
+return h('div', errStr, len, allStr, allOkObj)
+}
+// 設定 CheckBox
+let { disabled } = self
+let hideDetails = true
+let dense = true
+const baseProps = { hideDetails, dense, disabled }
+const baseClass = self.inline ? ['d-inline-block'] : []
+let siblings = siblingConf.map((c) =&amp;gt; {
+let props = {
+label: c.text,
+inputValue: self.innervalue === c.value,
+...baseProps,
+}
+// 如果只有一個選項，取消勾選時就顯示 falseValue
+let valueOnNull = len === 1 ? self.falseValue : null
+let on = {
+change: (e) =&amp;gt; (self.innervalue = e ? c.value : valueOnNull),
+}
+return h(&amp;quot;v-checkbox&amp;quot;, { props, class: baseClass, on })
+})
+// 傳回整個元件
+return h('div', {}, siblings)
+}
+})
+&lt;/code>&lt;/pre>
+&lt;div id="app">
 &lt;x-ck-single v-model="value" inline>&lt;/x-ck-single>
 {{value === null ? 'null' : value}}
 &lt;/div>

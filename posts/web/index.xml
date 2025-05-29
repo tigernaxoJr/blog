@@ -2,67 +2,66 @@
 &lt;ol>
 &lt;li>
 &lt;p>建立 docker 網路 &lt;code>mynetwork&lt;/code>，如果設定其他名稱，以下步驟再自行調整對應。&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker create network mynetwork
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">docker create network mynetwork
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>
 &lt;p>建立 docker-compose 環境 &lt;code>keycloak/.env&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>KEYCLOCK_IMAGE&lt;span style="color:#f92672">=&lt;/span>bitnami/keycloak:23.0.3
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_VENDOR&lt;span style="color:#f92672">=&lt;/span>postgresql
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_PORT&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">5432&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_USER&lt;span style="color:#f92672">=&lt;/span>keycloak
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_PASSWORD&lt;span style="color:#f92672">=&lt;/span>password
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_DATABASE_NAME&lt;span style="color:#f92672">=&lt;/span>keycloak
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_ADMIN_USER&lt;span style="color:#f92672">=&lt;/span>admin
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>KEYCLOAK_ADMIN_PASSWORD&lt;span style="color:#f92672">=&lt;/span>admin
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">KEYCLOCK_IMAGE=bitnami/keycloak:23.0.3
+KEYCLOAK_DATABASE_VENDOR=postgresql
+KEYCLOAK_DATABASE_PORT=5432
+KEYCLOAK_DATABASE_USER=keycloak
+KEYCLOAK_DATABASE_PASSWORD=password
+KEYCLOAK_DATABASE_NAME=keycloak
+KEYCLOAK_ADMIN_USER=admin
+KEYCLOAK_ADMIN_PASSWORD=admin
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>
 &lt;p>&lt;code>keycloak/docker-compose.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">postgres_data&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">driver&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">keycloak_db&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">postgres&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">volumes&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">postgres_data:/var/lib/postgresql/data&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_DB&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_NAME}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_USER}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">POSTGRES_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PASSWORD}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">keycloak&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOCK_IMAGE}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_VENDOR&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_VENDOR}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_HOST&lt;/span>: &lt;span style="color:#ae81ff">keycloak_db&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_PORT&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PORT}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_NAME&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_NAME}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_USER}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_DATABASE_PASSWORD}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_DATABASE_SCHEMA&lt;/span>: &lt;span style="color:#ae81ff">public&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ADMIN_USER&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_ADMIN_USER}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ADMIN_PASSWORD&lt;/span>: &lt;span style="color:#ae81ff">${KEYCLOAK_ADMIN_PASSWORD}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ENABLE_HEALTH_ENDPOINTS&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KEYCLOAK_ENABLE_STATISTICS&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_PROXY&lt;/span>: &lt;span style="color:#ae81ff">edge&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_PROXY_ADDRESS_FORWARDING&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">KC_HTTP_ENABLED&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;true&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">unless-stopped&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">mynetwork&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">depends_on&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">keycloak_db&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">networks&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">mynetwork&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-yaml">version: '3'
+volumes:
+postgres_data:
+driver: local
+services:
+keycloak_db:
+image: postgres
+restart: always
+volumes:
+- postgres_data:/var/lib/postgresql/data
+environment:
+POSTGRES_DB: ${KEYCLOAK_DATABASE_NAME}
+POSTGRES_USER: ${KEYCLOAK_DATABASE_USER}
+POSTGRES_PASSWORD: ${KEYCLOAK_DATABASE_PASSWORD}
+networks:
+- mynetwork
+keycloak:
+image: ${KEYCLOCK_IMAGE}
+environment:
+KEYCLOAK_DATABASE_VENDOR: ${KEYCLOAK_DATABASE_VENDOR}
+KEYCLOAK_DATABASE_HOST: keycloak_db
+KEYCLOAK_DATABASE_PORT: ${KEYCLOAK_DATABASE_PORT}
+KEYCLOAK_DATABASE_NAME: ${KEYCLOAK_DATABASE_NAME}
+KEYCLOAK_DATABASE_USER: ${KEYCLOAK_DATABASE_USER}
+KEYCLOAK_DATABASE_PASSWORD: ${KEYCLOAK_DATABASE_PASSWORD}
+KEYCLOAK_DATABASE_SCHEMA: public
+KEYCLOAK_ADMIN_USER: ${KEYCLOAK_ADMIN_USER}
+KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+KEYCLOAK_ENABLE_HEALTH_ENDPOINTS: 'true'
+KEYCLOAK_ENABLE_STATISTICS: 'true'
+KC_PROXY: edge
+KC_PROXY_ADDRESS_FORWARDING: 'true'
+KC_HTTP_ENABLED: 'true'
+restart: unless-stopped
+networks:
+- mynetwork
+depends_on:
+- keycloak_db
+networks:
+mynetwork:
+external: true
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>
 &lt;p>建立 &lt;code>nginx/nginx.conf&lt;/code>，這裡我把 &lt;code>keycloak.docker.vm&lt;/code> 給 keycloak，裡面有一些設置 ssl 用得到的區塊放置在註解。&lt;/p></description></item><item><title>[Web] API Design</title><link>https://blog.tigernaxo.com/posts/web/web-api-design/</link><pubDate>Mon, 11 Jul 2022 11:35:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/web-api-design/</guid><description>&lt;h2 id="reference">Reference&lt;/h2>
 &lt;p>&lt;a href="https://learn.microsoft.com/en-us/azure/architecture/best-practices/index-best-practices" target="_blank" rel="noopener">Best practices in cloud applications&lt;/a>&lt;/p></description></item><item><title>[Web] RESTful 敏感性 GET 參數</title><link>https://blog.tigernaxo.com/posts/web/security-get/</link><pubDate>Mon, 11 Jul 2022 11:35:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/web/security-get/</guid><description>&lt;h2 id="網址列參數洩漏風險">網址列參數洩漏風險&lt;/h2>
@@ -101,41 +100,44 @@ SSL 連線連接 TCP 層與 HTTP 層，因此透過 HTTPS 傳輸的網頁，網�
 &lt;ol start="2">
 &lt;li>安裝 &lt;a href="https://fontforge.org/en-US/" target="_blank" rel="noopener">FontForge&lt;/a>，找到 &lt;code>fontforge.exe&lt;/code> 的位址 (&lt;strong>注意，跟桌面捷徑呼叫的執行檔不一樣！&lt;/strong>)，我的是在 &lt;code>C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe&lt;/code>&lt;/li>
 &lt;li>建立一個轉檔腳本 &lt;code>tte-extract.pe&lt;/code>，內容如下
-&lt;pre tabindex="0">&lt;code># Open EUDC TTE
-Open(&amp;#34;EUDC.tte&amp;#34;, 4)
+&lt;pre>&lt;code># Open EUDC TTE
+Open(&amp;quot;EUDC.tte&amp;quot;, 4)
 # CHANGE TTFNAME 2 EUDC
-SetTTFName(0x409,1,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x409,2,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x409,3,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x409,4,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x404,1,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x404,2,&amp;#34;EUDC&amp;#34;)
-SetTTFName(0x409,3,&amp;#34;&amp;#34;)
-SetTTFName(0x404,4,&amp;#34;EUDC&amp;#34;)
-SetFontNames(&amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;EUDC&amp;#34;, &amp;#34;Regular&amp;#34;, &amp;#34;655&amp;#34;, &amp;#34;1.0.0&amp;#34;)
-Generate(&amp;#34;EUDC.ttf&amp;#34;)
-Generate(&amp;#34;EUDC.woff&amp;#34;)
-Generate(&amp;#34;EUDC.woff2&amp;#34;)
+SetTTFName(0x409,1,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x409,2,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x409,3,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x409,4,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x404,1,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x404,2,&amp;quot;EUDC&amp;quot;)
+SetTTFName(0x409,3,&amp;quot;&amp;quot;)
+SetTTFName(0x404,4,&amp;quot;EUDC&amp;quot;)
+SetFontNames(&amp;quot;EUDC&amp;quot;, &amp;quot;EUDC&amp;quot;, &amp;quot;EUDC&amp;quot;, &amp;quot;Regular&amp;quot;, &amp;quot;655&amp;quot;, &amp;quot;1.0.0&amp;quot;)
+Generate(&amp;quot;EUDC.ttf&amp;quot;)
+Generate(&amp;quot;EUDC.woff&amp;quot;)
+Generate(&amp;quot;EUDC.woff2&amp;quot;)
 Close()
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>把 &lt;code>EUDC.tte&lt;/code>、&lt;code>tte-extract&lt;/code>放在同一個位址，在該目錄下用指令執行轉檔 (fontforge.exe 的位址可能需要修改)： &lt;code>C:/Program\ Files\ \(x86\)/FontForgeBuilds/bin/fontforge.exe -script tte-extract.pe&lt;/code>&lt;/li>
 &lt;li>得到的 &lt;code>woff&lt;/code>、&lt;code>woff2&lt;/code>、&lt;code>ttf&lt;/code> 用 css 設定為網頁字形：
 &lt;ul>
 &lt;li>設定網頁字形
-&lt;pre tabindex="0">&lt;code>font-family: &amp;#34;EUDC&amp;#34;;
+&lt;pre>&lt;code>font-family: &amp;quot;EUDC&amp;quot;;
 font-style: normal;
-src: url(&amp;#39;./fonts/EUDC.woff2&amp;#39;) format(&amp;#39;woff2&amp;#39;),
-url(&amp;#39;./fonts/EUDC.woff&amp;#39;) format(&amp;#39;woff&amp;#39;),
-url(&amp;#39;./fonts/EUDC.ttf&amp;#39;) format(&amp;#39;truetype&amp;#39;);
+src: url('./fonts/EUDC.woff2') format('woff2'),
+url('./fonts/EUDC.woff') format('woff'),
+url('./fonts/EUDC.ttf') format('truetype');
 }
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>套用網頁字形
-&lt;pre tabindex="0">&lt;code>-webkit-font-smoothing: antialiased;
+&lt;pre>&lt;code>-webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
-font-family: &amp;#39;其他優先使用的字型&amp;#39;, &amp;#39;EUDC&amp;#39;, sans-serif;
+font-family: '其他優先使用的字型', 'EUDC', sans-serif;
 font-display: auto;
 }
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ul>
 &lt;/li>
 &lt;/ol>

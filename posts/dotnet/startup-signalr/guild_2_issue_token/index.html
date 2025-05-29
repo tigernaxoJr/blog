@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
+<!doctype html><html lang=en><head><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.1d0a40547a1ee0f84ea97e79640ba8cc1ab51593037b50b8f4ec8055371dd70a.css integrity="sha256-HQpAVHoe4PhOqX55ZAuozBq1FZMDe1C49OyAVTcd1wo="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
 <i data-feather=sidebar></i>
 </button>
 <a class=navbar-brand href=/>YuCheng's Site</a>
@@ -34,100 +34,100 @@
 </span></span><span style=display:flex;background-color:#3c3d38><span>    <span style=color:#75715e>// 在 service container 當中註冊 JWT Option</span>
 </span></span><span style=display:flex;background-color:#3c3d38><span>    services.AddOptions&lt;JWTOption&gt;()
 </span></span><span style=display:flex;background-color:#3c3d38><span>        .Bind(Configuration.GetSection(JWTOption.JWT));
-</span></span><span style=display:flex><span>}</span></span></code></pre></div></p><h1 id=簽發-token>簽發 Token</h1><h2 id=安裝-token-套件>安裝 Token 套件</h2><p>筆者在 ASP .NET Core 3.1 的 Web API 專案後，無法直接使用 JWT 相關功能，所以必須先安裝套件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>dotnet add package System.IdentityModel.Tokens.Jwt --version 6.8.0
-</span></span></code></pre></div><h2 id=login-controller>Login Controller</h2><p>建立 API 控制器 <code>Controllers/TokenController.cs</code>，並注入 <code>IOptions&lt;JWTOption></code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Collections.Generic;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.IdentityModel.Tokens.Jwt;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Linq;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Security.Claims;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Text;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Threading.Tasks;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.AspNetCore.Authorization;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.AspNetCore.Http;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.AspNetCore.Mvc;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.Extensions.Configuration;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.Extensions.Configuration.UserSecrets;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.Extensions.Options;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Microsoft.IdentityModel.Tokens;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>namespace</span> SignalR.Controllers
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span><span style=color:#a6e22e>    [Route(&#34;api/[controller]</span><span style=color:#e6db74>&#34;)]
-</span></span></span><span style=display:flex><span><span style=color:#e6db74></span><span style=color:#a6e22e>    [ApiController]</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TokenController</span> : ControllerBase
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> JWTOption _jwtOpt;
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// 等待服務容器注入 IOptions&lt;JWTOption&gt;</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> TokenController(IOptions&lt;JWTOption&gt; jwtOpt)
-</span></span><span style=display:flex><span>        {
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>this</span>._jwtOpt = jwtOpt.Value;
-</span></span><span style=display:flex><span>        }
-</span></span><span style=display:flex><span><span style=color:#a6e22e>
-</span></span></span><span style=display:flex><span><span style=color:#a6e22e>        [AllowAnonymous]</span>
-</span></span><span style=display:flex><span><span style=color:#a6e22e>        [HttpPost(&#34;signin&#34;)]</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> IActionResult SignIn(LoginModel loginModel)
-</span></span><span style=display:flex><span>        {
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 模擬驗證使用者帳號密碼</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>var</span> canLogin = loginModel.userId == <span style=color:#e6db74>&#34;naxo&#34;</span> &amp;&amp; loginModel.password == <span style=color:#e6db74>&#34;pass&#34;</span>;
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (canLogin)
-</span></span><span style=display:flex><span>            {
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>string</span> issuer = _jwtOpt.Issuer;
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>string</span> signKey = _jwtOpt.SignKey;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 設定要加入到 JWT Token 中的聲明資訊(Claims)</span>
-</span></span><span style=display:flex><span>                List&lt;Claim&gt; claims = <span style=color:#66d9ef>new</span> List&lt;Claim&gt;();
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 加入Sub(用戶)</span>
-</span></span><span style=display:flex><span>                claims.Add(<span style=color:#66d9ef>new</span> Claim(JwtRegisteredClaimNames.Sub, loginModel.userId));
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 加入jti(JWT ID) 用於一次性 token</span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>//claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 聲明使用者 userId、roles 的 claim，這裡會用來判斷使用者識別碼、使用者群組</span>
-</span></span><span style=display:flex><span>                claims.Add(<span style=color:#66d9ef>new</span> Claim(<span style=color:#e6db74>&#34;userId&#34;</span>, loginModel.userId));
-</span></span><span style=display:flex><span>                claims.Add(<span style=color:#66d9ef>new</span> Claim(<span style=color:#e6db74>&#34;roles&#34;</span>, <span style=color:#e6db74>&#34;Admin&#34;</span>));
-</span></span><span style=display:flex><span>                claims.Add(<span style=color:#66d9ef>new</span> Claim(<span style=color:#e6db74>&#34;roles&#34;</span>, <span style=color:#e6db74>&#34;Users&#34;</span>));
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 建立一組對稱式加密金鑰，主要用於 JWT 簽章之用</span>
-</span></span><span style=display:flex><span>                SymmetricSecurityKey securityKey = <span style=color:#66d9ef>new</span> SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey));
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 定義加密金鑰、演算法、數位簽章摘要</span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// HmacSha256 必須大於 128 bits，亦即 key 長度至少要 16 字元</span>
-</span></span><span style=display:flex><span>                SigningCredentials signingCredentials = <span style=color:#66d9ef>new</span> SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 產生一個 JwtSecurityToken</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>var</span> token = <span style=color:#66d9ef>new</span> JwtSecurityToken(
-</span></span><span style=display:flex><span>                        issuer,  <span style=color:#75715e>// Issuer    </span>
-</span></span><span style=display:flex><span>                        issuer,  <span style=color:#75715e>// Audience    </span>
-</span></span><span style=display:flex><span>                        claims,  <span style=color:#75715e>// claims</span>
-</span></span><span style=display:flex><span>                        expires: DateTime.Now.AddMinutes(_jwtOpt.Expires), <span style=color:#75715e>// token 生效至過期的分鐘數</span>
-</span></span><span style=display:flex><span>                        signingCredentials: signingCredentials
-</span></span><span style=display:flex><span>                        );
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 序列化 JwtSecurityToken</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>var</span> jwt_token = <span style=color:#66d9ef>new</span> JwtSecurityTokenHandler().WriteToken(token);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>                <span style=color:#75715e>// 回傳 token</span>
-</span></span><span style=display:flex><span>                <span style=color:#66d9ef>return</span> Ok(<span style=color:#66d9ef>new</span>
-</span></span><span style=display:flex><span>                {
-</span></span><span style=display:flex><span>                    token = jwt_token,
-</span></span><span style=display:flex><span>                });
-</span></span><span style=display:flex><span>            }
-</span></span><span style=display:flex><span>            <span style=color:#75715e>// 驗證失敗</span>
-</span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> BadRequest(<span style=color:#66d9ef>new</span>
-</span></span><span style=display:flex><span>            {
-</span></span><span style=display:flex><span>                err = <span style=color:#e6db74>&#34;登入失敗&#34;</span>,
-</span></span><span style=display:flex><span>            });
-</span></span><span style=display:flex><span>        }
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>LoginModel</span>
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> userId { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> password { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h1 id=測試>測試</h1><p>至此我們已完成了一個簡易的 Token SignIn API，以 Postman 進行測試：
-<img src=/posts/dotnet/startup-signalr/guild_2_issue_token/test_ok.jpg alt=測試結果></p><h1 id=備註>備註</h1><ul><li>驗證使用者帳號/密碼的區段需自行代換成應用程式需要的程式碼。</li><li>Token 當中的 Claim 可視情況自行增減</li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts/dotnet/startup-signalr/guild_2_issue_token/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+</span></span><span style=display:flex><span>}</span></span></code></pre></div></p><h1 id=簽發-token>簽發 Token</h1><h2 id=安裝-token-套件>安裝 Token 套件</h2><p>筆者在 ASP .NET Core 3.1 的 Web API 專案後，無法直接使用 JWT 相關功能，所以必須先安裝套件：</p><pre><code class=language-shell>dotnet add package System.IdentityModel.Tokens.Jwt --version 6.8.0
+</code></pre><h2 id=login-controller>Login Controller</h2><p>建立 API 控制器 <code>Controllers/TokenController.cs</code>，並注入 <code>IOptions&lt;JWTOption></code>：</p><pre><code class=language-csharp>using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+
+namespace SignalR.Controllers
+{
+    [Route(&quot;api/[controller]&quot;)]
+    [ApiController]
+    public class TokenController : ControllerBase
+    {
+        private JWTOption _jwtOpt;
+        // 等待服務容器注入 IOptions&lt;JWTOption&gt;
+        public TokenController(IOptions&lt;JWTOption&gt; jwtOpt)
+        {
+            this._jwtOpt = jwtOpt.Value;
+        }
+
+        [AllowAnonymous]
+        [HttpPost(&quot;signin&quot;)]
+        public IActionResult SignIn(LoginModel loginModel)
+        {
+            // 模擬驗證使用者帳號密碼
+            var canLogin = loginModel.userId == &quot;naxo&quot; &amp;&amp; loginModel.password == &quot;pass&quot;;
+            if (canLogin)
+            {
+                string issuer = _jwtOpt.Issuer;
+                string signKey = _jwtOpt.SignKey;
+
+                // 設定要加入到 JWT Token 中的聲明資訊(Claims)
+                List&lt;Claim&gt; claims = new List&lt;Claim&gt;();
+
+                // 加入Sub(用戶)
+                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, loginModel.userId));
+                // 加入jti(JWT ID) 用於一次性 token
+                //claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+                // 聲明使用者 userId、roles 的 claim，這裡會用來判斷使用者識別碼、使用者群組
+                claims.Add(new Claim(&quot;userId&quot;, loginModel.userId));
+                claims.Add(new Claim(&quot;roles&quot;, &quot;Admin&quot;));
+                claims.Add(new Claim(&quot;roles&quot;, &quot;Users&quot;));
+
+                // 建立一組對稱式加密金鑰，主要用於 JWT 簽章之用
+                SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey));
+                // 定義加密金鑰、演算法、數位簽章摘要
+                // HmacSha256 必須大於 128 bits，亦即 key 長度至少要 16 字元
+                SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+                // 產生一個 JwtSecurityToken
+                var token = new JwtSecurityToken(
+                        issuer,  // Issuer    
+                        issuer,  // Audience    
+                        claims,  // claims
+                        expires: DateTime.Now.AddMinutes(_jwtOpt.Expires), // token 生效至過期的分鐘數
+                        signingCredentials: signingCredentials
+                        );
+                // 序列化 JwtSecurityToken
+                var jwt_token = new JwtSecurityTokenHandler().WriteToken(token);
+
+                // 回傳 token
+                return Ok(new
+                {
+                    token = jwt_token,
+                });
+            }
+            // 驗證失敗
+            return BadRequest(new
+            {
+                err = &quot;登入失敗&quot;,
+            });
+        }
+    }
+    public class LoginModel
+    {
+        public string userId { get; set; }
+        public string password { get; set; }
+    }
+}
+</code></pre><h1 id=測試>測試</h1><p>至此我們已完成了一個簡易的 Token SignIn API，以 Postman 進行測試：
+<img src=/posts/dotnet/startup-signalr/guild_2_issue_token/test_ok.jpg alt=測試結果></p><h1 id=備註>備註</h1><ul><li>驗證使用者帳號/密碼的區段需自行代換成應用程式需要的程式碼。</li><li>Token 當中的 Claim 可視情況自行增減</li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/tigernaxoJr/blog/edit/main/content/posts/dotnet/startup-signalr/guild_2_issue_token/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
 Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/dotnet/startup-signalr/guild_1_start/ title="[SignalR] Websocket 即時聊天程式(一) - 建立專案" class="btn filled-button"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>[SignalR] Websocket 即時聊天程式(一) - 建立專案</div></a></div><div class="col-md-6 next-article"><a href=/posts/dotnet/startup-signalr/guild_4_front_end_login/ title="[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面" class="btn filled-button"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn type=button data-bs-toggle=tooltip data-bs-placement=left title="Scroll to top"><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center ps-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#appsettingjson>appsetting.json</a></li><li><a href=#jwt-option-類別>JWT Option 類別</a></li><li><a href=#註冊服務容器>註冊服務容器</a></li></ul><ul><li><a href=#安裝-token-套件>安裝 Token 套件</a></li><li><a href=#login-controller>Login Controller</a></li></ul></nav></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-start"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:ycc@tigernaxo.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span></a></li><li><a href=https://github.com/tigernaxoJr target=_blank rel=noopener><span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span></a></li><li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target=_blank rel=noopener><span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span></a></li><li><a href=tel:+886919681059 target=_blank rel=noopener><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></a></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://blog.tigernaxo.com//index.xml>
 <input type=hidden name=schedule_type value=1>
 <small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
 <button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-start"><div class=col-md-4><a id=theme href=https://github.com/hugo-toha/toha target=_blank rel=noopener><img src=/images/theme-logo_hu_b3360284c55cf72d.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2020 Copyright.</div><div class="col-md-4 text-end"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.22babcef24279791b6f32a01a1f1cb863ef9ef9bc7102ea30d65299e2250e52e.js integrity="sha256-Irq87yQnl5G28yoBofHLhj7575vHEC6jDWUpniJQ5S4=" defer></script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.462fb4ab20b7246dd03f05bb696903160b324cc55d4ce20d423d37bd47a003ad.js integrity="sha256-Ri+0qyC3JG3QPwW7aWkDFgsyTMVdTOINQj03vUegA60=" defer></script></body></html>

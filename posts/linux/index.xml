@@ -1,59 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/linux/</link><description>Recent content in Linux on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Jan 2023 11:14:30 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>[Arch] 安裝(Virtualbox)</title><link>https://blog.tigernaxo.com/posts/linux/arch-install/</link><pubDate>Fri, 20 Jan 2023 11:14:30 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/linux/arch-install/</guid><description>&lt;h2 id="bios-system">BIOS system&lt;/h2>
 &lt;ol>
 &lt;li>分割磁碟， /dev/sda1 給 1G，其餘給 /dev/sda2
-&lt;pre tabindex="0">&lt;code>fdisk /dev/sda
-&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>mkswap /dev/sda1
+&lt;pre>&lt;code>fdisk /dev/sda
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>mkswap /dev/sda1
 mkfs.ext4 /dev/sda2
 mount /dev/sda2 /mnt
 swapon /dev/sda1
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>安裝(arch 核心、linux 核心、韌體)
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacstrap -K /mnt base linux linux-firmware
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>其他套件(非必要)
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacstrap -K /mnt vim sudo openssh docker docker-compose bash-completion
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">pacstrap -K /mnt base linux linux-firmware
+&lt;/code>&lt;/pre>
+其他套件(非必要)
+&lt;pre>&lt;code class="language-bash">pacstrap -K /mnt vim sudo openssh docker docker-compose bash-completion
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>產生 fstab
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># -U Use UUIDs for source identifiers &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash"># -U Use UUIDs for source identifiers
+genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>Chroot
-&lt;pre tabindex="0">&lt;code>arch-chroot /mnt
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;pre>&lt;code>arch-chroot /mnt
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>Time zone
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># generate /etc/adjtime&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hwclock --systohc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+# generate /etc/adjtime
+hwclock --systohc
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>Localization
 在&lt;code>/etc/locale.gen&lt;/code>裡面把&lt;code>en_US.UTF-8 UTF-8&lt;/code>、&lt;code>zh_TW.UTF-8 UTF-8&lt;/code>解除註解。
-&lt;pre tabindex="0">&lt;code>locale-gen
-&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>echo &amp;#34;LANG=en_US.UTF-8&amp;#34; &amp;gt;&amp;gt; /etc/locale.conf
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;pre>&lt;code>locale-gen
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>echo &amp;quot;LANG=en_US.UTF-8&amp;quot; &amp;gt;&amp;gt; /etc/locale.conf
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>Boot loader
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacman -S grub
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># don’t put the disk number sda1, just the disk name sda&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>grub-install /dev/sda
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>grub-mkconfig -o /boot/grub/grub.cfg
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">pacman -S grub
+# don’t put the disk number sda1, just the disk name sda
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>Root password
-&lt;pre tabindex="0">&lt;code>passwd
-&lt;/code>&lt;/pre>&lt;/li>
+&lt;pre>&lt;code>passwd
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;li>重開機
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>exit
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>unmount -R /mnt
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>reboot
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;pre>&lt;code class="language-bash">exit
+unmount -R /mnt
+reboot
+&lt;/code>&lt;/pre>
+&lt;/li>
 &lt;/ol>
 &lt;h2 id="efi-system">EFI system&lt;/h2>
 &lt;p>首先在 virtualbox 硬體的部分將 EFI 打勾&lt;/p></description></item><item><title>[Linux] Ubuntu SSH 連線</title><link>https://blog.tigernaxo.com/posts/linux/ubuntu22-ssh/</link><pubDate>Tue, 15 Nov 2022 10:23:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/linux/ubuntu22-ssh/</guid><description>&lt;h2 id="更改-port">更改 port&lt;/h2>
 &lt;p>可以直接修改&lt;code>/etc/ssh/sshd_config&lt;/code>裡面的 Port 設定(解開註解修改)，或直接新增一個檔案：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo echo &lt;span style="color:#e6db74">&amp;#34;Port 22&amp;#34;&lt;/span> &amp;gt;&amp;gt; /etc/ssh/sshd_config.d/port.conf
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre tabindex="0">&lt;code>sudo ufw status verbose
+&lt;pre>&lt;code class="language-bash">sudo echo &amp;quot;Port 22&amp;quot; &amp;gt;&amp;gt; /etc/ssh/sshd_config.d/port.conf
+&lt;/code>&lt;/pre>
+&lt;pre>&lt;code>sudo ufw status verbose
 sudo ufw allow 22
-&lt;/code>&lt;/pre>&lt;p>重啟 sshd&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>service sshd restart
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;a href="https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps" target="_blank" rel="noopener">https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps&lt;/a>&lt;/p></description></item><item><title>[Linux] CentOS 8 設定網路靜態IP</title><link>https://blog.tigernaxo.com/posts/linux/centos8-static-ip/</link><pubDate>Tue, 16 Jun 2020 09:37:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/linux/centos8-static-ip/</guid><description>&lt;h1 id="查詢ip">查詢IP&lt;/h1>
-&lt;pre tabindex="0">&lt;code>$ ip a
+&lt;/code>&lt;/pre>
+&lt;p>重啟 sshd&lt;/p>
+&lt;pre>&lt;code class="language-bash">service sshd restart
+&lt;/code>&lt;/pre>
+&lt;p>&lt;a href="https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps" target="_blank" rel="noopener">https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps&lt;/a>&lt;/p></description></item><item><title>[Linux] CentOS 8 設定網路靜態IP</title><link>https://blog.tigernaxo.com/posts/linux/centos8-static-ip/</link><pubDate>Tue, 16 Jun 2020 09:37:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/linux/centos8-static-ip/</guid><description>&lt;h1 id="查詢ip">查詢IP&lt;/h1>
+&lt;pre>&lt;code>$ ip a
 1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 inet 127.0.0.1/8 scope host lo
@@ -66,11 +81,12 @@ inet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute enp0s3
 valid_lft forever preferred_lft forever
 inet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroute
 valid_lft forever preferred_lft forever
-&lt;/code>&lt;/pre>&lt;h1 id="修改網路設定">修改網路設定&lt;/h1>
+&lt;/code>&lt;/pre>
+&lt;h1 id="修改網路設定">修改網路設定&lt;/h1>
 &lt;p>修改網路介面設置如下，檔案名稱預設為ifcfg-網路介面(網路卡)名稱，舉例來說安裝好 CentOS 預設的網路卡 enp0s3 設定檔：/etc/sysconfig/network-scripts/ifcfg-enp0s3&lt;/p></description></item><item><title>[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</title><link>https://blog.tigernaxo.com/posts/linux/ubuntu204-static-ip/</link><pubDate>Sat, 13 Jun 2020 09:37:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/linux/ubuntu204-static-ip/</guid><description>&lt;p>Ubuntu 自 17.10 以後就可以用 netplan 設置網卡~&lt;/p>
 &lt;h1 id="檢查網路介面">檢查網路介面&lt;/h1>
 &lt;p>以 ip a 可以看到我的 ubuntu 有2個網路介面分別是 lo、enp0s3，對應到 loopback、有線網卡&lt;/p>
-&lt;pre tabindex="0">&lt;code>$ ip a
+&lt;pre>&lt;code>$ ip a
 1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 inet 127.0.0.1/8 scope host lo
@@ -83,5 +99,6 @@ inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
 valid_lft 86159sec preferred_lft 86159sec
 inet6 fe80::a00:27ff:fe6a:7be3/64 scope link
 valid_lft forever preferred_lft forever
-&lt;/code>&lt;/pre>&lt;h1 id="檢查設定檔">檢查設定檔&lt;/h1>
+&lt;/code>&lt;/pre>
+&lt;h1 id="檢查設定檔">檢查設定檔&lt;/h1>
 &lt;p>所有放置於 /etc/netplan 底下的 yaml 檔都會影響 netplan 的設置，檢查設定檔看到只有一個 00-installer-config.yaml，內容空空如也，一般來說在安裝系統時有設定過網路就會有，如果沒有的話就自己新增囉：&lt;/p></description></item></channel></rss>

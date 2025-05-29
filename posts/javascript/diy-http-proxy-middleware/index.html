@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
+<!doctype html><html lang=en><head><title>[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.1d0a40547a1ee0f84ea97e79640ba8cc1ab51593037b50b8f4ec8055371dd70a.css integrity="sha256-HQpAVHoe4PhOqX55ZAuozBq1FZMDe1C49OyAVTcd1wo="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[Tools] 10分鐘建造 proxy 克服跨網域資源存取(CORS)問題"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
 <i data-feather=sidebar></i>
 </button>
 <a class=navbar-brand href=/>YuCheng's Site</a>
@@ -9,66 +9,66 @@
 (例如 vue 開發者臨時檢查其他框架的程式碼遇到跨網域問題)，
 重新研究如何設置開發環境跨網域代理伺服器往往就花費多餘的時間
 (不過最終還是要搭建起來阿，喂~~)，
-因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。</p><h1 id=步驟>步驟</h1><h2 id=首先安裝-nodejs>首先安裝 <a href=https://nodejs.org/en/ target=_blank rel=noopener>node.js</a></h2><h2 id=建立專案資料夾>建立專案資料夾</h2><p>建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir proxy
-</span></span></code></pre></div><h2 id=起始專案>起始專案</h2><p>用指令移動到該專案資料夾下，起始專案：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd proxy
-</span></span><span style=display:flex><span>npm init 
-</span></span></code></pre></div><h2 id=安裝相依性>安裝相依性</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>npm i express http-proxy-middleware cors
-</span></span></code></pre></div><h2 id=建立-appjs>建立 app.js</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>express</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;express&#39;</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>cors</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;cors&#39;</span>);
-</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> { <span style=color:#a6e22e>createProxyMiddleware</span> } <span style=color:#f92672>=</span> <span style=color:#a6e22e>require</span>(<span style=color:#e6db74>&#39;http-proxy-middleware&#39;</span>);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 建立一個 Express 伺服器
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>app</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>express</span>();
-</span></span><span style=display:flex><span><span style=color:#a6e22e>app</span>.<span style=color:#a6e22e>use</span>(<span style=color:#a6e22e>cors</span>())
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 設定 Express 伺服器的 Host、Port
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>PORT</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>3000</span>;
-</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>HOST</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;localhost&#34;</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 設定代理到 google 的 Proxy 端點
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>app</span>.<span style=color:#a6e22e>use</span>(<span style=color:#e6db74>&#39;/google&#39;</span>, <span style=color:#a6e22e>createProxyMiddleware</span>({
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>target</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://www.google.com/&#34;</span>,
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>changeOrigin</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>true</span>,
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pathRewrite</span><span style=color:#f92672>:</span> {
-</span></span><span style=display:flex><span>        [<span style=color:#e6db74>`^/google`</span>]<span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;&#39;</span>,
-</span></span><span style=display:flex><span>    },
-</span></span><span style=display:flex><span>}));
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 設定代理到 yahoo 的 Proxy 端點
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>app</span>.<span style=color:#a6e22e>use</span>(<span style=color:#e6db74>&#39;/yahoo&#39;</span>, <span style=color:#a6e22e>createProxyMiddleware</span>({
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>target</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://tw.yahoo.com/&#34;</span>,
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>changeOrigin</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>true</span>,
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>pathRewrite</span><span style=color:#f92672>:</span> {
-</span></span><span style=display:flex><span>        [<span style=color:#e6db74>`^/yahoo`</span>]<span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;&#39;</span>,
-</span></span><span style=display:flex><span>    },
-</span></span><span style=display:flex><span>}));
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e>// 啟動代理伺服器
-</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>app</span>.<span style=color:#a6e22e>listen</span>(<span style=color:#a6e22e>PORT</span>, <span style=color:#a6e22e>HOST</span>, () =&gt; {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`Starting Proxy at </span><span style=color:#e6db74>${</span><span style=color:#a6e22e>HOST</span><span style=color:#e6db74>}</span><span style=color:#e6db74>:</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>PORT</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>);
-</span></span><span style=display:flex><span>});
-</span></span></code></pre></div><h2 id=啟動代理伺服器>啟動代理伺服器</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>$ node app.js
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>HPM<span style=color:#f92672>]</span> Proxy created: /  -&gt; https://www.google.com/
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>HPM<span style=color:#f92672>]</span> Proxy rewrite rule created: <span style=color:#e6db74>&#34;^/google&#34;</span> ~&gt; <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>HPM<span style=color:#f92672>]</span> Proxy created: /  -&gt; https://tw.yahoo.com/
-</span></span><span style=display:flex><span><span style=color:#f92672>[</span>HPM<span style=color:#f92672>]</span> Proxy rewrite rule created: <span style=color:#e6db74>&#34;^/yahoo&#34;</span> ~&gt; <span style=color:#e6db74>&#34;&#34;</span>
-</span></span><span style=display:flex><span>Starting Proxy at localhost:3000
-</span></span></code></pre></div><h2 id=測試>測試</h2><p>打開隨意網頁 F12，用 fetch api 透過 proxy 對 google 或 yahoo 發起 get 請求成功獲得資訊，且 Header 裡面會有<code>Access-Control-Allow-Origin: *</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#a6e22e>fetch</span>(<span style=color:#e6db74>&#39;http://localhost:3000/google/&#39;</span>)
-</span></span><span style=display:flex><span>  .<span style=color:#a6e22e>then</span>(<span style=color:#a6e22e>response</span> =&gt; <span style=color:#a6e22e>response</span>.<span style=color:#a6e22e>text</span>())
-</span></span><span style=display:flex><span>  .<span style=color:#a6e22e>then</span>(<span style=color:#a6e22e>data</span> =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>data</span>));
-</span></span><span style=display:flex><span><span style=color:#75715e>// Promise {&lt;pending&gt;}
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// &lt;!doctype html&gt;&lt;html itemscope=&#34;&#34; itemtype=&#34;http://schema.org/WebPage&#34; lang=&#34;zh-TW&#34;&gt;&lt;head&gt;&lt;meta charset=&#34;UT...
-</span></span></span></code></pre></div><p>如果是直接對 google 發起的 get 請求則會因為跨網域問題不會成功：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#a6e22e>fetch</span>(<span style=color:#e6db74>&#39;https://www.google.com/&#39;</span>)
-</span></span><span style=display:flex><span>  .<span style=color:#a6e22e>then</span>(<span style=color:#a6e22e>response</span> =&gt; <span style=color:#a6e22e>response</span>.<span style=color:#a6e22e>text</span>())
-</span></span><span style=display:flex><span>  .<span style=color:#a6e22e>then</span>(<span style=color:#a6e22e>data</span> =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>data</span>));
-</span></span><span style=display:flex><span><span style=color:#75715e>// Promise {&lt;pending&gt;}
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// Access to fetch at &#39;https://www.google.com/&#39; from origin &#39;https://developer.mozilla.org&#39; has been blocked by CORS policy: No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource. If an opaque response serves your needs, set the request&#39;s mode to &#39;no-cors&#39; to fetch the resource with CORS disabled.
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// GET https://www.google.com/ net::ERR_FAILED
-</span></span></span><span style=display:flex><span><span style=color:#75715e>// Using_Fetch:1 Uncaught (in promise) TypeError: Failed to fetch
-</span></span></span></code></pre></div></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts/Javascript/diy-http-proxy-middleware.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+因此紀錄一下怎麼用 node.js 建立一個通用的代理伺服器處理跨網域問題，整個過程不超過5分鐘。</p><h1 id=步驟>步驟</h1><h2 id=首先安裝-nodejs>首先安裝 <a href=https://nodejs.org/en/ target=_blank rel=noopener>node.js</a></h2><h2 id=建立專案資料夾>建立專案資料夾</h2><p>建立一個資料夾叫做 proxy 存放這個專案吧，手動建立也可以。</p><pre><code class=language-bash>mkdir proxy
+</code></pre><h2 id=起始專案>起始專案</h2><p>用指令移動到該專案資料夾下，起始專案：</p><pre><code class=language-bash>cd proxy
+npm init 
+</code></pre><h2 id=安裝相依性>安裝相依性</h2><pre><code class=language-bash>npm i express http-proxy-middleware cors
+</code></pre><h2 id=建立-appjs>建立 app.js</h2><pre><code class=language-js>const express = require('express');
+const cors = require('cors');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+// 建立一個 Express 伺服器
+const app = express();
+app.use(cors())
+
+// 設定 Express 伺服器的 Host、Port
+const PORT = 3000;
+const HOST = &quot;localhost&quot;;
+
+// 設定代理到 google 的 Proxy 端點
+app.use('/google', createProxyMiddleware({
+    target: &quot;https://www.google.com/&quot;,
+    changeOrigin: true,
+    pathRewrite: {
+        [`^/google`]: '',
+    },
+}));
+
+// 設定代理到 yahoo 的 Proxy 端點
+app.use('/yahoo', createProxyMiddleware({
+    target: &quot;https://tw.yahoo.com/&quot;,
+    changeOrigin: true,
+    pathRewrite: {
+        [`^/yahoo`]: '',
+    },
+}));
+
+// 啟動代理伺服器
+app.listen(PORT, HOST, () =&gt; {
+    console.log(`Starting Proxy at ${HOST}:${PORT}`);
+});
+</code></pre><h2 id=啟動代理伺服器>啟動代理伺服器</h2><pre><code class=language-bash>$ node app.js
+[HPM] Proxy created: /  -&gt; https://www.google.com/
+[HPM] Proxy rewrite rule created: &quot;^/google&quot; ~&gt; &quot;&quot;
+[HPM] Proxy created: /  -&gt; https://tw.yahoo.com/
+[HPM] Proxy rewrite rule created: &quot;^/yahoo&quot; ~&gt; &quot;&quot;
+Starting Proxy at localhost:3000
+</code></pre><h2 id=測試>測試</h2><p>打開隨意網頁 F12，用 fetch api 透過 proxy 對 google 或 yahoo 發起 get 請求成功獲得資訊，且 Header 裡面會有<code>Access-Control-Allow-Origin: *</code>：</p><pre><code class=language-js>fetch('http://localhost:3000/google/')
+  .then(response =&gt; response.text())
+  .then(data =&gt; console.log(data));
+// Promise {&lt;pending&gt;}
+// &lt;!doctype html&gt;&lt;html itemscope=&quot;&quot; itemtype=&quot;http://schema.org/WebPage&quot; lang=&quot;zh-TW&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;UT...
+</code></pre><p>如果是直接對 google 發起的 get 請求則會因為跨網域問題不會成功：</p><pre><code class=language-js>fetch('https://www.google.com/')
+  .then(response =&gt; response.text())
+  .then(data =&gt; console.log(data));
+// Promise {&lt;pending&gt;}
+// Access to fetch at 'https://www.google.com/' from origin 'https://developer.mozilla.org' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+// GET https://www.google.com/ net::ERR_FAILED
+// Using_Fetch:1 Uncaught (in promise) TypeError: Failed to fetch
+</code></pre></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/tigernaxoJr/blog/edit/main/content/posts/Javascript/diy-http-proxy-middleware.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
 Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/javascript/diy-simple-router/ title="[DIY] 用Typescript搭建簡易前端路由" class="btn filled-button"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>[DIY] 用Typescript搭建簡易前端路由</div></a></div><div class="col-md-6 next-article"><a href=/posts/typescript/ts-extend-global-obj/ title="[TS] Typescript 在標準內建物件加上屬性" class="btn filled-button"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>[TS] Typescript 在標準內建物件加上屬性</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn type=button data-bs-toggle=tooltip data-bs-placement=left title="Scroll to top"><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center ps-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#首先安裝-nodejs>首先安裝 <a href=https://nodejs.org/en/>node.js</a></a></li><li><a href=#建立專案資料夾>建立專案資料夾</a></li><li><a href=#起始專案>起始專案</a></li><li><a href=#安裝相依性>安裝相依性</a></li><li><a href=#建立-appjs>建立 app.js</a></li><li><a href=#啟動代理伺服器>啟動代理伺服器</a></li><li><a href=#測試>測試</a></li></ul></nav></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-start"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:ycc@tigernaxo.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span></a></li><li><a href=https://github.com/tigernaxoJr target=_blank rel=noopener><span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span></a></li><li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target=_blank rel=noopener><span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span></a></li><li><a href=tel:+886919681059 target=_blank rel=noopener><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></a></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://blog.tigernaxo.com//index.xml>
 <input type=hidden name=schedule_type value=1>
 <small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
 <button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-start"><div class=col-md-4><a id=theme href=https://github.com/hugo-toha/toha target=_blank rel=noopener><img src=/images/theme-logo_hu_b3360284c55cf72d.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2020 Copyright.</div><div class="col-md-4 text-end"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.22babcef24279791b6f32a01a1f1cb863ef9ef9bc7102ea30d65299e2250e52e.js integrity="sha256-Irq87yQnl5G28yoBofHLhj7575vHEC6jDWUpniJQ5S4=" defer></script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.462fb4ab20b7246dd03f05bb696903160b324cc55d4ce20d423d37bd47a003ad.js integrity="sha256-Ri+0qyC3JG3QPwW7aWkDFgsyTMVdTOINQj03vUegA60=" defer></script></body></html>

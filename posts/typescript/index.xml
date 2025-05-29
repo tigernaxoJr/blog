@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Typescript on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/typescript/</link><description>Recent content in Typescript on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 20 May 2020 09:37:18 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/typescript/index.xml" rel="self" type="application/rss+xml"/><item><title>[TS] Typescript 在標準內建物件加上屬性</title><link>https://blog.tigernaxo.com/posts/typescript/ts-extend-global-obj/</link><pubDate>Wed, 20 May 2020 09:37:18 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/typescript/ts-extend-global-obj/</guid><description>&lt;h3 id="宣告">宣告&lt;/h3>
 &lt;p>這個動作是 Extends Array Interface&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">interface&lt;/span> Array&amp;lt;&lt;span style="color:#f92672">T&lt;/span>&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">newfunc&lt;/span>(&lt;span style="color:#a6e22e">o&lt;/span>: &lt;span style="color:#66d9ef">T&lt;/span>)&lt;span style="color:#f92672">:&lt;/span> Array&amp;lt;&lt;span style="color:#f92672">T&lt;/span>&amp;gt;;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Array.&lt;span style="color:#a6e22e">prototype&lt;/span>.&lt;span style="color:#a6e22e">newfunc&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">function&lt;/span> (&lt;span style="color:#a6e22e">o&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// some code
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">this&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="使用">使用&lt;/h3>
+&lt;pre>&lt;code class="language-ts">interface Array&amp;lt;T&amp;gt; {
+newfunc(o: T): Array&amp;lt;T&amp;gt;;
+}
+Array.prototype.newfunc = function (o) {
+// some code
+return this;
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="使用">使用&lt;/h3>
 &lt;p>使用者要先拿到被 extend 的 interface&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ts" data-lang="ts">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">declare&lt;/span> &lt;span style="color:#66d9ef">global&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">interface&lt;/span> Array&amp;lt;&lt;span style="color:#f92672">T&lt;/span>&amp;gt; {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">newfunc&lt;/span>(&lt;span style="color:#a6e22e">o&lt;/span>: &lt;span style="color:#66d9ef">T&lt;/span>)&lt;span style="color:#f92672">:&lt;/span> Array&amp;lt;&lt;span style="color:#f92672">T&lt;/span>&amp;gt;;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="reference">Reference&lt;/h2>
+&lt;pre>&lt;code class="language-ts">declare global {
+interface Array&amp;lt;T&amp;gt; {
+newfunc(o: T): Array&amp;lt;T&amp;gt;;
+}
+}
+&lt;/code>&lt;/pre>
+&lt;h2 id="reference">Reference&lt;/h2>
 &lt;ul>
 &lt;li>&lt;a href="https://stackoverflow.com/questions/12802383/extending-array-in-typescript" target="_blank" rel="noopener">stackoverflow - extending array in typescript&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://bobbyhadz.com/blog/typescript-array-extend" target="_blank" rel="noopener">bobbyhadz - typescript-array-extend&lt;/a>&lt;/li>

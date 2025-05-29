@@ -59,35 +59,37 @@ The Order of UseAuthentication、UseAuthorization&lt;/p>
 &lt;h1 id="configuration">Configuration&lt;/h1>
 &lt;p>在 Startup.ConfigureServices 方法中設置驗證方案，
 並且可以在 AddCookie 當中設置 CookieAuthenticationOptions(見前一節)&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 設置 cookie 驗證作為應用程式預設的驗證方案&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 將 cookie 服務添加到服務容器當中&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .AddCookie();
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization，
+&lt;pre>&lt;code class="language-c#">// 設置 cookie 驗證作為應用程式預設的驗證方案
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+// 將 cookie 服務添加到服務容器當中
+.AddCookie();
+&lt;/code>&lt;/pre>
+&lt;p>在 Startup.Configure 方法中，呼叫 UseAuthentication、UseAuthorization，
 啟用驗證中間件並設置 HttpContext.User 屬性，
 UseAuthentication 必須在 UseAuthorization 之前，且兩者都必須在 UseEndpoints 之前被呼叫：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseAuthentication(); &lt;span style="color:#75715e">// 驗證&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseAuthorization(); &lt;span style="color:#75715e">// 授權&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// 端點對應&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>app.UseEndpoints(endpoints =&amp;gt;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapControllers();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> endpoints.MapRazorPages();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="cookie-policy-middleware">Cookie Policy Middleware&lt;/h1>
+&lt;pre>&lt;code class="language-c#">app.UseAuthentication(); // 驗證
+app.UseAuthorization(); // 授權
+// 端點對應
+app.UseEndpoints(endpoints =&amp;gt;
+{
+endpoints.MapControllers();
+endpoints.MapRazorPages();
+});
+&lt;/code>&lt;/pre>
+&lt;h1 id="cookie-policy-middleware">Cookie Policy Middleware&lt;/h1>
 &lt;p>在中間件當中設置的驗證政策會作用於全域(每個請求)，
 舉例來說，最常用的就是限制應用程式所有 Cookie 的 SameSite 屬性，
 所有 Controller 簽發的 Cookie.SamSite 屬性會被限縮為較嚴格(不比 MinimumSameSitePolicy 寬鬆)的設置：&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c#" data-lang="c#">&lt;span style="display:flex;">&lt;span>app.UseCookiePolicy(&lt;span style="color:#66d9ef">new&lt;/span> CookiePolicyOptions {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// 所有 Cookie.SamSite 設置都會被提升為 Strict&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> MinimumSameSitePolicy = SameSiteMode.Strict,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Cookie.SamSite 設置為 None 的話會被提升為 Lax&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.Lax, &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// MinimumSameSitePolicy 設置為最寬鬆，因此不會影響 Cookie.SamSite&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//MinimumSameSitePolicy = SameSiteMode.None, &lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>});
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="create-an-authentication-cookie">Create an authentication cookie&lt;/h1>
+&lt;pre>&lt;code class="language-c#">app.UseCookiePolicy(new CookiePolicyOptions {
+// 所有 Cookie.SamSite 設置都會被提升為 Strict
+MinimumSameSitePolicy = SameSiteMode.Strict,
+// Cookie.SamSite 設置為 None 的話會被提升為 Lax
+//MinimumSameSitePolicy = SameSiteMode.Lax,
+// MinimumSameSitePolicy 設置為最寬鬆，因此不會影響 Cookie.SamSite
+//MinimumSameSitePolicy = SameSiteMode.None,
+});
+&lt;/code>&lt;/pre>
+&lt;h1 id="create-an-authentication-cookie">Create an authentication cookie&lt;/h1>
 &lt;p>.NET Core 利用 ClaimsPrincipal 將序列化的使用者資訊儲存在 Cookie 當中
 而 ClaimsPrincipal 可包含很多 ClaimsIdentity(但通常只有一個)；
 ClaimsIdentity 可以且通常包含很多 Claims(聲明)，

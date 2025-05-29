@@ -1,4 +1,4 @@
-<!doctype html><html lang=en><head><title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
+<!doctype html><html lang=en><head><title>[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)</title><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><link rel=stylesheet href=/application.1d0a40547a1ee0f84ea97e79640ba8cc1ab51593037b50b8f4ec8055371dd70a.css integrity="sha256-HQpAVHoe4PhOqX55ZAuozBq1FZMDe1C49OyAVTcd1wo="><meta property="og:title" content="YuCheng's Site"><meta property="og:type" content="website"><meta property="og:description" content="Portfolio and personal blog of Yu Cheng."><meta property="og:image" content="/images/author/peter.png"><meta property="og:url" content="https://blog.tigernaxo.com/"><meta name=description content="[.NET Core] 不阻塞的非同步控制器(Non-Blocking Asynchronous Controllers)"><script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">let theme=localStorage.getItem("theme-scheme")||localStorage.getItem("darkmode:color-scheme")||"light";theme==="system"&&(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?theme="dark":theme="light"),document.documentElement.setAttribute("data-theme",theme)</script></head><body class="type-posts kind-page" data-bs-spy=scroll data-bs-target=#TableOfContents data-bs-offset=80><div class="container-fluid bg-secondary wrapper"><nav class="navbar navbar-expand-xl top-navbar shadow" id=top-navbar><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button>
 <i data-feather=sidebar></i>
 </button>
 <a class=navbar-brand href=/>YuCheng's Site</a>
@@ -19,41 +19,41 @@ action 前加上 async 的作用在於建立一個管理回傳任務的狀態機
 且如果 API 回傳型別是 Task 但卻只使用同步函式，
 那該API的行為就只是同步。
 以 Dapper 存取資料庫為例子，用 QueryAsync 代替 Query，
-可以避免在 Query 在等待回應的時候阻塞其他非同步方法的執行。</p><h1 id=範例>範例</h1><p>透過建立一個非同步的 Controller 由前端呼叫，可以獲得非阻塞的結果：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c# data-lang=c#><span style=display:flex><span><span style=color:#a6e22e>[Route(&#34;api/[controller]</span><span style=color:#e6db74>&#34;)]
-</span></span></span><span style=display:flex><span><span style=color:#e6db74></span><span style=color:#a6e22e>[ApiController]</span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TaskController</span> : ControllerBase
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span><span style=color:#a6e22e>    [HttpGet(&#34;Delay&#34;)]</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>async</span> Task&lt;IActionResult&gt; Delay()
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> controllerName = <span style=color:#e6db74>&#34;Delay&#34;</span>;
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> startTime = DateTime.Now.ToString(<span style=color:#e6db74>&#34;HH:MM:ss.fff&#34;</span>);
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>5000</span>);
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>var</span> endTime = DateTime.Now.ToString(<span style=color:#e6db74>&#34;HH:MM:ss.fff&#34;</span>);
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> Ok(<span style=color:#66d9ef>new</span> { controllerName, startTime, endTime });
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>在前端以 javscript 程式碼測試可以觀察到非阻塞 api：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>callApi</span>(<span style=color:#a6e22e>url</span>){
-</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fetch</span>(<span style=color:#a6e22e>url</span>)
-</span></span><span style=display:flex><span>	.<span style=color:#a6e22e>then</span>(<span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>res</span>) {
-</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>res</span>.<span style=color:#a6e22e>json</span>();
-</span></span><span style=display:flex><span>	})
-</span></span><span style=display:flex><span>	.<span style=color:#a6e22e>then</span>(<span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>json</span>) {
-</span></span><span style=display:flex><span>		<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>json</span>);
-</span></span><span style=display:flex><span>	});
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#a6e22e>callApi</span>(<span style=color:#e6db74>&#39;api/Task/Delay&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#a6e22e>callApi</span>(<span style=color:#e6db74>&#39;api/Task/Delay&#39;</span>)
-</span></span><span style=display:flex><span><span style=color:#75715e>// {controllerName: &#34;Delay&#34;, startTime: &#34;02:03:46.720&#34;, endTime: &#34;02:03:51.764&#34;}
-</span></span></span><span style=display:flex><span><span style=color:#75715e>//{controllerName: &#34;Delay&#34;, startTime: &#34;02:03:46.720&#34;, endTime: &#34;02:03:51.764&#34;}
-</span></span></span></code></pre></div><p>P.S. 測試當下無法在Edge瀏覽器中呼叫同一支 api 獲得非阻塞結果，
+可以避免在 Query 在等待回應的時候阻塞其他非同步方法的執行。</p><h1 id=範例>範例</h1><p>透過建立一個非同步的 Controller 由前端呼叫，可以獲得非阻塞的結果：</p><pre><code class=language-c#>[Route(&quot;api/[controller]&quot;)]
+[ApiController]
+public class TaskController : ControllerBase
+{
+    [HttpGet(&quot;Delay&quot;)]
+    public async Task&lt;IActionResult&gt; Delay()
+    {
+        var controllerName = &quot;Delay&quot;;
+        var startTime = DateTime.Now.ToString(&quot;HH:MM:ss.fff&quot;);
+        await Task.Delay(5000);
+        var endTime = DateTime.Now.ToString(&quot;HH:MM:ss.fff&quot;);
+        return Ok(new { controllerName, startTime, endTime });
+    }
+}
+</code></pre><p>在前端以 javscript 程式碼測試可以觀察到非阻塞 api：</p><pre><code class=language-js>function callApi(url){
+	fetch(url)
+	.then(function(res) {
+		return res.json();
+	})
+	.then(function(json) {
+		console.log(json);
+	});
+}
+callApi('api/Task/Delay')
+callApi('api/Task/Delay')
+// {controllerName: &quot;Delay&quot;, startTime: &quot;02:03:46.720&quot;, endTime: &quot;02:03:51.764&quot;}
+//{controllerName: &quot;Delay&quot;, startTime: &quot;02:03:46.720&quot;, endTime: &quot;02:03:51.764&quot;}
+</code></pre><p>P.S. 測試當下無法在Edge瀏覽器中呼叫同一支 api 獲得非阻塞結果，
 同時呼叫 api 第二次呼叫會被瀏覽器排在第一次呼叫之後執行，
 看起來會像是該 api 在伺服器端發生了阻塞，
 但是 Chrome 卻沒有這個情況，可能是瀏覽器政策不同，
-無論如何後端回傳 Task 的 Controller 行為都是非阻塞的。</p><h1 id=reference>Reference</h1><ul><li><a href=https://docs.microsoft.com/en-us/dotnet/csharp/async target=_blank rel=noopener>MSDN - Asynchronous programming</a></li><li><a href=https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap target=_blank rel=noopener>MSDN - Task-based asynchronous pattern</a></li><li><a href=https://stackoverflow.com/questions/59823334/task-without-async-await-in-controller-action-method target=_blank rel=noopener>stackoverflow - Task without async/await in controller action method</a></li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts/dotnet/basic-async-controller.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+無論如何後端回傳 Task 的 Controller 行為都是非阻塞的。</p><h1 id=reference>Reference</h1><ul><li><a href=https://docs.microsoft.com/en-us/dotnet/csharp/async target=_blank rel=noopener>MSDN - Asynchronous programming</a></li><li><a href=https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap target=_blank rel=noopener>MSDN - Task-based asynchronous pattern</a></li><li><a href=https://stackoverflow.com/questions/59823334/task-without-async-await-in-controller-action-method target=_blank rel=noopener>stackoverflow - Task without async/await in controller action method</a></li></ul></div><div class="row ps-3 pe-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/tigernaxoJr/blog/edit/main/content/posts/dotnet/basic-async-controller.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
 Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/ title="[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)" class="btn filled-button"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>[.NET Core] 在 Ubuntu 20.04 上部署 .NET (使用 Nginx 反向代理)</div></a></div><div class="col-md-6 next-article"><a href=/posts/dotnet/startup-auth/auth_guild_1/ title="[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權" class="btn filled-button"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>[.NET Core] ASP .NET Core 3.1 驗證與授權(一)-驗證與授權</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn type=button data-bs-toggle=tooltip data-bs-placement=left title="Scroll to top"><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center ps-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#總是加上-async-關鍵字>總是加上 async 關鍵字</a></li><li><a href=#在action中使用非同步方法>在Action中使用非同步方法：</a></li></ul></nav></div></div></section></div><footer id=footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-start"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#about>About</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#skills>Skills</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#experiences>Experiences</a></li><li class=nav-item><a class=smooth-scroll href=https://blog.tigernaxo.com/#education>Education</a></li></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><a href=mailto:ycc@tigernaxo.com target=_blank rel=noopener><span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span></a></li><li><a href=https://github.com/tigernaxoJr target=_blank rel=noopener><span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span></a></li><li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target=_blank rel=noopener><span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span></a></li><li><a href=tel:+886919681059 target=_blank rel=noopener><span><i class="fas fa-phone-alt"></i></span> <span>+886919681059</span></a></li></ul></div><div class="col-md-4 col-sm-12"><p>Stay up to date with email notification</p><form method=post action=https://blogtrottr.com><div class=form-group><input type=email class=form-control name=btr_email placeholder="Enter email"><br><input type=hidden name=btr_url value=https://blog.tigernaxo.com//index.xml>
 <input type=hidden name=schedule_type value=1>
 <small id=emailHelp class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
 <button type=submit class="btn btn-info"> Submit</button></div></form></div></div></div><hr><div class=container><div class="row text-start"><div class=col-md-4><a id=theme href=https://github.com/hugo-toha/toha target=_blank rel=noopener><img src=/images/theme-logo_hu_b3360284c55cf72d.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2020 Copyright.</div><div class="col-md-4 text-end"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.22babcef24279791b6f32a01a1f1cb863ef9ef9bc7102ea30d65299e2250e52e.js integrity="sha256-Irq87yQnl5G28yoBofHLhj7575vHEC6jDWUpniJQ5S4=" defer></script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script src=/application.462fb4ab20b7246dd03f05bb696903160b324cc55d4ce20d423d37bd47a003ad.js integrity="sha256-Ri+0qyC3JG3QPwW7aWkDFgsyTMVdTOINQj03vUegA60=" defer></script></body></html>
