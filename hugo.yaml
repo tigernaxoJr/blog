@@ -1,3 +1,4 @@
+# https://github.com/hugo-toha/hugo-toha.github.io/blob/main/hugo.yaml
 baseURL: https://blog.tigernaxo.com
 
 languageCode: zh-tw
@@ -38,6 +39,9 @@ languages:
 
 # Allow raw html in markdown file
 markup:
+  highlight:
+    # style: monokai
+    codeFences: false
   goldmark:
     renderer:
       unsafe: true
@@ -45,6 +49,8 @@ markup:
     startLevel: 2
     endLevel: 6
     ordered: false
+
+
 
 # At least HTML and JSON are required for the main HTML content and
 # client-side JavaScript search
@@ -60,7 +66,7 @@ enableEmoji: true
 # Site parameters
 params:
   # GitHub repo URL of your site
-  gitRepo: https://github.com/hugo-toha/hugo-toha.github.io
+  gitRepo: https://github.com/tigernaxoJr/blog
 
   features:
     # Enable portfolio section
@@ -74,6 +80,13 @@ params:
     # Enable Table of contents in reading page
     toc:
       enable: true
+
+    syntaxHighlight:
+      enable: true
+      services:
+        hljs:
+          # see: https://highlightjs.readthedocs.io/en/latest/api.html#configure
+          noHighlightRe: /^no-highlight$/i
 
   # Configure footer
   footer:
