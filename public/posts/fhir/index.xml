@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FHIR on YuCheng&#39;s Site</title>
+    <link>https://0.0.0.0:1313/posts/fhir/</link>
+    <description>Recent content in FHIR on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Jul 2023 16:11:00 +0800</lastBuildDate><atom:link href="https://0.0.0.0:1313/posts/fhir/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[FHIR] SMART App Launch Framework</title>
+      <link>https://0.0.0.0:1313/posts/fhir/fhir-smart-app/</link>
+      <pubDate>Mon, 10 Jul 2023 16:11:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/fhir/fhir-smart-app/</guid>
+      <description>&lt;h1 id=&#34;smart-app-launch-framework&#34;&gt;SMART App Launch Framework&lt;/h1&gt;
+&lt;h2 id=&#34;介紹&#34;&gt;介紹&lt;/h2&gt;
+&lt;h3 id=&#34;使用情境&#34;&gt;使用情境&lt;/h3&gt;
+&lt;p&gt;SMART App Launch Framework 中 OAuth 2.0 裡面的資源擁有者被稱為 user，涉及的腳色如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Resource Owner&lt;/code&gt; (&lt;code&gt;user&lt;/code&gt;)：操作 EHR 的人，可能是醫生、病患和其他使用者。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Resource Server&lt;/code&gt;：存放資源的伺服器。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Authorization Server&lt;/code&gt;：&lt;code&gt;基於 OAuth 2.0&lt;/code&gt; 的授權伺服器。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;client&lt;/code&gt;：由 EHR 開啟的第三方應用程式，會嘗試透過 EHR 向授權伺服器取得授權。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EHR&lt;/code&gt;：和電子健康紀錄(Electronic Health Record)有關的應用程式，可以是個人健康紀錄(PHR)、病患入口網站、任何支援 FHIR 系統的平台，負責將實體的權限（例如用戶的權限）委託給第三方應用程序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;依據 &lt;code&gt;user&lt;/code&gt;、&lt;code&gt;cilent&lt;/code&gt; 啟動方式區分為四種使用情境：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用者為&lt;code&gt;病患&lt;/code&gt;，&lt;code&gt;獨立啟動&lt;/code&gt;的 App。&lt;/li&gt;
+&lt;li&gt;使用者為&lt;code&gt;病患&lt;/code&gt;，&lt;code&gt;從入口網站啟動&lt;/code&gt;的 App。&lt;/li&gt;
+&lt;li&gt;使用者為&lt;code&gt;醫療服務提供者&lt;/code&gt;，&lt;code&gt;獨立啟動&lt;/code&gt;的 App。&lt;/li&gt;
+&lt;li&gt;使用者為&lt;code&gt;醫療服務提供者&lt;/code&gt;，&lt;code&gt;從入口網站啟動&lt;/code&gt;的 App。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;目的&#34;&gt;目的&lt;/h3&gt;
+&lt;p&gt;SMART App Launch Framework 目的在於提供：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;定義一個在 EHR 現有用戶和權限管理系統之上，將實體權限（例如用戶的權限）委託給第 3 方應用程序的機制。&lt;/li&gt;
+&lt;li&gt;讓使用者終端設備或安全伺服器上使用的應用程式(&lt;code&gt;client&lt;/code&gt;)請求授權(authorize)、身份驗證(authenticate)的授權協定 (protocol)&lt;/li&gt;
+&lt;li&gt;與 FHIR 的數據系統整合的指引，相容於&lt;code&gt;FHIR 試用標準草案第二版&lt;/code&gt; (&lt;code&gt;FHIR R2 (DSTU2)&lt;/code&gt;) 及之後的版本。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;沒有&lt;/strong&gt;提供什麼：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[FHIR] SMART Health IT</title>
+      <link>https://0.0.0.0:1313/posts/fhir/fhir-smart-overview/</link>
+      <pubDate>Mon, 10 Jul 2023 16:11:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/fhir/fhir-smart-overview/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://smarthealthit.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SMART Health IT&lt;/a&gt; 最早在《新英格蘭醫學雜誌》的一篇文章中推出，提出&lt;code&gt;編寫一次應用程序，然後讓它在醫療保健系統的任何地方運行&lt;/code&gt;，制定通用 API。
+SMART 已成為 &lt;code&gt;21st Century Cures Act&lt;/code&gt;和&lt;code&gt;2020 Final Rule from the ONC&lt;/code&gt;認證要求項目。&lt;/p&gt;
+&lt;h2 id=&#34;pre-erequirement&#34;&gt;Pre-erequirement&lt;/h2&gt;
+&lt;p&gt;需要先熟悉 OAuth 2.0 的流程。&lt;/p&gt;
+&lt;h2 id=&#34;discovery-document&#34;&gt;Discovery document&lt;/h2&gt;
+&lt;p&gt;SMART 定義了一個標準的 metadata 端點 &lt;code&gt;/.well-known/smart-configuration&lt;/code&gt; 稱為 discovery document
+用來告訴使用者仲介訊息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Server Capabilities (server 可以做什麼)&lt;/li&gt;
+&lt;li&gt;Configuration (配置?)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;認證與授權&#34;&gt;認證與授權&lt;/h2&gt;
+&lt;h3 id=&#34;授權authorization&#34;&gt;授權(Authorization)&lt;/h3&gt;
+&lt;p&gt;SMART 定義兩種 Client 端 App &lt;code&gt;授權&lt;/code&gt;模式，差別主要在於被授權是否有使用者參與：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Authorization via SMART App Launch&lt;br&gt;
+透過 1.EHR 或其他健康軟體的登入 session 或2.使用者手動授權，將用戶權限委託給&lt;code&gt;面向使用者的 App&lt;/code&gt;本身連接到 FHIR Server 存取資源，被授權方獲得授權方分向的資訊稱為 &lt;code&gt;lanuch context&lt;/code&gt; (例如用戶資訊)。&lt;/li&gt;
+&lt;li&gt;Authorization via SMART Backend Services&lt;br&gt;
+授權在與用戶無關的情況下完成。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;認證authentication&#34;&gt;認證(Authentication)&lt;/h3&gt;
+&lt;p&gt;SMART 定義兩種 Client 端 App &lt;code&gt;認證&lt;/code&gt;模式，也就是對稱/不對稱加密，官方建議是使用不對稱加密：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Other] FHIRcast</title>
+      <link>https://0.0.0.0:1313/posts/fhir/fhir-fhircast/</link>
+      <pubDate>Fri, 07 Jul 2023 08:11:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/fhir/fhir-fhircast/</guid>
+      <description>&lt;h3 id=&#34;topic&#34;&gt;topic:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;就是要同步的 session id&lt;/li&gt;
+&lt;li&gt;同一個 topic 下有很多 event&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;subscriber&#34;&gt;subscriber:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;在 subscription 建立前 subscriber 必須要知道
+&lt;ol&gt;
+&lt;li&gt;hub.topic：要訂閱的主題&lt;/li&gt;
+&lt;li&gt;hub.url：跟哪裡要訂閱&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;可自己決定要訂閱的特定 event&lt;/li&gt;
+&lt;li&gt;無法針對 topic 下的 event 退訂，一定是退訂整個 topic&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;smart&#34;&gt;SMART&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;SMART on FHIR EHR launch&amp;rdquo; 和 &amp;ldquo;SMART on FHIR standalone launch&amp;rdquo; 是 SMART（Substitutable Medical Applications, Reusable Technologies）在 FHIR（Fast Healthcare Interoperability Resources）框架下兩種不同的啟動方式。這兩種啟動方式在使用 SMART 應用程序和與電子健康記錄系統（EHR）或獨立部署環境的交互方面存在一些差異。&lt;/p&gt;
+&lt;p&gt;SMART on FHIR EHR launch:&lt;/p&gt;
+&lt;p&gt;EHR launch 是指 SMART 應用程序直接嵌入到電子健康記錄系統中，並從 EHR 中獲取所需的上下文信息。
+使用 EHR launch，SMART 應用程序可以藉助於與 EHR 系統的整合，進行單一簽入（Single Sign-On）和訪問患者的醫療數據等功能。
+EHR launch 通常需要在 EHR 系統中進行配置和授權，以便 SMART 應用程序可以與 EHR 系統進行交互操作。
+SMART on FHIR standalone launch:&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

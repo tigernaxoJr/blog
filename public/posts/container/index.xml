@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[維運] Container on YuCheng&#39;s Site</title>
+    <link>https://0.0.0.0:1313/posts/container/</link>
+    <description>Recent content in [維運] Container on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 23 Nov 2022 00:16:00 +0800</lastBuildDate><atom:link href="https://0.0.0.0:1313/posts/container/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[Docker] Docker Network</title>
+      <link>https://0.0.0.0:1313/posts/container/docker-network-network/</link>
+      <pubDate>Wed, 23 Nov 2022 00:16:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/docker-network-network/</guid>
+      <description>&lt;p&gt;Linux 把主機名稱對應的 ip 位址儲存在 /etc/hostname
+/proc/sys/kernel/hostname 指令
+Linux 透過一些機制把 domain name 轉換為 IP 位址
+/etc/nsswitch.conf
+/etc/hosts
+DNS&lt;/p&gt;
+&lt;h2 id=&#34;refrence&#34;&gt;Refrence&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/nagoya-foundation/running-a-dns-server-in-docker-61cc2003e899&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Running a DNS server in docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-handbook.info/browse/stable/sect.hostname-name-service.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Debian - Setting the Hostname and Configuring the Name Service&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://titangene.github.io/article/networking-in-docker-compose.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;networking in docker compose&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/compose/networking/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Docker-Networking in Compose&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/compose/compose-file/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Docker-Compose specification&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Docker] 在 Ubuntu 安裝 Docker</title>
+      <link>https://0.0.0.0:1313/posts/container/docker-install/</link>
+      <pubDate>Tue, 15 Nov 2022 08:46:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/docker-install/</guid>
+      <description>&lt;p&gt;從 &lt;a href=&#34;https://docs.docker.com/engine/install/ubuntu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Install Docker Engine on Ubuntu&lt;/a&gt; 總結出腳本，直接執行就好：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Uninstall old versions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get remove docker docker-engine docker.io containerd runc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Set up the repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Update the apt package index and install packages to allow apt to use a repository over HTTPS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    ca-certificates &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    curl &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    gnupg &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;    lsb-release
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Add Docker’s official GPG key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p /etc/apt/keyrings
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# set up the repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#ae81ff&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;deb [arch=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;dpkg --print-architecture&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;lsb_release -cs&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; stable&amp;#34;&lt;/span&gt; | sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Install Docker Engine&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 把當前使用者加到 docker 群組&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo usermod -aG docker &lt;span style=&#34;color:#e6db74&#34;&gt;${&lt;/span&gt;USER&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Verify that the Docker Engine installation is successful by running the hello-world image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo docker run hello-world
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/engine/install/ubuntu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Install Docker Engine on Ubuntu&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[K8S] 自架 Kubernetes 使用 VM 模擬多台 Server</title>
+      <link>https://0.0.0.0:1313/posts/container/k8s-basc-install/</link>
+      <pubDate>Sat, 23 Jul 2022 20:51:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/k8s-basc-install/</guid>
+      <description>&lt;p&gt;準備/安裝兩台 Server ( 使用 VM clone 然後修改 hostname )
+一台為 Master (主控)，另外一台為 Node ( 節點 )
+安裝 kubelet/kubeadm ( Master 與 node 皆要執行此步驟 )&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 設定 k8s server上網路&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;net.bridge.bridge-nf-call-ip6tables = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;net.bridge.bridge-nf-call-iptables = 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo sysctl --system
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 安裝 kubeadm / kubelet&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get update &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt-get install -y apt-transport-https curl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;deb https://apt.kubernetes.io/ kubernetes-xenial main
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get update
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install -y kubelet kubeadm kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-mark hold kubelet kubeadm kubectl
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 安裝 Docker&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo add-apt-repository &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;lsb_release -cs&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; stable&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt update
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install docker-ce -y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker --version
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl start docker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chmod &lt;span style=&#34;color:#ae81ff&#34;&gt;666&lt;/span&gt; /var/run/docker.sock
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl enable docker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;EOF | sudo tee /etc/docker/daemon.json
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  &amp;#34;exec-opts&amp;#34;: [&amp;#34;native.cgroupdriver=systemd&amp;#34;]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart docker
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 關閉 swap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo swapoff -a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo sed -i &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/\/swap/s/^/#/&amp;#39;&lt;/span&gt; /etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 設定服務自動重啟&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl enable kubelet
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Master Node 啟動&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo kubeadm init --pod-network-cidr&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;192.168.0.0/16
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl taint nodes --all node-role.kubernetes.io/master-
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# kubeconfig&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p $HOME/.kube
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chown &lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;id -u&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;:&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;id -g&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt; $HOME/.kube/config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Deploying a pod network&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>[K8s] 以 Secrete 共享 tnsnames.ora</title>
+      <link>https://0.0.0.0:1313/posts/container/k8s-example-tnsnames.ora/</link>
+      <pubDate>Thu, 21 Jul 2022 08:05:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/k8s-example-tnsnames.ora/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Managed ODP.NET 連線資料庫標榜不需要額外安裝 Oracle Client，資料庫連線資訊可以透過：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程式內直接設定 connection string。&lt;/li&gt;
+&lt;li&gt;解析環境變數 TNS_ADMIN 所指資料夾下的 tnsnames.ora。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;考慮到可維護性，一旦連線資訊有所變動(Ip/Domain/Port/Service Name/SID)，如果直接將連線字串寫在程式裡面，就需要重新佈署每個程式專案，
+因此如果讓 Managed ODP.NET 讀取共用的設定就能夠擁有只維護一份連線資訊的方便性。&lt;/p&gt;
+&lt;p&gt;單主機的做法是部屬 tnsnames.ora 檔案，但因為 K8S 中 pod 都是隔離的環境，要共用連線資訊透過研究可能有這幾種方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;ExternalName Service&lt;/strong&gt; 對應外部的資料庫位址，無法因應 ip, service name, sid 修改。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Service + Endpoints&lt;/strong&gt; 轉送 ip 和 port。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Secret Volume&lt;/strong&gt; 共用 tnsnames.ora。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;三種連線資訊共用策略是否能反映連線資訊修改：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;/th&gt;
+          &lt;th&gt;ExternalName Service&lt;/th&gt;
+          &lt;th&gt;Service + Endpoints&lt;/th&gt;
+          &lt;th&gt;Secret Volume&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Ip/Domain&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Port&lt;/td&gt;
+          &lt;td&gt;不能&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Service Name/SID&lt;/td&gt;
+          &lt;td&gt;不能&lt;/td&gt;
+          &lt;td&gt;不能&lt;/td&gt;
+          &lt;td&gt;可&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;step&#34;&gt;Step&lt;/h2&gt;
+&lt;p&gt;Secret 用處：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Container] 學習資源</title>
+      <link>https://0.0.0.0:1313/posts/container/basic-resource/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/basic-resource/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://hub.docker.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DockerHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.docker.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Docker文件&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;K8S&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Docker] Docker Basic Command</title>
+      <link>https://0.0.0.0:1313/posts/container/docker-command/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/docker-command/</guid>
+      <description>&lt;p&gt;執行容器&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run [image] [overwrite defalut commain]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;列出正在執行的容器， &amp;ndash;all 可以列出曾經執行過的容器&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker ps [--all]
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run
+docker ps --all
+docker create
+docker start (what different from docker run?)
+docker system prune
+docker logs
+docker stop   (send sigterm) 10s then docker kill
+docker kill
+docker build -t &amp;lt;dockerid&amp;gt;/&amp;lt;project&amp;gt;:latest .
+
+docker exec -it &amp;lt;containerId&amp;gt; /bin/bash (i, t stands for?)
+# execute new command
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;build context!
+port mapping 是為了處理 into docker，docker 出來從來沒有被限制&lt;/p&gt;
+&lt;p&gt;Docker Compose
+所有的 docker-compose 都要在 yml 資料夾下作用
+可啟動多個 Contailner 並連接 Container 之間的網路
+docker-compose.yml
+docker-compose up
+docker-compose up -d # start container in the background
+docker-compose up &amp;ndash;build
+docker-compose down
+docker-compose ps (需要 yml ，因此要在 yml 所在的資料夾下才能下)
+network
+service&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Docker] Linux-namespace 和 cgroup</title>
+      <link>https://0.0.0.0:1313/posts/container/docker-namespace/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/docker-namespace/</guid>
+      <description>&lt;p&gt;UTS namespace – 隔離 interface, ip address, iptagbles, route 等各式各樣跟網路有關的資源
+IPC namespace – 隔離 inter process communication
+PID namespace – 程序編號(Process ID)，每個容器都會有PID=1的超級父process，這個process在本機上也會有另一個PID
+Network namespace – 允許擁有獨立的網路設備、IP Address、路由、port
+Mount namespace – 掛載點，也就是隔離文件系統
+User namespace – user及user group&lt;/p&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10217583&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;第 11 屆 iThome 鐵人賽 - [Day4] 淺談 Container 實現原理, 初探 Namespace 隔離&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cutejaneii.gitbook.io/docker/docker-underlying-technology/linux-namespaces&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Jennifer的Docker筆記本 - Linux Namespace&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://coolshell.cn/articles/17010.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DOCKER基础技术：LINUX NAMESPACE（上）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://coolshell.cn/articles/17029.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DOCKER基础技术：LINUX NAMESPACE（下）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.twblogs.net/a/5c9bde00bd9eee752388288e&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;linux cgroup技術介紹&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[容器] Open Container Initiative (OCI)</title>
+      <link>https://0.0.0.0:1313/posts/container/tmp/</link>
+      <pubDate>Mon, 25 Apr 2022 06:26:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/container/tmp/</guid>
+      <description>&lt;p&gt;OCI（Open Container Initiative）是一個開放的行業標準組織，旨在定義容器格式和運行時的規範，以確保容器在不同的容器執行環境中能夠保持一致性和互通性。&lt;/p&gt;
+&lt;p&gt;OCI 的主要組成部分包括容器映像（Image）和容器執行時（Runtime）的規範。容器映像規範定義了容器的打包格式，確保在不同的運行環境中能夠一致地部署。容器執行時規範則定義了容器的運行時行為，確保容器在各種容器執行環境中都能夠正確運行。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/opencontainers/runtime-spec/blob/main/config-linux.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/opencontainers/runtime-spec/blob/main/config-linux.md&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CRI
+&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10218127&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://ithelp.ithome.com.tw/articles/10218127&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CNI
+在 Kubernetes（k8s）中，有一些與容器和容器環境相關的重要術語，包括OCI、CRI、CNI。以下是對這些術語的解釋：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;OCI（Open Container Initiative）:
+功能： OCI 是一個開放的行業標準組織，致力於定義容器格式和運行時的規範。OCI 的主要目標是確保容器在不同的容器執行環境中能夠保持一致性和互通性。OCI 的規範包括容器映像（Image）和容器運行時（Runtime）的標準，確保容器能夠在各種 OCI 兼容的容器執行時中運行。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CRI（Container Runtime Interface）:
+功能： CRI 是 Kubernetes 中的一個介面，用於定義容器運行時（Container Runtime）和 Kubernetes 的通信標準。它允許 Kubernetes 與不同的容器運行時進行交互，使得 Kubernetes 不依賴於特定的容器運行時實現。Kubernetes 通過 CRI 與容器運行時進行通信，包括容器的創建、啟動、停止等操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CNI（Container Networking Interface）:
+功能： CNI 是 Kubernetes 中用於定義容器網路的標準介面。它定義了容器如何連接到網路，以及網路如何在不同的容器執行時中實現。CNI 允許 Kubernetes 使用不同的網路插件，以滿足各種網路需求。簡而言之，CNI 提供了一種標準的方法來設定容器的網路，並支援不同的網路實現。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://kubernetes.io/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://minikube.sigs.k8s.io/docs/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://minikube.sigs.k8s.io/docs/&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

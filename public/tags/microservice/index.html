@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>Microservice</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.1951c9a57aee8800969154abaabd6ca0dbac2f9125d12cf09fa6ee7effcdac69.css" integrity="sha256-GVHJpXruiACWkVSrqr1soNusL5El0Szwn6bufv/NrGk=" />
+
+
+
+
+
+
+<link rel="alternate" type="application/rss+xml" href="https://0.0.0.0:1313/tags/microservice/index.xml" title="YuCheng's Site">
+
+
+
+
+
+
+
+
+<meta property="og:title" content="YuCheng&#39;s Site"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="Portfolio and personal blog of Yu Cheng."/>
+<meta property="og:image" content="/images/author/peter.png">
+<meta property="og:url" content="https://0.0.0.0:1313/">
+
+     
+
+    
+
+
+
+
+
+    <script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">
+     let theme = localStorage.getItem('theme-scheme') || localStorage.getItem('darkmode:color-scheme') || 'light'
+if (theme === 'system') {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  } else {
+    theme = 'light'
+  }
+}
+document.documentElement.setAttribute('data-theme', theme)
+
+    </script>
+    
+  </head>
+
+  <body class="type-tags kind-term" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      YuCheng&#39;s Site</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  
+  
+    
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/tags" data-filter="all">Tags</a></li>
+            <div class="subtree taxonomy-terms">
+              
+              
+
+
+
+  
+  
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/authentication/" data-taxonomy-term="authentication"><span class="taxonomy-label">Authentication</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/ddd/" data-taxonomy-term="ddd"><span class="taxonomy-label">DDD</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/docker/" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/domain-drived-design/" data-taxonomy-term="domain-drived-design"><span class="taxonomy-label">Domain Drived Design</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/dotnetcore/" data-taxonomy-term="dotnetcore"><span class="taxonomy-label">DotNetCore</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/github/" data-taxonomy-term="github"><span class="taxonomy-label">GitHub</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/github-pages/" data-taxonomy-term="github-pages"><span class="taxonomy-label">GitHub Pages</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/google-drive/" data-taxonomy-term="google-drive"><span class="taxonomy-label">Google Drive</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/host/" data-taxonomy-term="host"><span class="taxonomy-label">Host</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/jenkins/" data-taxonomy-term="jenkins"><span class="taxonomy-label">Jenkins</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/k8s/" data-taxonomy-term="k8s"><span class="taxonomy-label">K8s</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/linux/" data-taxonomy-term="linux"><span class="taxonomy-label">Linux</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/logger/" data-taxonomy-term="logger"><span class="taxonomy-label">Logger</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term active" href="https://0.0.0.0:1313/tags/microservice/" data-taxonomy-term="microservice"><span class="taxonomy-label">Microservice</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/oauth/" data-taxonomy-term="oauth"><span class="taxonomy-label">OAuth</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/osi/" data-taxonomy-term="osi"><span class="taxonomy-label">OSI</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/routing/" data-taxonomy-term="routing"><span class="taxonomy-label">Routing</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/system-design/" data-taxonomy-term="system-design"><span class="taxonomy-label">System Design</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/token/" data-taxonomy-term="token"><span class="taxonomy-label">Token</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/tags/ubuntu/" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span></a></li>
+        
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      
+      
+      
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/software/arch-microservice/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/software/arch-microservice/" class="post-card-link">
+        <h5 class="card-title">[System] 單體式架構 vs 微服務架構</h5>
+        <p class="card-text post-summary">單體式與微服務架構 單體式架構 以前後端分離的網頁應用程式為例，傳統上大多採用軟體工程多層式架構(Multitier Architecture)中的三層式架構(Three-Tire-Architecture)，組成如下：
+Data tier: 資料庫(DB)，有資料表(Table)儲存應用程式資訊。 Logic tier: 就是後端(Backend)、應用程式伺服器 (AP Server)，負責和前端交換資料、存取資料庫。 Presentation tier: 就是前端(Frontend)，提供靜態資源，負責和使用者互動、和後端交換資料。 微服務架構 隨著系統愈來愈複雜，為了可維護性、擴充性、開發敏捷性， 透過軟體工程的手段將一個應用程式下緊密連結(耦合性強)的服務拆成許多連結鬆散且可獨立部署的小型服務， 小型服務之間透過 HTTP、gRPC&hellip; 等通訊協定串聯訊息，構成複雜的應用程式。 這就是微服務架構。
+服務環境 單體式(VM) 一般來說單體式架構較常以 虛擬機(Virtual Machine) 的方式來建立單體式架構的各層環境， VM 將服務從作業系統層面進行隔離(也就是不同服務有各自獨立的作業系統)， VM 相較於實體機器較能夠彈性控管分配資源， 但在啟動速度、硬體資源耗用等等&hellip;都需要考慮到各自的作業系統。
+微服務(容器) 實現微服務架構的核心技術是容器(Container)， 容器將執行環境在應用程式層面上隔離，不同服務共用同一個作業系統， 相較於傳統單體式架構使用的 VM 技術，容器的優點是耗用的資源少，啟動速度快(因為不用為每個服務建立一個OS)。
+開發模式 單體式 由於所有邏輯都存在同一個服務， 因此開發者通常會被要求了解整個應用程式的運作邏輯，但那是一件很困難(或說不可能)的事， 且會占開發者工作很大一部分，嚴重影響開發效率。 而因為服務都綁定在同一個AP上，使用不同的技術棧進行開發會非常麻煩，所以開發能選擇的工具受到限制
+微服務 開發者不需要了解整個應用澄式的運作邏輯，可專注於自己開發的部分 由於服務隔離的特性，不同服務容易使用不同的技術棧進行開發， 可以把任務分派到不同團隊 敏捷式(agile)開發 單體式 瀑布(waterfall)開發模式
+敏捷性：拆成為服務的專案更適合敏捷開發，也因為拆成可獨立部屬的小型服務，負責不同小型服務的團隊可以使用不同的技術棧。 部屬與擴展 單體式 囿於單體式架構的侷限，每當更新版本或修復Bug的時候， 無論是否涉及的商業邏輯範圍大小， 都需要將整個前/後端應用程式重新編譯、部屬， 這對擴展 scaling、負載平衡 Loading balance 都會是一項挑戰。
+傳統應用程式負載增加時，應用程式整體架構可以進行如下調整，
+橫向擴展：增加同一環境(ex: AP Server)上可用硬體資源(CPU、MEMORY、Disk&hellip;)。 縱向擴展：增加提供服務的環境 (ex: 第二台 AP Server 等等&hellip;)，好處是有了備援機制，可以達成負載平衡。 不論環境是由實體機器/VM/容器所建立，一旦所有的服務都在同一個環境內執行()，就會有下面的缺點：
+</p>
+      </a>
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Monday, October 18, 2021
+          </span>
+      <a
+      href="/posts/software/arch-microservice/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+    </div>
+    <div class="paginator">
+      
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:ycc@tigernaxo.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://github.com/tigernaxoJr target="_blank" rel="noopener">
+                  <span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target="_blank" rel="noopener">
+                  <span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span>
+                </a></li>
+              
+            
+              
+                <li><a href=tel:&#43;886919681059 target="_blank" rel="noopener">
+                  <span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span>
+                </a></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://0.0.0.0:1313//index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2020 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.9cebc9aa7061e63138b4be1164c2e44e369f8a76a38ee9b50363a51e69da159e.js" integrity="sha256-nOvJqnBh5jE4tL4RZMLkTjafinajjum1A2OlHmnaFZ4=" defer></script>
+
+
+    
+     
+
+    
+</body>
+</html>

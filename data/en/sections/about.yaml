@@ -1,0 +1,70 @@
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+  template: sections/about.html
+
+# your designation
+designation: Software Engineer
+# your company information
+company:
+  name: Kuang Tien General Hospital #Example Co.
+  url: "https://www.ktgh.com.tw"
+
+# your resume. this file path should be relative to you "static" directory
+resume: "https://drive.google.com/file/d/1KfdI4Et68NmDsISpM7tBp5ulTJCb4IiP/view?usp=sharing"
+
+# a summary about you
+summary: 'I am a passionate software engineer with 7 years of working experience. I work on some fun projects.'
+
+# your social links
+# give as many as you want. use font-awesome for the icons.
+socialLinks:
+- name: Email
+  icon: "fas fa-envelope"
+  url: "tigernaxo.co.cc@gmail.com"
+
+- name: Github
+  icon: "fab fa-github"
+  url: "https://www.github.com/tigernaxo"
+
+- name: LinkedIn
+  icon: "fab fa-linkedin"
+  url: "https://www.linkedin.com/in/%E8%AD%BD%E6%99%9F-%E9%99%B3-41464a132"
+
+# Show your badges
+# You can show your verifiable certificates from https://www.credly.com.
+# You can also show a circular bar indicating the level of expertise on a certain skill
+badges:
+# - type: certification
+#   name: Certified Kubernetes Security Specialist
+#   url: "https://www.credly.com/org/the-linux-foundation/badge/exam-developer-certified-kubernetes-security-specialist"
+#   badge: "https://images.credly.com/size/680x680/images/f4bf92ed-8985-40b2-bc07-2f9308780854/kubernetes-security-specialist-logo-examdev.png"
+- type: soft-skill-indicator
+  name: Back-End
+  percentage: 85
+  color: blue
+
+- type: soft-skill-indicator
+  name: Front-End
+  percentage: 90
+  color: yellow
+
+- type: soft-skill-indicator
+  name: DevOps
+  percentage: 75
+  color: green
+
+- type: soft-skill-indicator
+  name: Problem Solve
+  percentage: 95
+  color: orange
+
+# you can also provide color code instead of the color name
+# - type: soft-skill-indicator
+#   name: Example 1
+#   percentage: 75
+#   color: "#00adb5"

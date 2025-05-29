@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>NET Core 3.1</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.1951c9a57aee8800969154abaabd6ca0dbac2f9125d12cf09fa6ee7effcdac69.css" integrity="sha256-GVHJpXruiACWkVSrqr1soNusL5El0Szwn6bufv/NrGk=" />
+
+
+
+
+
+
+<link rel="alternate" type="application/rss+xml" href="https://0.0.0.0:1313/categories/net-core-3.1/index.xml" title="YuCheng's Site">
+
+
+
+
+
+
+
+
+<meta property="og:title" content="YuCheng&#39;s Site"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="Portfolio and personal blog of Yu Cheng."/>
+<meta property="og:image" content="/images/author/peter.png">
+<meta property="og:url" content="https://0.0.0.0:1313/">
+
+     
+
+    
+
+
+
+
+
+    <script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">
+     let theme = localStorage.getItem('theme-scheme') || localStorage.getItem('darkmode:color-scheme') || 'light'
+if (theme === 'system') {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  } else {
+    theme = 'light'
+  }
+}
+document.documentElement.setAttribute('data-theme', theme)
+
+    </script>
+    
+  </head>
+
+  <body class="type-categories kind-term" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      YuCheng&#39;s Site</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  
+  
+    
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/categories" data-filter="all">Categories</a></li>
+            <div class="subtree taxonomy-terms">
+              
+              
+
+
+
+  
+  
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/categories/devops/" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term active" href="https://0.0.0.0:1313/categories/net-core-3.1/" data-taxonomy-term="net-core-3.1"><span class="taxonomy-label">NET Core 3.1</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/categories/system/" data-taxonomy-term="system"><span class="taxonomy-label">System</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/categories/tools/" data-taxonomy-term="tools"><span class="taxonomy-label">Tools</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="https://0.0.0.0:1313/categories/webtech/" data-taxonomy-term="webtech"><span class="taxonomy-label">WebTech</span></a></li>
+        
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      
+      
+      
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/dotnet/draft-host/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/dotnet/draft-host/" class="post-card-link">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 的 Host</h5>
+        <p class="card-text post-summary">Host 是封裝整個應用程式資源的物件，在單一 Host 物件中包含所有應用程式資源的主要理由是管理應用程式的生命週期，包含啟動、關機。資源包含：
+Dependency injection (DI) Logging Configuration IHostedService 實作 Host 啟動時，對服務容器中每個註冊的 IHostedService 具體類別呼叫方法 StartAsync 啟動服務， ASP 當中，服務容器中註冊了提供 web 服務的 IHostedService 實體類別，這個實體類別實作了 HTTP server。
+Generic Host Web 專案在 .NET Core 2.2 前是直接起始一個 WebHost； 到了 .NET Core 3.0 之後包含 Web 專案一律使用 Generic Host， 接著才在 Generic Host 設置 Web 服務。
+Reference MSDN - .NET Generic Host in ASP.NET Core </p>
+      </a>
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Monday, November 16, 2020
+          </span>
+      <a
+      href="/posts/dotnet/draft-host/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/dotnet/draft-logger/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/dotnet/draft-logger/" class="post-card-link">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 的 Logger</h5>
+        <p class="card-text post-summary">Reference</p>
+      </a>
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Monday, November 16, 2020
+          </span>
+      <a
+      href="/posts/dotnet/draft-logger/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/dotnet/draft-routing/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/dotnet/draft-routing/" class="post-card-link">
+        <h5 class="card-title">[.NET Core] ASP .NET Core 3.1 的路由</h5>
+        <p class="card-text post-summary">// 路由對應(route mapping) app.UseRouting(); // 進入實際資源存取端點 app.UseEndpoints(endpoints =&gt; { // configure endpoints }); Reference MSDN - Routing in ASP.NET Core </p>
+      </a>
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Monday, November 16, 2020
+          </span>
+      <a
+      href="/posts/dotnet/draft-routing/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+    </div>
+    <div class="paginator">
+      
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:ycc@tigernaxo.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://github.com/tigernaxoJr target="_blank" rel="noopener">
+                  <span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target="_blank" rel="noopener">
+                  <span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span>
+                </a></li>
+              
+            
+              
+                <li><a href=tel:&#43;886919681059 target="_blank" rel="noopener">
+                  <span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span>
+                </a></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://0.0.0.0:1313//index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2020 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.9cebc9aa7061e63138b4be1164c2e44e369f8a76a38ee9b50363a51e69da159e.js" integrity="sha256-nOvJqnBh5jE4tL4RZMLkTjafinajjum1A2OlHmnaFZ4=" defer></script>
+
+
+    
+     
+
+    
+</body>
+</html>

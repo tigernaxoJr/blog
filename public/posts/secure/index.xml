@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>[Secure] 安全性議題 on YuCheng&#39;s Site</title>
+    <link>https://0.0.0.0:1313/posts/secure/</link>
+    <description>Recent content in [Secure] 安全性議題 on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 16 Jul 2023 00:25:00 +0800</lastBuildDate><atom:link href="https://0.0.0.0:1313/posts/secure/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[授權] OAuth 2.0 Authorization Framework</title>
+      <link>https://0.0.0.0:1313/posts/secure/oauth2-01protocol/</link>
+      <pubDate>Sun, 16 Jul 2023 00:25:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/secure/oauth2-01protocol/</guid>
+      <description>&lt;h2 id=&#34;介紹-introduction&#34;&gt;介紹 Introduction&lt;/h2&gt;
+&lt;p&gt;OAuth 是一套授權框架，讓第三方應用程式(被授權方)不需取得原始帳號、密碼等敏感資訊，獲得有限的權限以存取資源，目前版本為 2.0。
+運作方式為&lt;code&gt;授權伺服器&lt;/code&gt;發放 &lt;code&gt;token&lt;/code&gt;給&lt;code&gt;第三方應用&lt;/code&gt;，token 上記載相關權限範圍(scope)，&lt;code&gt;資源伺服器&lt;/code&gt;需要權限存取時&lt;code&gt;第三方應用&lt;/code&gt;再把 token 出示給系統驗證。&lt;/p&gt;
+&lt;h3 id=&#34;腳色roles&#34;&gt;腳色(Roles)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;授權伺服器 (Authorization Server)&lt;/code&gt;：負責管理使用者授權的伺服器。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;資源伺服器 (Resource Server)&lt;/code&gt;：儲存資源的伺服器。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;第三方應用程式 (Third-Party Application)&lt;/code&gt;：需要存取資源的應用程式。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;使用者 (User)&lt;/code&gt;：授權第三方應用程式存取其資源的使用者。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;rfc-規範&#34;&gt;RFC 規範&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;RFC 6749&lt;br&gt;
+是 OAuth 2.0 的核心規範，描述了 OAuth 2.0 的&lt;code&gt;授權框架&lt;/code&gt;和&lt;code&gt;授權流程&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;RFC 6750&lt;br&gt;
+OAuth 2.0 的另一個相關規範，定義了用於訪問受保護資源的&lt;code&gt;身份驗證方法&lt;/code&gt;，規範包括 Bearer Token 的身份驗證。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- ### 協定流程 --&gt;
+&lt;!-- todo: flow --&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.rfcreader.com/#rfc6749&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RFC 6749&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[授權] IdentityServer4 </title>
+      <link>https://0.0.0.0:1313/posts/secure/oauth2-20identityserver4/</link>
+      <pubDate>Sun, 16 Jul 2023 00:19:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/secure/oauth2-20identityserver4/</guid>
+      <description>&lt;p&gt;IdentityServer4 是適用於 ASP.NET Core 的 OpenID Connect 和 OAuth 2.0 框架。免費版本安全性更新至 2022 年 11 月。新版本 Duende IdentityServer 商用需要收費(開發/測試/個人項目以及年總收入低於 100 萬美元的公司或個人免費)。&lt;/p&gt;
+&lt;h2&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;nuget 安裝 IdentityServer4&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://identityserver4.readthedocs.io/en/latest/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Welcome to IdentityServer4 (latest)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>[授權] OAuth 2.0 Authorization Framework 授權許可</title>
+      <link>https://0.0.0.0:1313/posts/secure/oauth2-02grants/</link>
+      <pubDate>Sun, 16 Jul 2023 00:19:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/secure/oauth2-02grants/</guid>
+      <description>&lt;h2 id=&#34;授權許可-authorization-grant&#34;&gt;授權許可 (Authorization Grant)&lt;/h2&gt;
+&lt;p&gt;理解授權許可前需要先瞭解解幾個名詞：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;授權碼 (Authorization Code)&lt;/code&gt;：由授權伺服器產生，用於授權第三方應用程式存取資源的授權憑證。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;存取權杖 (Access Token)&lt;/code&gt;：由授權伺服器產生，用於允許第三方應用程式存取資源的授權憑證，時效通常較短。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;刷新令牌 (Refresh Token)&lt;/code&gt;：由授權伺服器產生，用於重新產生存取權杖的授權憑證，時效通常較長。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;客戶端憑證&lt;/code&gt;：第三方應用程式本身用於 Basic Access Authentication 的驗證資訊，具體來說是 client_id、client_secret。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OAth 2.0 根據授權許可的方式分為四種：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;授權碼許可(Authorization Code Grant)&lt;/li&gt;
+&lt;li&gt;隱含許可(Implicit Grant)&lt;/li&gt;
+&lt;li&gt;資源擁有者密碼憑證許可(Resource Owner Password Credentials Grant)&lt;/li&gt;
+&lt;li&gt;客戶端憑證許可(Client Credentials Grant)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;授權碼許可authorization-code-grant&#34;&gt;授權碼許可(Authorization Code Grant)&lt;/h3&gt;
+&lt;p&gt;第三方應用程式向授權伺服器請求授權碼，並將授權碼傳遞給資源伺服器以存取資源的授權流程，這是最常用的模式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;網站使用者&lt;/code&gt;在&lt;code&gt;授權伺服器&lt;/code&gt;的登入站點申請&lt;code&gt;授權碼&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;授權伺服器&lt;/code&gt;將授權碼告知&lt;code&gt;第三方應用程式&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;第三方應用程式&lt;/code&gt;使用&lt;code&gt;客戶端憑證&lt;/code&gt;和收到的&lt;code&gt;授權碼&lt;/code&gt; 向 &lt;code&gt;授權伺服器&lt;/code&gt; 發起請求獲得 token。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;隱含許可implicit-grant&#34;&gt;隱含許可(Implicit Grant)&lt;/h3&gt;
+&lt;p&gt;因省略對第三方應用的授權碼直接以前端網址列取得 token ，故稱隱含式許可，但直接以前端網址參數的方式傳送 token 給網站使用者，是&lt;strong&gt;非常不安全的作法&lt;/strong&gt;，一般 token 的有效期間設定為 session 期間有效 (關閉網頁即失效)。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;網站使用者&lt;/code&gt;從&lt;code&gt;授權伺服器&lt;/code&gt;登入。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;授權伺服器&lt;/code&gt;直接在網址列帶入 access_token 轉跳第三方應用程式。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;資源擁有者密碼憑證許可resource-owner-password-credentials-grant&#34;&gt;資源擁有者密碼憑證許可(Resource Owner Password Credentials Grant)&lt;/h3&gt;
+&lt;p&gt;讓第三方應用直接以網站使用者密碼取得 token，必須要是高度信任的第三方應用才能用此方法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;第三方應用程式&lt;/code&gt;向&lt;code&gt;使用者&lt;/code&gt;請求其&lt;code&gt;帳戶密碼&lt;/code&gt;(使用者憑證)。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;第三方應用程式&lt;/code&gt;以&lt;code&gt;使用者帳戶密碼&lt;/code&gt;向&lt;code&gt;授權伺服器&lt;/code&gt;請求 token。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;客戶端憑證許可client-credentials-grant&#34;&gt;客戶端憑證許可(Client Credentials Grant)&lt;/h3&gt;
+&lt;p&gt;此種 token 針發放對象為第三方應用而非用戶，與用戶認証無關，由第三方應用傳送其自己的 user credentials 獲得 token。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[授權] OpenID Connect (OIDC) 基於 OAuth 2.0 協議的身份驗證和授權層</title>
+      <link>https://0.0.0.0:1313/posts/secure/oauth2-10oicd/</link>
+      <pubDate>Sun, 16 Jul 2023 00:19:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/secure/oauth2-10oicd/</guid>
+      <description>&lt;p&gt;OAuth 2.0 只定義如何授權，OIDC 要處理認證&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Relying Party&lt;/code&gt;：相當於 OAuth 2.0 當中的 &lt;code&gt;client&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;JWS&lt;/code&gt;：JSON Web Signature (RFC 7515)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;JWT&lt;/code&gt;：JWT（JSON Web Token）是基於 JWS（JSON Web Signature）標準的 token 格式。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ID Token&lt;/code&gt;：採用 JWS ，資源伺服器能透過數位簽章確保使用者的身分正確性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;OpenID Connect（OIDC）是基於 OAuth 2.0 協議的身份驗證和授權層，
+定義用於&lt;code&gt;身份驗證&lt;/code&gt;和&lt;code&gt;使用者資訊交換&lt;/code&gt;的規範。OIDC 的標準文件是 RFC 6749 和 RFC 6750。&lt;/p&gt;
+&lt;p&gt;OpenID Connect 的具體規範是通過一系列的 OIDC 規範來定義的，其中包括：&lt;/p&gt;
+&lt;p&gt;RFC 6749: The OAuth 2.0 Authorization Framework
+RFC 6750: The OAuth 2.0 Authorization Framework: Bearer Token Usage
+OpenID Connect Core: The OpenID Connect Core 1.0 specification
+OpenID Connect Discovery: OpenID Connect Discovery 1.0
+OpenID Connect Dynamic Client Registration: OpenID Connect Dynamic Client Registration 1.0
+OpenID Connect Session Management: OpenID Connect Session Management 1.0
+等等。
+這些規範一起定義了 OpenID Connect 協議的核心功能和特性，使其成為現代身份驗證和授權的常用標準之一。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[憑證] Token</title>
+      <link>https://0.0.0.0:1313/posts/secure/token/</link>
+      <pubDate>Sat, 15 Jul 2023 00:36:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/secure/token/</guid>
+      <description>&lt;p&gt;Token..&lt;/p&gt;
+&lt;h2 id=&#34;token-種類&#34;&gt;Token 種類&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Opaque Token：不透明的 Token，對使用者來說本身只是無意義的字串，無法直接檢視裡面的內容，需要透過驗證伺服器解釋。&lt;/li&gt;
+&lt;li&gt;Not Opaque Token：token 內含有意義的資訊，使用者可以直接檢視。&lt;/li&gt;
+&lt;li&gt;JWT(Json Web Token)：是一種 Not Opaque Token，Header、Paload、Signature組成。&lt;/li&gt;
+&lt;li&gt;ID Token：是一種 JWT，
+透明的 Token，本身就帶有資訊 ex: ID Token、 JWT&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;jwtjson-web-token&#34;&gt;JWT(Json Web Token)&lt;/h3&gt;
+&lt;p&gt;JWT 結構為三個分隔部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Header（標頭）&lt;/li&gt;
+&lt;li&gt;Payload（有效載荷）&lt;/li&gt;
+&lt;li&gt;Signature（簽名）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;標頭(Header)和有效載荷(Payload)是 JSON 格式以 Base64 編碼組成，可以包含有關使用者、資源或其他資訊。簽名(Signature)則用於驗證，以確保Token在傳遞過程未被篡改。&lt;/p&gt;
+&lt;h2 id=&#34;儲存位址&#34;&gt;儲存位址&lt;/h2&gt;
+&lt;p&gt;必須要 ajax 可存取的位址，可供選擇如下：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;位置&lt;/th&gt;
+          &lt;th&gt;優點&lt;/th&gt;
+          &lt;th&gt;缺點&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;localStorage&lt;/td&gt;
+          &lt;td&gt;網頁關閉還存在&lt;/td&gt;
+          &lt;td&gt;XSS 攻擊&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;sessionStorage&lt;/td&gt;
+          &lt;td&gt;-&lt;/td&gt;
+          &lt;td&gt;XSS 攻擊、網頁關閉就消失&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;cookie&lt;/td&gt;
+          &lt;td&gt;必須取消 HTTP-only&lt;/td&gt;
+          &lt;td&gt;CSRF 風險、cookie 容量小&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;memory&lt;/td&gt;
+          &lt;td&gt;XSS 攻擊保護&lt;/td&gt;
+          &lt;td&gt;網頁關閉就消失&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;安全性&#34;&gt;安全性&lt;/h2&gt;
+&lt;h2 id=&#34;保護手段&#34;&gt;保護手段&lt;/h2&gt;
+&lt;p&gt;Token encryption: Encrypt the tokens before storing them in localStorage and decrypt them when needed. This adds an extra layer of protection against unauthorized access.&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>
