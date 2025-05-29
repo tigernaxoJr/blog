@@ -22,3 +22,5 @@ degrees:
     institution:
       name: Department of Life Sciences, National Chung Hsing University
       url: "#"
+      # logo: /images/education/college.png # Path of the logo image
+      # darkLogo: /images/education/college-dark.png #(optional), Can optionally show a different logo for dark theme

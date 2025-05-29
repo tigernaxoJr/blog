@@ -1,70 +1,77 @@
+# section information
 section:
   name: Skills
   id: skills
   enable: true
   weight: 2
   showOnNavbar: true
-  template: sections/skills.html
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
 # Your Skills.
 # Give a summary of you each skill in the summary section.
-# find logo https://icon-icons.com/search/icons/?filtro=javascript
 skills:
-  - name: ASP .NET/.NET Core
-    logo: "images/sections/skills/netcore.png"
-    summary: ".NET/.NET Core MVC API 開發"
+- name: ASP .NET
+  logo: "images/sections/skills/netcore.png"
+  summary: ".NET/.NET Core MVC API 開發"
 
-  - name: C# Development
-    logo: "images/sections/skills/csharp.png"
-    summary: "Using as the main language for professional development."
+- name: C# Development
+  logo: "images/sections/skills/csharp.png"
+  summary: "Using as the main language for professional development."
 
-  - name: Cloud Computing
-    logo: "images/sections/skills/gcp.png"
-    summary: "Worked with GCP"
+- name: Cloud Computing
+  logo: "images/sections/skills/gcp.png"
+  summary: "Worked with GCP"
 
-  - name: Docker
-    logo: "images/sections/skills/docker.png"
-    summary: "Experienced with multi-stage, multi-arch build process."
+- name: Docker
+  logo: "images/sections/skills/docker.png"
+  summary: "Experienced with multi-stage, multi-arch build process."
+  url: "https://www.docker.com/"
 
-  - name: JavaScript
-    logo: "images/sections/skills/javascript.png"
-    summary: "Familiar with modern ECMAScript"
+- name: JavaScript
+  logo: "images/sections/skills/javascript.png"
+  summary: "Familiar with modern ECMAScript"
 
-  - name: Linux
-    logo: "images/sections/skills/linux.png"
-    summary: "Using as the main operating system. Capable of writing bash/shell scripts."
+- name: Linux
+  logo: "images/sections/skills/linux.png"
+  summary: "Using as the main operating system. Capable of writing bash/shell scripts."
 
-  - name: Git
-    logo: "images/sections/skills/git.png"
-    summary: "Experienced with git-based development. Mostly, use Github. Also, have experience in working with GitLab."
+# - name: Git
+#   logo: "images/sections/skills/git.png"
+#   summary: "Experienced with git-based development. Mostly, use Github. Also, have experience in working with GitLab."
 
-  - name: Vue
-    logo: "images/sections/skills/vue.png"
-    summary: "Vue/Vue-next Vue-CLI development"
+- name: Vue
+  logo: "images/sections/skills/vue.png"
+  summary: "Vue/Vue-next Vue-CLI development"
 
-  - name: Vuetify
-    logo: "images/sections/skills/vuetify.png"
-    summary: "My most used vue UI Framework"
+- name: Quasar
+  logo: "images/sections/skills/quasar.png"
+  summary: "My most used vue UI Framework"
 
-  - name: Bootstrap
-    logo: "images/sections/skills/bootstrap.png"
-    summary: "Familiar with bootstrap4/5"
+# - name: Vuetify
+#   logo: "images/sections/skills/vuetify.png"
+#   summary: "My most used vue UI Framework"
 
-  - name: JQuery
-    logo: "images/sections/skills/jquery.png"
-    summary: "Familiar with jquery and jquery-related component libraries, such as jquery-mobile"
+# - name: Bootstrap
+#   logo: "images/sections/skills/bootstrap.png"
+#   summary: "Familiar with bootstrap4/5"
 
-  - name: SignallR/WebSocket
-    logo: "images/sections/skills/SignalR.png"
-    summary: "Use SignalR as real-time communication technology in my webChat APP and cloud exam system project."
+# - name: JQuery
+#   logo: "images/sections/skills/jquery.png"
+#   summary: "Familiar with jquery and jquery-related component libraries, such as jquery-mobile"
 
-  - name: Oracle DB
-    logo: "images/sections/skills/oracle.png"
-    summary: "Oracle 資料庫"
+# - name: SignallR/WebSocket
+#   logo: "images/sections/skills/SignalR.png"
+#   summary: "Use SignalR as real-time communication technology in my webChat APP and cloud exam system project."
 
-  - name: MS SQL
-    logo: "images/sections/skills/sqlserver.jpg"
-    summary: "sql server 開發經驗"
+- name: Oracle DB
+  logo: "images/sections/skills/oracle.png"
+  summary: "Oracle 資料庫"
 
-  - name: Web Server
-    logo: "images/sections/skills/nginx.jpg"
-    summary: "Nginx、IIS 部屬管理"
+- name: MS SQL
+  logo: "images/sections/skills/sqlserver.jpg"
+  summary: "sql server 開發經驗"
+
+- name: Web Server
+  logo: "images/sections/skills/nginx.jpg"
+  summary: "Nginx、IIS 部屬管理"

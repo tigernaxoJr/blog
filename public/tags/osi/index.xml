@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OSI on YuCheng&#39;s Site</title>
+    <link>https://0.0.0.0:1313/tags/osi/</link>
+    <description>Recent content in OSI on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 16 Nov 2020 05:42:00 +0800</lastBuildDate><atom:link href="https://0.0.0.0:1313/tags/osi/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[WebTech] OSI 七層協定</title>
+      <link>https://0.0.0.0:1313/posts/web/osi/</link>
+      <pubDate>Mon, 16 Nov 2020 05:42:00 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/web/osi/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;Layer 1:實體層（Physical Layer）&lt;/li&gt;
+&lt;li&gt;Layer 2:資料連結層（Data Link Layer）&lt;/li&gt;
+&lt;li&gt;Layer 3:網路層（Network Layer）&lt;/li&gt;
+&lt;li&gt;Layer 4:傳輸層（Transport Layer）&lt;/li&gt;
+&lt;li&gt;Layer 5:會議層（Session Layer）&lt;/li&gt;
+&lt;li&gt;Layer 6:展示層（Presentation Layer）&lt;/li&gt;
+&lt;li&gt;Layer 7:應用層（Application Layer）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;reference&#34;&gt;Reference&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10000021&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;ithome - 什麼是OSI的7層架構？和常聽到的Layer 7有關？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;wiki - OSI 模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://linux.vbird.org/linux_server/0110network_basic.php#whatisnetwork_osi&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;鳥哥的 Linux 私房菜 - 網路基礎概念&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on YuCheng&#39;s Site</title>
+    <link>https://0.0.0.0:1313/posts/linux/</link>
+    <description>Recent content in Linux on YuCheng&#39;s Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 20 Jan 2023 11:14:30 +0800</lastBuildDate><atom:link href="https://0.0.0.0:1313/posts/linux/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>[Arch] 安裝 oh my zsh</title>
+      <link>https://0.0.0.0:1313/posts/linux/arch-ohmyzsh/</link>
+      <pubDate>Fri, 20 Jan 2023 11:14:30 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/arch-ohmyzsh/</guid>
+      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pacman -S zsh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Arch] 安裝(Virtualbox)</title>
+      <link>https://0.0.0.0:1313/posts/linux/arch-install/</link>
+      <pubDate>Fri, 20 Jan 2023 11:14:30 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/arch-install/</guid>
+      <description>&lt;h2 id=&#34;bios-system&#34;&gt;BIOS system&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;分割磁碟， /dev/sda1 給 1G，其餘給 /dev/sda2
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;fdisk /dev/sda
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkswap /dev/sda1
+mkfs.ext4 /dev/sda2
+mount /dev/sda2 /mnt
+swapon /dev/sda1
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;安裝(arch 核心、linux 核心、韌體)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pacstrap -K /mnt base linux linux-firmware 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;其他套件(非必要)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pacstrap -K /mnt vim sudo openssh docker docker-compose bash-completion
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;產生 fstab
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# -U Use UUIDs for source identifiers &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Chroot
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;arch-chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Time zone
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# generate /etc/adjtime&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hwclock --systohc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Localization
+在&lt;code&gt;/etc/locale.gen&lt;/code&gt;裡面把&lt;code&gt;en_US.UTF-8 UTF-8&lt;/code&gt;、&lt;code&gt;zh_TW.UTF-8 UTF-8&lt;/code&gt;解除註解。
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;locale-gen
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;LANG=en_US.UTF-8&amp;#34; &amp;gt;&amp;gt; /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Boot loader
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pacman -S grub
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# don’t put the disk number sda1, just the disk name sda&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;grub-install /dev/sda
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Root password
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;passwd
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;重開機
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;exit
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unmount -R /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;efi-system&#34;&gt;EFI system&lt;/h2&gt;
+&lt;p&gt;首先在 virtualbox 硬體的部分將 EFI 打勾&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Linux] Ubuntu SSH 連線</title>
+      <link>https://0.0.0.0:1313/posts/linux/ubuntu22-ssh/</link>
+      <pubDate>Tue, 15 Nov 2022 10:23:18 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/ubuntu22-ssh/</guid>
+      <description>&lt;h2 id=&#34;更改-port&#34;&gt;更改 port&lt;/h2&gt;
+&lt;p&gt;可以直接修改&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;裡面的 Port 設定(解開註解修改)，或直接新增一個檔案：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Port 22&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /etc/ssh/sshd_config.d/port.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo ufw status verbose
+sudo ufw allow 22
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重啟 sshd&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service sshd restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.hostinger.com/tutorials/how-to-change-ssh-port-vps&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Linux] CentOS 8 設定網路靜態IP</title>
+      <link>https://0.0.0.0:1313/posts/linux/centos8-static-ip/</link>
+      <pubDate>Tue, 16 Jun 2020 09:37:18 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/centos8-static-ip/</guid>
+      <description>&lt;h1 id=&#34;查詢ip&#34;&gt;查詢IP&lt;/h1&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ip a
+1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: enp0s3: mtu 1500 qdisc fq_codel state UP group default qlen 1000
+link/ether 08:00:27:85:fe:50 brd ff:ff:ff:ff:ff:ff
+inet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute enp0s3
+valid_lft forever preferred_lft forever
+inet6 fe80::98e4:9fbc:ba91:db3f/64 scope link noprefixroute
+valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;修改網路設定&#34;&gt;修改網路設定&lt;/h1&gt;
+&lt;p&gt;修改網路介面設置如下，檔案名稱預設為ifcfg-網路介面(網路卡)名稱，舉例來說安裝好 CentOS 預設的網路卡 enp0s3 設定檔：/etc/sysconfig/network-scripts/ifcfg-enp0s3&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Linux] Ubuntu 20.4 以 netplan 設定網路靜態IP</title>
+      <link>https://0.0.0.0:1313/posts/linux/ubuntu204-static-ip/</link>
+      <pubDate>Sat, 13 Jun 2020 09:37:18 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/ubuntu204-static-ip/</guid>
+      <description>&lt;p&gt;Ubuntu 自 17.10 以後就可以用 netplan 設置網卡~&lt;/p&gt;
+&lt;h1 id=&#34;檢查網路介面&#34;&gt;檢查網路介面&lt;/h1&gt;
+&lt;p&gt;以 ip a 可以看到我的 ubuntu 有2個網路介面分別是 lo、enp0s3，對應到 loopback、有線網卡&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ip a
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:6a:7b:e3 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86159sec preferred_lft 86159sec
+    inet6 fe80::a00:27ff:fe6a:7be3/64 scope link 
+       valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;檢查設定檔&#34;&gt;檢查設定檔&lt;/h1&gt;
+&lt;p&gt;所有放置於 /etc/netplan 底下的 yaml 檔都會影響 netplan 的設置，檢查設定檔看到只有一個 00-installer-config.yaml，內容空空如也，一般來說在安裝系統時有設定過網路就會有，如果沒有的話就自己新增囉：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>[Linux] 學習資源</title>
+      <link>https://0.0.0.0:1313/posts/linux/basic-resource/</link>
+      <pubDate>Sat, 13 Jun 2020 09:37:18 +0800</pubDate>
+      
+      <guid>https://0.0.0.0:1313/posts/linux/basic-resource/</guid>
+      <description>&lt;h3 id=&#34;debian&#34;&gt;Debian&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debian-handbook.info/browse/stable/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Debian - The Debian Administrator&amp;rsquo;s Handbook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

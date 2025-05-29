@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>[JS] Array 常用方法</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.1951c9a57aee8800969154abaabd6ca0dbac2f9125d12cf09fa6ee7effcdac69.css" integrity="sha256-GVHJpXruiACWkVSrqr1soNusL5El0Szwn6bufv/NrGk=" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta property="og:title" content="YuCheng&#39;s Site"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="Portfolio and personal blog of Yu Cheng."/>
+<meta property="og:image" content="/images/author/peter.png">
+<meta property="og:url" content="https://0.0.0.0:1313/">
+
+    
+<meta name="description" content="[JS] Array 常用方法" />
+
+
+
+    
+
+
+
+
+
+    <script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">
+     let theme = localStorage.getItem('theme-scheme') || localStorage.getItem('darkmode:color-scheme') || 'light'
+if (theme === 'system') {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  } else {
+    theme = 'light'
+  }
+}
+document.documentElement.setAttribute('data-theme', theme)
+
+    </script>
+    
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      YuCheng&#39;s Site</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/database/"> [DB] Database</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/database/oracle-managedodp/" title="[Oracle] Managed ODP.NET">[Oracle] Managed ODP.NET</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/database/sql-cte/" title="[SQL] CTE">[SQL] CTE</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/database/sql-merge/" title="[SQL] Merge">[SQL] Merge</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/database/sql-ranking/" title="[SQL] Ranking">[SQL] Ranking</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/database/todo/" title="[SQL] Todo">[SQL] Todo</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/linux/"> [OS] Linux</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/arch-ohmyzsh/" title="[Arch] oh my zsh">[Arch] oh my zsh</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/arch-install/" title="[Arch] 安裝(Virtualbox)">[Arch] 安裝(Virtualbox)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/basic-resource/" title="[Linux] 學習資源">[Linux] 學習資源</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/centos8-static-ip/" title="[CentOS] 設定網路靜態IP">[CentOS] 設定網路靜態IP</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/ubuntu22-ssh/" title="[Ubuntu] SSH 連線">[Ubuntu] SSH 連線</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/linux/ubuntu204-static-ip/" title="[Ubuntu] 設定網路靜態IP">[Ubuntu] 設定網路靜態IP</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/secure/"> [Secure] 安全性議題</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/secure/token/" title="[憑證] 前端 Token 保護">[憑證] 前端 Token 保護</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/secure/oauth2-01protocol/" title="[授權] OAuth 2.0 簡介">[授權] OAuth 2.0 簡介</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/secure/oauth2-02grants/" title="[授權] OAuth 2.0 授權許可">[授權] OAuth 2.0 授權許可</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/secure/oauth2-10oicd/" title="[授權] OAuth 2.0 - OIDC">[授權] OAuth 2.0 - OIDC</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/secure/oauth2-20identityserver4/" title="[授權] IdentityServer4">[授權] IdentityServer4</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/web/"> [Web] Web 相關</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/web/keycloak-docker-compose/" title="[Keycloak] docker 安裝">[Keycloak] docker 安裝</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/web/web-tool-eudc-frontforge/eudc/" title="[Web] FontForge 造難字">[Web] FontForge 造難字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/web/web-websub/" title="[Web] WebSub">[Web] WebSub</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/web/web-api-design/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/web/security-get/" title="[Web] 敏感性 GET 參數">[Web] 敏感性 GET 參數</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i data-feather="minus-circle"></i><a class="active list-link" href="/posts/javascript/"> [前端] Javascript</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/javascript/js-arr-func/" title="[JS] Array 常用方法">[JS] Array 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-obj-func/" title="[JS] Object 常用方法">[JS] Object 常用方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-proxy/" title="[JS] Proxy">[JS] Proxy</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-event-loop/" title="[JS] 並行模型和事件循環">[JS] 並行模型和事件循環</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-error-handle/" title="[JS] 例外處理">[JS] 例外處理</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-debounce-throttle/" title="[JS] 去顫與防抖">[JS] 去顫與防抖</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-module/" title="[JS] 各種模組(module)">[JS] 各種模組(module)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-hoisting/" title="[JS] 提升與暫時性死區">[JS] 提升與暫時性死區</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-closure/" title="[JS] 閉包(Closure)">[JS] 閉包(Closure)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-async/" title="[JS] 非同步程式設計">[JS] 非同步程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-prototype/" title="[JS]原型繼承鏈模型">[JS]原型繼承鏈模型</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/js-web-components/" title="[Web] Web Components">[Web] Web Components</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/code-roc-format/" title="[Code] 格式化民國年">[Code] 格式化民國年</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/code-console-time/" title="[Code] 程式執行時間">[Code] 程式執行時間</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/code-copy-html-content/" title="[Code] 複製元件內的文字">[Code] 複製元件內的文字</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/diy-simple-router/" title="[DIY] 前端路由">[DIY] 前端路由</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/javascript/diy-http-proxy-middleware/" title="[DIY] 開發 proxy">[DIY] 開發 proxy</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/typescript/"> [前端] Typescript</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/typescript/ts-extend-global-obj/" title="[TS] 擴充標準內建物件">[TS] 擴充標準內建物件</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/frontend-vue/"> [前端] Vue</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-router_add_query/" title="[Router] Navigation Guard 加入查詢參數">[Router] Navigation Guard 加入查詢參數</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-ts-provide/" title="[TS] TS-Provide">[TS] TS-Provide</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vuetify3-layout-admin/" title="[Vuetify3] Admin 版面配置">[Vuetify3] Admin 版面配置</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-comp-yncheckbox/" title="[元件] CheckBox">[元件] CheckBox</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-comp-promise/" title="[元件] Promise 元件方法">[元件] Promise 元件方法</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-comp-wrapper/" title="[元件] Transparent Wrapper">[元件] Transparent Wrapper</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-ts-bug/" title="[元件] TypeScript 注意事項">[元件] TypeScript 注意事項</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/frontend-vue/vue-comp-global/" title="[元件] 全域元件">[元件] 全域元件</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/dotnet/"> [後端] .NET</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-webapi/" title="[.NET] .NET 6 Web API 專案">[.NET] .NET 6 Web API 專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/pdf-print/" title="[.NET] PDF 列印">[.NET] PDF 列印</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/webview2-single-file/" title="[.NET] WebView2 單檔部屬">[.NET] WebView2 單檔部屬</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/nuget/" title="[.NET] 製作 Nuget package">[.NET] 製作 Nuget package</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/secret/" title="[.NET] 開發階段專案敏感資料">[.NET] 開發階段專案敏感資料</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/snippet-json-dt/" title="[Snippet] DataTable轉Json">[Snippet] DataTable轉Json</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/snippet-json-operate/" title="[Snippet] JsonElement 操作">[Snippet] JsonElement 操作</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/deploy-ubuntu2004-nginx/ubuntu2004_nginx/" title="[部屬手動] Ubuntu Nginx">[部屬手動] Ubuntu Nginx</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/basic-async-controller/" title="[基礎] 非同步控制器">[基礎] 非同步控制器</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/dotnet/startup-auth/"> [練習] 認證與授權</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-auth/auth_guild_1/" title="[驗證與授權] 驗證與授權">[驗證與授權] 驗證與授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-auth/auth_guild_2/" title="[驗證與授權] 驗證設定">[驗證與授權] 驗證設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-auth/auth_guild_3/" title="[驗證與授權] 驗證實例">[驗證與授權] 驗證實例</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-auth/auth_guild_4/" title="[驗證與授權] 授權設定">[驗證與授權] 授權設定</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-auth/auth_guild_memo/" title="[驗證與授權] 備註頁面">[驗證與授權] 備註頁面</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/dotnet/startup-signalr/"> [練習] 即時聊天專案</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-signalr/guild_1_start/" title="[SignalR] 建立專案">[SignalR] 建立專案</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-signalr/guild_2_issue_token/" title="[SignalR] 後端 Token 授權">[SignalR] 後端 Token 授權</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-signalr/guild_4_front_end_login/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-signalr/guild_5_file_upload/" title="[SignalR] 前端登入頁面">[SignalR] 前端登入頁面</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/dotnet/startup-signalr/guild_3_validate_token/" title="[SignalR] 後端 Token 認證">[SignalR] 後端 Token 認證</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/csharp/"> [後端] csharp</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/csharp/async/" title="[Code] 處理民國年">[Code] 處理民國年</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/csharp/cultureinfo/" title="[Code] 處理民國年">[Code] 處理民國年</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/software/"> [系統] 軟體設計</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/arch-multi-layer/" title="[架構] 多層(layer)架構">[架構] 多層(layer)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/arch-n-tier/" title="[架構] 多層(tier)架構">[架構] 多層(tier)架構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/arch-clean-arch-review/" title="[架構] 無暇的程式碼">[架構] 無暇的程式碼</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/quality-nest/" title="[程式] 巢狀結構">[程式] 巢狀結構</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/pg-functional/" title="[程設] 函數式程式設計">[程設] 函數式程式設計</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/pg-method-chaining/" title="[程設] 鏈式語法比較">[程設] 鏈式語法比較</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/draft-basic-async-tap/" title="[基礎] TAP 非同步模式">[基礎] TAP 非同步模式</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/component-cohesion/" title="[原則] 元件內聚性 Cohesion">[原則] 元件內聚性 Cohesion</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/software/component-coupling/" title="[原則] 元件耦合性 Coupling">[原則] 元件耦合性 Coupling</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/container/"> [維運] Container 基礎</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/basic-resource/" title="[Basic] 學習資源">[Basic] 學習資源</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/docker-network-network/" title="[Basic] Docker Network 服務">[Basic] Docker Network 服務</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/docker-namespace/" title="[Basic] Namespace">[Basic] Namespace</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/tmp/" title="[Basic] Open Container Initiative (OCI)">[Basic] Open Container Initiative (OCI)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/docker-command/" title="[Docker] 基礎指令">[Docker] 基礎指令</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/docker-install/" title="[Docker] 安裝">[Docker] 安裝</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/k8s-example-tnsnames.ora/" title="[K8s] 共享 tnsnames.ora">[K8s] 共享 tnsnames.ora</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/container/k8s-basc-install/" title="[K8S] 自架 K8S 腳本">[K8S] 自架 K8S 腳本</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/devops/"> [維運] DevOps</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/git-orphan-worktree/" title="[Git] orphan branch/worktree">[Git] orphan branch/worktree</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/git-action-release-dotnet/" title="[Git] Release Action (Dotnet)">[Git] Release Action (Dotnet)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/git-action-release-vue/" title="[Git] Release Action (Vue)">[Git] Release Action (Vue)</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/k8s-debian-kubeadm/" title="[K8S] K8S 安裝">[K8S] K8S 安裝</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/nginx-conf/" title="[Nginx] Configuration">[Nginx] Configuration</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/nginx-subrequest/" title="[Nginx] Subrequest">[Nginx] Subrequest</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/sonarqube_netcore31/" title="[SonarQube] 安裝與.NET 檢測">[SonarQube] 安裝與.NET 檢測</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/devops/traefik/" title="[Traefik] workshop">[Traefik] workshop</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/fhir/"> [HIS] FHIR</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/fhir/fhir-fhircast/" title="[Other] FHIRcast">[Other] FHIRcast</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/fhir/fhir-smart-overview/" title="[SMART] Overview">[SMART] Overview</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/fhir/fhir-smart-app/" title="[SMART] App Launch">[SMART] App Launch</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/other/"> [其他] Other</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li>
+      <i data-feather="plus-circle"></i><a class=" list-link" href="/posts/other/homeassistant/"> [智能家居] Home Assistant</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/homeassistant/ha-install/" title="[安裝] Home Assistant 安裝">[安裝] Home Assistant 安裝</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/telegram-bot/" title="[Bot] Telegram Bot">[Bot] Telegram Bot</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/taiwania_login_oneclick/" title="[DIY] 一鍵登入台灣杉">[DIY] 一鍵登入台灣杉</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/hugo-toha-2023/" title="[Hugo] Toha Theme">[Hugo] Toha Theme</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/openwrt-docker/" title="[OpenWrt] Docker">[OpenWrt] Docker</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/linux-gdrive-cli/" title="[工具] Gdrive CLI / Linux">[工具] Gdrive CLI / Linux</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/tools-openapi-generator/" title="[工具] openapi generator">[工具] openapi generator</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/vim-plugin-ycm/" title="[工具] Vim Plugin YCM">[工具] Vim Plugin YCM</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/other/auth-oauth2/" title="[授權] OAuth2.0">[授權] OAuth2.0</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='/images/author/peter_hu_63e06a667215102.png' alt="Author Image">
+          <h5 class="author-name">Chen Yu Cheng</h5>
+          <p class="text-muted">Wednesday, April 29, 2020</p>
+        </div>
+        
+
+        <div class="title">
+          <h1>[JS] Array 常用方法</h1>
+        </div>
+
+        
+
+        
+        <div class="post-content" id="post-content">
+          <p>紀錄常用的 Array 方法，細節可以到MDN看</p>
+<h1 id="陣列操作">陣列操作</h1>
+<h2 id="尾端彈出-arrayprototypepop推入-arrayprototypepush">尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()</h2>
+<blockquote>
+<p>arr.pop()<br>
+arr.push(element1[, &hellip;[, elementN]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">pop</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>)  <span style="color:#75715e">// [1, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">push</span>(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>)  <span style="color:#75715e">// [1, 2, 3, 5]
+</span></span></span></code></pre></div><h2 id="首端彈出-arrayprototypeshift推入-arrayprototypeunshift">首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()</h2>
+<blockquote>
+<p>arr.shift()<br>
+arr.unshift(element1[, &hellip;[, elementN]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">shift</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>) <span style="color:#75715e">// [2, 3, 4]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">unshift</span>(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>) <span style="color:#75715e">// [0, 2, 3, 4]
+</span></span></span></code></pre></div><h2 id="指定位置插入移除取代-arrayprototypesplice">指定位置插入/移除/取代 Array.prototype.splice()</h2>
+<blockquote>
+<p>let arrRemoved = arr.splice(start[, deleteCount[, item1[, item2[, &hellip;]]]])</p></blockquote>
+<p>可以說式集移除、插入、取代(移除+插入)於一身的重要函式，並且將被移除的區段做為新陣列回傳，可根據傳入的參數將使用場景分類如下表，可幫助理解：</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th style="text-align: center">添加item</th>
+          <th style="text-align: right">不添加item</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>deleteCount=0</td>
+          <td style="text-align: center">在現有位置添加元素</td>
+          <td style="text-align: right">(無意義)</td>
+      </tr>
+      <tr>
+          <td>deleteCount&gt;0</td>
+          <td style="text-align: center">取代現有元素</td>
+          <td style="text-align: right">範圍移除元素</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="範圍移除元素">範圍移除元素</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 移除索引位置3的元素，移除範圍為1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">removed</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">removed</span>) <span style="color:#75715e">// [3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>) <span style="color:#75715e">// [0, 1, 2, 4, 5, 6]
+</span></span></span></code></pre></div><h3 id="在現有位置添加元素">在現有位置添加元素</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 移除索引位置3的元素，移除範圍為0，並且插入3.1, 3.2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">removed</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3.1</span>, <span style="color:#ae81ff">3.2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 這時候獲得的 removed 為空陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">removed</span>) <span style="color:#75715e">// []
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 插入的元素從索引位置3的地方開始
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>) <span style="color:#75715e">// [0, 1, 2, 3.1, 3.2, 3, 4, 5, 6]
+</span></span></span></code></pre></div><h3 id="取代現有元素">取代現有元素</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 移除索引為3的元素，移除長度範圍為2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 並且插入元素 10, 11, 12
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">removed</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">removed</span>) <span style="color:#75715e">// [3, 4]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>) <span style="color:#75715e">//  [0, 1, 2, 10, 11, 12, 5, 6]
+</span></span></span></code></pre></div><h2 id="複製陣列內特定區塊至特定位置-arrayprototypecopywithin">複製陣列內特定區塊至特定位置 Array.prototype.copyWithin()</h2>
+<blockquote>
+<p>arr.copyWithin(target[, start[, end]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將索引3-4之間的區塊(&#34;4&#34;)貼到索引0(取代0)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">copyWithin</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>)); <span style="color:#75715e">// [4, 2, 3, 4, 5]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將索引3到結束之間的區塊(4, 5)貼到索引1(取代1,2)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">copyWithin</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)); <span style="color:#75715e">// [4, 4, 5, 4, 5]
+</span></span></span></code></pre></div><h2 id="全部或指定位置填滿-arrayprototypefill">全部或指定位置填滿 Array.prototype.fill()</h2>
+<blockquote>
+<p>arr.fill(value[, start[, end]])</p></blockquote>
+<p>把陣列內全部的元素，或指定的索引範圍以特定值填滿</p>
+<ul>
+<li>如果傳入的值是物件，會以物件的參照填滿</li>
+<li>如果給定的索引 index 或 end 是負值，則以 arr.length+index 計算</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 全部填滿
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>);               <span style="color:#75715e">// [4, 4, 4]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 指定位置以後填滿給定的值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>);            <span style="color:#75715e">// [1, 4, 4]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 指定範圍填滿
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>);         <span style="color:#75715e">// [1, 4, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 若為負值則自動加上長度(只會加一次)，因此(4, -3, -2)等於(4, 0, 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>);       <span style="color:#75715e">// [4, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 指定範圍超出長度則無作用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>);         <span style="color:#75715e">// [1, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// NaN 無效
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">fill</span>(<span style="color:#ae81ff">4</span>, <span style="color:#66d9ef">NaN</span>, <span style="color:#66d9ef">NaN</span>);     <span style="color:#75715e">// [1, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[].<span style="color:#a6e22e">fill</span>.<span style="color:#a6e22e">call</span>({ <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span> }, <span style="color:#ae81ff">4</span>);  <span style="color:#75715e">// {0: 4, 1: 4, 2: 4, length: 3}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 物件複製的是參照，指向同一物件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> Array(<span style="color:#ae81ff">3</span>).<span style="color:#a6e22e">fill</span>({}) <span style="color:#75715e">// [{}, {}, {}];
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">hi</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hi&#34;</span>; <span style="color:#75715e">// [{ hi: &#34;hi&#34; }, { hi: &#34;hi&#34; }, { hi: &#34;hi&#34; }]
+</span></span></span></code></pre></div><h2 id="元素反轉-arrayprototypereverse">元素反轉 Array.prototype.reverse()</h2>
+<blockquote>
+<p>arr.reverse()</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">reverse</span>(); 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>);  <span style="color:#75715e">// [3, 2, 1]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">b</span>); <span style="color:#75715e">// [3, 2, 1]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 回傳的陣列指向被反轉的原本陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">a</span><span style="color:#f92672">===</span><span style="color:#a6e22e">b</span>  <span style="color:#75715e">// true
+</span></span></span></code></pre></div><h2 id="元素排序-arrayprototypesort">元素排序 Array.prototype.sort()</h2>
+<blockquote>
+<p>arr.sort([compareFunction])</p></blockquote>
+<p>對陣列進行 in place 排序，且回傳原陣列，如果不給定 compareFunction 則預設依據字串 Unicode 編碼進行比對後進行升冪排序，但根據環境實作不同時間/空間複雜度也不同，且各環境下同一陣列的排序結果也不一定相同。</p>
+<ul>
+<li>compareFunction(a, b) &gt; 0: 把 b 排在 a 之前。</li>
+<li>compareFunction(a, b) = 0: 不改變排序。</li>
+<li>compareFunction(a, b) &lt; 0: 把 a 排在 b 之前。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 預設是升冪排序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">sort</span>() <span style="color:#75715e">// [1, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 針對物件排序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">objs</span> <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>  { <span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Peter&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">36</span> },
+</span></span><span style="display:flex;"><span>  { <span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Vicky&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">35</span> },
+</span></span><span style="display:flex;"><span>  { <span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Red&#39;</span>, <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">37</span> },
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 根據 value 屬性排序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">objs</span>.<span style="color:#a6e22e">sort</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 根據 name 排序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">items</span>.<span style="color:#a6e22e">sort</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 一般來說忽視大小寫
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">keyA</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">key</span>.<span style="color:#a6e22e">toUpperCase</span>(); 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">keyB</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">key</span>.<span style="color:#a6e22e">toUpperCase</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">keyA</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">keyB</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">keyA</span> <span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">keyB</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// names must be equal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>P.S. 如果進行大量排序操作可轉為Map排序後再轉回陣列，效能較好 (詳見MDN)</p>
+<h2 id="處理每個元素-arrayprototypeforeach">處理每個元素 Array.prototype.forEach()</h2>
+<blockquote>
+<p>arr.forEach(function callback(currentValue[, index[, array]]) {}[, thisArg]);</p></blockquote>
+<p>對每個陣列元素傳入並執行給定的 callback 函式，forEach 是 blocking 操作，但每個 callback 是並行執行無法區分先後順序！如果要循序執行必須要加以改造，或是改用 for…of，只有在每個 callback 彼此間沒有依賴關係時才使用 forEach。</p>
+<h1 id="取值求值">取值/求值</h1>
+<h2 id="取得陣列長度-arraylength">取得陣列長度 Array.length</h2>
+<h2 id="從開頭或特定位置取得元素首次出現的索引-arrayprototypeindexof">從開頭或特定位置取得元素首次出現的索引 Array.prototype.indexOf()</h2>
+<blockquote>
+<p>arr.indexOf(searchElement[, fromIndex])</p></blockquote>
+<h2 id="取得元素-最後出現的索引-arrayprototypelastindexof">取得元素 最後出現的索引 Array.prototype.lastIndexOf()</h2>
+<blockquote>
+<p>arr.lastIndexOf(searchElement[, fromIndex])</p></blockquote>
+<h2 id="取得滿足回呼函式的索引-arrayprototypefindindex">取得滿足回呼函式的索引 Array.prototype.findIndex()</h2>
+<blockquote>
+<p>arr.findIndex(callback[, thisArg])</p></blockquote>
+<h2 id="取得符合判斷式的第一個元素值-arrayprototypefind">取得符合判斷式的第一個元素值 Array.prototype.find()</h2>
+<blockquote>
+<p>arr.find(callback[, thisArg])</p></blockquote>
+<h2 id="執行-reducer-function-取值-arrayprototypereduce">執行 reducer function 取值 Array.prototype.reduce()</h2>
+<blockquote>
+<p>arr.reduce(callback[accumulator, currentValue, currentIndex, array], initialValue)</p></blockquote>
+<p>reducer 接收一個 callback 並且對每個第一個之外的每個元素執行 callback (如果有提供 initialValue 則也會將第一個元素納入計算)，callback 函式參數如下：</p>
+<ul>
+<li>accumulator：callback 函式上次回傳的結果</li>
+<li>currentValue：目前正在處裡的陣列元素。</li>
+<li>currentIndex：目前陣列元素的索引，如果沒有提供 initialValue 的時候從1開始，否則從 0 開始。</li>
+<li>array：正在處裡的陣列。</li>
+<li>initialValue：提供起始值讓第一個元素可以納入計算。</li>
+</ul>
+<p>如果沒有提供 initialValue，累加時的型別判定不好掌握，時常產生預期之外的結果，因此最好習慣總是提供 initialValue，並且需注意 accumulator、currentValue 作為函示取值時是否為正確的型別。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">maxCallback</span> <span style="color:#f92672">=</span> ( <span style="color:#a6e22e">acc</span>, <span style="color:#a6e22e">cur</span> ) =&gt;{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">max</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">max</span>(<span style="color:#a6e22e">acc</span>.<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">cur</span>.<span style="color:#a6e22e">x</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;acc: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">acc</span> <span style="color:#f92672">+</span><span style="color:#e6db74">&#34;, cur: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">cur</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;, max: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">max</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">max</span> 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>[ { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> }, { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">22</span> }, { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">42</span> } ].<span style="color:#a6e22e">reduce</span>( <span style="color:#a6e22e">maxCallback</span> ); 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 第一輪輸出正缺判定 acc.x, cur.x
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// acc: [object Object], cur: [object Object], max: 22
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 第二輪 acc 實際上為 22，所以22.x=NaN，Math.max(NaN, 42)=NaN
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// acc: 22, cur: [object Object], max: NaN
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 第三輪之後 acc 基本上就是 NaN
+</span></span></span></code></pre></div><p>良好的習慣：</p>
+<ul>
+<li>提供初始值。</li>
+<li>以轉型函示(如 map )將要累計的值導出至新的 array 避免 callback 從物件中取值，新陣列再進行 reduce。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">maxCallback</span> <span style="color:#f92672">=</span> ( <span style="color:#a6e22e">acc</span>, <span style="color:#a6e22e">cur</span> ) =&gt;{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Math.<span style="color:#a6e22e">max</span>(<span style="color:#a6e22e">acc</span>, <span style="color:#a6e22e">cur</span>) 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>[ { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> }, { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">22</span> }, { <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">42</span> } ]
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">map</span>( <span style="color:#a6e22e">el</span> =&gt; <span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">x</span> )
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">reduce</span>( <span style="color:#a6e22e">maxCallback</span>, <span style="color:#f92672">-</span><span style="color:#66d9ef">Infinity</span> );
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 42
+</span></span></span></code></pre></div><h2 id="反向執行-reducer-function-取值-arrayprototypereduceright">反向執行 reducer function 取值 Array.prototype.reduceRight()</h2>
+<blockquote>
+<p>arr.reduceRight(callback(accumulator, currentValue[, index[, array]])[, initialValue])</p></blockquote>
+<h2 id="取得以分隔符號連接元素的字串-arrayprototypejoin">取得以分隔符號連接元素的字串 Array.prototype.join()</h2>
+<blockquote>
+<p>arr.join([separator])</p></blockquote>
+<p>以分隔符號合併陣列中所有的元素成一個字串並回傳，分隔符號預設為’,’。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 使用預設的分隔符號 &#39;,&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>].<span style="color:#a6e22e">join</span>() <span style="color:#75715e">// &#34;1,2,3,4,5&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 不使用分隔符號
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>].<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;&#39;</span>) <span style="color:#75715e">// &#34;12345&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 指定其他分隔符號
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>].<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;_&#39;</span>) <span style="color:#75715e">// &#34;1_2_3_4_5&#34;
+</span></span></span></code></pre></div><h2 id="取得表示該陣列的字串-arrayprototypetostring">取得表示該陣列的字串 Array.prototype.toString()</h2>
+<blockquote>
+<p>arr.toString()</p></blockquote>
+<p>取得該陣列的文字描述，效果跟 arr.join() 一樣。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>].<span style="color:#a6e22e">toString</span>() <span style="color:#75715e">// &#34;1,2,3,4,5&#34;
+</span></span></span></code></pre></div><h1 id="取得新陣列">取得新陣列</h1>
+<h2 id="陣列建構方法-arrayarrayof">陣列建構方法 Array()、Array.of()</h2>
+<blockquote>
+<p>let arr1 = new Array([capacity]);<br>
+let arr2 = Array.of(element0[, element1[, &hellip;[, elementN]]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">new</span> Array(<span style="color:#ae81ff">5</span>); <span style="color:#75715e">// [empty × 5]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Array.<span style="color:#66d9ef">of</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>) <span style="color:#75715e">// [1, 2, 3, 4, 5]
+</span></span></span></code></pre></div><h2 id="取得從字串陣列產生的新陣列可加入元素轉換函式-arrayfrom">取得從字串、陣列產生的新陣列，可加入元素轉換函式 Array.from()</h2>
+<blockquote>
+<p>Array.from(arrayLike [, mapFn [, thisArg]])</p></blockquote>
+<p>從 array-like/iterable object 如 string、set、map、arguments獲得 shallow-copied 的陣列。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 拆解字串產生 Array
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Array.<span style="color:#a6e22e">from</span>(<span style="color:#e6db74">&#39;foo&#39;</span>) <span style="color:#75715e">// [ &#34;f&#34;, &#34;o&#34;, &#34;o&#34; ];
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將 set 轉為陣列，這裡會自動去掉一個重複的 foo 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">set</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Set</span>([<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;bar&#39;</span>, <span style="color:#e6db74">&#39;baz&#39;</span>, <span style="color:#e6db74">&#39;foo&#39;</span>]);
+</span></span><span style="display:flex;"><span>Array.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">set</span>); <span style="color:#75715e">// [&#34;foo&#34;, &#34;bar&#34;, &#34;baz&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 將 map、map.values、map.keys 轉為陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">map</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Map</span>([[<span style="color:#e6db74">&#39;1&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>], [<span style="color:#e6db74">&#39;2&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>]]);
+</span></span><span style="display:flex;"><span>Array.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">map</span>); <span style="color:#75715e">// [[1, a], [2, b]]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Array.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">map</span> .<span style="color:#a6e22e">keys</span>()); <span style="color:#75715e">// [&#39;1&#39;, &#39;2&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Array.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">map</span> .<span style="color:#a6e22e">values</span>()); <span style="color:#75715e">// [&#39;a&#39;, &#39;b&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 從函式的引數獲得陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">args</span><span style="color:#f92672">=</span>[];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">f</span>(){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">args</span> <span style="color:#f92672">=</span> Array.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">arguments</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">f</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">args</span>.<span style="color:#a6e22e">toString</span>() <span style="color:#75715e">// &#34;1,2,3&#34;
+</span></span></span></code></pre></div><h2 id="從特定區段產生新陣列-arrayprototypeslice">從特定區段產生新陣列 Array.prototype.slice()</h2>
+<blockquote>
+<p>arr.slice([begin[, end]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>].<span style="color:#a6e22e">slice</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>) <span style="color:#75715e">// [2, 3]
+</span></span></span></code></pre></div><h2 id="取得元素滿足回呼函式的新陣列-arrayprototypefilter">取得元素滿足回呼函式的新陣列 Array.prototype.filter()</h2>
+<blockquote>
+<p>let newArray = arr.filter(callback(element[, index[, array]])[, thisArg])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">newArr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">filter</span>(<span style="color:#a6e22e">e</span> =&gt; <span style="color:#a6e22e">e</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">newArr</span> <span style="color:#75715e">// [0, 2, 4, 6]
+</span></span></span></code></pre></div><h2 id="取得串接多個陣列後的新陣列-arrayprototypeconcat">取得串接多個陣列後的新陣列 Array.prototype.concat()</h2>
+<blockquote>
+<p>let new_array = old_array.concat(value1[, value2[, &hellip;[, valueN]]])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr1</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr2</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arrConcat</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">concat</span>(<span style="color:#a6e22e">arr1</span>, <span style="color:#a6e22e">arr2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// arr 並沒有改變，串聯的陣列是新陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr</span> <span style="color:#75715e">// [0, 1, 2, 3]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arrConcat</span> <span style="color:#75715e">// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span></span></span></code></pre></div><h2 id="取得每個元素轉換後的新陣列-arrayprototypemap">取得每個元素轉換後的新陣列 Array.prototype.map()</h2>
+<blockquote>
+<p>let new_array = arr.map(function callback( currentValue[, index[, array]]) {
+// 回傳作為新陣列的元素
+}[, thisArg])</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">arr</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">newArr</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">e</span> =&gt; <span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">newArr</span> <span style="color:#75715e">// [0, 2, 4, 6, 8, 10, 12]
+</span></span></span></code></pre></div><h2 id="取得多維陣列攤平後的新陣列-arrayprototypeflat">取得多維陣列攤平後的新陣列 Array.prototype.flat()</h2>
+<blockquote>
+<p>let newArray = arr.flat([depth]);</p></blockquote>
+<p>Array.prototype.flat() 會自動清除空元素，並展開指定深度的巢狀陣列，深度預設值為 1。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// arr1 深度為1，所以不指定深度就能攤開
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr1</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]];
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">flat</span>(); <span style="color:#75715e">// [1, 2, 3, 4]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// arr2 深度為2，因此需指定深度才能完整攤開
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr2</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]]];
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">arr2</span>.<span style="color:#a6e22e">flat</span>(); <span style="color:#75715e">// [1, 2, 3, 4, [5, 6]]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr2</span>.<span style="color:#a6e22e">flat</span>(<span style="color:#ae81ff">2</span>); <span style="color:#75715e">// [1, 2, 3, 4, 5, 6]
+</span></span></span></code></pre></div><h2 id="取得多維陣列以回呼函式攤平後的新陣列-arrayprototypeflatmap">取得多維陣列以回呼函式攤平後的新陣列 Array.prototype.flatMap()</h2>
+<blockquote>
+<p>var new_array = arr.flatMap(function callback(currentValue[, index[, array]]) {<br>
+// 回傳作為新陣列的元素<br>
+}[, thisArg])</p></blockquote>
+<p>arr.flatMap(func) 的效果等於 arr.map(func).flat() 但效能較佳，不過攤開深度只能是1，當 map() 回傳的元素是陣列且需要透過 flate() 攤開呈現最終結果時，可改用 flateMap()，例如從”句子”陣列獲得”單字”陣列：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 假設要從句子陣列獲得單字的一維陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">arr1</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;animal cell&#34;</span>, <span style="color:#e6db74">&#34;have&#34;</span>, <span style="color:#e6db74">&#34;mitochondria&#34;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用 map 處裡會獲得二維陣列，必須再串聯一次 flat()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">x</span> =&gt; <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34; &#34;</span>)); <span style="color:#75715e">// [[&#34;animal&#34;,&#34;cell&#34;],[&#34;have&#34;],[&#34;mitochondria&#34;]]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">x</span> =&gt; <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34; &#34;</span>)).<span style="color:#a6e22e">flat</span>(); <span style="color:#75715e">// [&#34;animal &#34;,&#34;cell&#34;,&#34;have&#34;, &#34;mitochondria&#34;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// flatMap 效果等價於 map().flat()，但效能更佳
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">arr1</span>.<span style="color:#a6e22e">flatMap</span>(<span style="color:#a6e22e">x</span> =&gt; <span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34; &#34;</span>)); <span style="color:#75715e">// [&#34;animal &#34;,&#34;cell&#34;,&#34;have&#34;, &#34;mitochondria&#34;]
+</span></span></span></code></pre></div><h1 id="判斷">判斷</h1>
+<h2 id="判斷該物件是否為陣列-arrayisarray">判斷該物件是否為陣列 Array.isArray()</h2>
+<p>Array.isArray(obj)</p>
+<h2 id="判斷陣列的每個元素是否皆滿足判斷函式-arrayprototypeevery">判斷陣列的每個元素是否皆滿足判斷函式 Array.prototype.every()</h2>
+<p>arr.every(callback[, thisArg])</p>
+<h2 id="判斷陣列是否有至少一個元素滿足判斷函式-arrayprototypesome">判斷陣列是否有至少一個元素滿足判斷函式 Array.prototype.some()</h2>
+<p>arr.some(callback[, thisArg])</p>
+<h2 id="判斷陣列是否包含某元素值-arrayprototypeincludes">判斷陣列是否包含某元素值 Array.prototype.includes()</h2>
+<p>arr.includes(searchElement[, fromIndex])</p>
+<h1 id="reference">Reference</h1>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array</a></li>
+</ul>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/hugo-toha/hugo-toha.github.io/edit/main/content/posts/Javascript/js-arr-func/index.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/web/security-get/" title="[Web] RESTful 敏感性 GET 參數" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">[Web] RESTful 敏感性 GET 參數</div>
+      </a>
+    </div>
+  
+  
+      
+      
+        
+      
+      <div class="col-md-6 next-article">
+        <a href="/posts/javascript/js-obj-func/" title="[JS] Object 常用方法" class="btn filled-button">
+          <div>Next <i class="fas fa-chevron-circle-right"></i></div>
+          <div class="next-prev-text">[JS] Object 常用方法</div>
+        </a>
+      </div>
+    
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#尾端彈出-arrayprototypepop推入-arrayprototypepush">尾端彈出 Array.prototype.pop()、推入 Array.prototype.push()</a></li>
+    <li><a href="#首端彈出-arrayprototypeshift推入-arrayprototypeunshift">首端彈出 Array.prototype.shift()、推入 Array.prototype.unshift()</a></li>
+    <li><a href="#指定位置插入移除取代-arrayprototypesplice">指定位置插入/移除/取代 Array.prototype.splice()</a>
+      <ul>
+        <li><a href="#範圍移除元素">範圍移除元素</a></li>
+        <li><a href="#在現有位置添加元素">在現有位置添加元素</a></li>
+        <li><a href="#取代現有元素">取代現有元素</a></li>
+      </ul>
+    </li>
+    <li><a href="#複製陣列內特定區塊至特定位置-arrayprototypecopywithin">複製陣列內特定區塊至特定位置 Array.prototype.copyWithin()</a></li>
+    <li><a href="#全部或指定位置填滿-arrayprototypefill">全部或指定位置填滿 Array.prototype.fill()</a></li>
+    <li><a href="#元素反轉-arrayprototypereverse">元素反轉 Array.prototype.reverse()</a></li>
+    <li><a href="#元素排序-arrayprototypesort">元素排序 Array.prototype.sort()</a></li>
+    <li><a href="#處理每個元素-arrayprototypeforeach">處理每個元素 Array.prototype.forEach()</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#取得陣列長度-arraylength">取得陣列長度 Array.length</a></li>
+    <li><a href="#從開頭或特定位置取得元素首次出現的索引-arrayprototypeindexof">從開頭或特定位置取得元素首次出現的索引 Array.prototype.indexOf()</a></li>
+    <li><a href="#取得元素-最後出現的索引-arrayprototypelastindexof">取得元素 最後出現的索引 Array.prototype.lastIndexOf()</a></li>
+    <li><a href="#取得滿足回呼函式的索引-arrayprototypefindindex">取得滿足回呼函式的索引 Array.prototype.findIndex()</a></li>
+    <li><a href="#取得符合判斷式的第一個元素值-arrayprototypefind">取得符合判斷式的第一個元素值 Array.prototype.find()</a></li>
+    <li><a href="#執行-reducer-function-取值-arrayprototypereduce">執行 reducer function 取值 Array.prototype.reduce()</a></li>
+    <li><a href="#反向執行-reducer-function-取值-arrayprototypereduceright">反向執行 reducer function 取值 Array.prototype.reduceRight()</a></li>
+    <li><a href="#取得以分隔符號連接元素的字串-arrayprototypejoin">取得以分隔符號連接元素的字串 Array.prototype.join()</a></li>
+    <li><a href="#取得表示該陣列的字串-arrayprototypetostring">取得表示該陣列的字串 Array.prototype.toString()</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#陣列建構方法-arrayarrayof">陣列建構方法 Array()、Array.of()</a></li>
+    <li><a href="#取得從字串陣列產生的新陣列可加入元素轉換函式-arrayfrom">取得從字串、陣列產生的新陣列，可加入元素轉換函式 Array.from()</a></li>
+    <li><a href="#從特定區段產生新陣列-arrayprototypeslice">從特定區段產生新陣列 Array.prototype.slice()</a></li>
+    <li><a href="#取得元素滿足回呼函式的新陣列-arrayprototypefilter">取得元素滿足回呼函式的新陣列 Array.prototype.filter()</a></li>
+    <li><a href="#取得串接多個陣列後的新陣列-arrayprototypeconcat">取得串接多個陣列後的新陣列 Array.prototype.concat()</a></li>
+    <li><a href="#取得每個元素轉換後的新陣列-arrayprototypemap">取得每個元素轉換後的新陣列 Array.prototype.map()</a></li>
+    <li><a href="#取得多維陣列攤平後的新陣列-arrayprototypeflat">取得多維陣列攤平後的新陣列 Array.prototype.flat()</a></li>
+    <li><a href="#取得多維陣列以回呼函式攤平後的新陣列-arrayprototypeflatmap">取得多維陣列以回呼函式攤平後的新陣列 Array.prototype.flatMap()</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#判斷該物件是否為陣列-arrayisarray">判斷該物件是否為陣列 Array.isArray()</a></li>
+    <li><a href="#判斷陣列的每個元素是否皆滿足判斷函式-arrayprototypeevery">判斷陣列的每個元素是否皆滿足判斷函式 Array.prototype.every()</a></li>
+    <li><a href="#判斷陣列是否有至少一個元素滿足判斷函式-arrayprototypesome">判斷陣列是否有至少一個元素滿足判斷函式 Array.prototype.some()</a></li>
+    <li><a href="#判斷陣列是否包含某元素值-arrayprototypeincludes">判斷陣列是否包含某元素值 Array.prototype.includes()</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://0.0.0.0:1313/#education">Education</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:ycc@tigernaxo.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>ycc@tigernaxo.com</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://github.com/tigernaxoJr target="_blank" rel="noopener">
+                  <span><i class="fab fa-github"></i></span> <span>tigernaxoJr</span>
+                </a></li>
+              
+            
+              
+                <li><a href=https://www.linkedin.com/in/%e8%ad%bd%e6%99%9f-%e9%99%b3-41464a132 target="_blank" rel="noopener">
+                  <span><i class="fab fa-linkedin"></i></span> <span>Chen Yu Cheng</span>
+                </a></li>
+              
+            
+              
+                <li><a href=tel:&#43;886919681059 target="_blank" rel="noopener">
+                  <span><i class="fas fa-phone-alt"></i></span> <span>&#43;886919681059</span>
+                </a></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://0.0.0.0:1313//index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2020 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script src="/application.9cebc9aa7061e63138b4be1164c2e44e369f8a76a38ee9b50363a51e69da159e.js" integrity="sha256-nOvJqnBh5jE4tL4RZMLkTjafinajjum1A2OlHmnaFZ4=" defer></script>
+
+
+    
+     
+
+    
+</body>
+</html>
