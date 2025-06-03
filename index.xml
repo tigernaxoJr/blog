@@ -1,26 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YuCheng's Site</title><link>https://blog.tigernaxo.com/</link><description>Recent content on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Jun 2025 15:52:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/index.xml" rel="self" type="application/rss+xml"/><item><title>[防火牆] 地理位置規則(GeoIP)</title><link>https://blog.tigernaxo.com/posts/firewall/geoip/</link><pubDate>Tue, 03 Jun 2025 15:52:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/firewall/geoip/</guid><description>&lt;p>最近在 GCP 上，中南美洲的網路流量讓我每個月多花了好幾十塊&amp;hellip;台幣，對免費仔而言實在有點不能接受！其實，我們可以從 IP 層面直接把這些不必要的流量擋掉。&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YuCheng's Site</title><link>https://blog.tigernaxo.com/</link><description>Recent content on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Jun 2025 15:52:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/index.xml" rel="self" type="application/rss+xml"/><item><title>[防火牆] 地理位置規則(GeoIP)</title><link>https://blog.tigernaxo.com/posts/firewall/geoip/</link><pubDate>Tue, 03 Jun 2025 15:52:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/firewall/geoip/</guid><description>&lt;p>最近我在 GCP 上發現一個惱人的問題：中南美洲的網路流量，竟然每個月讓我多噴了好幾十塊台幣！對於我這種「免費仔」來說，這簡直是不能接受的額外開銷。雖然金額不大，但積少成多也是錢啊！&lt;/p>
 &lt;h2 id="為什麼要擋流量">為什麼要擋流量？&lt;/h2>
-&lt;p>如果你的網站或服務主要受眾不在中南美洲，那麼來自這些地區的流量很可能是惡意掃描、DDoS 攻擊的嘗試，或是其他你不需要的連線。擋掉這些流量，除了能省下荷包，也能降低主機的負擔，提升安全性。&lt;/p>
-&lt;h2 id="如何實現-ip-層級封鎖">如何實現 IP 層級封鎖？&lt;/h2>
-&lt;p>對於 Linux 主機或虛擬機器 (VM)，最直接、開源且有效的方法就是使用 iptables 或 nftables。這兩者都是 Linux 內建的防火牆工具，可以在 IP 層級進行精準的流量控制。&lt;/p>
-&lt;p>不過，光有 iptables/nftables 還不夠，我們需要一個方式來識別哪些 IP 屬於中南美洲。這時候就需要搭配：&lt;/p>
-&lt;ul>
-&lt;li>xtables-addons (或類似的腳本工具，例如 geoip-shell)：這些工具能讓你根據地理位置來設定防火牆規則。&lt;/li>
-&lt;li>MaxMind GeoLite2 資料庫：這是一個免費的地理位置 IP 資料庫，它會告訴你每個 IP 位址來自哪個國家或地區。&lt;/li>
-&lt;/ul>
-&lt;h2 id="讓工具自動搞定">讓工具自動搞定！&lt;/h2>
-&lt;p>手動去找出中南美洲的所有 IP 範圍，然後一條一條地加到防火牆規則裡，那也太費時了！開源專案 &lt;code>friendly-bits/geoip-shell&lt;/code> 已經為我們把這項工作簡化了許多。&lt;/p>
-&lt;p>透過這個專案，可以：&lt;/p>
-&lt;ul>
-&lt;li>自動生成防火牆規則：它會根據 MaxMind GeoLite2 資料庫，自動產生針對特定國家或地區的 IP 封鎖規則。&lt;/li>
-&lt;li>排程自動更新 IP：IP 位址的歸屬可能會變動，geoip-shell 還能設定排程，自動更新 GeoLite2 資料庫和防火牆規則，確保你的封鎖列表始終保持最新。&lt;br>
-這樣一來，就能輕鬆地從 IP 層面阻擋來自中南美洲的流量，有效控制 GCP 的網路費用，同時提升主機的安全性！&lt;/li>
-&lt;/ul>
-&lt;pre>&lt;code class="language-bash"># 安裝 geoip-shell
-# 根據其 GitHub 說明進行安裝
-# 生成封鎖南美洲的規則
-sudo geoip-shell block --countries AR,BO,BR,CL,CO,EC,GF,GY,PY,PE,SR,UY,VE
-&lt;/code>&lt;/pre></description></item><item><title>[OpenWrt] 在 linux 中使用 Docker 跑 OpenWrt</title><link>https://blog.tigernaxo.com/posts/other/openwrt-docker/</link><pubDate>Fri, 19 Jan 2024 08:00:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/openwrt-docker/</guid><description>&lt;p>定義一個 Network，叫做 MYNAT，關閉 DHCP。&lt;/p>
+&lt;p>你可能會問，區區幾十塊台幣也要計較？當然要！特別是當這些流量不是你預期的合法訪客時。很多時候，來自特定地區的流量可能是：&lt;/p>
+&lt;p>惡意掃描：網路攻擊者在尋找網站漏洞。
+DDoS 攻擊嘗試：分散式阻斷服務攻擊的前奏或小規模嘗試。
+殭屍網路活動：受感染的電腦發出的無意義流量。
+這些流量不僅浪費你的錢，還會增加你 GCP 主機的負擔，影響正常服務的效能和穩定性。對我們這些斤斤計較流量費用的使用者來說，擋掉不必要的流量，是省錢、維護效能和安全的好方法。&lt;/p>
+&lt;h2 id="gcp-ngfw-雖好但口袋不夠深">GCP NGFW 雖好，但口袋不夠深？&lt;/h2>
+&lt;p>GCP 自家的 Cloud Next Generation Firewall (NGFW) 確實提供了強大的地理位置封鎖功能。透過 NGFW，你可以輕鬆設定規則，阻擋來自特定國家或地區的 IP 流量。這聽起來很棒，對吧？&lt;/p>
+&lt;p>然而，問題就在於：GCP NGFW 是要收費的！ 它通常會依據你處理的流量來計費，這對於想要最大化免費額度，或是對預算極為敏感的「免費仔」來說，並不是一個理想的方案。我們需要一個開源且免費的替代方案。&lt;/p>
+&lt;h2 id="開源方案iptables--geolite2-的完美組合">開源方案：iptables + GeoLite2 的完美組合&lt;/h2>
+&lt;p>別擔心，我們還是有辦法！對於運行 Linux 主機或 VM 的使用者來說，最直接、最經濟實惠的方法就是利用 Linux 內建的防火牆工具 iptables (或新一代的 nftables)，並結合 MaxMind GeoLite2 資料庫。&lt;/p>
+&lt;p>iptables/nftables：這是 Linux 核心層級的防火牆，可以直接在 IP 層面對流量進行精準的控制。這表示在流量到達你的應用程式之前，就可以直接被阻擋掉，達到最佳的省錢效果。
+MaxMind GeoLite2 資料庫：這是一個免費的地理位置 IP 資料庫。它能告訴你每個 IP 位址的歸屬國家或地區，是我們判斷是否需要阻擋的依據。&lt;/p>
+&lt;h2 id="自動化腳本省時省力告別手動設定">自動化腳本：省時省力，告別手動設定&lt;/h2>
+&lt;p>手動去找出中南美洲的所有 IP 範圍，然後一條一條地加到防火牆規則裡？光是想想都覺得頭皮發麻！幸好，開源社群已經為我們準備了貼心的工具。&lt;/p>
+&lt;p>我發現 &lt;code>friendly-bits/geoip-shell&lt;/code> 這個 GitHub 專案是個非常棒的選擇。它能幫助你：&lt;/p>
+&lt;p>自動生成防火牆規則：根據 MaxMind GeoLite2 資料庫，這個腳本會自動產生針對特定國家或地區的 IP 封鎖規則，省去你手動查詢和輸入的麻煩。
+排程自動更新 IP：IP 位址的地理歸屬會隨時間變化。geoip-shell 支援設定自動排程，定期更新 GeoLite2 資料庫，並重新生成防火牆規則，確保你的封鎖列表始終是最新的，讓你的防禦滴水不漏。
+藉由這個組合，我們就能在不花一毛錢的情況下，精確地阻擋來自中南美洲的流量，有效控制你的 GCP 費用，同時讓你的主機跑得更輕盈、更安全。&lt;/p></description></item><item><title>[OpenWrt] 在 linux 中使用 Docker 跑 OpenWrt</title><link>https://blog.tigernaxo.com/posts/other/openwrt-docker/</link><pubDate>Fri, 19 Jan 2024 08:00:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/openwrt-docker/</guid><description>&lt;p>定義一個 Network，叫做 MYNAT，關閉 DHCP。&lt;/p>
 &lt;p>新增一部虛擬機，定義兩張網卡：&lt;/p>
 &lt;ol>
 &lt;li>預設 NAT：用來模擬 ISP 裝置。(enp0s3)&lt;/li>
