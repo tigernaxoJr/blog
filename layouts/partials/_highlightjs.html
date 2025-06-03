@@ -2,23 +2,28 @@
 {{ $base_url := printf "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@%s/build" $version }}
 {{ $langs := slice "bash" "css" "elixir" "excel" "ini" "javascript" "markdown" "php" "python" "shell" "plaintext" "http" "json" }}
 <link rel="stylesheet" href="{{ $base_url }}/styles/default.min.css">
+<link rel="stylesheet" href="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css" />
 <script defer src="{{ $base_url }}/highlight.min.js"></script>
+<script defer src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js" onload="hljs.addPlugin(new CopyButtonPlugin());"></script>
 {{ range $langs }}
 <script defer src="{{ $base_url }}/languages/{{ . }}.min.js"></script>
-{{ end }}
-<script defer>
-document.addEventListener('DOMContentLoaded', (event) => {
-  document.querySelectorAll('pre code').forEach((el) => {
-    hljs.highlightElement(el);
-  });
-});
-</script> -->
+{{ end }} -->
 
-<link
+<script defer>
+// document.addEventListener('DOMContentLoaded', (event) => {
+//   // document.querySelectorAll('pre code').forEach((el) => {
+//   //   hljs.highlightElement(el);
+//   // });
+//   hljs.addPlugin(new CopyButtonPlugin())
+//   hljs.highlightAll();
+// });
+</script>
+
+<!-- <link
   rel="stylesheet"
   href="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.css"
-/>
-<script defer src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js"></script>
+/> -->
+<!-- <script defer src="https://unpkg.com/highlightjs-copy/dist/highlightjs-copy.min.js"></script> -->
 <script defer>
     // not working
     // hljs.addPlugin(new CopyButtonPlugin());
