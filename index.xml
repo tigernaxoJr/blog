@@ -1,4 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YuCheng's Site</title><link>https://blog.tigernaxo.com/</link><description>Recent content on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 03 Jun 2025 15:52:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/index.xml" rel="self" type="application/rss+xml"/><item><title>[防火牆] 地理位置規則(GeoIP)</title><link>https://blog.tigernaxo.com/posts/firewall/geoip/</link><pubDate>Tue, 03 Jun 2025 15:52:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/firewall/geoip/</guid><description>&lt;p>最近我在 GCP 上發現一個惱人的問題：中南美洲的網路流量，竟然每個月讓我多噴了好幾十塊台幣！對於我這種「免費仔」來說，這簡直是不能接受的額外開銷。雖然金額不大，但積少成多也是錢啊！&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>YuCheng's Site</title><link>https://blog.tigernaxo.com/</link><description>Recent content on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 10 Jun 2025 10:34:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/index.xml" rel="self" type="application/rss+xml"/><item><title>[開發] API-first approach</title><link>https://blog.tigernaxo.com/posts/software/dev-api-first/</link><pubDate>Tue, 10 Jun 2025 10:34:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/dev-api-first/</guid><description>&lt;h2 id="高效協作的基石深入理解-api-first-開發方法">高效協作的基石：深入理解 API-First 開發方法&lt;/h2>
+&lt;p>在現代軟體開發的浪潮中，追求更快的交付速度、更敏捷的反應能力，以及更優質的使用者體驗，是所有團隊的共同目標。傳統的瀑布式開發流程，因其僵化和漫長的等待週期，已逐漸無法滿足市場的快速變化。為此，「API-First」開發方法應運而生，它不僅僅是一種技術實踐，更是一種推動團隊高效協作的開發哲學。&lt;/p>
+&lt;p>本文將深入探討 API-First 的核心概念，比較其與傳統開發流程的差異，分析其優劣，並提供在前端專案中實踐 API Mock 的具體教學。&lt;/p>
+&lt;h3 id="什麼是-api-first-approach">什麼是 API-First Approach？&lt;/h3>
+&lt;p>&lt;strong>API-First (API 優先)&lt;/strong> 是一種軟體開發策略，其核心精神是&lt;strong>將 API (應用程式介面) 視為整個產品的核心與一等公民 (First-class Citizen)。&lt;/strong>&lt;/p>
+&lt;p>在開發啟動之初，不再是先設計資料庫或撰寫後端邏輯，而是由前後端團隊，甚至包含產品、設計團隊，共同協商並定義出一份清晰、嚴謹的 &lt;strong>API 契約 (API Contract)&lt;/strong>。這份契約詳細描述了 API 的路由、請求方法、參數、數據格式以及回傳的響應內容。&lt;/p>
+&lt;p>這份契約一旦確立，就成為前後端各自開發的共同依據。後端團隊依照契約實作業務邏輯與資料庫；前端團隊則可以立即使用這份契約，搭配 Mock (模擬) 技術來打造使用者介面，無需等待後端 API 的實際完成。&lt;/p>
+&lt;p>最常用來定義 API 契約的工具是 &lt;strong>OpenAPI 規範 (前身為 Swagger)&lt;/strong>。它提供了一套標準化的格式 (通常是 YAML 或 JSON)，讓人類和機器都能輕鬆理解 API 的功能與結構。&lt;/p>
+&lt;blockquote>
+&lt;p>核心理念： 先定義好軟體元件之間如何溝通 (API)，再各自實現內部邏輯。&lt;/p>&lt;/blockquote>
+&lt;h2 id="典範轉移api-first-vs-傳統開發流程">典範轉移：API-First vs. 傳統開發流程&lt;/h2>
+&lt;p>為了更清晰地理解 API-First 帶來的變革，我們從幾個關鍵維度來比較它與傳統開發流程的差異。&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>比較維度&lt;/th>
+&lt;th>傳統開發流程 (Database-First)&lt;/th>
+&lt;th>API-First 開發流程&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>開發啟動點&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>資料庫先行&lt;/strong>：設計資料庫結構 -&amp;gt; 開發後端 API -&amp;gt; 前端串接。&lt;/td>
+&lt;td>&lt;strong>契約先行&lt;/strong>：前後端共同定義 API 契約。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>團隊依賴性&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>強烈的上下游依賴&lt;/strong>：前端強烈依賴後端，後端依賴資料庫設計。任何上游變動都會造成下游阻塞。&lt;/td>
+&lt;td>&lt;strong>並行開發&lt;/strong>：前後端解耦，可同時進行開發。前端依賴的是「契約」，而非「已完成的後端程式」。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>前後端溝通&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>後端主導&lt;/strong>：後端開發完 API 後，提供給前端使用，前端常處於被動接收的角色。溝通多發生在整合階段。&lt;/td>
+&lt;td>&lt;strong>協同合作&lt;/strong>：開發初期就共同協商 API 規格。前端甚至能主導介面規格，因為他們最了解介面需要什麼資料。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>迭代速度&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>緩慢且僵化&lt;/strong>：任何需求變更都可能需要從資料庫層級開始修改，牽一髮動全身，迭代週期長。&lt;/td>
+&lt;td>&lt;strong>快速且敏捷&lt;/strong>：前端可以基於 Mock 數據快速迭代 UI/UX，不受後端進度限制，非常適合敏捷開發中的快速原型和頻繁調整。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>錯誤發現時機&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>後期整合階段&lt;/strong>：許多介面不匹配、資料格式錯誤的問題，直到最後整合測試時才會浮現，修復成本高。&lt;/td>
+&lt;td>&lt;strong>開發初期&lt;/strong>：由於 API 契約先行，規格不一致的問題在設計階段就被解決。介面和使用者體驗問題也能在早期透過原型被發現。&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="api-first-的優點與挑戰">API-First 的優點與挑戰&lt;/h2>
+&lt;p>採用 API-First 方法能帶來顯著的好處，但同時也伴隨著一些需要克服的挑戰。&lt;/p></description></item><item><title>[防火牆] 地理位置規則(GeoIP)</title><link>https://blog.tigernaxo.com/posts/firewall/geoip/</link><pubDate>Tue, 03 Jun 2025 15:52:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/firewall/geoip/</guid><description>&lt;p>最近我在 GCP 上發現一個惱人的問題：中南美洲的網路流量，竟然每個月讓我多噴了好幾十塊台幣！對於我這種「免費仔」來說，這簡直是不能接受的額外開銷。雖然金額不大，但積少成多也是錢啊！&lt;/p>
 &lt;h2 id="為什麼要擋流量">為什麼要擋流量？&lt;/h2>
 &lt;p>你可能會問，區區幾十塊台幣也要計較？當然要！特別是當這些流量不是你預期的合法訪客時。很多時候，來自特定地區的流量可能是：&lt;/p>
 &lt;ul>
