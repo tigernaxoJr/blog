@@ -102,14 +102,17 @@
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <priority>0.1</priority>
   </url><url>
-    <loc>https://0.0.0.0:1313/posts/firewall/geoip/</loc>
-    <lastmod>2025-06-03T15:52:00+08:00</lastmod>
+    <loc>https://0.0.0.0:1313/posts/software/</loc>
+    <lastmod>2025-06-10T10:34:00+08:00</lastmod>
+  </url><url>
+    <loc>https://0.0.0.0:1313/posts/software/dev-api-first/</loc>
+    <lastmod>2025-06-10T10:34:00+08:00</lastmod>
   </url><url>
     <loc>https://0.0.0.0:1313/posts/</loc>
-    <lastmod>2025-06-03T15:52:00+08:00</lastmod>
+    <lastmod>2025-06-10T10:34:00+08:00</lastmod>
   </url><url>
     <loc>https://0.0.0.0:1313/</loc>
-    <lastmod>2025-06-03T15:52:00+08:00</lastmod>
+    <lastmod>2025-06-10T10:34:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
@@ -120,6 +123,9 @@
                 hreflang="en"
                 href="https://0.0.0.0:1313/"
                 />
+  </url><url>
+    <loc>https://0.0.0.0:1313/posts/firewall/geoip/</loc>
+    <lastmod>2025-06-03T15:52:00+08:00</lastmod>
   </url><url>
     <loc>https://0.0.0.0:1313/posts/firewall/</loc>
     <lastmod>2025-06-03T15:52:00+08:00</lastmod>
@@ -200,9 +206,6 @@
     <lastmod>2023-05-10T11:06:00+08:00</lastmod>
   </url><url>
     <loc>https://0.0.0.0:1313/posts/software/pg-method-chaining/</loc>
-    <lastmod>2023-04-22T20:58:00+08:00</lastmod>
-  </url><url>
-    <loc>https://0.0.0.0:1313/posts/software/</loc>
     <lastmod>2023-04-22T20:58:00+08:00</lastmod>
   </url><url>
     <loc>https://0.0.0.0:1313/posts/other/tools-openapi-generator/</loc>
