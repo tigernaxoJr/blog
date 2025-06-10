@@ -59,11 +59,17 @@ menu:
 `msw` 的最大優勢在於它利用 Service Worker 技術在瀏覽器層面攔截網路請求，對你的應用程式碼是完全透明的，無需修改任何 fetch 或 axios 的邏輯，實現了零侵入的 Mock。
 
 ### 步驟 1：安裝 msw
-在 Vite 專案根目錄下，執行以下指令：
+1. 在 Vite 專案根目錄下，執行以下指令：
 ```bash
 npm install msw --save-dev
 # 或者
 yarn add msw --dev
+```
+2. 建立攔截 http request 的基礎設施程式碼  
+在 public 下建立 mockServiceWorker.js，`/mockServiceWorker.js` 是 msw 攔截 http request 的基礎設施程式碼路徑。   
+[參考資料](https://mswjs.io/docs/getting-started/integrate/browser#where-is-my-public-directory)
+```bash
+npx msw init ./public --save
 ```
 ### 步驟 2：建立 Mock 請求處理器 (Handlers)
 這是定義 API Mock 行為的地方，相當於 Mock 版本的後端路由。
@@ -123,6 +129,7 @@ import { handlers } from './handlers';
 // 設定一個使用我們定義的 handlers 的 Service Worker
 export const worker = setupWorker(...handlers);
 ```
+
 ### 步驟 4：在開發環境中啟動 Mock Service
 最後，我們需要修改應用程式的入口文件 (通常是 src/main.jsx 或 src/main.tsx)，讓 msw 只在開發模式下啟動。
 ```js
