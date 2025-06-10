@@ -126,37 +126,34 @@ export const worker = setupWorker(...handlers);
 ### 步驟 4：在開發環境中啟動 Mock Service
 最後，我們需要修改應用程式的入口文件 (通常是 src/main.jsx 或 src/main.tsx)，讓 msw 只在開發模式下啟動。
 ```js
-// src/main.jsx (或 .tsx)
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
-import './index.css';
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
+import router from './router'
+import { createPinia } from 'pinia'
 
-// 啟用 MSW Mock Server
-async function enableMocking() {
-  // 這個環境變數是 Vite 預設提供的
-  // 只在 development 環境下才載入並啟動 msw
-  if (process.env.NODE_ENV !== 'development') {
+
+const enableMocking = async ()=>{
+  if(import.meta.env.MODE === 'development'){
     return;
   }
-
-  const { worker } = await import('./mocks/browser.js');
-
+  const { worker } = await import('./mocks/browser');
   // `onunhandledrequest: 'bypass'` 能夠讓 msw 忽略那些
   // 我們沒有在 handlers 中定義的請求 (例如請求 css, svg 檔案)
-  return worker.start({
-    onunhandledrequest: 'bypass',
+  worker.start({
+    onUnhandledRequest: 'bypass',
   });
 }
 
-// 渲染你的 React 應用
-enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-});
+enableMocking().then(()=>{
+  const app = createApp(App)
+  const pinia = createPinia();
+
+  app.use(router) // 使用 router
+  app.use(pinia); // 使用 pinia
+
+  app.mount('#app')
+})
 ```
 現在，當你啟動 Vite 開發伺服器 (npm run dev)，打開瀏覽器的開發者工具，你會在 Console 看到 [MSW] Mocking enabled. 的訊息。此時，你在應用中發出的 /api/users 請求將會被 msw 攔截，並返回你在 handlers.js 中定義的模擬數據，而無需任何後端伺服器！
 
