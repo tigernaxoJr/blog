@@ -73,7 +73,7 @@ menu:
 首先在 virtualbox 硬體的部分將 EFI 打勾
 1. 分割磁碟，使用 GPT table，/dev/sda1, /dev/sda2 給 1G，其餘給 /dev/sda3
     ```
-    fdisk /dev/sda
+    gdisk /dev/sda
     ```
     ```
     mkswap /dev/sda1
@@ -166,6 +166,32 @@ https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linu
 ```
 Server = https://mirror.archlinux.tw/ArchLinux/$repo/os/$arch
 ```
+## Trouble shooting
+
+### Error: keyring is not writable
+
+如果在使用 `pacstrap` 安裝 Arch 時遇到 "error: keyring is not writable" ，這通常和網路環境有關，例如：
+ - 只能透過 HTTP(S) proxy 存取網路
+ - 在隔離網路環境中。
+ - 防火牆問題
+
+**解決方法：**
+
+手動初始化 pacman keyring，執行這兩個命令後，應該就能正常使用 `pacstrap` 進行安裝。
+
+```bash
+# 初始化 pacman 的金鑰環
+pacman-key --init
+# 填充預設的金鑰
+pacman-key --populate
+```
+
+如果上述方法無效，也可以嘗試啟動 pacman-init 服務：
+```bash
+systemctl start pacman-init.service
+```
+
 ## Reference
 - [Arch-Installation_guide](https://wiki.archlinux.org/title/Installation_guide)
 https://itsfoss.com/install-arch-linux/
+- [Arch-pacstrap error: keyring is not writable](https://bbs.archlinux.org/viewtopic.php?id=283075)
