@@ -162,6 +162,7 @@ systemctl start sshd
 useradd -m naxo
 usermod -aG wheel naxo
 ```
+
 https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/
 
 ## 新增國網中心 mirrolist
