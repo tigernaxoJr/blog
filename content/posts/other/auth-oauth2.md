@@ -44,9 +44,8 @@ OAuth2 有很多變化
 ### Client Credentials
 M2M (machine-to-machine)
 通常是應用程式向 Authorization Server 請求取得獲取自己相關資源的 Access Token，而不是為了獲取使用者的資源。
-不需要驗證使用者身分，單純應用程式向 Authorization Server 驗證自己的資訊。
+不需要驗證使用者身分，單純應用程式向  Authorization Server 驗證自己的資訊。
 
 ## Reference
 - [[筆記] 認識 OAuth 2.0：一次了解各角色、各類型流程的差異](https://medium.com/%E9%BA%A5%E5%85%8B%E7%9A%84%E5%8D%8A%E8%B7%AF%E5%87%BA%E5%AE%B6%E7%AD%86%E8%A8%98/%E7%AD%86%E8%A8%98-%E8%AA%8D%E8%AD%98-oauth-2-0-%E4%B8%80%E6%AC%A1%E4%BA%86%E8%A7%A3%E5%90%84%E8%A7%92%E8%89%B2-%E5%90%84%E9%A1%9E%E5%9E%8B%E6%B5%81%E7%A8%8B%E7%9A%84%E5%B7%AE%E7%95%B0-c42da83a6015)
 - [](https://ithelp.ithome.com.tw/articles/10225956)
-
