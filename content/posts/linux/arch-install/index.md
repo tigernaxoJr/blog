@@ -158,11 +158,12 @@ systemctl start sshd
 ```
 ## sudo user...
 ```bash
-# 先visudo，讓 %wheel 成為 sudor
+# 先visudo，讓 %wheel 成為 sudo
 useradd -m naxo
 usermod -aG wheel naxo
 ```
 https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/
+
 ## 新增國網中心 mirrolist
 `/etc/pacman.d/mirrorlist`
 ```
