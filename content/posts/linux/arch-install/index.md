@@ -157,11 +157,13 @@ systemctl enable sshd
 systemctl start sshd
 ```
 ## sudo user...
-visudo，讓 %wheel 成為 sudor
+```bash
+# 先visudo，讓 %wheel 成為 sudor
 useradd -m naxo
 usermod -aG wheel naxo
+```
 https://ostechnix.com/add-delete-and-grant-sudo-privileges-to-users-in-arch-linux/
-## 新增國網中心 mirrot
+## 新增國網中心 mirrolist
 `/etc/pacman.d/mirrorlist`
 ```
 Server = https://mirror.archlinux.tw/ArchLinux/$repo/os/$arch
