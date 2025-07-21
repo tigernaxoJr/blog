@@ -39,7 +39,7 @@ jobs:
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4.0.0
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.DeployToken }}
         publish_branch: gh-pages
         publish_dir: ./public
         cname: blog.tigernaxo.com
