@@ -248,14 +248,14 @@ SMART 已成為 &lt;code&gt;21st Century Cures Act&lt;/code&gt;和&lt;code&gt;20
 用來告訴使用者仲介訊息：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Server Capabilities (server 可以做什麼)&lt;/li&gt;
-&lt;li&gt;Configuration (配置?)&lt;/li&gt;
+&lt;li&gt;Configuration (配置??)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="認證與授權"&gt;認證與授權&lt;/h2&gt;
 &lt;h3 id="授權authorization"&gt;授權(Authorization)&lt;/h3&gt;
 &lt;p&gt;SMART 定義兩種 Client 端 App &lt;code&gt;授權&lt;/code&gt;模式，差別主要在於被授權是否有使用者參與：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Authorization via SMART App Launch&lt;br&gt;
-透過 1.EHR 或其他健康軟體的登入 session 或2.使用者手動授權，將用戶權限委託給&lt;code&gt;面向使用者的 App&lt;/code&gt;本身連接到 FHIR Server 存取資源，被授權方獲得授權方分向的資訊稱為 &lt;code&gt;lanuch context&lt;/code&gt; (例如用戶資訊)。&lt;/li&gt;
+透過 1.EHR 或其他健康軟體的登入 session 或 2.使用者手動授權，將用戶權限委託給&lt;code&gt;面向使用者的 App&lt;/code&gt;本身連接到 FHIR Server 存取資源，被授權方獲得授權方分向的資訊稱為 &lt;code&gt;lanuch context&lt;/code&gt; (例如用戶資訊)。&lt;/li&gt;
 &lt;li&gt;Authorization via SMART Backend Services&lt;br&gt;
 授權在與用戶無關的情況下完成。&lt;/li&gt;
 &lt;/ul&gt;
