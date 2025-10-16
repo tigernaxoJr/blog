@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[練習] 即時聊天專案 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/</link><description>Recent content in [練習] 即時聊天專案 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 04 Jan 2021 09:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/dotnet/startup-signalr/index.xml" rel="self" type="application/rss+xml"/><item><title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</link><pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</guid><description>&lt;h1 id="安裝套件">安裝套件&lt;/h1>
-&lt;p>要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：&lt;/p>
-&lt;pre>&lt;code class="language-shell">dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-&lt;/code>&lt;/pre>
-&lt;h1 id="註冊認證服務">註冊認證服務&lt;/h1>
-&lt;p>新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務，
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[練習] 即時聊天專案 on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/</link><description>Recent content in [練習] 即時聊天專案 on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 04 Jan 2021 09:11:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/dotnet/startup-signalr/index.xml" rel="self" type="application/rss+xml"/><item><title>[SignalR] Websocket 即時聊天程式(三) - 後端 Token 認證</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</link><pubDate>Fri, 20 Nov 2020 22:44:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_3_validate_token/</guid><description>&lt;h1 id="安裝套件"&gt;安裝套件&lt;/h1&gt;
+&lt;p&gt;要進行 Token 的認證，需要先安裝 Microsoft.AspNetCore.Authentication.JwtBearer 套件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="註冊認證服務"&gt;註冊認證服務&lt;/h1&gt;
+&lt;p&gt;新增一個檔案 DependencyInjection.cs，在當中製作 IServiceCollection 的擴充方法來自定義 JWT token 認證服務，
 在裡面設置 Token 的認證規則、使用者識別碼對應、使用者群組對應，
 而 SignalR 抓取使用者識別碼 (UserIdentifier) 的介面方法是 IUserIdProvider.GetUserId，
 因此我們需要另外新增一個實作 IUserProvider 的類別注入服務容器給 SignalR 使用
-，該檔案程式碼如下：&lt;/p>
-&lt;pre>&lt;code class="language-cs">using Microsoft.AspNetCore.Authentication.JwtBearer;
+，該檔案程式碼如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-cs"&gt;using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -89,65 +89,65 @@ return connection.User?.Identity?.Name;
 }
 }
 }
-&lt;/code>&lt;/pre>
-&lt;p>然後在 Startup.cs 當中添加對該類別的引用：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</link><pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</guid><description>&lt;h1 id="安裝-axios">安裝 axios&lt;/h1>
-&lt;p>SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：&lt;/p>
-&lt;p>axios 一樣可以透過 LibMan 安裝~&lt;/p>
-&lt;pre>&lt;code class="language-shell">libman install axios@latest \
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然後在 Startup.cs 當中添加對該類別的引用：&lt;/p&gt;</description></item><item><title>[SignalR] Websocket 即時聊天程式(四) - 前端登入頁面</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</link><pubDate>Tue, 10 Nov 2020 05:05:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_4_front_end_login/</guid><description>&lt;h1 id="安裝-axios"&gt;安裝 axios&lt;/h1&gt;
+&lt;p&gt;SignalR 連線驗證的方式是將 token 夾帶於網址參數中發送到伺服器，因此進行 websocket 連線前我們透過 ajax 向伺服器發送帳號密碼索取登入的 Token，我們安裝方便使用 ajax 的 axios 函式庫：&lt;/p&gt;
+&lt;p&gt;axios 一樣可以透過 LibMan 安裝~&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;libman install axios@latest \
 -p unpkg \
 -d wwwroot/js/axios \
 --files dist/axios.min.js
-&lt;/code>&lt;/pre>
-&lt;p>在 wwwRoot/index.html 添加對 axios 的引用：&lt;/p>
-&lt;pre>&lt;code class="language-js">&amp;lt;script src=&amp;quot;./lib/axios/dist/axios.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h1 id="簡易登入ui">簡易登入UI&lt;/h1>
-&lt;p>雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：&lt;/p>
-&lt;pre>&lt;code class="language-shell">libman install bootstrap@5.0.0-alpha2 \
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 wwwRoot/index.html 添加對 axios 的引用：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;&amp;lt;script src=&amp;quot;./lib/axios/dist/axios.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="簡易登入ui"&gt;簡易登入UI&lt;/h1&gt;
+&lt;p&gt;雖然是功能原型，為了讓做出來的頁面不要太粗暴，拿 bootstrap 的 css 來套用一下 UI：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;libman install bootstrap@5.0.0-alpha2 \
 -p unpkg \
 -d wwwroot/lib/bootstrap \
 --files dist/js/bootstrap.min.js \
 --files dist/css/bootstrap.min.css
-&lt;/code>&lt;/pre>
-&lt;p>在 wwwRoot/index.html 添加對 bootstrap css 的引用：&lt;/p>
-&lt;pre>&lt;code class="language-js">&amp;lt;script src=&amp;quot;./lib/bootstrap/dist/js/bootstrap.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;p>現在將 wwwRoot/index.html 修改如下：&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</link><pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</guid><description>&lt;h1 id="signalr驗證方式">SignalR驗證方式&lt;/h1>
-&lt;p>SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：&lt;/p>
-&lt;ul>
-&lt;li>Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。&lt;/li>
-&lt;li>Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。&lt;/li>
-&lt;/ul>
-&lt;p>將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。&lt;/p>
-&lt;h1 id="以-option-pattern-取得-jwt-設定">以 Option pattern 取得 JWT 設定&lt;/h1>
-&lt;p>這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：&lt;/p>
-&lt;h2 id="appsettingjson">appsetting.json&lt;/h2>
-&lt;p>將 JWT 相關的設定寫到 appsetting.json 當中：
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Logging&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Warning&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;JWT&amp;#34;&lt;/span>: {
-&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Issuer&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Naxo&amp;#34;&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span> &lt;span style="color:#f92672">&amp;#34;Expires&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1440&amp;#34;&lt;/span>, &lt;span style="color:#75715e">// 憑證有效分鐘數
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#f92672">&amp;#34;SignKey&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&amp;#34;&lt;/span> &lt;span style="color:#75715e">// 設定簽發/解密憑證的對稱式加密金鑰
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex; background-color:#3c3d38">&lt;span>&lt;span style="color:#75715e">&lt;/span> },
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;AllowedHosts&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/p></description></item><item><title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</link><pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</guid><description>&lt;p>這個系列會&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&amp;amp;tabs=visual-studio" target="_blank" rel="noopener">官方文件&lt;/a>為主，保留必要的部分，並視情況修改部份程式、添加說明文字。&lt;/p>
-&lt;h1 id="建立-signalr-專案">建立 SignalR 專案&lt;/h1>
-&lt;p>這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：&lt;/p>
-&lt;pre>&lt;code class="language-shell"># 建立專案
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 wwwRoot/index.html 添加對 bootstrap css 的引用：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;&amp;lt;script src=&amp;quot;./lib/bootstrap/dist/js/bootstrap.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;現在將 wwwRoot/index.html 修改如下：&lt;/p&gt;</description></item><item><title>[SignalR] Websocket 即時聊天程式(二) - 後端 Token 授權</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</link><pubDate>Sat, 07 Nov 2020 01:35:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_2_issue_token/</guid><description>&lt;h1 id="signalr驗證方式"&gt;SignalR驗證方式&lt;/h1&gt;
+&lt;p&gt;SignalR 的授權可以選擇使用 Cookie 或 Bearer Token：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cookie: 驗證方法與一般網頁別無二致，較容易實作但缺點是只能用於瀏覽器(browser-specific)。&lt;/li&gt;
+&lt;li&gt;Bearer Token 可通用於網頁和 App (或提供任何應用程式)，使用 Token 做登入能夠讓應用程式更容易實作其他使用者端，如果有其他的伺服器簽發 Token，更容易整合至單一登入(Single Sign-On)，也是官方建議使用的方式，以下假設簽發 Token 與 SignalR 伺服器為同一台進行實作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;將 Token 驗證實作至伺服器之前，讓我們先練習實作一支簽發 Token 的 API。&lt;/p&gt;
+&lt;h1 id="以-option-pattern-取得-jwt-設定"&gt;以 Option pattern 取得 JWT 設定&lt;/h1&gt;
+&lt;p&gt;這裡練習 Option pattern，以獲取 appsetting.json 當中 JWT 相關設定的強型別支援：&lt;/p&gt;
+&lt;h2 id="appsettingjson"&gt;appsetting.json&lt;/h2&gt;
+&lt;p&gt;將 JWT 相關的設定寫到 appsetting.json 當中：
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Logging&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;LogLevel&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Default&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;Information&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Microsoft&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;Warning&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;Information&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex; background-color:#3c3d38"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;JWT&amp;#34;&lt;/span&gt;: {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex; background-color:#3c3d38"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Issuer&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;Naxo&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex; background-color:#3c3d38"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;Expires&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;1440&amp;#34;&lt;/span&gt;, &lt;span style="color:#75715e"&gt;// 憑證有效分鐘數
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex; background-color:#3c3d38"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;SignKey&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;myNameIsTigernaxo,ThisIsMyPersonalBlog&amp;#34;&lt;/span&gt; &lt;span style="color:#75715e"&gt;// 設定簽發/解密憑證的對稱式加密金鑰
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex; background-color:#3c3d38"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;#34;AllowedHosts&amp;#34;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#34;*&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;</description></item><item><title>[SignalR] Websocket 即時聊天程式(一) - 建立專案</title><link>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</link><pubDate>Tue, 03 Nov 2020 05:46:45 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/dotnet/startup-signalr/guild_1_start/</guid><description>&lt;p&gt;這個系列會&lt;a href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr?view=aspnetcore-3.1&amp;amp;tabs=visual-studio" target="_blank" rel="noopener"&gt;官方文件&lt;/a&gt;為主，保留必要的部分，並視情況修改部份程式、添加說明文字。&lt;/p&gt;
+&lt;h1 id="建立-signalr-專案"&gt;建立 SignalR 專案&lt;/h1&gt;
+&lt;p&gt;這個範例設定用靜態 html 做前端，這樣之後要做前後端分離也更容易一些，之後會用到 web api 請求登入 Token，所以起始一個 web api 專案：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-shell"&gt;# 建立專案
 dotnet new webapi -o SignalR
 # 以 VS Code 打開專案
 code -r signalr
-&lt;/code>&lt;/pre>
-&lt;h1 id="建立-signalr-中樞">建立 SignalR 中樞&lt;/h1>
-&lt;p>在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：&lt;/p>
-&lt;pre>&lt;code class="language-c#">using Microsoft.AspNetCore.SignalR;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="建立-signalr-中樞"&gt;建立 SignalR 中樞&lt;/h1&gt;
+&lt;p&gt;在.NET Core 3.1 當中使用 SignalR 伺服器端不再需要安裝額外的套件，直接將 SignalR 注入服務容器就能使用， SignalR 的 Hub 中文名稱就叫做中樞，在專案中新增資料夾 Hubs 用來專門存放 Hub 實作類別，並在 Hubs 中新增檔案 ChatHub.cs，內容如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-c#"&gt;using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 namespace SignalR.Hubs
 {
@@ -162,6 +162,6 @@ await Clients.All.SendAsync(&amp;quot;ReceiveMessage&amp;quot;, user, message);
 }
 }
 }
-&lt;/code>&lt;/pre>
-&lt;h1 id="設定-startupcs">設定 Startup.cs&lt;/h1>
-&lt;p>依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：&lt;/p></description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="設定-startupcs"&gt;設定 Startup.cs&lt;/h1&gt;
+&lt;p&gt;依照官網的設定，在 Startup.cs 當中新增第13, 30,42-43 ,52 行：&lt;/p&gt;</description></item></channel></rss>

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vue on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/frontend-vue/</link><description>Recent content in Vue on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 06 Apr 2023 14:21:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/frontend-vue/index.xml" rel="self" type="application/rss+xml"/><item><title>[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</link><pubDate>Thu, 06 Apr 2023 14:21:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</guid><description>&lt;p>用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件&lt;/p>
-&lt;h2 id="vue3">Vue3&lt;/h2>
-&lt;h3 id="vue26">Vue2.6&lt;/h3>
-&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vue on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/frontend-vue/</link><description>Recent content in Vue on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 06 Apr 2023 14:21:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/frontend-vue/index.xml" rel="self" type="application/rss+xml"/><item><title>[元件] 把 attr、event、slot，直接 Passthrough 給子元件，製作包裝元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</link><pubDate>Thu, 06 Apr 2023 14:21:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-wrapper/</guid><description>&lt;p&gt;用來複寫給專案用的元件，用於在既有 UI framework 上打造專案元件&lt;/p&gt;
+&lt;h2 id="vue3"&gt;Vue3&lt;/h2&gt;
+&lt;h3 id="vue26"&gt;Vue2.6&lt;/h3&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;template&amp;gt;
 &amp;lt;q-btn v-bind=&amp;quot;{ ...$attrs, ...$props }&amp;quot; v-on=&amp;quot;$listeners&amp;quot;&amp;gt;
 &amp;lt;template v-for=&amp;quot;(_, slot) of $scopedSlots&amp;quot; v-slot:[slot]=&amp;quot;scope&amp;quot;&amp;gt;
 &amp;lt;slot :name=&amp;quot;slot&amp;quot; v-bind=&amp;quot;scope&amp;quot;/&amp;gt;
@@ -9,10 +9,10 @@
 &amp;lt;slot&amp;gt;&amp;lt;/slot&amp;gt;
 &amp;lt;/q-btn&amp;gt;
 &amp;lt;/template&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h3 id="vue3-1">Vue3&lt;/h3>
-&lt;p>Vue3 裡面只要綁定 $attrs 即可，attrs, props, event 全部自動綁定進去。&lt;/p>
-&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="vue3-1"&gt;Vue3&lt;/h3&gt;
+&lt;p&gt;Vue3 裡面只要綁定 $attrs 即可，attrs, props, event 全部自動綁定進去。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;template&amp;gt;
 &amp;lt;q-btn v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
 &amp;lt;template v-for=&amp;quot;(slot, index) of Object.keys($slots)&amp;quot; :key=&amp;quot;index&amp;quot; v-slot:[slot]&amp;gt;
 &amp;lt;slot :name=&amp;quot;slot&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
@@ -20,10 +20,10 @@
 &amp;lt;slot&amp;gt;&amp;lt;/slot&amp;gt;
 &amp;lt;/q-btn&amp;gt;
 &amp;lt;/template&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h3 id="quasar2-ts">Quasar2-TS&lt;/h3>
-&lt;p>Quasar 裡面 Props, Slot 有獨立的 interface 定義，因此可直接拿到。&lt;/p>
-&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="quasar2-ts"&gt;Quasar2-TS&lt;/h3&gt;
+&lt;p&gt;Quasar 裡面 Props, Slot 有獨立的 interface 定義，因此可直接拿到。&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;template&amp;gt;
 &amp;lt;q-btn v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
 &amp;lt;template v-for=&amp;quot;(slot, index) of Object.keys($slots)&amp;quot; :key=&amp;quot;index&amp;quot; v-slot:[slot]&amp;gt;
 &amp;lt;slot :name=&amp;quot;slot&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
@@ -38,27 +38,27 @@ const props = withDefaults(defineProps&amp;lt;QBtnProps&amp;gt;(),{
 });
 &amp;lt;/script&amp;gt;
 &amp;lt;style scoped&amp;gt;&amp;lt;/style&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h3 id="vuetify3">Vuetify3&lt;/h3>
-&lt;p>Vuetify3 裡面 Props, Slot 沒有獨立的 interface 定義，因此需額外定義。
-&lt;code>MyBtn.vue&lt;/code>&lt;/p></description></item><item><title>[But] TypeScript 注意事項</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</link><pubDate>Fri, 10 Mar 2023 08:14:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</guid><description>&lt;p>用這樣的寫法，會造成 IDE 異常&lt;/p>
-&lt;pre>&lt;code class="language-js">:columns=&amp;quot;columns as QTableProps['columns']&amp;quot;
-&lt;/code>&lt;/pre></description></item><item><title>[元件] 全域元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</link><pubDate>Tue, 13 Dec 2022 15:10:57 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</guid><description>&lt;h2 id="vue-的作法">Vue 的作法&lt;/h2>
-&lt;pre>&lt;code class="language-js">app.component('component-name', component)
-&lt;/code>&lt;/pre>
-&lt;h2 id="quasar2-的做法">Quasar2 的做法&lt;/h2>
-&lt;p>Vite/Typescript&lt;/p>
-&lt;p>建立 src/boot/register-my-component.ts&lt;/p>
-&lt;pre>&lt;code class="language-typescript">import { boot } from 'quasar/wrappers';
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id="vuetify3"&gt;Vuetify3&lt;/h3&gt;
+&lt;p&gt;Vuetify3 裡面 Props, Slot 沒有獨立的 interface 定義，因此需額外定義。
+&lt;code&gt;MyBtn.vue&lt;/code&gt;&lt;/p&gt;</description></item><item><title>[But] TypeScript 注意事項</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</link><pubDate>Fri, 10 Mar 2023 08:14:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-bug/</guid><description>&lt;p&gt;用這樣的寫法，會造成 IDE 異常&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;:columns=&amp;quot;columns as QTableProps['columns']&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>[元件] 全域元件</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</link><pubDate>Tue, 13 Dec 2022 15:10:57 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-global/</guid><description>&lt;h2 id="vue-的作法"&gt;Vue 的作法&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;app.component('component-name', component)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="quasar2-的做法"&gt;Quasar2 的做法&lt;/h2&gt;
+&lt;p&gt;Vite/Typescript&lt;/p&gt;
+&lt;p&gt;建立 src/boot/register-my-component.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-typescript"&gt;import { boot } from 'quasar/wrappers';
 import BasicBtnVue from 'src/components/BasicBtn.vue';
 // &amp;quot;async&amp;quot; is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ app }) =&amp;gt; {
 app.component('x-btn', BasicBtnVue);
 });
-&lt;/code>&lt;/pre>
-&lt;p>在 quasar.conf.js 內新增設定&lt;/p>
-&lt;pre>&lt;code class="language-js">module.exports = configure(function (/* ctx */) {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 quasar.conf.js 內新增設定&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;module.exports = configure(function (/* ctx */) {
 return {
 // ...上略
 // https://v2.quasar.dev/quasar-cli-vite/boot-files
@@ -66,11 +66,11 @@ boot: ['i18n', 'register-my-component'],
 // ... 下略
 };
 });
-&lt;/code>&lt;/pre>
-&lt;p>建立型別定義檔，我放在 src/components 下
-components.d.ts&lt;/p></description></item><item><title>[Typescript] Typescript 用 InjectionKey 達成強型別 provide</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</link><pubDate>Thu, 17 Nov 2022 11:49:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</guid><description>&lt;p>Working with Reactivity
-上游元件&lt;/p>
-&lt;pre>&lt;code class="language-html">&amp;lt;script lang=&amp;quot;ts&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;建立型別定義檔，我放在 src/components 下
+components.d.ts&lt;/p&gt;</description></item><item><title>[Typescript] Typescript 用 InjectionKey 達成強型別 provide</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</link><pubDate>Thu, 17 Nov 2022 11:49:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-ts-provide/</guid><description>&lt;p&gt;Working with Reactivity
+上游元件&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;script lang=&amp;quot;ts&amp;quot;&amp;gt;
 import { InjectionKey, provide, Ref, reactive } from 'vue';
 // State
 export interface IState {
@@ -82,32 +82,32 @@ drawer: false,
 });
 provide&amp;lt;IState&amp;gt;(stateKey, computed(()=&amp;gt;state));
 &amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;p>下游元件&lt;/p>
-&lt;pre>&lt;code class="language-html">&amp;lt;script setup lang=&amp;quot;ts&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;下游元件&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;script setup lang=&amp;quot;ts&amp;quot;&amp;gt;
 import { inject, ref } from 'vue';
 import { stateKey } from './Parent.vue';
 const state = inject(stateKey, ref({ drawer: false }));
 &amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h2 id="reference">Reference&lt;/h2>
-&lt;ul>
-&lt;li>&lt;a href="https://vuejs.org/guide/components/provide-inject.html" target="_blank" rel="noopener">Vue.js/guild - Provide / Inject&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://vuejs.org/api/composition-api-dependency-injection.html" target="_blank" rel="noopener">Vue.js/api - Composition API: Dependency Injection&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-promise/</link><pubDate>Fri, 26 Aug 2022 15:03:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-promise/</guid><description>&lt;p>有用過 &lt;a href="https://sweetalert2.github.io/" target="_blank" rel="noopener">sweetalert2&lt;/a> 的話，應該會喜歡可以同步等待對話框回傳值的方式，
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="reference"&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://vuejs.org/guide/components/provide-inject.html" target="_blank" rel="noopener"&gt;Vue.js/guild - Provide / Inject&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://vuejs.org/api/composition-api-dependency-injection.html" target="_blank" rel="noopener"&gt;Vue.js/api - Composition API: Dependency Injection&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>[DIY] 設計一個可回傳 Promise 的 Dialog 元件方法</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-promise/</link><pubDate>Fri, 26 Aug 2022 15:03:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-promise/</guid><description>&lt;p&gt;有用過 &lt;a href="https://sweetalert2.github.io/" target="_blank" rel="noopener"&gt;sweetalert2&lt;/a&gt; 的話，應該會喜歡可以同步等待對話框回傳值的方式，
 這裡做一個 Vue2 元件，呼叫該元件的方法會彈出對話框等待使用者輸入，並且回傳 Promise，
-如此一來就能夠在同一個函式當中處理使用者輸入值。&lt;/p>
-&lt;p>Dialog 元件設計原理:&lt;/p>
-&lt;ol>
-&lt;li>元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。&lt;/li>
-&lt;li>設置&lt;a href="https://vuejs.org/v2/api/#vm-watch" target="_blank" rel="noopener">watcher&lt;/a>讓元件取得使用者輸入後 resolve promise&lt;/li>
-&lt;/ol>
-&lt;p>得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)，
+如此一來就能夠在同一個函式當中處理使用者輸入值。&lt;/p&gt;
+&lt;p&gt;Dialog 元件設計原理:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;元件方法 GetConfirm() 顯示 Dialog 元件並回傳一個 Promise，。&lt;/li&gt;
+&lt;li&gt;設置&lt;a href="https://vuejs.org/v2/api/#vm-watch" target="_blank" rel="noopener"&gt;watcher&lt;/a&gt;讓元件取得使用者輸入後 resolve promise&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;得利於上述元件的設計，實際上的效益是將複雜度封裝到子元件裡面(watcher移動到元件內)，
 如此不需在上層元件撰寫使用者輸入取值的監視邏輯，
-讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。&lt;/p>
-&lt;p>這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。&lt;/p>
-&lt;h2 id="vue3-實作">Vue3 實作&lt;/h2>
-&lt;pre>&lt;code class="language-html">&amp;lt;template&amp;gt;
+讓我們得以在上層元件直接 await GetConfirm 同步取得值進行操作。&lt;/p&gt;
+&lt;p&gt;這個概念的用途非常廣，例如 Vue router 的 component route guard，在離開表單頁面前跳出使用者確認的 Dialog。&lt;/p&gt;
+&lt;h2 id="vue3-實作"&gt;Vue3 實作&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;template&amp;gt;
 &amp;lt;v-dialog v-model=&amp;quot;dialog&amp;quot; v-bind=&amp;quot;$attrs&amp;quot;&amp;gt;
 &amp;lt;slot v-bind=&amp;quot;{ Resolve }&amp;quot;&amp;gt;&amp;lt;/slot&amp;gt;
 &amp;lt;/v-dialog&amp;gt;
@@ -126,9 +126,9 @@ return new Promise((res) =&amp;gt; (resolve = res));
 };
 defineExpose({ GetResult, Resolve });
 &amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;h2 id="舊vuejs-實作">[舊]Vuejs 實作&lt;/h2>
-&lt;pre>&lt;code class="language-html">&amp;lt;button id=&amp;quot;xBtn&amp;quot;&amp;gt;執行測試&amp;lt;/button&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="舊vuejs-實作"&gt;[舊]Vuejs 實作&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;button id=&amp;quot;xBtn&amp;quot;&amp;gt;執行測試&amp;lt;/button&amp;gt;
 &amp;lt;div id=&amp;quot;xApp&amp;quot; class=&amp;quot;modal&amp;quot; :style=&amp;quot;{display: dialog?'block':'none'}&amp;quot;&amp;gt;
 &amp;lt;div class=&amp;quot;modal-content&amp;quot;&amp;gt;
 &amp;lt;span class=&amp;quot;close&amp;quot;&amp;gt;Test Modal&amp;lt;/span&amp;gt;
@@ -137,8 +137,8 @@ defineExpose({ GetResult, Resolve });
 &amp;lt;button @click=&amp;quot;choose(2)&amp;quot;&amp;gt;2&amp;lt;/button&amp;gt;
 &amp;lt;/div&amp;gt;
 &amp;lt;/div&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;pre>&lt;code class="language-html">&amp;lt;script src=&amp;quot;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-html"&gt;&amp;lt;script src=&amp;quot;https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
 &amp;lt;script&amp;gt;
 let data = { result: null, dialog: false }
 let dialog = new Vue({
@@ -177,8 +177,8 @@ document.getElementById('xBtn')
 async e =&amp;gt; alert( await dialog.getConfirm() )
 );
 &amp;lt;/script&amp;gt;
-&lt;/code>&lt;/pre>
-&lt;pre>&lt;code class="language-css">/* The Modal (background) */
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="language-css"&gt;/* The Modal (background) */
 .modal {
 display: none; /* Hidden by default */
 position: fixed; /* Stay in place */
@@ -200,33 +200,33 @@ padding: 20px;
 border: 1px solid #888;
 width: 80%;
 }
-&lt;/code>&lt;/pre>
-&lt;h2 id="舊vue-next-實作">[舊]Vue-next 實作&lt;/h2>
-&lt;p>這裡使用 vue-next/setup/quasar/typescript&lt;/p></description></item><item><title>[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</link><pubDate>Thu, 19 Aug 2021 17:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</guid><description>&lt;p>工作上需要把每一個路由都加上同一個 query string
-第一直覺就是直接寫成這樣：&lt;/p>
-&lt;pre>&lt;code class="language-js">router.beforeEach(async (to, from, next) =&amp;gt; {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="舊vue-next-實作"&gt;[舊]Vue-next 實作&lt;/h2&gt;
+&lt;p&gt;這裡使用 vue-next/setup/quasar/typescript&lt;/p&gt;</description></item><item><title>[DIY] Vue Router 使用 Navigation Guard 加入查詢參數</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</link><pubDate>Thu, 19 Aug 2021 17:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-router_add_query/</guid><description>&lt;p&gt;工作上需要把每一個路由都加上同一個 query string
+第一直覺就是直接寫成這樣：&lt;/p&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;router.beforeEach(async (to, from, next) =&amp;gt; {
 next({
 path: path,
 query: {...to.queryl ,token: tokenStr}
 })
 })
-&lt;/code>&lt;/pre>
-&lt;p>結果卻跳出 &lt;code>Maximum call stack size exceeded&lt;/code> 的錯誤，判斷程式出現無窮迴圈：&lt;/p>
-&lt;pre>&lt;code>runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded
-&lt;/code>&lt;/pre>
-&lt;p>第一個反應是傻眼貓咪，為什麼 &lt;code>next()&lt;/code> 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會，
-難道說 &lt;code>next()&lt;/code> 在傳入參數與不傳入參數的行為並不相同！！
-因此去翻閱官網對 &lt;code>next()&lt;/code> 的說明：&lt;/p>
-&lt;blockquote>
-&lt;p>next: Function: &lt;strong>this function must be called to resolve the hook.&lt;/strong> The action depends on the arguments provided to next:&lt;/p>
-&lt;p>&lt;strong>next(): move on to the next hook in the pipeline.&lt;/strong> If no hooks are left, the navigation is confirmed.&lt;/p></description></item><item><title>[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-yncheckbox/</link><pubDate>Thu, 29 Jul 2021 13:50:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-yncheckbox/</guid><description>&lt;ul>
-&lt;li>情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN&lt;/li>
-&lt;li>情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1
-可以打造兩個元件，分別對應至單選、多選&lt;/li>
-&lt;/ul>
-&lt;h1 id="單選元件">單選元件&lt;/h1>
-&lt;h2 id="程式碼-code">程式碼 (Code)&lt;/h2>
-&lt;pre>&lt;code class="language-js">Vue.component('x-ck-single', {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;結果卻跳出 &lt;code&gt;Maximum call stack size exceeded&lt;/code&gt; 的錯誤，判斷程式出現無窮迴圈：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;runtime.js?96cf:285 Uncaught (in promise) RangeError: Maximum call stack size exceeded
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第一個反應是傻眼貓咪，為什麼 &lt;code&gt;next()&lt;/code&gt; 不傳入參數的時候不會出現無窮迴圈，但塞進參數就會，
+難道說 &lt;code&gt;next()&lt;/code&gt; 在傳入參數與不傳入參數的行為並不相同！！
+因此去翻閱官網對 &lt;code&gt;next()&lt;/code&gt; 的說明：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;next: Function: &lt;strong&gt;this function must be called to resolve the hook.&lt;/strong&gt; The action depends on the arguments provided to next:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;next(): move on to the next hook in the pipeline.&lt;/strong&gt; If no hooks are left, the navigation is confirmed.&lt;/p&gt;</description></item><item><title>[DIY] 用 Render Function 打造靈活的 CheckBox 元件範例</title><link>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-yncheckbox/</link><pubDate>Thu, 29 Jul 2021 13:50:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/frontend-vue/vue-comp-yncheckbox/</guid><description>&lt;ul&gt;
+&lt;li&gt;情境1：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值是一串YN代表某個選項是否有被選去，例如： YNNYYNNYYN&lt;/li&gt;
+&lt;li&gt;情境2：要選取多個 ckeckbox 對應到資料庫的欄位，欄位值只有一個，可能是任何字元，例如： 1
+可以打造兩個元件，分別對應至單選、多選&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="單選元件"&gt;單選元件&lt;/h1&gt;
+&lt;h2 id="程式碼-code"&gt;程式碼 (Code)&lt;/h2&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;Vue.component('x-ck-single', {
 props: {
 disabled: { type: Boolean, default: () =&amp;gt; false },
 // checkbox 的標記 [string] || [{text:string, value:any}]
@@ -298,24 +298,24 @@ return h(&amp;quot;v-checkbox&amp;quot;, { props, class: baseClass, on })
 return h('div', {}, siblings)
 }
 })
-&lt;/code>&lt;/pre>
-&lt;div id="app">
-&lt;x-ck-single v-model="value" inline>&lt;/x-ck-single>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div id="app"&gt;
+&lt;x-ck-single v-model="value" inline&gt;&lt;/x-ck-single&gt;
 {{value === null ? 'null' : value}}
-&lt;/div>
-&lt;script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js">&lt;/script>
-&lt;script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js">&lt;/script>
-&lt;script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js">&lt;/script>
-&lt;script>
+&lt;/div&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"&gt;&lt;/script&gt;
+&lt;script&gt;
 Vue.component('x-ck-single', {
 props: {
-disabled: { type: Boolean, default: () => false },
+disabled: { type: Boolean, default: () =&gt; false },
 // checkbox 的標記 [string] || [{text:string, value:any}]
-labels: { type: Array, default: () => ['Yes', 'No'] },
-value: { default: () => null },
-trueValue: { default: () => 'Y' },
-falseValue: { default: () => 'N' },
-inline: { type: Boolean, default: () => false },
+labels: { type: Array, default: () =&gt; ['Yes', 'No'] },
+value: { default: () =&gt; null },
+trueValue: { default: () =&gt; 'Y' },
+falseValue: { default: () =&gt; 'N' },
+inline: { type: Boolean, default: () =&gt; false },
 },
 data() {
 return {
@@ -341,13 +341,13 @@ this.$emit('input', v)
 render: function (h) {
 const self = this
 let len = self.labels.length // labels 的長度
-let allStr = self.labels.every((label) => typeof label == 'string') // 是否為 string
-let allOkObj = self.labels.every((l) => !!l.text &amp;&amp; !!l.value) // 是否為合法的物件(如果不是 string)
+let allStr = self.labels.every((label) =&gt; typeof label == 'string') // 是否為 string
+let allOkObj = self.labels.every((l) =&gt; !!l.text &amp;&amp; !!l.value) // 是否為合法的物件(如果不是 string)
 let siblingConf = null
 if (allOkObj) {
-siblingConf = self.labels.map((l) => _.pick(l, ['text', 'value']))
+siblingConf = self.labels.map((l) =&gt; _.pick(l, ['text', 'value']))
 } else if (allStr &amp;&amp; len &lt;= 2) {
-siblingConf = self.labels.map((text, idx) => {
+siblingConf = self.labels.map((text, idx) =&gt; {
 let value = idx === 0 ? self.trueValue : self.falseValue
 return { text, value }
 })
@@ -362,7 +362,7 @@ let hideDetails = true
 let dense = true
 const baseProps = { hideDetails, dense, disabled }
 const baseClass = self.inline ? ['d-inline-block'] : []
-let siblings = siblingConf.map((c) => {
+let siblings = siblingConf.map((c) =&gt; {
 let props = {
 label: c.text,
 inputValue: self.innervalue === c.value,
@@ -371,7 +371,7 @@ inputValue: self.innervalue === c.value,
 // 如果只有一個選項，取消勾選時就顯示 falseValue
 let valueOnNull = len === 1 ? self.falseValue : null
 let on = {
-change: (e) => (self.innervalue = e ? c.value : valueOnNull),
+change: (e) =&gt; (self.innervalue = e ? c.value : valueOnNull),
 }
 return h("v-checkbox", { props, class: baseClass, on })
 })
@@ -379,12 +379,12 @@ return h("v-checkbox", { props, class: baseClass, on })
 return h('div', {}, siblings)
 }
 })
-&lt;/script>
-&lt;script>
+&lt;/script&gt;
+&lt;script&gt;
 new Vue({
 el: '#app',
 data: { value: '' }
 })
-&lt;/script>
-&lt;h1 id="多選元件">多選元件&lt;/h1>
-&lt;h2 id="程式碼-code-1">程式碼 (Code)&lt;/h2></description></item></channel></rss>
+&lt;/script&gt;
+&lt;h1 id="多選元件"&gt;多選元件&lt;/h1&gt;
+&lt;h2 id="程式碼-code-1"&gt;程式碼 (Code)&lt;/h2&gt;</description></item></channel></rss>

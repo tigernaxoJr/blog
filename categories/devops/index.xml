@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on YuCheng's Site</title><link>https://blog.tigernaxo.com/categories/devops/</link><description>Recent content in DevOps on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>[DevOps] CI/CD-01 安裝 Jenkins</title><link>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</link><pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</guid><description>&lt;h1 id="環境">環境&lt;/h1>
-&lt;p>硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。
-環境部分需要安裝 Java (8 或 11) 和 Docker&lt;/p>
-&lt;h1 id="安裝-docker">安裝 Docker&lt;/h1>
-&lt;pre>&lt;code class="language-bash"># 卸載舊的 docker
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on YuCheng's Site</title><link>https://blog.tigernaxo.com/categories/devops/</link><description>Recent content in DevOps on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 18 Oct 2021 14:04:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>[DevOps] CI/CD-01 安裝 Jenkins</title><link>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</link><pubDate>Mon, 18 Oct 2021 14:04:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/devops/pipeline/01_install_jenkins/</guid><description>&lt;h1 id="環境"&gt;環境&lt;/h1&gt;
+&lt;p&gt;硬體部分官方提到: RAM &amp;gt; 256NB，最好 2GB，空間留至少 10GB 放置 Docker 映像檔。
+環境部分需要安裝 Java (8 或 11) 和 Docker&lt;/p&gt;
+&lt;h1 id="安裝-docker"&gt;安裝 Docker&lt;/h1&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;# 卸載舊的 docker
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 # 安裝必要的套件
 # apt-transport-https 讓套件管理程式可以透過 https 協定使用 repo
@@ -24,6 +24,6 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 # 下載測試 image 並執行，預期會得到輸出然後 container 就會結束
 sudo docker run hello-world
-&lt;/code>&lt;/pre>
-&lt;h1 id="執行-jenkins">執行 Jenkins&lt;/h1>
-&lt;p>接著執行 Jenkins image，取得首次登入密碼&lt;/p></description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id="執行-jenkins"&gt;執行 Jenkins&lt;/h1&gt;
+&lt;p&gt;接著執行 Jenkins image，取得首次登入密碼&lt;/p&gt;</description></item></channel></rss>

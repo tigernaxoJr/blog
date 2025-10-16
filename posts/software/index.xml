@@ -1,118 +1,118 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[架構] Architecture on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/software/</link><description>Recent content in [架構] Architecture on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 10 Jun 2025 10:34:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/software/index.xml" rel="self" type="application/rss+xml"/><item><title>[開發] API-first approach</title><link>https://blog.tigernaxo.com/posts/software/dev-api-first/</link><pubDate>Tue, 10 Jun 2025 10:34:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/dev-api-first/</guid><description>&lt;h2 id="高效協作的基石深入理解-api-first-開發方法">高效協作的基石：深入理解 API-First 開發方法&lt;/h2>
-&lt;p>在現代軟體開發的浪潮中，追求更快的交付速度、更敏捷的反應能力，以及更優質的使用者體驗，是所有團隊的共同目標。傳統的瀑布式開發流程，因其僵化和漫長的等待週期，已逐漸無法滿足市場的快速變化。為此，「API-First」開發方法應運而生，它不僅僅是一種技術實踐，更是一種推動團隊高效協作的開發哲學。&lt;/p>
-&lt;p>本文將深入探討 API-First 的核心概念，比較其與傳統開發流程的差異，分析其優劣，並提供在前端專案中實踐 API Mock 的具體教學。&lt;/p>
-&lt;h3 id="什麼是-api-first-approach">什麼是 API-First Approach？&lt;/h3>
-&lt;p>&lt;strong>API-First (API 優先)&lt;/strong> 是一種軟體開發策略，其核心精神是&lt;strong>將 API (應用程式介面) 視為整個產品的核心與一等公民 (First-class Citizen)。&lt;/strong>&lt;/p>
-&lt;p>在開發啟動之初，不再是先設計資料庫或撰寫後端邏輯，而是由前後端團隊，甚至包含產品、設計團隊，共同協商並定義出一份清晰、嚴謹的 &lt;strong>API 契約 (API Contract)&lt;/strong>。這份契約詳細描述了 API 的路由、請求方法、參數、數據格式以及回傳的響應內容。&lt;/p>
-&lt;p>這份契約一旦確立，就成為前後端各自開發的共同依據。後端團隊依照契約實作業務邏輯與資料庫；前端團隊則可以立即使用這份契約，搭配 Mock (模擬) 技術來打造使用者介面，無需等待後端 API 的實際完成。&lt;/p>
-&lt;p>最常用來定義 API 契約的工具是 &lt;strong>OpenAPI 規範 (前身為 Swagger)&lt;/strong>。它提供了一套標準化的格式 (通常是 YAML 或 JSON)，讓人類和機器都能輕鬆理解 API 的功能與結構。&lt;/p>
-&lt;blockquote>
-&lt;p>核心理念： 先定義好軟體元件之間如何溝通 (API)，再各自實現內部邏輯。&lt;/p>&lt;/blockquote>
-&lt;h2 id="典範轉移api-first-vs-傳統開發流程">典範轉移：API-First vs. 傳統開發流程&lt;/h2>
-&lt;p>為了更清晰地理解 API-First 帶來的變革，我們從幾個關鍵維度來比較它與傳統開發流程的差異。&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>比較維度&lt;/th>
-&lt;th>傳統開發流程 (Database-First)&lt;/th>
-&lt;th>API-First 開發流程&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>&lt;strong>開發啟動點&lt;/strong>&lt;/td>
-&lt;td>&lt;strong>資料庫先行&lt;/strong>：設計資料庫結構 -&amp;gt; 開發後端 API -&amp;gt; 前端串接。&lt;/td>
-&lt;td>&lt;strong>契約先行&lt;/strong>：前後端共同定義 API 契約。&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>團隊依賴性&lt;/strong>&lt;/td>
-&lt;td>&lt;strong>強烈的上下游依賴&lt;/strong>：前端強烈依賴後端，後端依賴資料庫設計。任何上游變動都會造成下游阻塞。&lt;/td>
-&lt;td>&lt;strong>並行開發&lt;/strong>：前後端解耦，可同時進行開發。前端依賴的是「契約」，而非「已完成的後端程式」。&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>前後端溝通&lt;/strong>&lt;/td>
-&lt;td>&lt;strong>後端主導&lt;/strong>：後端開發完 API 後，提供給前端使用，前端常處於被動接收的角色。溝通多發生在整合階段。&lt;/td>
-&lt;td>&lt;strong>協同合作&lt;/strong>：開發初期就共同協商 API 規格。前端甚至能主導介面規格，因為他們最了解介面需要什麼資料。&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>迭代速度&lt;/strong>&lt;/td>
-&lt;td>&lt;strong>緩慢且僵化&lt;/strong>：任何需求變更都可能需要從資料庫層級開始修改，牽一髮動全身，迭代週期長。&lt;/td>
-&lt;td>&lt;strong>快速且敏捷&lt;/strong>：前端可以基於 Mock 數據快速迭代 UI/UX，不受後端進度限制，非常適合敏捷開發中的快速原型和頻繁調整。&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>錯誤發現時機&lt;/strong>&lt;/td>
-&lt;td>&lt;strong>後期整合階段&lt;/strong>：許多介面不匹配、資料格式錯誤的問題，直到最後整合測試時才會浮現，修復成本高。&lt;/td>
-&lt;td>&lt;strong>開發初期&lt;/strong>：由於 API 契約先行，規格不一致的問題在設計階段就被解決。介面和使用者體驗問題也能在早期透過原型被發現。&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;h2 id="api-first-的優點與挑戰">API-First 的優點與挑戰&lt;/h2>
-&lt;p>採用 API-First 方法能帶來顯著的好處，但同時也伴隨著一些需要克服的挑戰。&lt;/p></description></item><item><title>[Program] 比較 Method chaining、fluent interface、c# 擴充方法</title><link>https://blog.tigernaxo.com/posts/software/pg-method-chaining/</link><pubDate>Sat, 22 Apr 2023 20:58:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/pg-method-chaining/</guid><description>&lt;p>Method chaining、Fluent interface 和 擴充方法(Extension method) 三種雖然相似，但實則為不同的程式設計概念。&lt;/p>
-&lt;h2 id="method-chaining">Method chaining&lt;/h2>
-&lt;p>Method chaining 是一種技術，允許在一行程式碼中調用對象的一系列方法。鏈中的每個方法都返回被調用的對象，從而允許在同一個對象上調用下一個方法。這種技術用於創建更可讀和簡潔的代碼。&lt;/p>
-&lt;h2 id="fluent-interface">Fluent interface&lt;/h2>
-&lt;p>Fluent interface 是一種設計模式，使用方法串鏈創建更具表現力和可讀性的API。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>[架構] Architecture on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/software/</link><description>Recent content in [架構] Architecture on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 10 Jun 2025 10:34:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/software/index.xml" rel="self" type="application/rss+xml"/><item><title>[開發] API-first approach</title><link>https://blog.tigernaxo.com/posts/software/dev-api-first/</link><pubDate>Tue, 10 Jun 2025 10:34:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/dev-api-first/</guid><description>&lt;h2 id="高效協作的基石深入理解-api-first-開發方法"&gt;高效協作的基石：深入理解 API-First 開發方法&lt;/h2&gt;
+&lt;p&gt;在現代軟體開發的浪潮中，追求更快的交付速度、更敏捷的反應能力，以及更優質的使用者體驗，是所有團隊的共同目標。傳統的瀑布式開發流程，因其僵化和漫長的等待週期，已逐漸無法滿足市場的快速變化。為此，「API-First」開發方法應運而生，它不僅僅是一種技術實踐，更是一種推動團隊高效協作的開發哲學。&lt;/p&gt;
+&lt;p&gt;本文將深入探討 API-First 的核心概念，比較其與傳統開發流程的差異，分析其優劣，並提供在前端專案中實踐 API Mock 的具體教學。&lt;/p&gt;
+&lt;h3 id="什麼是-api-first-approach"&gt;什麼是 API-First Approach？&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;API-First (API 優先)&lt;/strong&gt; 是一種軟體開發策略，其核心精神是&lt;strong&gt;將 API (應用程式介面) 視為整個產品的核心與一等公民 (First-class Citizen)。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在開發啟動之初，不再是先設計資料庫或撰寫後端邏輯，而是由前後端團隊，甚至包含產品、設計團隊，共同協商並定義出一份清晰、嚴謹的 &lt;strong&gt;API 契約 (API Contract)&lt;/strong&gt;。這份契約詳細描述了 API 的路由、請求方法、參數、數據格式以及回傳的響應內容。&lt;/p&gt;
+&lt;p&gt;這份契約一旦確立，就成為前後端各自開發的共同依據。後端團隊依照契約實作業務邏輯與資料庫；前端團隊則可以立即使用這份契約，搭配 Mock (模擬) 技術來打造使用者介面，無需等待後端 API 的實際完成。&lt;/p&gt;
+&lt;p&gt;最常用來定義 API 契約的工具是 &lt;strong&gt;OpenAPI 規範 (前身為 Swagger)&lt;/strong&gt;。它提供了一套標準化的格式 (通常是 YAML 或 JSON)，讓人類和機器都能輕鬆理解 API 的功能與結構。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;核心理念： 先定義好軟體元件之間如何溝通 (API)，再各自實現內部邏輯。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id="典範轉移api-first-vs-傳統開發流程"&gt;典範轉移：API-First vs. 傳統開發流程&lt;/h2&gt;
+&lt;p&gt;為了更清晰地理解 API-First 帶來的變革，我們從幾個關鍵維度來比較它與傳統開發流程的差異。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;比較維度&lt;/th&gt;
+&lt;th&gt;傳統開發流程 (Database-First)&lt;/th&gt;
+&lt;th&gt;API-First 開發流程&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;開發啟動點&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;資料庫先行&lt;/strong&gt;：設計資料庫結構 -&amp;gt; 開發後端 API -&amp;gt; 前端串接。&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;契約先行&lt;/strong&gt;：前後端共同定義 API 契約。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;團隊依賴性&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;強烈的上下游依賴&lt;/strong&gt;：前端強烈依賴後端，後端依賴資料庫設計。任何上游變動都會造成下游阻塞。&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;並行開發&lt;/strong&gt;：前後端解耦，可同時進行開發。前端依賴的是「契約」，而非「已完成的後端程式」。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;前後端溝通&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;後端主導&lt;/strong&gt;：後端開發完 API 後，提供給前端使用，前端常處於被動接收的角色。溝通多發生在整合階段。&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;協同合作&lt;/strong&gt;：開發初期就共同協商 API 規格。前端甚至能主導介面規格，因為他們最了解介面需要什麼資料。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;迭代速度&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;緩慢且僵化&lt;/strong&gt;：任何需求變更都可能需要從資料庫層級開始修改，牽一髮動全身，迭代週期長。&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;快速且敏捷&lt;/strong&gt;：前端可以基於 Mock 數據快速迭代 UI/UX，不受後端進度限制，非常適合敏捷開發中的快速原型和頻繁調整。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;錯誤發現時機&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;後期整合階段&lt;/strong&gt;：許多介面不匹配、資料格式錯誤的問題，直到最後整合測試時才會浮現，修復成本高。&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;開發初期&lt;/strong&gt;：由於 API 契約先行，規格不一致的問題在設計階段就被解決。介面和使用者體驗問題也能在早期透過原型被發現。&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="api-first-的優點與挑戰"&gt;API-First 的優點與挑戰&lt;/h2&gt;
+&lt;p&gt;採用 API-First 方法能帶來顯著的好處，但同時也伴隨著一些需要克服的挑戰。&lt;/p&gt;</description></item><item><title>[Program] 比較 Method chaining、fluent interface、c# 擴充方法</title><link>https://blog.tigernaxo.com/posts/software/pg-method-chaining/</link><pubDate>Sat, 22 Apr 2023 20:58:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/pg-method-chaining/</guid><description>&lt;p&gt;Method chaining、Fluent interface 和 擴充方法(Extension method) 三種雖然相似，但實則為不同的程式設計概念。&lt;/p&gt;
+&lt;h2 id="method-chaining"&gt;Method chaining&lt;/h2&gt;
+&lt;p&gt;Method chaining 是一種技術，允許在一行程式碼中調用對象的一系列方法。鏈中的每個方法都返回被調用的對象，從而允許在同一個對象上調用下一個方法。這種技術用於創建更可讀和簡潔的代碼。&lt;/p&gt;
+&lt;h2 id="fluent-interface"&gt;Fluent interface&lt;/h2&gt;
+&lt;p&gt;Fluent interface 是一種設計模式，使用方法串鏈創建更具表現力和可讀性的API。
 Fluent interface 的目標是使代碼看起來更像自然語言，使其更容易理解和使用。
-在 Fluent interface 中，每個方法調用返回一個對象，允許在同一個對象上調用下一個方法。這種技術通常用於庫和框架中，以為開發人員提供更直觀和自然的API。&lt;/p>
-&lt;h2 id="擴充方法">擴充方法&lt;/h2>
-&lt;p>擴充方法是一種在不修改類本身的情況下為現有類添加功能的方法。擴充方法在單獨的靜態類中定義，並像擴展類的方法一樣調用。這允許開發人員在不修改源代碼的情況下為現有類添加功能。擴充方法通常用於為現有類添加實用函數或為無法修改的類（例如第三方庫）添加功能。&lt;/p>
-&lt;h1 id="reference">Reference&lt;/h1>
-&lt;ul>
-&lt;li>&lt;a href="https://www.thinkinmd.com/post/2020/03/02/coding-style-of-fluent-interface/" target="_blank" rel="noopener">Fluent Interface｜一種程式碼”寫作”風格&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/extension-methods" target="_blank" rel="noopener">擴充方法 (C# 程式設計手冊)&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Method_chaining" target="_blank" rel="noopener">wiki-Method chaining&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>[架構] 多層式架構(Multi-layer Architecture)</title><link>https://blog.tigernaxo.com/posts/software/arch-multi-layer/</link><pubDate>Tue, 28 Mar 2023 23:34:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-multi-layer/</guid><description>&lt;p>中文多層架構的層可翻作 layer 或 tier，兩者主要的差別在於 layer 指程式邏輯在應用程式的位置；而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。這一篇的層說的是 layer，談如何在軟體層面利用分層 (layer) 妥善安排程式碼，以 multi-layer 撰寫程式碼能將複雜的邏輯隔離開達成關注點分離(SoC, Separation of concerns)，好處有：&lt;/p>
-&lt;ul>
-&lt;li>降低耦合：程式拆成各司其職的單元，降低彼此耦合，增加程式單元彈性(擴展性)、複用性。&lt;/li>
-&lt;li>易於維護：多層式架構中程式碼各司其職，容易定位問題發生點、而非從整個應用程式邏輯找。&lt;/li>
-&lt;li>敏捷開發：程式可快速回應需求修改(理由與易於維護類似，但是在開發時獲得的好處)。&lt;/li>
-&lt;li>平行開發：解耦的程式有助於降低協作併版衝突。&lt;/li>
-&lt;/ul>
-&lt;h1 id="分層">分層&lt;/h1>
-&lt;h2 id="三層式架構">三層式架構&lt;/h2>
-&lt;p>一般來說最常用的三層式架構組成為：&lt;/p>
-&lt;ul>
-&lt;li>表現層 (PL; Presentation Layer)：ASP 內就是 Controller 結尾。&lt;/li>
-&lt;li>商業邏輯繩 (BLL; Business Logic Layer)：又稱為 Service Layer，命名習慣是 Service、Helper 結尾。&lt;/li>
-&lt;li>資料存取層(DAL; Data Access Layer)：命名習慣是 Repo 結尾。&lt;/li>
-&lt;/ul>
-&lt;p>另外有人將 Domain、Common 稱為一層，但這個部分其實不太像層，因為會被每一層引用，在架構上呈現比較不像層那樣扁平，裡面包含：
-Model、Entity、DTO(Data transfer object) 或 Value Object，這裡只有屬性沒有方法。&lt;/p>
-&lt;h2 id="四層式架構">四層式架構&lt;/h2>
-&lt;p>為了降低 PL 與 BL 之間的耦合，有時會在 Business Logic Layer(BLL) 上再疊一層 Service Layer(SL)，作為 Presentation Layer 與 Business Layer 的中介層，這時 Business Logic Layer 的命名就不以 Serviece 結尾，通常較大型專案才需要如此分法。&lt;br>
-而 SL 和 BLL 的差別在於商業邏輯精細度，一個SL操作 (coarse-grained operation) 通常包含複數BL操作 (fine-grained operation)。&lt;/p></description></item><item><title>[架構] 無暇的程式碼-讀書心得</title><link>https://blog.tigernaxo.com/posts/software/arch-clean-arch-review/</link><pubDate>Mon, 12 Dec 2022 10:57:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-clean-arch-review/</guid><description>&lt;h2 id="軟體系統價值">軟體系統價值&lt;/h2>
-&lt;p>行為價值、架構價值&lt;/p>
-&lt;h3 id="行為價值">行為價值&lt;/h3>
-&lt;p>工程師的首要責任
+在 Fluent interface 中，每個方法調用返回一個對象，允許在同一個對象上調用下一個方法。這種技術通常用於庫和框架中，以為開發人員提供更直觀和自然的API。&lt;/p&gt;
+&lt;h2 id="擴充方法"&gt;擴充方法&lt;/h2&gt;
+&lt;p&gt;擴充方法是一種在不修改類本身的情況下為現有類添加功能的方法。擴充方法在單獨的靜態類中定義，並像擴展類的方法一樣調用。這允許開發人員在不修改源代碼的情況下為現有類添加功能。擴充方法通常用於為現有類添加實用函數或為無法修改的類（例如第三方庫）添加功能。&lt;/p&gt;
+&lt;h1 id="reference"&gt;Reference&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.thinkinmd.com/post/2020/03/02/coding-style-of-fluent-interface/" target="_blank" rel="noopener"&gt;Fluent Interface｜一種程式碼”寫作”風格&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://learn.microsoft.com/zh-tw/dotnet/csharp/programming-guide/classes-and-structs/extension-methods" target="_blank" rel="noopener"&gt;擴充方法 (C# 程式設計手冊)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Method_chaining" target="_blank" rel="noopener"&gt;wiki-Method chaining&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>[架構] 多層式架構(Multi-layer Architecture)</title><link>https://blog.tigernaxo.com/posts/software/arch-multi-layer/</link><pubDate>Tue, 28 Mar 2023 23:34:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-multi-layer/</guid><description>&lt;p&gt;中文多層架構的層可翻作 layer 或 tier，兩者主要的差別在於 layer 指程式邏輯在應用程式的位置；而 tier 指 layer 在系統上實際部屬執行的位址，屬於物理層級的指涉。這一篇的層說的是 layer，談如何在軟體層面利用分層 (layer) 妥善安排程式碼，以 multi-layer 撰寫程式碼能將複雜的邏輯隔離開達成關注點分離(SoC, Separation of concerns)，好處有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;降低耦合：程式拆成各司其職的單元，降低彼此耦合，增加程式單元彈性(擴展性)、複用性。&lt;/li&gt;
+&lt;li&gt;易於維護：多層式架構中程式碼各司其職，容易定位問題發生點、而非從整個應用程式邏輯找。&lt;/li&gt;
+&lt;li&gt;敏捷開發：程式可快速回應需求修改(理由與易於維護類似，但是在開發時獲得的好處)。&lt;/li&gt;
+&lt;li&gt;平行開發：解耦的程式有助於降低協作併版衝突。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="分層"&gt;分層&lt;/h1&gt;
+&lt;h2 id="三層式架構"&gt;三層式架構&lt;/h2&gt;
+&lt;p&gt;一般來說最常用的三層式架構組成為：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;表現層 (PL; Presentation Layer)：ASP 內就是 Controller 結尾。&lt;/li&gt;
+&lt;li&gt;商業邏輯繩 (BLL; Business Logic Layer)：又稱為 Service Layer，命名習慣是 Service、Helper 結尾。&lt;/li&gt;
+&lt;li&gt;資料存取層(DAL; Data Access Layer)：命名習慣是 Repo 結尾。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另外有人將 Domain、Common 稱為一層，但這個部分其實不太像層，因為會被每一層引用，在架構上呈現比較不像層那樣扁平，裡面包含：
+Model、Entity、DTO(Data transfer object) 或 Value Object，這裡只有屬性沒有方法。&lt;/p&gt;
+&lt;h2 id="四層式架構"&gt;四層式架構&lt;/h2&gt;
+&lt;p&gt;為了降低 PL 與 BL 之間的耦合，有時會在 Business Logic Layer(BLL) 上再疊一層 Service Layer(SL)，作為 Presentation Layer 與 Business Layer 的中介層，這時 Business Logic Layer 的命名就不以 Serviece 結尾，通常較大型專案才需要如此分法。&lt;br&gt;
+而 SL 和 BLL 的差別在於商業邏輯精細度，一個SL操作 (coarse-grained operation) 通常包含複數BL操作 (fine-grained operation)。&lt;/p&gt;</description></item><item><title>[架構] 無暇的程式碼-讀書心得</title><link>https://blog.tigernaxo.com/posts/software/arch-clean-arch-review/</link><pubDate>Mon, 12 Dec 2022 10:57:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-clean-arch-review/</guid><description>&lt;h2 id="軟體系統價值"&gt;軟體系統價值&lt;/h2&gt;
+&lt;p&gt;行為價值、架構價值&lt;/p&gt;
+&lt;h3 id="行為價值"&gt;行為價值&lt;/h3&gt;
+&lt;p&gt;工程師的首要責任
 需求實現、可用性保障(功能性 Bug、性能、穩定性)
-業務明確、穩定的前提下，可忽略架構價值&lt;/p>
-&lt;h3 id="架構價值">架構價值&lt;/h3>
-&lt;p>更容易適應:需求變更。
+業務明確、穩定的前提下，可忽略架構價值&lt;/p&gt;
+&lt;h3 id="架構價值"&gt;架構價值&lt;/h3&gt;
+&lt;p&gt;更容易適應:需求變更。
 變更實作難度和變更的範圍成正比、跟變更的具體形狀無關。 ??
 業務需求通常不明確、時常變動，因此架構非常重要。
-不關注架構價值會隨著版本迭代、變更每一行程式成本升高，因此投入的人力成本增加。&lt;/p>
-&lt;ul>
-&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/65658089" target="_blank" rel="noopener">知乎-架构整洁之道, 看这一篇就够了！&lt;/a>&lt;/li>
-&lt;li>&lt;a href="https://alitech-public.oss-cn-beijing.aliyuncs.com/1557040476898/jiagouzhengjie-siweidaotu.png" target="_blank" rel="noopener">架构整洁之道超詳細關係圖&lt;/a>&lt;/li>
-&lt;/ul></description></item><item><title>[Program] 巢狀結構</title><link>https://blog.tigernaxo.com/posts/software/quality-nest/</link><pubDate>Sun, 11 Dec 2022 02:19:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/quality-nest/</guid><description>&lt;h2 id="巢狀程式結構與可讀性">巢狀程式結構與可讀性&lt;/h2>
-&lt;p>巢狀程式結構，尤其當其深度過深時，會顯著降低程式碼的可讀性，並增加後續維護的難度。通常，為了保持高可讀性，程式碼的深度應最多不超過三層。嚴格遵守此原則的程式設計師，常被稱為 &lt;strong>「Never Nester」&lt;/strong>。&lt;/p>
-&lt;h2 id="消除eliminating巢狀程式的手法">消除(Eliminating)巢狀程式的手法&lt;/h2>
-&lt;p>以下是草稿中提到的消除巢狀程式結構的幾種主要手法：&lt;/p>
-&lt;ol>
-&lt;li>Extraction (抽出法)&lt;br>
-原理： 從複雜或多層的巢狀結構中，將一部分程式碼抽出成獨立的函式（function）或方法（method）。&lt;br>
-說明： 當程式碼內部有重複邏輯、或某個程式區塊承擔了過多的責任時，可以將這部分邏輯提取出來，形成一個新的、具有單一職責的函式。這不僅能減少原始函式的巢狀深度，也能提高程式碼的模組化程度和重用性。&lt;br>
+不關注架構價值會隨著版本迭代、變更每一行程式成本升高，因此投入的人力成本增加。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://zhuanlan.zhihu.com/p/65658089" target="_blank" rel="noopener"&gt;知乎-架构整洁之道, 看这一篇就够了！&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://alitech-public.oss-cn-beijing.aliyuncs.com/1557040476898/jiagouzhengjie-siweidaotu.png" target="_blank" rel="noopener"&gt;架构整洁之道超詳細關係圖&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>[Program] 巢狀結構</title><link>https://blog.tigernaxo.com/posts/software/quality-nest/</link><pubDate>Sun, 11 Dec 2022 02:19:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/quality-nest/</guid><description>&lt;h2 id="巢狀程式結構與可讀性"&gt;巢狀程式結構與可讀性&lt;/h2&gt;
+&lt;p&gt;巢狀程式結構，尤其當其深度過深時，會顯著降低程式碼的可讀性，並增加後續維護的難度。通常，為了保持高可讀性，程式碼的深度應最多不超過三層。嚴格遵守此原則的程式設計師，常被稱為 &lt;strong&gt;「Never Nester」&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id="消除eliminating巢狀程式的手法"&gt;消除(Eliminating)巢狀程式的手法&lt;/h2&gt;
+&lt;p&gt;以下是草稿中提到的消除巢狀程式結構的幾種主要手法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Extraction (抽出法)&lt;br&gt;
+原理： 從複雜或多層的巢狀結構中，將一部分程式碼抽出成獨立的函式（function）或方法（method）。&lt;br&gt;
+說明： 當程式碼內部有重複邏輯、或某個程式區塊承擔了過多的責任時，可以將這部分邏輯提取出來，形成一個新的、具有單一職責的函式。這不僅能減少原始函式的巢狀深度，也能提高程式碼的模組化程度和重用性。&lt;br&gt;
 範例：
-&lt;ul>
-&lt;li>將一個複雜的條件判斷邏輯包裝成一個布林函式。&lt;/li>
-&lt;li>將一個迴圈內部的複雜計算過程抽出成一個輔助函式。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>Inversion (反轉法)&lt;br>
-原理： 將**跳出函式（Early Exit / Guard Clause）**的判斷條件移至函式的最頂部。&lt;br>
-說明： Inversion 的核心思想是盡早處理無效或不需要繼續執行的情況。而不是將判斷條件放在深層的巢狀結構中，將這些「守衛條件」前置，一旦條件不符就立即返回（return）或拋出例外（throw exception）。這能有效減少主邏輯的巢狀深度，使正常執行的路徑更加清晰。&lt;/li>
-&lt;/ol>
-&lt;pre>&lt;code class="language-js">// 原始巢狀結構
+&lt;ul&gt;
+&lt;li&gt;將一個複雜的條件判斷邏輯包裝成一個布林函式。&lt;/li&gt;
+&lt;li&gt;將一個迴圈內部的複雜計算過程抽出成一個輔助函式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Inversion (反轉法)&lt;br&gt;
+原理： 將**跳出函式（Early Exit / Guard Clause）**的判斷條件移至函式的最頂部。&lt;br&gt;
+說明： Inversion 的核心思想是盡早處理無效或不需要繼續執行的情況。而不是將判斷條件放在深層的巢狀結構中，將這些「守衛條件」前置，一旦條件不符就立即返回（return）或拋出例外（throw exception）。這能有效減少主邏輯的巢狀深度，使正常執行的路徑更加清晰。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class="language-js"&gt;// 原始巢狀結構
 if (userIsAuthenticated) {
 if (userHasPermission) {
 // 核心業務邏輯
@@ -132,43 +132,43 @@ if (!userHasPermission) {
 return;
 }
 // 核心業務邏輯 (巢狀深度降低)
-&lt;/code>&lt;/pre>
-&lt;ol start="3">
-&lt;li>依據契約式程式設計 (Design by Contract, DbC) 移除不必要判斷&lt;br>
-原理： 根據契約式程式設計的原則，假設程式碼的使用者（呼叫端）會傳入合法的參數，進而移除程式碼內部不必要的參數合法性判斷。&lt;br>
-說明： 契約式程式設計強調在函式（或方法）的前置條件（Preconditions）、**後置條件（Postconditions）和不變條件（Invariants）**之間建立明確的「契約」。前置條件規定了呼叫端必須滿足的條件才能呼叫函式。如果程式設計師能夠信任呼叫端會確保這些前置條件被滿足，那麼在被呼叫的函式內部就可以省略對這些條件的重複判斷。&lt;br>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;依據契約式程式設計 (Design by Contract, DbC) 移除不必要判斷&lt;br&gt;
+原理： 根據契約式程式設計的原則，假設程式碼的使用者（呼叫端）會傳入合法的參數，進而移除程式碼內部不必要的參數合法性判斷。&lt;br&gt;
+說明： 契約式程式設計強調在函式（或方法）的前置條件（Preconditions）、**後置條件（Postconditions）和不變條件（Invariants）**之間建立明確的「契約」。前置條件規定了呼叫端必須滿足的條件才能呼叫函式。如果程式設計師能夠信任呼叫端會確保這些前置條件被滿足，那麼在被呼叫的函式內部就可以省略對這些條件的重複判斷。&lt;br&gt;
 重要考量：
-&lt;ul>
-&lt;li>公共介面與內部函式： 對於對外公開的 API 或函式，通常仍建議進行參數驗證，因為無法完全信任外部呼叫者。然而，對於僅供內部使用的函式，如果其前置條件能在呼叫端被保證，則可以考慮移除重複判斷以簡化程式碼。&lt;/li>
-&lt;li>信任與防禦性： 這是信任呼叫端與防禦性程式設計之間的一種權衡。過度的防禦性判斷會增加程式碼複雜度，但過於信任也可能導致未預期的錯誤。&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ol>
-&lt;h2 id="總結">總結&lt;/h2>
-&lt;p>綜合運用 Extraction、Inversion 以及基於 契約式程式設計 的判斷移除，可以有效降低程式碼的巢狀深度，顯著提升程式碼的可讀性、可維護性，並使程式邏輯更加清晰。&lt;/p></description></item><item><title>[架構] 多層式架構(Multitier Architecture)</title><link>https://blog.tigernaxo.com/posts/software/arch-n-tier/</link><pubDate>Mon, 17 May 2021 23:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-n-tier/</guid><description>&lt;h1 id="多層式架構-multitier-architecture-">多層式架構 (Multitier Architecture) 🏗️&lt;/h1>
-&lt;p>多層式架構（Multitier Architecture），也稱為 N-Tier Architecture，是**主從式架構（Client-Server Architecture）**的一種實現方式。在討論這個架構時，我們常會聽到「層」（layer）和「階」（tier）這兩個詞。&lt;/p>
-&lt;p>這兩者主要的差別在於：&lt;/p>
-&lt;p>層 (Layer)：指應用程式中邏輯功能的劃分，例如表現層、業務邏輯層、資料存取層。它關注的是程式碼的組織與職責分離。
+&lt;ul&gt;
+&lt;li&gt;公共介面與內部函式： 對於對外公開的 API 或函式，通常仍建議進行參數驗證，因為無法完全信任外部呼叫者。然而，對於僅供內部使用的函式，如果其前置條件能在呼叫端被保證，則可以考慮移除重複判斷以簡化程式碼。&lt;/li&gt;
+&lt;li&gt;信任與防禦性： 這是信任呼叫端與防禦性程式設計之間的一種權衡。過度的防禦性判斷會增加程式碼複雜度，但過於信任也可能導致未預期的錯誤。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="總結"&gt;總結&lt;/h2&gt;
+&lt;p&gt;綜合運用 Extraction、Inversion 以及基於 契約式程式設計 的判斷移除，可以有效降低程式碼的巢狀深度，顯著提升程式碼的可讀性、可維護性，並使程式邏輯更加清晰。&lt;/p&gt;</description></item><item><title>[架構] 多層式架構(Multitier Architecture)</title><link>https://blog.tigernaxo.com/posts/software/arch-n-tier/</link><pubDate>Mon, 17 May 2021 23:20:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/software/arch-n-tier/</guid><description>&lt;h1 id="多層式架構-multitier-architecture-"&gt;多層式架構 (Multitier Architecture) 🏗️&lt;/h1&gt;
+&lt;p&gt;多層式架構（Multitier Architecture），也稱為 N-Tier Architecture，是**主從式架構（Client-Server Architecture）**的一種實現方式。在討論這個架構時，我們常會聽到「層」（layer）和「階」（tier）這兩個詞。&lt;/p&gt;
+&lt;p&gt;這兩者主要的差別在於：&lt;/p&gt;
+&lt;p&gt;層 (Layer)：指應用程式中邏輯功能的劃分，例如表現層、業務邏輯層、資料存取層。它關注的是程式碼的組織與職責分離。
 階 (Tier)：指這些邏輯層在物理上的部署位置。一個「階」可以是一台獨立的伺服器、一個虛擬機或一個容器。它關注的是系統的實際部署環境。
-簡單來說，Layer 是邏輯上的劃分，而 Tier 是物理上的部署。本篇文章主要討論的是物理部署層面的「階 (Tier)」。&lt;/p>
-&lt;h2 id="n-tier-模型優點與權衡-">N-Tier 模型：優點與權衡 ⚖️&lt;/h2>
-&lt;p>在 N-Tier 模型中，層與層之間的邊界有 N-1 個。程式碼每次跨越一個邊界，都會帶來顯著的效能耗損。據估計，僅僅是跨越同一台機器上不同進程（process）的邊界，效能損失就可能高達 1000 倍。如果這個邊界是透過網路進行的遠端呼叫，效能損失將更為巨大。&lt;/p>
-&lt;p>因此，每增加一個 Tier，系統的複雜度就會提升，效能也可能呈幾何級數下降。對於簡單的應用程式來說，過多的層級劃分容易造成過度設計（Over-design）。&lt;/p>
-&lt;p>在決定是否採用多層式架構時，必須在以下幾個優點與效能之間做出權衡：&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>提高可擴展性 (Scalability)&lt;/strong>：可以針對特定的 Tier（例如應用程式伺服器）進行獨立擴展，以應對不斷增長的負載。&lt;/li>
-&lt;li>&lt;strong>提高容錯率 (Fault Tolerance)&lt;/strong>：單一 Tier 的故障不會輕易導致整個系統癱瘓。例如，如果一台 Web 伺服器當機，負載平衡器可以將流量導向其他正常的伺服器。&lt;/li>
-&lt;li>&lt;strong>提高安全性 (Security)&lt;/strong>：可以在不同 Tier 之間設置防火牆或不同的安全規則。例如，資料庫伺服器可以被嚴格保護在內部網路中，只允許應用程式層存取。&lt;/li>
-&lt;li>&lt;strong>提高效能 (Performance)&lt;/strong>：雖然跨層通訊會有效能損耗，但透過將不同任務分配給專門的伺服器（例如，資料庫伺服器專門處理資料查詢），可以優化整體系統的處理效率和響應能力。&lt;/li>
-&lt;/ul>
-&lt;h2 id="常見的-tier-模型">常見的 Tier 模型&lt;/h2>
-&lt;h3 id="單層式架構-1-tier-model">單層式架構 (1-Tier Model)&lt;/h3>
-&lt;p>在單層模型中，所有的邏輯層（表現層、應用層、資料層）都運行在同一台機器、同一個進程中。這種架構下，由於沒有跨越進程或網路邊界，因此沒有額外的通訊效能損失。早期的個人電腦應用程式多屬於此類。&lt;/p>
-&lt;h3 id="雙層式架構-2-tier-model">雙層式架構 (2-Tier Model)&lt;/h3>
-&lt;p>雙層模型將邏輯層分配到兩個不同的記憶體空間運行。這兩個空間可能在同一台機器上，但更常見的是部署在兩台不同的機器上，也就是典型的主從式架構（Client-Server）。&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>Client (客戶端)&lt;/strong>：負責表現層。&lt;/li>
-&lt;li>&lt;strong>Server (伺服器)&lt;/strong>：負責應用邏輯與資料存儲。&lt;/li>
-&lt;/ul>
-&lt;h3 id="三層式架構-3-tier-model">三層式架構 (3-Tier Model)&lt;/h3>
-&lt;p>三層式架構是目前最廣泛應用的模型，尤其是在 Web 應用程式中。它將系統劃分為三個獨立的、可單獨部署和管理的 Tier。&lt;/p></description></item></channel></rss>
+簡單來說，Layer 是邏輯上的劃分，而 Tier 是物理上的部署。本篇文章主要討論的是物理部署層面的「階 (Tier)」。&lt;/p&gt;
+&lt;h2 id="n-tier-模型優點與權衡-"&gt;N-Tier 模型：優點與權衡 ⚖️&lt;/h2&gt;
+&lt;p&gt;在 N-Tier 模型中，層與層之間的邊界有 N-1 個。程式碼每次跨越一個邊界，都會帶來顯著的效能耗損。據估計，僅僅是跨越同一台機器上不同進程（process）的邊界，效能損失就可能高達 1000 倍。如果這個邊界是透過網路進行的遠端呼叫，效能損失將更為巨大。&lt;/p&gt;
+&lt;p&gt;因此，每增加一個 Tier，系統的複雜度就會提升，效能也可能呈幾何級數下降。對於簡單的應用程式來說，過多的層級劃分容易造成過度設計（Over-design）。&lt;/p&gt;
+&lt;p&gt;在決定是否採用多層式架構時，必須在以下幾個優點與效能之間做出權衡：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;提高可擴展性 (Scalability)&lt;/strong&gt;：可以針對特定的 Tier（例如應用程式伺服器）進行獨立擴展，以應對不斷增長的負載。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;提高容錯率 (Fault Tolerance)&lt;/strong&gt;：單一 Tier 的故障不會輕易導致整個系統癱瘓。例如，如果一台 Web 伺服器當機，負載平衡器可以將流量導向其他正常的伺服器。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;提高安全性 (Security)&lt;/strong&gt;：可以在不同 Tier 之間設置防火牆或不同的安全規則。例如，資料庫伺服器可以被嚴格保護在內部網路中，只允許應用程式層存取。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;提高效能 (Performance)&lt;/strong&gt;：雖然跨層通訊會有效能損耗，但透過將不同任務分配給專門的伺服器（例如，資料庫伺服器專門處理資料查詢），可以優化整體系統的處理效率和響應能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="常見的-tier-模型"&gt;常見的 Tier 模型&lt;/h2&gt;
+&lt;h3 id="單層式架構-1-tier-model"&gt;單層式架構 (1-Tier Model)&lt;/h3&gt;
+&lt;p&gt;在單層模型中，所有的邏輯層（表現層、應用層、資料層）都運行在同一台機器、同一個進程中。這種架構下，由於沒有跨越進程或網路邊界，因此沒有額外的通訊效能損失。早期的個人電腦應用程式多屬於此類。&lt;/p&gt;
+&lt;h3 id="雙層式架構-2-tier-model"&gt;雙層式架構 (2-Tier Model)&lt;/h3&gt;
+&lt;p&gt;雙層模型將邏輯層分配到兩個不同的記憶體空間運行。這兩個空間可能在同一台機器上，但更常見的是部署在兩台不同的機器上，也就是典型的主從式架構（Client-Server）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Client (客戶端)&lt;/strong&gt;：負責表現層。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Server (伺服器)&lt;/strong&gt;：負責應用邏輯與資料存儲。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="三層式架構-3-tier-model"&gt;三層式架構 (3-Tier Model)&lt;/h3&gt;
+&lt;p&gt;三層式架構是目前最廣泛應用的模型，尤其是在 Web 應用程式中。它將系統劃分為三個獨立的、可單獨部署和管理的 Tier。&lt;/p&gt;</description></item></channel></rss>

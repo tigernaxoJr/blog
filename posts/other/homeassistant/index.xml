@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home Assistant on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/</link><description>Recent content in Home Assistant on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Nov 2022 08:50:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/other/homeassistant/index.xml" rel="self" type="application/rss+xml"/><item><title>[HA] 使用 Docker Compose 安裝 Home Assistant</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</link><pubDate>Tue, 22 Nov 2022 08:50:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</guid><description>&lt;p>這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。
-採用的映象檔是 &lt;code>ghcr.io/home-assistant/home-assistant:stable&lt;/code> ，因為我需要使用網址來區分服務(同一個 443 port 的情況下)，所以採取反向代理的方式，一方面讓之後要部屬其他應用、加上憑證、等等操作都交給 nginx 比較方便，因此不會將 8123 port 直接對外。&lt;/p>
-&lt;ol>
-&lt;li>建立 &lt;code>mynetwork&lt;/code>
-&lt;pre>&lt;code class="language-bash">docker create network mynetwork
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;li>建立 &lt;code>ha&lt;/code>&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>&lt;code>ha/docker-compose.yml&lt;/code>
-&lt;pre>&lt;code class="language-yml">version: '3'
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home Assistant on YuCheng's Site</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/</link><description>Recent content in Home Assistant on YuCheng's Site</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Nov 2022 08:50:00 +0800</lastBuildDate><atom:link href="https://blog.tigernaxo.com/posts/other/homeassistant/index.xml" rel="self" type="application/rss+xml"/><item><title>[HA] 使用 Docker Compose 安裝 Home Assistant</title><link>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</link><pubDate>Tue, 22 Nov 2022 08:50:00 +0800</pubDate><guid>https://blog.tigernaxo.com/posts/other/homeassistant/ha-install/</guid><description>&lt;p&gt;這裡是假設手邊已經有一台安裝 docker、docker-compose 的 Linux 系統。
+採用的映象檔是 &lt;code&gt;ghcr.io/home-assistant/home-assistant:stable&lt;/code&gt; ，因為我需要使用網址來區分服務(同一個 443 port 的情況下)，所以採取反向代理的方式，一方面讓之後要部屬其他應用、加上憑證、等等操作都交給 nginx 比較方便，因此不會將 8123 port 直接對外。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;建立 &lt;code&gt;mynetwork&lt;/code&gt;
+&lt;pre&gt;&lt;code class="language-bash"&gt;docker create network mynetwork
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;建立 &lt;code&gt;ha&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ha/docker-compose.yml&lt;/code&gt;
+&lt;pre&gt;&lt;code class="language-yml"&gt;version: '3'
 services:
 ha:
 container_name: homeassistant
@@ -26,23 +26,23 @@ networks:
 networks:
 mynetwork:
 external: true
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;li>&lt;code>ha/.env&lt;/code>
-&lt;pre>&lt;code>HA_IMAGE=&amp;quot;homeassistant/home-assistant:stable&amp;quot;
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;li>&lt;code>ha/.gitignore&lt;/code>
-&lt;pre>&lt;code>volume/
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;/ul>
-&lt;ol start="3">
-&lt;li>建立 &lt;code>nginx&lt;/code>&lt;/li>
-&lt;/ol>
-&lt;ul>
-&lt;li>&lt;code>nginx/docker-compose.yml&lt;/code>
-&lt;pre>&lt;code class="language-yml">version: '3'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ha/.env&lt;/code&gt;
+&lt;pre&gt;&lt;code&gt;HA_IMAGE=&amp;quot;homeassistant/home-assistant:stable&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ha/.gitignore&lt;/code&gt;
+&lt;pre&gt;&lt;code&gt;volume/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;建立 &lt;code&gt;nginx&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;nginx/docker-compose.yml&lt;/code&gt;
+&lt;pre&gt;&lt;code class="language-yml"&gt;version: '3'
 services:
 web:
 image: nginx
@@ -62,10 +62,10 @@ environment:
 networks:
 mynetwork:
 external: true
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;li>&lt;code>nginx/nginx.conf&lt;/code>
-&lt;pre>&lt;code>events {
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;nginx/nginx.conf&lt;/code&gt;
+&lt;pre&gt;&lt;code&gt;events {
 }
 http {
 upstream ha {
@@ -107,16 +107,16 @@ proxy_set_header Connection &amp;quot;Upgrade&amp;quot;;
 }
 }
 }
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;/ul>
-&lt;ol start="4">
-&lt;li>啟動服務
-&lt;pre>&lt;code class="language-bash">docker-compose -f ha/docker-compose.yml up -d
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;啟動服務
+&lt;pre&gt;&lt;code class="language-bash"&gt;docker-compose -f ha/docker-compose.yml up -d
 docker-compose -f nginx/docker-compose.yml up -d
-&lt;/code>&lt;/pre>
-&lt;/li>
-&lt;/ol>
-&lt;h2 id="創建帳號">創建帳號&lt;/h2>
-&lt;p>例如我的 IP 是 192.168.56.100
-現在可以進入 &lt;code>http://192.168.56.100/&lt;/code> 開始創建帳號。&lt;/p></description></item></channel></rss>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="創建帳號"&gt;創建帳號&lt;/h2&gt;
+&lt;p&gt;例如我的 IP 是 192.168.56.100
+現在可以進入 &lt;code&gt;http://192.168.56.100/&lt;/code&gt; 開始創建帳號。&lt;/p&gt;</description></item></channel></rss>
